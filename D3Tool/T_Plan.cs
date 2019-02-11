@@ -18,8 +18,8 @@ namespace D3Tool
         public T_Time t4 { get; set; }
         public T_Key Keys { get; set; }
         public bool IsEnabled { get; set; }
-        public object CursorPosX = null;
-        public object CursorPosY = null;
+        public int CursorPosX { get; set; }
+        public int CursorPosY { get; set; }
         public DateTime CursorPosTime { get; set; }
         
 

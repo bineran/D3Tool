@@ -1856,8 +1856,18 @@ namespace D3Tool
             //1奥术洪流 2 电刑 3冰霜新星（大于0才放） 4原力之波 左键风暴护甲  右键 陨石术
             var th = new Thread(new ThreadStart(delegate ()
             {
+                bool iscs = false;
+                //object objx=0;
+                //object objy=0;
+                //int intx = 0;
+                //int inty = 0;
+                int centerx = 960;
+                int centery = 540;
+                int mnewx = centerx;
+                int mnewy = centery;
                 while (true)
                 {
+                    iscs = false;//是否需要传送
                     if (!isD3)
                     {
                          continue;
@@ -1868,21 +1878,49 @@ namespace D3Tool
                     }
                
                     objdm.KeyDown(D3Config.KEYS.Key4);
-                    Sleep(tt.Key4 * 1000);
-                    objdm.KeyUp(D3Config.KEYS.Key4);
+                 
                     if (tt.Key3 > 0 && (DateTime.Now - D3Config.PLAN.CursorPosTime).TotalMilliseconds < 4000)
                     {
-                        D3Config.PLAN.CursorPosTime = DateTime.Now.AddDays(-1);
-                        objdm.MoveTo((int)D3Config.PLAN.CursorPosX, (int)D3Config.PLAN.CursorPosY);
-                        objdm.KeyPress(D3Config.KEYS.Key2);
+                        iscs = true;
                     }
-                    objdm.KeyDown(D3Config.KEYS.Key2);
-                    Sleep(tt.Key2 * 1000);
-                    objdm.KeyUp(D3Config.KEYS.Key2);
-            
+                    if (iscs)
+                    {
+                        Sleep(tt.Key4 * 1000-266);
+                        D3Config.PLAN.CursorPosTime = DateTime.Now.AddDays(-1);
+                        objdm.MoveTo(D3Config.PLAN.CursorPosX, D3Config.PLAN.CursorPosY);
+                        Sleep(10);
+                        objdm.MoveTo(D3Config.PLAN.CursorPosX, D3Config.PLAN.CursorPosY);
+                        objdm.KeyDown(D3Config.KEYS.Key3);
+                        Sleep(tt.Key3 * 1000);
+                        objdm.KeyUp(D3Config.KEYS.Key3);
+                       
+                        objdm.KeyUp(D3Config.KEYS.Key4);
+                   
+                        objdm.MoveTo(mnewx, mnewy);
+                        Sleep(10);
+                        objdm.MoveTo(mnewx, mnewy);
 
 
+                        objdm.KeyDown(D3Config.KEYS.Key2);
+                        Sleep(tt.Key2 * 1000-400);
+                        objdm.KeyUp(D3Config.KEYS.Key2);
+                    }
+                    else
+                    {
+                        Sleep(tt.Key4 * 1000);
+                        objdm.KeyUp(D3Config.KEYS.Key4);
+
+                        objdm.KeyDown(D3Config.KEYS.Key2);
+                        Sleep(tt.Key2 * 1000);
+                        objdm.KeyUp(D3Config.KEYS.Key2);
+                    }
                     objdm.RightDown();
+                    if (tt.Key3 > 0)
+                    {
+                        //objdm.GetCursorPos(out objx, out objy);
+                        //intx = (int)objx;
+                        //inty = (int)objy;
+                    }
                     Sleep(tt.KeyR*1000);
                     objdm.RightUp();
 

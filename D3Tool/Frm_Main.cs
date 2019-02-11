@@ -264,6 +264,8 @@ namespace D3Tool
             { }
 
         }
+        object tmpobjectx;
+        object tmpobjecty;
 
         void kh_OnKeyDownEvent(object sender, KeyEventArgs e)
         {
@@ -321,7 +323,10 @@ namespace D3Tool
                         {
 
                             D3Config.PLAN.CursorPosTime = DateTime.Now;
-                            this.objdm.GetCursorPos(out D3Config.PLAN.CursorPosX, out D3Config.PLAN.CursorPosY);
+                            
+                            this.objdm.GetCursorPos(out tmpobjectx, out tmpobjecty);
+                            D3Config.PLAN.CursorPosX = (int)tmpobjectx;
+                            D3Config.PLAN.CursorPosY = (int)tmpobjecty;
 
                         }
                     }
