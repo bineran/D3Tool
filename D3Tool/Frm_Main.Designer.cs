@@ -144,6 +144,7 @@
             this.numericUpDown23 = new System.Windows.Forms.NumericUpDown();
             this.label53 = new System.Windows.Forms.Label();
             this.numericUpDown24 = new System.Windows.Forms.NumericUpDown();
+            this.ckenable = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -178,6 +179,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.ckenable);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
@@ -188,7 +190,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(587, 45);
+            this.panel1.Size = new System.Drawing.Size(680, 45);
             this.panel1.TabIndex = 1;
             // 
             // button1
@@ -268,7 +270,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(587, 455);
+            this.tabControl1.Size = new System.Drawing.Size(680, 455);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -623,7 +625,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(579, 429);
+            this.tabPage2.Size = new System.Drawing.Size(672, 429);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "功能二";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1550,11 +1552,21 @@
             this.numericUpDown24.Size = new System.Drawing.Size(283, 21);
             this.numericUpDown24.TabIndex = 63;
             // 
+            // ckenable
+            // 
+            this.ckenable.AutoSize = true;
+            this.ckenable.Location = new System.Drawing.Point(577, 14);
+            this.ckenable.Name = "ckenable";
+            this.ckenable.Size = new System.Drawing.Size(72, 16);
+            this.ckenable.TabIndex = 5;
+            this.ckenable.Text = "启用修改";
+            this.ckenable.UseVisualStyleBackColor = true;
+            // 
             // Frm_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 500);
+            this.ClientSize = new System.Drawing.Size(680, 500);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -1722,6 +1734,7 @@
         private System.Windows.Forms.TextBox cmbjn43;
         private System.Windows.Forms.TextBox cmbjn42;
         private System.Windows.Forms.TextBox cmbjn41;
+        private System.Windows.Forms.CheckBox ckenable;
     }
 }
 

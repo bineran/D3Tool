@@ -65,7 +65,7 @@ namespace D3Tool
 
         public void FN(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
-            tt.FNType = 1;
+ 
             tt.FNType = 0;
             tt.FNMax = 1;
             switch (tt.fmode)
@@ -1852,6 +1852,7 @@ namespace D3Tool
 
         public void 奥陨宏2(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
+            D3Config.PLAN.CursorPosTime = DateTime.Now.AddDays(-1);
             //1奥术洪流 2 电刑 3冰霜新星（大于0才放） 4原力之波 左键风暴护甲  右键 陨石术
             var th = new Thread(new ThreadStart(delegate ()
             {
@@ -1865,19 +1866,22 @@ namespace D3Tool
                     {
                         continue;
                     }
-                    if (tt.Key3 > 0)
-                    {
-                        objdm.KeyPress(D3Config.KEYS.Key3);
-                    }
+               
                     objdm.KeyDown(D3Config.KEYS.Key4);
                     Sleep(tt.Key4 * 1000);
                     objdm.KeyUp(D3Config.KEYS.Key4);
-
+                    if (tt.Key3 > 0 && (DateTime.Now - D3Config.PLAN.CursorPosTime).TotalMilliseconds < 4000)
+                    {
+                        D3Config.PLAN.CursorPosTime = DateTime.Now.AddDays(-1);
+                        objdm.MoveTo((int)D3Config.PLAN.CursorPosX, (int)D3Config.PLAN.CursorPosY);
+                        objdm.KeyPress(D3Config.KEYS.Key2);
+                    }
                     objdm.KeyDown(D3Config.KEYS.Key2);
                     Sleep(tt.Key2 * 1000);
                     objdm.KeyUp(D3Config.KEYS.Key2);
-               
-     
+            
+
+
                     objdm.RightDown();
                     Sleep(tt.KeyR*1000);
                     objdm.RightUp();

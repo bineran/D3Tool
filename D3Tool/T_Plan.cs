@@ -7,6 +7,9 @@ namespace D3Tool
 {
     public class T_Plan
     {
+        public T_Plan() {
+            IsEnabled = true;
+        }
         public string Path { get; set; }
         public string Name { get; set; }
         public T_Time t1 { get; set; }
@@ -14,6 +17,11 @@ namespace D3Tool
         public T_Time t3 { get; set; }
         public T_Time t4 { get; set; }
         public T_Key Keys { get; set; }
-   
+        public bool IsEnabled { get; set; }
+        public object CursorPosX = null;
+        public object CursorPosY = null;
+        public DateTime CursorPosTime { get; set; }
+        
+
     }
 }

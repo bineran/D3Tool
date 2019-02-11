@@ -36,10 +36,9 @@ namespace D3Tool
             kh.SetHook();
             kh.OnKeyDownEvent += kh_OnKeyDownEvent;
             mouseHook = new MouseHook();
-         
             mouseHook.MouseWheel += mouseHook_MouseWheel;
-            mouseHook.MouseUp+=mouseHook_MouseUp;
-            mouseHook.MouseDown += mouseHook_MouseDown;
+            //mouseHook.MouseUp+=mouseHook_MouseUp;
+            //mouseHook.MouseDown += mouseHook_MouseDown;
             mouseHook.Start();
         }
 
@@ -306,6 +305,26 @@ namespace D3Tool
                     {
                         tmpkey = 123 * 10;
                     }
+                    else if (tmpkey == 162 && isbl)
+                    {
+                        List<EnumD3> alcotorl = new List<EnumD3>();
+                        var td = slhd[hd];
+                        if (td.alth1.Count > 0)
+                            alcotorl.Add((EnumD3)Enum.Parse(typeof(EnumD3), this.comboBox2.SelectedValue.ToString()));
+                        if (td.alth2.Count > 0)
+                            alcotorl.Add((EnumD3)Enum.Parse(typeof(EnumD3), this.comboBox3.SelectedValue.ToString()));
+                        if (td.alth3.Count > 0)
+                            alcotorl.Add((EnumD3)Enum.Parse(typeof(EnumD3), this.comboBox4.SelectedValue.ToString()));
+                        if (td.alth4.Count > 0)
+                            alcotorl.Add((EnumD3)Enum.Parse(typeof(EnumD3), this.comboBox5.SelectedValue.ToString()));
+                        if (alcotorl.Contains(EnumD3.奥陨宏) || alcotorl.Contains(EnumD3.奥陨宏2))
+                        {
+
+                            D3Config.PLAN.CursorPosTime = DateTime.Now;
+                            this.objdm.GetCursorPos(out D3Config.PLAN.CursorPosX, out D3Config.PLAN.CursorPosY);
+
+                        }
+                    }
                 }
                 
                 if (tmpkey == D3Config.KEYS.Key_Stop)
@@ -376,23 +395,23 @@ namespace D3Tool
             {
                 dt.Rows.Add(s);
             }
+  
+        
             this.comboBox2.ValueMember = "name";
             this.comboBox2.DisplayMember = "name";
-            this.comboBox2.DataSource = dt.Copy();
+            this.comboBox2.DataSource = new DataView(dt.Copy()) { Sort="name" };
 
             this.comboBox3.ValueMember = "name";
             this.comboBox3.DisplayMember = "name";
-            this.comboBox3.DataSource = dt.Copy();
+            this.comboBox3.DataSource = new DataView(dt.Copy()) { Sort = "name" };
 
             this.comboBox4.ValueMember = "name";
             this.comboBox4.DisplayMember = "name";
-            this.comboBox4.DataSource = dt.Copy();
+            this.comboBox4.DataSource = new DataView(dt.Copy()) { Sort = "name" };
 
             this.comboBox5.ValueMember = "name";
             this.comboBox5.DisplayMember = "name";
-            this.comboBox5.DataSource = dt.Copy();
-
-       
+            this.comboBox5.DataSource = new DataView(dt.Copy()) { Sort = "name" };
         }
         private void BindCMB()
         {
@@ -409,6 +428,7 @@ namespace D3Tool
                     fmode = EnumD3.不做操作
                 };
             }
+
 
             this.comboBox2.SelectedValue = D3Config.PLAN.t1.fmode.ToString();
 
@@ -531,8 +551,13 @@ namespace D3Tool
             this.numericUpDown23.DataBindings.Clear();
             this.numericUpDown20.DataBindings.Clear();
             this.numericUpDown19.DataBindings.Clear();
-
-          var  SelectPlan = D3Config.PLAN;
+            this.ckenable.DataBindings.Clear();
+            this.tabPage1.DataBindings.Clear();
+            this.tabPage2.DataBindings.Clear();
+            this.tabPage3.DataBindings.Clear();
+            this.tabPage4.DataBindings.Clear();
+            var  SelectPlan = D3Config.PLAN;
+            this.ckenable.DataBindings.Add("Checked", SelectPlan, "IsEnabled");
 
             this.numericUpDown1.DataBindings.Add("Value", SelectPlan.t1, "Key1");
             this.numericUpDown2.DataBindings.Add("Value", SelectPlan.t1, "Key2");
@@ -540,6 +565,13 @@ namespace D3Tool
             this.numericUpDown4.DataBindings.Add("Value", SelectPlan.t1, "Key4");
             this.numericUpDown5.DataBindings.Add("Value", SelectPlan.t1, "KeyL");
             this.numericUpDown6.DataBindings.Add("Value", SelectPlan.t1, "KeyR");
+
+  
+            this.tabPage1.DataBindings.Add("Enabled", SelectPlan, "IsEnabled");
+            this.tabPage2.DataBindings.Add("Enabled", SelectPlan, "IsEnabled");
+            this.tabPage3.DataBindings.Add("Enabled", SelectPlan, "IsEnabled");
+            this.tabPage4.DataBindings.Add("Enabled", SelectPlan, "IsEnabled");
+
 
             this.cmbjn11.DataBindings.Add("Text", SelectPlan.t1, "Memo1");
             this.cmbjn12.DataBindings.Add("Text", SelectPlan.t1, "Memo2");
