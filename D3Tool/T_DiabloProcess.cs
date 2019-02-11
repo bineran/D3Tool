@@ -65,6 +65,7 @@ namespace D3Tool
 
         public void FN(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
+            tt.FNType = 1;
             tt.FNType = 0;
             tt.FNMax = 1;
             switch (tt.fmode)
