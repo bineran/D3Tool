@@ -1900,15 +1900,17 @@ namespace D3Tool
                         Sleep(10);
                         objdm.MoveTo(mnewx, mnewy);
 
-                        mnewx = centerx + intx - D3Config.PLAN.CursorPosX;
-                        mnewy = centery + inty - D3Config.PLAN.CursorPosY;
-                        if(mnewx>0 && mnewy>0 && mnewx<2*centerx && mnewy<2*centery)
-                        {
-                            objdm.MoveTo(mnewx, mnewy);
+                        //mnewx = centerx + intx - D3Config.PLAN.CursorPosX;
+                        //mnewy = centery + inty - D3Config.PLAN.CursorPosY;
+                        //if(mnewx>0 && mnewy>0 && mnewx<2*centerx && mnewy<2*centery)
+                        //{
+                        //    objdm.MoveTo(mnewx, mnewy);
 
-                            Sleep(10);
-                            objdm.MoveTo(mnewx, mnewy);
-                        }
+                        //    Sleep(10);
+                        //    objdm.MoveTo(mnewx, mnewy);
+                        //    System.Diagnostics.Debug.WriteLine(string.Format("mnewx:{0},mnewy:{1},centerx:{2},centery:{3},CursorPosX:{4},CursorPosY:{5}",
+                        //        mnewx, mnewy, centerx, centery, D3Config.PLAN.CursorPosX, D3Config.PLAN.CursorPosY));
+                        //}
       
                         objdm.KeyDown(D3Config.KEYS.Key2);
                         Sleep(tt.Key2 * 1000-400);
@@ -1926,9 +1928,9 @@ namespace D3Tool
                     objdm.RightDown();
                     if (tt.Key3 > 0)
                     {
-                        objdm.GetCursorPos(out objx, out objy);
-                        intx = (int)objx;
-                        inty = (int)objy;
+                        //objdm.GetCursorPos(out objx, out objy);
+                        //intx = (int)objx;
+                        //inty = (int)objy;
                     }
                     Sleep(tt.KeyR*1000);
                     objdm.RightUp();
