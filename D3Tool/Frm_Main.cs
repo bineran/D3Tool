@@ -37,8 +37,8 @@ namespace D3Tool
             kh.OnKeyDownEvent += kh_OnKeyDownEvent;
             mouseHook = new MouseHook();
             mouseHook.MouseWheel += mouseHook_MouseWheel;
-            mouseHook.MouseUp += mouseHook_MouseUp;
-            mouseHook.MouseDown += mouseHook_MouseDown;
+            //mouseHook.MouseUp+=mouseHook_MouseUp;
+            //mouseHook.MouseDown += mouseHook_MouseDown;
             mouseHook.Start();
         }
 

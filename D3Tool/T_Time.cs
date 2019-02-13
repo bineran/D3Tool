@@ -13,6 +13,7 @@ namespace D3Tool
         public decimal Key4 { get; set; }
         public decimal KeyR { get; set; }
         public decimal KeyL { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public EnumD3 fmode { get; set; }
         public string Memo1 { get; set; }
         public string Memo2 { get; set; }
