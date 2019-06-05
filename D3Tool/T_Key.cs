@@ -11,6 +11,7 @@ namespace D3Tool
         public int Key2 { get; set; }
         public int Key3 { get; set; }
         public int Key4 { get; set; }
+  
         public int Key_Move { get; set; }
         public int Key_Stand { get; set; }
 

@@ -37,8 +37,8 @@ namespace D3Tool
             kh.OnKeyDownEvent += kh_OnKeyDownEvent;
             mouseHook = new MouseHook();
             mouseHook.MouseWheel += mouseHook_MouseWheel;
-            //mouseHook.MouseUp+=mouseHook_MouseUp;
-            //mouseHook.MouseDown += mouseHook_MouseDown;
+            mouseHook.MouseUp += mouseHook_MouseUp;
+            mouseHook.MouseDown += mouseHook_MouseDown;
             mouseHook.Start();
         }
 
@@ -215,7 +215,11 @@ namespace D3Tool
                     if (S_Time == null || (DateTime.Now - S_Time).TotalSeconds > 0.6)
                     {
                         S_Time = DateTime.Now;
-                        if (D3Config.KEYS.Key_FN1 == -2 || -2 == D3Config.KEYS.Key_FN10)
+                        if (D3Config.KEYS.Key_FN1 == D3Config.KEYS.Key_FN2 && -2 == D3Config.KEYS.Key_FN1)
+                        {
+                            td.FN12(D3Config.PLAN);
+                        }
+                        else if (D3Config.KEYS.Key_FN1 == -2 || -2 == D3Config.KEYS.Key_FN10)
                         {
                             td.FN1(D3Config.PLAN);
                         }
@@ -241,7 +245,11 @@ namespace D3Tool
                     {
                         X_Time = DateTime.Now;
 
-                        if (D3Config.KEYS.Key_FN1 == -1 || -1 == D3Config.KEYS.Key_FN10)
+                        if (D3Config.KEYS.Key_FN1 == D3Config.KEYS.Key_FN2 && -1 == D3Config.KEYS.Key_FN1)
+                        {
+                            td.FN12(D3Config.PLAN);
+                        }
+                        else if (D3Config.KEYS.Key_FN1 == -1 || -1 == D3Config.KEYS.Key_FN10)
                         {
                             td.FN1(D3Config.PLAN);
                         }
@@ -334,6 +342,10 @@ namespace D3Tool
                 
                 if (tmpkey == D3Config.KEYS.Key_Stop)
                 {
+                    object xx=0;
+                    object yy=0;
+                    objdm.GetCursorPos(out xx, out yy);
+                    System.IO.File.AppendAllText("poe.txt", string.Format("\r\n{2}---- x:{0},y:{1}", xx.ToString(), yy.ToString(),DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                     if (slhd.ContainsKey(hd))
                     {
                         slhd[hd].Stop();
@@ -341,6 +353,7 @@ namespace D3Tool
                     }
                     else
                     {
+                       // return;
                         if (!D3Config.KEYS.GameClass.Contains(str))
                         {
                             D3Config.KEYS.GameClass += " " + str;
@@ -367,7 +380,14 @@ namespace D3Tool
                     if (!isbl)
                         CreateForm(hd);
                     var td = slhd[hd];
-                    if (tmpkey == D3Config.KEYS.Key_FN1 || tmpkey==D3Config.KEYS.Key_FN10)
+
+                    if (
+                        
+                        D3Config.KEYS.Key_FN1 == D3Config.KEYS.Key_FN2 && tmpkey==D3Config.KEYS.Key_FN1)
+                    {
+                        td.FN12(D3Config.PLAN);
+                    }
+                    else if (tmpkey == D3Config.KEYS.Key_FN1 || tmpkey==D3Config.KEYS.Key_FN10)
                     {
                        td.FN1(D3Config.PLAN);
                     }

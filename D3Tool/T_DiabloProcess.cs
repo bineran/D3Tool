@@ -15,12 +15,12 @@ namespace D3Tool
 
     public class T_DiabloProcess
     {
-        public object o=3;
+        public object o = 3;
 
         public void 监视文件按4(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Clear();
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 FileSystemWatcher watcher = new FileSystemWatcher();
                 watcher.Path = @"D:\Files";
@@ -36,8 +36,8 @@ namespace D3Tool
                             if (DateTime.Now > t.AddSeconds(30))
                             {
                                 objdm.KeyDown(D3Config.KEYS.Key4);
-                               
-                                Sleep(Convert.ToInt32(tt.Key4*1000));
+
+                                Sleep(Convert.ToInt32(tt.Key4 * 1000));
 
                                 objdm.KeyUp(D3Config.KEYS.Key4);
                                 t = DateTime.Now;
@@ -59,13 +59,13 @@ namespace D3Tool
             alth.Add(th);
             althstop.Clear();
         }
-         
+
 
 
 
         public void FN(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
- 
+
             tt.FNType = 0;
             tt.FNMax = 1;
             switch (tt.fmode)
@@ -75,41 +75,55 @@ namespace D3Tool
                     ting(alth, tt, althstop);
 
                     CreateThread(this.流放原地第一技能, alth, tt, althstop);
-                     break;
+                    break;
                 case EnumD3.流放一键吃药:
 
 
                     CreateThread(this.流放一键吃药, alth, tt, althstop);
-                     break;
-              case EnumD3.先停:
-         
+                    break;
+                case EnumD3.先停:
 
-                     ting(alth, tt, althstop);
-                     break;
+
+                    ting(alth, tt, althstop);
+                    break;
+                case EnumD3.流放之路1920_1080_机会重铸:
+                    ting(alth, tt, althstop);
+                    CreateThread(this.流放之路1920_1080_机会重铸, alth, tt, althstop);
+                    break;
                 case EnumD3.天谴加马:
                     tt.FNType = 1;
                     tt.FNMax = 2;
 
-                     ting(alth, tt, althstop);
-                     CreateThread(this.天谴加马, alth, tt, althstop);
+                    ting(alth, tt, althstop);
+                    CreateThread(this.天谴加马, alth, tt, althstop);
+                    break;
+
+                case EnumD3.天谴原地:
+                    ting(alth, tt, althstop);
+                    CreateThread(this.天谴原地, alth, tt, althstop);
                     break;
 
                 case EnumD3.奥陨宏:
-                     ting(alth, tt, althstop);
-                    CreateThread(this.奥陨宏, alth, tt, althstop);
+                    ting(alth, tt, althstop);
+                    CreateThread(this.奥陨宏2, alth, tt, althstop);
                     break;
                 case EnumD3.奥陨宏2:
                     ting(alth, tt, althstop);
                     CreateThread(this.奥陨宏2, alth, tt, althstop);
                     break;
+                case EnumD3.奥陨宏黑洞3:
+                    ting(alth, tt, althstop);
+                    CreateThread(this.奥陨宏黑洞3, alth, tt, althstop);
+                    break;
+
                 case EnumD3.一直按Q定时按1234:
                     ting(alth, tt, althstop);
                     CreateThread(this.一直按Q定时按1234, alth, tt, althstop);
                     break;
                 case EnumD3.蛮子先停再3:
-                      ting(alth, tt, althstop);
-                      CreateThread(this.蛮子先停再3, alth, tt, althstop, 100);
-                      open(alth, tt, althstop, Convert.ToInt32(tt.KeyR * 1000));
+                    ting(alth, tt, althstop);
+                    CreateThread(this.蛮子先停再3, alth, tt, althstop, 100);
+                    open(alth, tt, althstop, Convert.ToInt32(tt.KeyR * 1000));
                     break;
 
                 case EnumD3.监视文件按4:
@@ -131,8 +145,8 @@ namespace D3Tool
                     ting(alth, tt, althstop);
                     先停再_原地依次按_1_2_3_4(alth, tt, althstop);
                     break;
-               
-                    
+
+
 
                 case EnumD3.一直按住强制移动定时按_1_2_3_4_左键_右键:
                     一直按住强制移动定时按_1_2_3_4_左键_右键(alth, tt, althstop);
@@ -147,24 +161,24 @@ namespace D3Tool
                     break;
                 case EnumD3.先停_按住强制移动定时按_1_2_3_4_左键_右键:
                     ting(alth, tt, althstop);
-                         CreateThread(  一直按住强制移动定时按_1_2_3_4_左键_右键,alth, tt, althstop);
+                    CreateThread(一直按住强制移动定时按_1_2_3_4_左键_右键, alth, tt, althstop);
                     break;
                 case EnumD3.不停一直按_1_2_3_4_左键_右键:
                     CreateThread(不停一直按_1_2_3_4_左键_右键, alth, tt, althstop);
                     break;
-                    
+
                 case EnumD3.定时按_1_2_3_4_左键_右键:
                     定时按_1_2_3_4_左键_右键(alth, tt, althstop);
                     break;
                 case EnumD3.先停_定时按_1_2_3_4_左键_右键:
                     ting(alth, tt, althstop);
-                    CreateThread(  定时按_1_2_3_4_左键_右键,alth, tt, althstop);
+                    CreateThread(定时按_1_2_3_4_左键_右键, alth, tt, althstop);
                     break;
                 case EnumD3.地震:
                     ting(alth, tt, althstop);
                     CreateThread(地震, alth, tt, althstop);
                     break;
-                    
+
                 case EnumD3.原地_依次按_1_2_3_4_左键_右键:
                     原地1次_依次按_1_2_3_4_左键_右键(alth, tt, althstop);
                     break;
@@ -175,7 +189,7 @@ namespace D3Tool
                 case EnumD3.持续点击左键一段时间:
                     持续点击左键一段时间(alth, tt, althstop);
                     break;
-                    
+
                 case EnumD3.单次_按3_1_2:
                     单次_按3_1_2(alth, tt, althstop);
                     break;
@@ -194,11 +208,11 @@ namespace D3Tool
                     break;
                 case EnumD3.先停再_原地左键定时按_1_2_3_4_右键_空格暂停:
                     ting(alth, tt, althstop);
-                 
-                  CreateThread(  this.先停再_原地左键定时按_1_2_3_4_右键_空格暂停,alth, tt, althstop);
+
+                    CreateThread(this.先停再_原地左键定时按_1_2_3_4_右键_空格暂停, alth, tt, althstop);
                     break;
 
-                                    case EnumD3.先停再_原地左键定时按_1_2_3_4_右键_空格连点:
+                case EnumD3.先停再_原地左键定时按_1_2_3_4_右键_空格连点:
                     ting(alth, tt, althstop);
                     先停再_原地左键定时按_1_2_3_4_右键_空格连点(alth, tt, althstop);
                     break;
@@ -219,7 +233,7 @@ namespace D3Tool
 
                     CreateThread(this.魂弹自动, alth, tt, althstop);
                     break;
-                    
+
                 case EnumD3.先停_按住1_定时按2_3_4_左键_右键:
                     ting(alth, tt, althstop);
 
@@ -233,16 +247,16 @@ namespace D3Tool
                     break;
 
                 case EnumD3.先停_按住右键_定时按_1_2_3_4_按住空格连点:
-                         ting(alth, tt, althstop);
+                    ting(alth, tt, althstop);
 
-                         CreateThread(this.先停_按住右键_定时按_1_2_3_4_按住空格连点, alth, tt, althstop);
+                    CreateThread(this.先停_按住右键_定时按_1_2_3_4_按住空格连点, alth, tt, althstop);
                     break;
                 case EnumD3.三刀飞刀:
                     ting(alth, tt, althstop);
 
                     CreateThread(this.三刀飞刀, alth, tt, althstop);
                     break;
-                    
+
                 case EnumD3.先停_原地按住左键_然后按住右键定时按1_2_3_4:
                     ting(alth, tt, althstop);
 
@@ -253,9 +267,19 @@ namespace D3Tool
 
                     CreateThread(this.先停_原地按右键_然后按住左键定时按1_2_3_4, alth, tt, althstop);
                     break;
-                    
-                    
-                    
+                case EnumD3.流放之路67_12:
+                    if (tt.Key1 > 0)
+                    {
+                        objdm.KeyDownChar("6");
+                    }
+                    if (tt.Key3 > 0)
+                    {
+                        objdm.KeyDownChar("7");
+                    }
+                    break;
+
+
+
                 case EnumD3.三秒火_按住2键_奥术洪流_和强制移动:
                     this.三秒火_按住2键_奥术洪流_和强制移动(alth, tt, althstop);
                     break;
@@ -278,7 +302,7 @@ namespace D3Tool
                     break;
                 case EnumD3.先停_原地和强制移动_定时按_1_2_3_4_左键_右键:
                     ting(alth, tt, althstop);
-                  CreateThread(  this.原地和强制移动_定时按_1_2_3_4_检测左键_定时右键,alth, tt, althstop);
+                    CreateThread(this.原地和强制移动_定时按_1_2_3_4_检测左键_定时右键, alth, tt, althstop);
                     break;
                 case EnumD3.P闪_再用技能1_2_3_4_非指向:
                     this.P闪_再用技能1_2_3_4_非指向(alth, tt, althstop);
@@ -293,19 +317,19 @@ namespace D3Tool
                 case EnumD3.先停_原地依次按_1_2_3_4_左键_4_休眠右键的时间_再开一:
                     ting(alth, tt, althstop);
                     this.原地1次_依次按_1_2_3_4_左键_4(alth, tt, althstop);
-           
-                  open(alth, tt, althstop, Convert.ToInt32(tt.KeyR * 1000));
-                 
+
+                    open(alth, tt, althstop, Convert.ToInt32(tt.KeyR * 1000));
+
                     break;
                 case EnumD3.先停_原地依次按_1_2_3_4_右键_休眠左键的时间_再开一:
-       
+
                     ting(alth, tt, althstop);
                     this.Sleep(Convert.ToInt32(tt.KeyL * 1000));
-                   
+
                     this.原地依次按_1_2_3_4_按住右键(alth, tt, althstop);
-               
+
                     open(alth, tt, althstop, Convert.ToInt32(tt.KeyL * 1000));
-               
+
 
                     break;
                 case EnumD3.分解传奇:
@@ -328,10 +352,24 @@ namespace D3Tool
                     ting(alth, tt, althstop);
                     CreateThread(this.先停_按住最大数量原地_定时按1_2_3_4_左键_右键, alth, tt, althstop, 100);
                     break;
+                case EnumD3.奥陨宏黑人:
+                    ting(alth, tt, althstop);
+                    CreateThread(this.奥陨宏黑人, alth, tt, althstop);
+                    break;
+
+                case EnumD3.奥陨宏黑人电甲:
+                    ting(alth, tt, althstop);
+                    CreateThread(this.奥陨宏黑人电甲, alth, tt, althstop);
+                    break;
                     
+                case EnumD3.设置元素戒指:
+                    CreateThread(this.设置元素戒指, alth, tt, althstop);
+                    break;
+
+
             }
         }
-        public void CreateThread(Action<List<Thread>, T_Time, List<Thread>> a, List<Thread> alth, T_Time tt, List<Thread> althstop,int sleeptime=100)
+        public void CreateThread(Action<List<Thread>, T_Time, List<Thread>> a, List<Thread> alth, T_Time tt, List<Thread> althstop, int sleeptime = 100)
         {
             Thread thtmp = new Thread(new ThreadStart(() =>
                   {
@@ -369,19 +407,19 @@ namespace D3Tool
                 Stop1();
                 Stop2();
                 Stop3();
- 
+
             }
-       
+
         }
         public void startLast()
         {
- 
+
         }
         public void Suspend_Resume(List<Thread> alth, decimal centertime)
         {
             if (alth == alth1)
             {
-          
+
                 Suspend_Resume(2, centertime);
                 Suspend_Resume(3, centertime);
                 Suspend_Resume(4, centertime);
@@ -389,7 +427,7 @@ namespace D3Tool
             else if (alth == alth2)
             {
                 Suspend_Resume(1, centertime);
-       
+
                 Suspend_Resume(3, centertime);
                 Suspend_Resume(4, centertime);
             }
@@ -397,7 +435,7 @@ namespace D3Tool
             {
                 Suspend_Resume(1, centertime);
                 Suspend_Resume(2, centertime);
-        
+
                 Suspend_Resume(4, centertime);
             }
             else if (alth == alth4)
@@ -405,7 +443,7 @@ namespace D3Tool
                 Suspend_Resume(1, centertime);
                 Suspend_Resume(2, centertime);
                 Suspend_Resume(3, centertime);
-           
+
 
             }
         }
@@ -435,7 +473,7 @@ namespace D3Tool
             alth.Clear();
             Thread th = new Thread(new ThreadStart(() =>
             {
-    
+
                 objdm.KeyPressChar("p");
                 this.Sleep(50);
                 objdm.LeftClick();
@@ -465,7 +503,7 @@ namespace D3Tool
                         objdm.KeyPress(D3Config.KEYS.Key4);
 
                     }
-         
+
                     //if (tt.KeyL > 0)
                     //{
                     //    this.Sleep(Convert.ToInt32(tt.KeyL * 1000));
@@ -485,11 +523,11 @@ namespace D3Tool
         }
         public void 先停原地再1左键1_选择右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyDown(D3Config.KEYS.Key_Stand);
                 this.Sleep(50);
-               
+
                 objdm.KeyPress(D3Config.KEYS.Key1);
 
                 this.Sleep(50);
@@ -506,15 +544,15 @@ namespace D3Tool
                 this.Sleep(50);
 
                 objdm.KeyUp(D3Config.KEYS.Key_Stand);
-               
-                if(tt.KeyL>0)
+
+                if (tt.KeyL > 0)
                 {
                     this.Sleep(200);
                     objdm.KeyDown(D3Config.KEYS.Key_Move);
                     this.Sleep(Convert.ToInt32(tt.KeyL * 1000));
                     objdm.KeyUp(D3Config.KEYS.Key_Move);
                 }
-          
+
             }));
             th.IsBackground = true;
             th.SetApartmentState(ApartmentState.STA);
@@ -584,7 +622,7 @@ namespace D3Tool
         }
         public void 左键循环(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 var t = Convert.ToInt32(tt.KeyL * 1000);
                 while (true)
@@ -605,7 +643,7 @@ namespace D3Tool
         }
         public void 持续点击左键一段时间(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 var t = DateTime.Now.AddMilliseconds(Convert.ToInt32(tt.KeyL * 1000));
                 while (true)
@@ -637,7 +675,7 @@ namespace D3Tool
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
                 while (true)
@@ -649,11 +687,11 @@ namespace D3Tool
                     }
                     if (isspack)
                     {
-                   
-                            objdm.KeyUp(D3Config.KEYS.Key_Stand);
-                        
-                      
-                        
+
+                        objdm.KeyUp(D3Config.KEYS.Key_Stand);
+
+
+
                         objdm.LeftClick();
                         System.Threading.Thread.Sleep(50);
                         continue;
@@ -674,7 +712,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -687,7 +725,7 @@ namespace D3Tool
 
         }
 
-      
+
         public void 先停再_原地左键定时按_1_2_3_4_右键_空格暂停(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
 
@@ -698,9 +736,9 @@ namespace D3Tool
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
-            
+
                 objdm.KeyDown(D3Config.KEYS.Key_Stand);
                 while (true)
                 {
@@ -732,7 +770,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -745,7 +783,7 @@ namespace D3Tool
 
         }
 
-      
+
         public void 先停_按住1_定时按2_3_4_左键_右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
 
@@ -757,12 +795,12 @@ namespace D3Tool
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
-          
+
                 //objdm.KeyDown(D3Config.KEYS.Key_Stand);
-                 var t1 = Convert.ToInt32(tt.Key1 * 1000);
+                var t1 = Convert.ToInt32(tt.Key1 * 1000);
 
                 while (true)
                 {
@@ -786,7 +824,7 @@ namespace D3Tool
                     else
                     {
                         this.Sleep(5);
-                        if(!iskey1)
+                        if (!iskey1)
                             objdm.KeyDown(D3Config.KEYS.Key1);
                     }
                 }
@@ -796,13 +834,13 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
                 objdm.KeyUp(D3Config.KEYS.Key1);
                 objdm.KeyUp(D3Config.KEYS.Key_Stand);
-       
+
 
             }));
             tmpth.IsBackground = true;
@@ -833,19 +871,19 @@ namespace D3Tool
             }
 
             if (keymax != D3Config.KEYS.Key1)
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key1, tt.Key1));
+                alth.Add(CreateKeyPressThread(D3Config.KEYS.Key1, tt.Key1));
             if (keymax != D3Config.KEYS.Key2)
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key2, tt.Key2));
+                alth.Add(CreateKeyPressThread(D3Config.KEYS.Key2, tt.Key2));
             if (keymax != D3Config.KEYS.Key3)
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
+                alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             if (keymax != D3Config.KEYS.Key4)
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
+                alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
 
             alth.Add(CreateMouseLeftPressThread(tt.KeyL));
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -860,7 +898,7 @@ namespace D3Tool
                         objdm.KeyUp(keymax);
 
                         System.Threading.Thread.Sleep(50);
-                        if(ttmax%2==0)
+                        if (ttmax % 2 == 0)
                         {
                             objdm.LeftClick();
                         }
@@ -873,7 +911,7 @@ namespace D3Tool
                         if ((keymax == D3Config.KEYS.Key1 && !iskey1) ||
                             (keymax == D3Config.KEYS.Key2 && !iskey2) ||
                             (keymax == D3Config.KEYS.Key3 && !iskey3) ||
-                            (keymax == D3Config.KEYS.Key4 && !iskey4) )
+                            (keymax == D3Config.KEYS.Key4 && !iskey4))
                             objdm.KeyDown(keymax);
                     }
                 }
@@ -883,7 +921,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -930,7 +968,7 @@ namespace D3Tool
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
             alth.Add(KeyDownStand());
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -943,7 +981,10 @@ namespace D3Tool
                     if (isspack)
                     {
                         objdm.KeyUp(keymax);
-                        objdm.LeftClick();
+                        if (ttmax % 2 == 0)
+                        {
+                            objdm.LeftClick();
+                        }
                         System.Threading.Thread.Sleep(50);
                         continue;
                     }
@@ -963,7 +1004,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -988,14 +1029,14 @@ namespace D3Tool
         public void 魂弹(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Add(KeyDownStand());
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
 
                 //objdm.KeyPress(D3Config.KEYS.Key3);
                 //this.Sleep(50);
                 var tmpi = 0;
-                var t2= Convert.ToInt32(tt.Key2 * 1000);
+                var t2 = Convert.ToInt32(tt.Key2 * 1000);
                 var t1 = Convert.ToInt32(tt.Key1 * 1000);
                 if (t2 > 0)
                 {
@@ -1003,7 +1044,7 @@ namespace D3Tool
                 }
                 if (t1 > 0)
                 {
-                    
+
                     objdm.KeyDown(D3Config.KEYS.Key1);
                     System.Threading.Thread.Sleep(t1);
                     objdm.KeyUp(D3Config.KEYS.Key1);
@@ -1049,7 +1090,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -1069,16 +1110,16 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
             alth.Add(KeyDownStand());
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 this.Sleep(200);
                 objdm.KeyDown(D3Config.KEYS.Key2);
                 this.Sleep(500);
                 objdm.KeyUp(D3Config.KEYS.Key2);
-             
+
                 //objdm.KeyPress(D3Config.KEYS.Key3);
                 //this.Sleep(50);
-       
+
                 while (true)
                 {
                     if (!isD3)
@@ -1095,7 +1136,7 @@ namespace D3Tool
                     }
                     if (isspack)
                     {
-       
+
                         // objdm.KeyUp(D3Config.KEYS.Key1);
                         objdm.LeftUp();
                         System.Threading.Thread.Sleep(50);
@@ -1114,7 +1155,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -1134,9 +1175,9 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
             alth.Add(KeyDownStand());
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
-    
+
                 bool isfirst = true;
                 var t1 = Convert.ToInt32(tt.Key1 * 1000);
                 var t2 = Convert.ToInt32(tt.Key2 * 1000);
@@ -1196,7 +1237,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key1);
                 objdm.LeftUp();
@@ -1217,54 +1258,54 @@ namespace D3Tool
         {
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(KeyDownStand());
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
-                    objdm.KeyPress(D3Config.KEYS.Key2);
-                    this.Sleep(50);
-                    objdm.KeyPress(D3Config.KEYS.Key3);
-                    this.Sleep(50);
-                    var KEY3 = false;
-                    while (true)
+                objdm.KeyPress(D3Config.KEYS.Key2);
+                this.Sleep(50);
+                objdm.KeyPress(D3Config.KEYS.Key3);
+                this.Sleep(50);
+                var KEY3 = false;
+                while (true)
+                {
+                    if (!isD3)
                     {
-                        if (!isD3)
-                        {
-                            System.Threading.Thread.Sleep(100);
-                            continue;
-                        }
-
-
-                        if (isspack || this.iskey1)
-                        {
-                            KEY3 = true;
-                            // objdm.KeyUp(D3Config.KEYS.Key1);
-                            objdm.LeftUp();
-                            System.Threading.Thread.Sleep(50);
-                            continue;
-                        }
- 
-
-                        if (KEY3)
-                        {
-                            objdm.KeyPress(D3Config.KEYS.Key3);
-                            System.Threading.Thread.Sleep(150);
-                            KEY3 = false;
-                        }
-
-                        if (!this.isleft)
-                        {
-                            objdm.LeftDown();
-                        }
                         System.Threading.Thread.Sleep(100);
-
+                        continue;
                     }
+
+
+                    if (isspack || this.iskey1)
+                    {
+                        KEY3 = true;
+                        // objdm.KeyUp(D3Config.KEYS.Key1);
+                        objdm.LeftUp();
+                        System.Threading.Thread.Sleep(50);
+                        continue;
+                    }
+
+
+                    if (KEY3)
+                    {
+                        objdm.KeyPress(D3Config.KEYS.Key3);
+                        System.Threading.Thread.Sleep(150);
+                        KEY3 = false;
+                    }
+
+                    if (!this.isleft)
+                    {
+                        objdm.LeftDown();
+                    }
+                    System.Threading.Thread.Sleep(100);
+
+                }
             }));
             th.IsBackground = true;
             th.SetApartmentState(ApartmentState.STA);
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -1287,11 +1328,11 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(KeyDownStand());
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
-                 var tR = Convert.ToInt32(tt.KeyR * 1000);
-                 var tL = Convert.ToInt32(tt.KeyL * 1000);
+                var tR = Convert.ToInt32(tt.KeyR * 1000);
+                var tL = Convert.ToInt32(tt.KeyL * 1000);
                 while (true)
                 {
                     if (!isD3)
@@ -1312,9 +1353,9 @@ namespace D3Tool
                         objdm.LeftUp();
                         //objdm.KeyDown(D3Config.KEYS.Key_Stand);
                         objdm.RightDown();
-                        this.Sleep(tR); 
-                       objdm.RightUp();
-                       objdm.LeftDown();
+                        this.Sleep(tR);
+                        objdm.RightUp();
+                        objdm.LeftDown();
                         this.Sleep(tL);
 
                         System.Threading.Thread.Sleep(5);
@@ -1326,12 +1367,12 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
                 objdm.KeyUp(D3Config.KEYS.Key_Stand);
-       
+
 
             }));
             tmpth.IsBackground = true;
@@ -1348,11 +1389,11 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(KeyDownStand());
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
-                 var tR = Convert.ToInt32(tt.KeyR * 1000);
-                 var tL = Convert.ToInt32(tt.KeyL * 1000);
+                var tR = Convert.ToInt32(tt.KeyR * 1000);
+                var tL = Convert.ToInt32(tt.KeyL * 1000);
                 while (true)
                 {
                     if (!isD3)
@@ -1374,8 +1415,8 @@ namespace D3Tool
                         objdm.RightUp();
                         //objdm.KeyDown(D3Config.KEYS.Key_Stand);
                         objdm.LeftDown();
-                       this.Sleep(tL);
-                       objdm.LeftUp();
+                        this.Sleep(tL);
+                        objdm.LeftUp();
                         objdm.RightDown();
                         this.Sleep(tR);
 
@@ -1388,12 +1429,12 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
                 objdm.KeyUp(D3Config.KEYS.Key_Stand);
-       
+
 
             }));
             tmpth.IsBackground = true;
@@ -1408,7 +1449,7 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(13, 0.3m));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -1426,7 +1467,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-          
+
 
         }
 
@@ -1440,7 +1481,7 @@ namespace D3Tool
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftDown();
                 objdm.KeyDown(D3Config.KEYS.Key_Stand);
@@ -1461,13 +1502,13 @@ namespace D3Tool
                     }
                     else
                     {
-           
-                            objdm.LeftDown();
-                            objdm.KeyDown(D3Config.KEYS.Key_Stand);
-                        
+
+                        objdm.LeftDown();
+                        objdm.KeyDown(D3Config.KEYS.Key_Stand);
+
 
                         // objdm.LeftDown();
-              
+
                         System.Threading.Thread.Sleep(200);
                     }
                 }
@@ -1477,7 +1518,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -1492,7 +1533,7 @@ namespace D3Tool
         public void 三秒火_按住2键_奥术洪流_和强制移动(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyDown(D3Config.KEYS.Key_Move);
                 //objdm.KeyDown(D3Config.KEYS.Key_Stand);
@@ -1509,18 +1550,18 @@ namespace D3Tool
                         objdm.KeyUp(D3Config.KEYS.Key2);
                         //objdm.KeyUp(D3Config.KEYS.Key_Stand);
                         objdm.KeyUp(D3Config.KEYS.Key_Move);
-            
+
                         System.Threading.Thread.Sleep(200);
                         continue;
                     }
                     else
                     {
 
-                            objdm.KeyDown(D3Config.KEYS.Key_Move);
-                            //objdm.KeyDown(D3Config.KEYS.Key_Stand);
-                            objdm.KeyDown(D3Config.KEYS.Key2);
-                        
-                    
+                        objdm.KeyDown(D3Config.KEYS.Key_Move);
+                        //objdm.KeyDown(D3Config.KEYS.Key_Stand);
+                        objdm.KeyDown(D3Config.KEYS.Key2);
+
+
                         System.Threading.Thread.Sleep(100);
                     }
                 }
@@ -1530,7 +1571,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key_Move);
                 objdm.KeyUp(D3Config.KEYS.Key2);
@@ -1552,7 +1593,7 @@ namespace D3Tool
             alth.Add(CreateMouseLeftPressThread(tt.KeyL));
             alth.Add(KeyDownStand());
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
                 objdm.RightDown();
@@ -1563,7 +1604,7 @@ namespace D3Tool
                         System.Threading.Thread.Sleep(100);
                         continue;
                     }
-                   
+
                     if (isspack)
                     {
                         if (isRight)
@@ -1576,11 +1617,12 @@ namespace D3Tool
                     }
                     else
                     {
-                        if(!isRight)
+                        objdm.KeyDown(D3Config.PLAN.Keys.Key_Stand);
+                        if (!isRight)
                         {
                             objdm.RightDown();
                         }
-               
+
                         System.Threading.Thread.Sleep(200);
                     }
                 }
@@ -1590,7 +1632,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -1614,7 +1656,7 @@ namespace D3Tool
             alth.Add(CreateMouseLeftPressThread(tt.KeyL));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyDown(D3Config.KEYS.Key_Move);
                 objdm.KeyDown(D3Config.KEYS.Key_Stand);
@@ -1644,7 +1686,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key_Move);
 
@@ -1664,7 +1706,7 @@ namespace D3Tool
 
 
         }
-                    public void 原地和强制移动_定时按_1_2_3_4_左键_右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        public void 原地和强制移动_定时按_1_2_3_4_左键_右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
 
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key1, tt.Key1));
@@ -1675,7 +1717,7 @@ namespace D3Tool
             alth.Add(CreateMouseLeftPressThread(tt.KeyL));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyDown(D3Config.KEYS.Key_Move);
                 objdm.KeyDown(D3Config.KEYS.Key_Stand);
@@ -1689,20 +1731,20 @@ namespace D3Tool
                     }
                     if (isspack)
                     {
-        
+
                         objdm.KeyUp(D3Config.KEYS.Key_Stand);
                         objdm.KeyUp(D3Config.KEYS.Key_Move);
- 
+
                         System.Threading.Thread.Sleep(200);
                         continue;
                     }
                     else
                     {
-                      
-                            objdm.KeyDown(D3Config.KEYS.Key_Move);
-                           objdm.KeyDown(D3Config.KEYS.Key_Stand);
-                    
-          
+
+                        objdm.KeyDown(D3Config.KEYS.Key_Move);
+                        objdm.KeyDown(D3Config.KEYS.Key_Stand);
+
+
                         System.Threading.Thread.Sleep(100);
                     }
                 }
@@ -1712,10 +1754,10 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key_Move);
-          
+
                 objdm.KeyUp(D3Config.KEYS.Key_Stand);
                 objdm.RightUp();
                 objdm.LeftUp();
@@ -1731,7 +1773,7 @@ namespace D3Tool
 
 
         }
-                    public void 地震(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        public void 地震(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Clear();
 
@@ -1739,8 +1781,8 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(CreateMouseLeftPressThread(tt.KeyL));
-    
-            var th = new Thread(new ThreadStart(delegate()
+
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyDown(D3Config.KEYS.Key_Move);
                 while (true)
@@ -1750,7 +1792,7 @@ namespace D3Tool
                         System.Threading.Thread.Sleep(100);
                         continue;
                     }
-                    
+
                     if (isspack)
                     {
                         objdm.RightClick();
@@ -1758,14 +1800,14 @@ namespace D3Tool
                         objdm.KeyUp(D3Config.KEYS.Key1);
                         objdm.LeftClick();
                         Sleep(100);
-                            continue;
+                        continue;
                     }
-                    if(!iskey1)
+                    if (!iskey1)
                         objdm.KeyDown(D3Config.KEYS.Key1);
 
-                    
-        
-                  
+
+
+
                 }
             }));
             th.IsBackground = true;
@@ -1774,9 +1816,9 @@ namespace D3Tool
             alth.Add(th);
 
 
-           
+
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key_Move);
                 objdm.KeyUp(D3Config.KEYS.Key1);
@@ -1790,43 +1832,170 @@ namespace D3Tool
 
 
         }
-        public void 奥陨宏(List<Thread> alth, T_Time tt, List<Thread> althstop)
+
+
+        public void 流放之路1920_1080_机会重铸(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
-            //1奥术洪流 2 电刑 3冰霜新星（大于0才放） 4原力之波 左键风暴护甲  右键 陨石术
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
+
+                int x1 = 1271;
+                int y1 = 584;
+                int x2 = 1910;
+                int y2 = 859;
+                int xw = 1290, yw = 613;
+                object x_jhs = 0;
+                object y_jhs = 0;
+                object x_czs = 0;
+                object y_czs = 0;
+                int fc = Convert.ToInt32(tt.Key3);
+                if (fc < 1 || fc>5)
+                {
+                    fc = 1;
+                }
                 while (true)
                 {
                     if (!isD3)
                     {
+                        Sleep(100);
+                        continue;
+                    }
+                    //                 x: 1271,y: 584
+                    // x: 1910,y: 859
+                    try
+                    {
+                        objdm.FindPic(x1, y1, x2, y2, "jhs.bmp", "000000", 0.5, 0, out x_jhs, out y_jhs);
+                        objdm.FindPic(x1, y1, x2, y2, "czs.bmp", "000000", 0.5, 0, out x_czs, out y_czs);
+                        var xx_jhs = Convert.ToInt32(x_jhs);
+                        var xx_czs = Convert.ToInt32(x_czs);
+                        var yy_jhs = Convert.ToInt32(y_jhs);
+                        var yy_czs = Convert.ToInt32(y_czs);
+                        System.IO.File.AppendAllText("poe.txt", string.Format("\r\n{2}  JHS---- x:{0},y:{1}", xx_jhs.ToString(), yy_jhs.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+                        System.IO.File.AppendAllText("poe.txt", string.Format("\r\n{2}  CZS---- x:{0},y:{1}", xx_czs.ToString(), yy_czs.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+
+                        if (xx_jhs > 0 && xx_czs > 0)
+                        {
+                            var t1 = Convert.ToInt32(tt.Key1 * 1000);
+                            var t2 = Convert.ToInt32(tt.Key2 * 1000);
+
+                         
+                            for (int i = 0; i < fc; i++)
+                            {
+
+                                objdm.MoveTo(xx_jhs, yy_jhs);
+                                Sleep(t1);
+                                objdm.RightClick();
+                                Sleep(t1);
+                                objdm.MoveTo(xw, yw+i*50);
+                                Sleep(t1);
+                                objdm.LeftClick();
+                                Sleep(t1);
+                           
+
+                            }
+                    
+
+                            for (int i = 0; i < fc; i++)
+                            {
+                                objdm.MoveTo(xx_czs, yy_czs);
+                                Sleep(t1);
+                                objdm.RightClick();
+                                Sleep(t1);
+                                objdm.MoveTo(xw, yw + i * 50);
+                                Sleep(t1);
+                                objdm.LeftClick();
+                                Sleep(t1);
+                           
+                            }
+                            objdm.MoveTo(846, 489);
+                        }
+                        else
+                        {
+                            Sleep(300);
+                        }
+                    }
+                    catch
+                    {
+                        Sleep(600);
+                    }
+                }
+
+            }));
+            th.IsBackground = true;
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();
+            alth.Add(th);
+
+            althstop.Clear();
+            var tmpth = new Thread(new ThreadStart(delegate ()
+            {
+             
+                
+
+            }));
+            tmpth.IsBackground = true;
+            tmpth.SetApartmentState(ApartmentState.STA);
+            althstop.Add(tmpth);
+
+        }
+        public void 奥陨宏2(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        {
+            if (YSDateTime == DateTime.MinValue)
+            {
+                return;
+            }
+
+            //1奥术洪流 2 电刑 3陨石术 4原力之波 左键风暴护甲  右键 传送术
+            var th = new Thread(new ThreadStart(delegate ()
+            {
+                var dxzs = 12;
+                var yszs = 33;
+                var ylbzs = 34;
+
+
+                while (true)
+                {
+                    var ttt = (DateTime.Now - YSDateTime.AddMilliseconds(-3000)).TotalMilliseconds % 3200;
+                    if (ttt < 15)
+                    {
+                        break;
+                    }
+                    else if (ttt > 600)
+                    {
+                        objdm.KeyPress(D3Config.KEYS.Key2);
+                        Sleep(50);
+                    }
+                    else
+                    {
+
+                        Sleep(10);
+                    }
+                }
+                while (true)
+                {
+                    if (!isD3)
+                    {
+                        Sleep(10);
                         continue;
                     }
                     if (isspack)
                     {
+                        Sleep(10);
                         continue;
                     }
-                    if (tt.Key3 > 0)
-                    {
-                        objdm.KeyPress(D3Config.KEYS.Key3);
-                    }
-                        objdm.KeyDown(D3Config.KEYS.Key4);
-                    Sleep(50);
-                       objdm.KeyUp(D3Config.KEYS.Key4);
-                      Sleep(50);
-                       objdm.KeyDown(D3Config.KEYS.Key2);
-                        Sleep(1580);
-                      objdm.KeyUp(D3Config.KEYS.Key2);
+                    XianZai_ZhenShu = 0;
+ 
 
-                    objdm.RightDown();
-                     Sleep(50);
-                    objdm.RightUp();
-                       Sleep(50);
-                       objdm.KeyDown(D3Config.KEYS.Key2);
-                         Sleep(990);
-                       objdm.KeyUp(D3Config.KEYS.Key2);
-                        objdm.KeyDown(D3Config.KEYS.Key1);
-                       Sleep(370);
-                      objdm.KeyUp(D3Config.KEYS.Key1);
+
+                    DownUpKeyCount(D3Config.KEYS.Key4, ylbzs);//原力波567
+                    SleepZS(4);
+                    DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 5);//电刑1000
+                    SleepZS(8);
+                    DownUpKeyCount(D3Config.KEYS.Key3, yszs);//550
+                    DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 2);//电刑400
+                    DownUpKeyCount(D3Config.KEYS.Key1, dxzs, 2);//引导400
+                    SleepZS(5);
+
                 }
             }));
             th.IsBackground = true;
@@ -1834,13 +2003,13 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
 
-                        althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            althstop.Clear();
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
-                objdm.RightUp();
                 objdm.KeyUp(D3Config.KEYS.Key1);
-                    objdm.KeyUp(D3Config.KEYS.Key2);
-                    objdm.KeyUp(D3Config.KEYS.Key4);
+                objdm.KeyUp(D3Config.KEYS.Key2);
+                objdm.KeyUp(D3Config.KEYS.Key3);
+                objdm.KeyUp(D3Config.KEYS.Key4);
 
             }));
             tmpth.IsBackground = true;
@@ -1850,99 +2019,91 @@ namespace D3Tool
 
         }
 
-        public void 奥陨宏2(List<Thread> alth, T_Time tt, List<Thread> althstop)
+
+
+        public void 奥陨宏黑洞3(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
-            D3Config.PLAN.CursorPosTime = DateTime.Now.AddDays(-1);
+
             //1奥术洪流 2 电刑 3冰霜新星（大于0才放） 4原力之波 左键风暴护甲  右键 陨石术
             var th = new Thread(new ThreadStart(delegate ()
             {
-                bool iscs = false;
-                object objx = 0;
-                object objy = 0;
-                int intx = 0;
-                int inty = 0;
-                int centerx = 960;
-                int centery = 540;
-                int mnewx = centerx;
-                int mnewy = centery;
+                int ylbzs = 38;
+                int dxzs = 12;
+                int QiDong = 1;
+                int yszs = 38;
+
+
+
+                objdm.KeyPress(D3Config.KEYS.Key4);
+
+                Sleep(634);
+
+                objdm.KeyDown(D3Config.KEYS.Key2);
+
+                Sleep(883);
+
+                objdm.KeyUp(D3Config.KEYS.Key2);
+                QiDong = 0;
+
+
+                XianZai_ZhenShu = 0;
+
                 while (true)
                 {
-                    iscs = false;//是否需要传送
-                    if (!isD3)
+                    if (QiDong == 5)
                     {
-                         continue;
+                        System.Diagnostics.Debug.WriteLine("55");
+                        DownUpKeySleepCount(D3Config.KEYS.Key4, ylbzs, 35);//原力波
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        QiDong = 1;
                     }
-                    if (isspack)
+                    else if (QiDong == 1)
                     {
-                        continue;
+                        System.Diagnostics.Debug.WriteLine("11");
+                        DownUpKeySleepCount(D3Config.KEYS.Key3, yszs);//陨石
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        DownUpKeyCount(D3Config.KEYS.Key1, dxzs, 2, -2);//引导
+                        SleepZS(2);
+                        DownUpKeySleepCount(D3Config.KEYS.Key4, ylbzs, 45);//原力波
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        QiDong = 2;
                     }
-               
-                    objdm.KeyDown(D3Config.KEYS.Key4);
-                 
-                    if (tt.Key3 > 0 && (DateTime.Now - D3Config.PLAN.CursorPosTime).TotalMilliseconds < 4000)
+                    else if (QiDong == 2)
                     {
-                        iscs = true;
+                        System.Diagnostics.Debug.WriteLine("22");
+                        DownUpKeySleepCount(D3Config.KEYS.Key3, yszs);//陨石
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        DownUpKeyCount(D3Config.KEYS.Key1, dxzs, 2, -2);//引导
+                        SleepZS(142);
+                        DownUpKeySleepCount(D3Config.KEYS.Key4, ylbzs, 45);//原力波
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        QiDong = 3;
                     }
-                    if (iscs)
+                    else if (QiDong == 3)
                     {
-                        Sleep(tt.Key4 * 1000-266);
-                        D3Config.PLAN.CursorPosTime = DateTime.Now.AddDays(-1);
-                        objdm.MoveTo(D3Config.PLAN.CursorPosX, D3Config.PLAN.CursorPosY);
-                        Sleep(10);
-                        objdm.MoveTo(D3Config.PLAN.CursorPosX, D3Config.PLAN.CursorPosY);
-                        objdm.KeyDown(D3Config.KEYS.Key3);
-                        Sleep(tt.Key3 * 1000);
-                        objdm.KeyUp(D3Config.KEYS.Key3);
-                       
-                        objdm.KeyUp(D3Config.KEYS.Key4);
-                   
-                        objdm.MoveTo(mnewx, mnewy);
-                        Sleep(10);
-                        objdm.MoveTo(mnewx, mnewy);
-
-                        //mnewx = centerx + intx - D3Config.PLAN.CursorPosX;
-                        //mnewy = centery + inty - D3Config.PLAN.CursorPosY;
-                        //if(mnewx>0 && mnewy>0 && mnewx<2*centerx && mnewy<2*centery)
-                        //{
-                        //    objdm.MoveTo(mnewx, mnewy);
-
-                        //    Sleep(10);
-                        //    objdm.MoveTo(mnewx, mnewy);
-                        //    System.Diagnostics.Debug.WriteLine(string.Format("mnewx:{0},mnewy:{1},centerx:{2},centery:{3},CursorPosX:{4},CursorPosY:{5}",
-                        //        mnewx, mnewy, centerx, centery, D3Config.PLAN.CursorPosX, D3Config.PLAN.CursorPosY));
-                        //}
-      
-                        objdm.KeyDown(D3Config.KEYS.Key2);
-                        Sleep(tt.Key2 * 1000-400);
-                        objdm.KeyUp(D3Config.KEYS.Key2);
+                        System.Diagnostics.Debug.WriteLine("33");
+                        DownUpKeySleepCount(D3Config.KEYS.Key3, yszs);//陨石
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        DownUpKeyCount(D3Config.KEYS.Key1, dxzs, 2, -2);//引导
+                        SleepZS(2);
+                        DownUpKeySleepCount(-2, yszs);//黑洞
+                        DownUpKeySleepCount(D3Config.KEYS.Key4, ylbzs, 25);//原力波
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        QiDong = 4;
                     }
-                    else
+                    else if (QiDong == 4)
                     {
-                        Sleep(tt.Key4 * 1000);
-                        objdm.KeyUp(D3Config.KEYS.Key4);
-
-                        objdm.KeyDown(D3Config.KEYS.Key2);
-                        Sleep(tt.Key2 * 1000);
-                        objdm.KeyUp(D3Config.KEYS.Key2);
+                        System.Diagnostics.Debug.WriteLine("44");
+                        DownUpKeySleepCount(D3Config.KEYS.Key3, yszs);//陨石
+                        DownUpKeyCount(D3Config.KEYS.Key2, dxzs, 3, -7);//电刑
+                        DownUpKeyCount(D3Config.KEYS.Key1, dxzs, 2, -2);//引导
+                        SleepZS(2);
+                        QiDong = 5;
                     }
-                    objdm.RightDown();
-                    if (tt.Key3 > 0)
+                    else if (QiDong == 0)
                     {
-                        //objdm.GetCursorPos(out objx, out objy);
-                        //intx = (int)objx;
-                        //inty = (int)objy;
+                        SleepZSAYHD(1, out QiDong);
                     }
-                    Sleep(tt.KeyR*1000);
-                    objdm.RightUp();
-
-                    objdm.KeyDown(D3Config.KEYS.Key2);
-                    Sleep(tt.KeyL * 1000);
-                    objdm.KeyUp(D3Config.KEYS.Key2);
-
-                    objdm.KeyDown(D3Config.KEYS.Key1);
-                    Sleep(tt.Key1 * 1000);
-                    objdm.KeyUp(D3Config.KEYS.Key1);
-                  
                 }
             }));
             th.IsBackground = true;
@@ -1955,6 +2116,7 @@ namespace D3Tool
             {
                 objdm.RightUp();
                 objdm.KeyUp(D3Config.KEYS.Key1);
+                objdm.KeyUp(D3Config.KEYS.Key3);
                 objdm.KeyUp(D3Config.KEYS.Key2);
                 objdm.KeyUp(D3Config.KEYS.Key4);
 
@@ -1965,10 +2127,261 @@ namespace D3Tool
 
 
         }
+        public void 黑人()
+        {
+            objdm.KeyDown(D3Config.KEYS.Key1);
+            objdm.KeyUp(D3Config.KEYS.Key1);
+            SleepZS(20);
+            objdm.RightUp();
+            for(int i=0;i<46;i++)
+            {
+                objdm.KeyDown(D3Config.KEYS.Key1);
+            
+                objdm.KeyUp(D3Config.KEYS.Key1);
+                SleepZS(25);
 
+            }
+           // DownUpKeyCount(D3Config.KEYS.Key1, 50, 23, 0);
+            SleepZS(30);
+        }
+        public void 电刑(int c)
+        {
+     
+            //objdm.KeyDown(D3Config.KEYS.Key_Stand);
+            //objdm.LeftDown();
+            //Sleep(950 - Convert.ToInt32(10 * tt.KeyL));
+            //objdm.LeftUp();
+            //objdm.KeyUp(D3Config.KEYS.Key_Stand);
+        }
+
+
+
+        public void 奥陨宏黑人(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        {
+
+            //16秒特效---电2开
+            var th = new Thread(new ThreadStart(delegate ()
+            {
+                XianZai_ZhenShu = 0;
+                var CiShu = 0;
+            
+                
+                var dxzs = 17;
+                var hdzs = 34;
+                var yszs = 33;
+                var ylbzs = 34;
+                var JianGe = 5; //自行修改数值保持伤害稳定（建议0 - 8）
+                var ShiJian = 94;//
+                var ShenMu = tt.Key4 > 0 ? 0 : 1; //自行修改踩神目时机（0.黑洞前踩神目，1.原力波后踩神目）
+        
+                KaiShi = DateTime.Now;
+                YSDateTime = DateTime.Now;
+                while (true)
+                {
+                   // System.Diagnostics.Debug.WriteLine("A=" + (DateTime.Now - KaiShi).TotalMilliseconds);
+                    黑人();
+                    if (CiShu == 0)
+                    {
+                     
+                        objdm.RightDown();
+                        SleepZS(391 - (20 - Convert.ToInt32(tt.Key1)) * 60);
+                        objdm.RightUp();
+                        SleepZS(29);
+                        CiShu = 1;
+                    }
+                    else
+                    {
+                        SleepZS(JianGe);
+                    }
+                   // System.Diagnostics.Debug.WriteLine("B="+(DateTime.Now - KaiShi).TotalMilliseconds);
+                    DownUpKeyCount(-1, dxzs, 6);//电刑七次
+                    SleepZS(127 - 3 * JianGe - ShiJian-1);
+                    objdm.KeyDown(D3Config.KEYS.Key4);
+                    objdm.KeyUp(D3Config.KEYS.Key4);
+                    SleepZS(hdzs);
+
+                    //DownUpKeyCount(D3Config.KEYS.Key4, hdzs);
+                    //黑洞
+                    objdm.KeyDown(D3Config.KEYS.Key2);
+                    objdm.KeyUp(D3Config.KEYS.Key2);
+                    SleepZS(ylbzs);
+                    //原力波
+                    DownUpKeyCount(-1, dxzs, 5);//电刑
+
+                    objdm.KeyDown(D3Config.KEYS.Key3);
+                    objdm.KeyUp(D3Config.KEYS.Key3);
+                    SleepZS(yszs);
+                    //陨石
+                 //   System.Diagnostics.Debug.WriteLine("C=" + (DateTime.Now - KaiShi).TotalMilliseconds);
+                    DownUpKeyCount(-1, dxzs, 2);//电刑
+                    SleepZS(JianGe);
+                    DownUpKeyCount(-2, dxzs);//引导
+                   
+                    SleepZS((1 - ShenMu) * ShiJian);
+      
+                    DownUpKeyCount(-1, dxzs, 2);//电刑
+                    objdm.KeyDown(D3Config.KEYS.Key4);
+                    objdm.KeyUp(D3Config.KEYS.Key4);
+                    SleepZS(hdzs);
+
+                    //DownUpKeyCount(D3Config.KEYS.Key4, hdzs);
+                    //黑洞
+                    objdm.KeyDown(D3Config.KEYS.Key2);
+                    objdm.KeyUp(D3Config.KEYS.Key2);
+                    SleepZS(ylbzs+ ShenMu * ShiJian);
+                    //DownUpKeyCount(D3Config.KEYS.Key2, ylbzs, 1, ShenMu * ShiJian);
+                    //原力波+踩神目
+                    DownUpKeyCount(-1, dxzs, 5);//电刑
+
+                    objdm.KeyDown(D3Config.KEYS.Key3);
+                    objdm.KeyUp(D3Config.KEYS.Key3);
+                    SleepZS(yszs);
+                    //陨石
+                    DownUpKeyCount(-1, dxzs, 2);//电刑
+                    SleepZS(JianGe);
+                    objdm.RightDown();
+                    SleepZS(1);
+                 //   System.Diagnostics.Debug.WriteLine("D=" + (DateTime.Now - KaiShi).TotalMilliseconds);
+
+                }
+            }));
+            th.IsBackground = true;
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();
+            alth.Add(th);
+
+            althstop.Clear();
+            var tmpth = new Thread(new ThreadStart(delegate ()
+            {
+                objdm.RightUp();
+                objdm.LeftUp();
+                objdm.KeyUp(D3Config.KEYS.Key3);
+                objdm.KeyUp(D3Config.KEYS.Key1);
+                objdm.KeyUp(D3Config.KEYS.Key2);
+                objdm.KeyUp(D3Config.KEYS.Key4);
+                objdm.KeyUp(D3Config.KEYS.Key_Move);
+                objdm.KeyUp(D3Config.KEYS.Key_Stand);
+
+            }));
+            tmpth.IsBackground = true;
+            tmpth.SetApartmentState(ApartmentState.STA);
+            althstop.Add(tmpth);
+
+
+
+
+
+        }
+        public void 奥陨宏黑人电甲(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        {
+
+            //16秒特效---电2开
+            var th = new Thread(new ThreadStart(delegate ()
+            {
+                XianZai_ZhenShu = 0;
+                var CiShu = 0;
+
+
+                var dxzs = 17;
+                var hdzs = 34;
+                var yszs = 33;
+                var ylbzs = 34;
+                var JianGe = 5; //自行修改数值保持伤害稳定（建议0 - 8）
+                var ShiJian = 94;//
+                var ShenMu = tt.Key4 > 0 ? 0 : 1; //自行修改踩神目时机（0.黑洞前踩神目，1.原力波后踩神目）
+
+                KaiShi = DateTime.Now;
+                YSDateTime = DateTime.Now;
+                while (true)
+                {
+                    // System.Diagnostics.Debug.WriteLine("A=" + (DateTime.Now - KaiShi).TotalMilliseconds);
+                    黑人();
+                    if (CiShu == 0)
+                    {
+
+                        objdm.RightDown();
+                        SleepZS(391 - (20 - Convert.ToInt32(tt.Key1)) * 60);
+                        objdm.RightUp();
+                        SleepZS(29);
+                        CiShu = 1;
+                    }
+                    else
+                    {
+                        SleepZS(JianGe);
+                    }
+                    DownUpKeyCount(-2, dxzs,8);//引导8次
+                    // System.Diagnostics.Debug.WriteLine("B="+(DateTime.Now - KaiShi).TotalMilliseconds);
+                    //DownUpKeyCount(-1, dxzs, 8);//电刑8次
+                    SleepZS(127 - 3 * JianGe - ShiJian - 1);
+
+                    objdm.KeyDown(D3Config.KEYS.Key2);
+                    objdm.KeyUp(D3Config.KEYS.Key2);
+                    SleepZS(ylbzs);
+                    //原力波
+                    DownUpKeyCount(-1, dxzs, 5);//电刑
+
+                    objdm.KeyDown(D3Config.KEYS.Key3);
+                    objdm.KeyUp(D3Config.KEYS.Key3);
+                    SleepZS(yszs);
+                    //陨石
+                    //   System.Diagnostics.Debug.WriteLine("C=" + (DateTime.Now - KaiShi).TotalMilliseconds);
+                    DownUpKeyCount(-1, dxzs, 2);//电刑
+                    SleepZS(JianGe);
+                    DownUpKeyCount(-2, dxzs);//引导
+
+                    SleepZS((1 - ShenMu) * ShiJian);
+
+                    DownUpKeyCount(-1, dxzs, 4);//电刑
+
+                    objdm.KeyDown(D3Config.KEYS.Key2);
+                    objdm.KeyUp(D3Config.KEYS.Key2);
+                    SleepZS(ylbzs + ShenMu * ShiJian);
+                    //DownUpKeyCount(D3Config.KEYS.Key2, ylbzs, 1, ShenMu * ShiJian);
+                    //原力波+踩神目
+                    DownUpKeyCount(-1, dxzs, 5);//电刑
+
+                    objdm.KeyDown(D3Config.KEYS.Key3);
+                    objdm.KeyUp(D3Config.KEYS.Key3);
+                    SleepZS(yszs);
+                    //陨石
+                    DownUpKeyCount(-1, dxzs, 2);//电刑
+                    SleepZS(JianGe);
+                    objdm.RightDown();
+                    SleepZS(1);
+                    //   System.Diagnostics.Debug.WriteLine("D=" + (DateTime.Now - KaiShi).TotalMilliseconds);
+
+                }
+            }));
+            th.IsBackground = true;
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();
+            alth.Add(th);
+
+            althstop.Clear();
+            var tmpth = new Thread(new ThreadStart(delegate ()
+            {
+                objdm.RightUp();
+                objdm.LeftUp();
+                objdm.KeyUp(D3Config.KEYS.Key3);
+                objdm.KeyUp(D3Config.KEYS.Key1);
+                objdm.KeyUp(D3Config.KEYS.Key2);
+                objdm.KeyUp(D3Config.KEYS.Key4);
+                objdm.KeyUp(D3Config.KEYS.Key_Move);
+                objdm.KeyUp(D3Config.KEYS.Key_Stand);
+
+            }));
+            tmpth.IsBackground = true;
+            tmpth.SetApartmentState(ApartmentState.STA);
+            althstop.Add(tmpth);
+
+
+
+
+
+        }
         public void 流放原地第一技能(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyDown(D3Config.KEYS.Key1);
                 objdm.KeyDown(D3Config.KEYS.Key_Stand);
@@ -2003,7 +2416,7 @@ namespace D3Tool
             alth.Add(th);
 
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key_Stand);
                 objdm.KeyUp(D3Config.KEYS.Key1);
@@ -2013,7 +2426,7 @@ namespace D3Tool
             tmpth.IsBackground = true;
             tmpth.SetApartmentState(ApartmentState.STA);
             althstop.Add(tmpth);
-  
+
         }
         public void 流放一键吃药(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
@@ -2042,7 +2455,7 @@ namespace D3Tool
                 objdm.KeyPressChar("5");
                 Sleep(tt.KeyL);
             }
-  
+
         }
 
         public void 先停再_原地依次按_1_2_3_4(List<Thread> alth, T_Time tt, List<Thread> althstop)
@@ -2071,7 +2484,7 @@ namespace D3Tool
             objdm.KeyUp(D3Config.KEYS.Key_Stand);
         }
 
-        
+
 
 
         public void 一直按Q定时按1234(List<Thread> alth, T_Time tt, List<Thread> althstop)
@@ -2081,7 +2494,7 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -2112,7 +2525,7 @@ namespace D3Tool
 
             objdm.KeyDownChar("q");
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 iskey1 = false;
                 iskey2 = false;
@@ -2130,28 +2543,29 @@ namespace D3Tool
             althstop.Add(tmpth);
 
         }
-        
-                    int ssss3333 = 1;
+
+        int ssss3333 = 1;
         public void 蛮子先停再3(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
 
             objdm.KeyPress(13);
-     
 
-         objdm.SendString2(this.Handle, "/p Zou Le 333---" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            Random r = new Random();
+
+            objdm.SendString2(this.Handle, "/p " + ("333").PadLeft(r.Next(5, 10), '3') + "  go go go");
             objdm.KeyPress(13);
 
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
-           
+
                 objdm.KeyUp(13);
             }));
             tmpth.IsBackground = true;
             tmpth.SetApartmentState(ApartmentState.STA);
             althstop.Add(tmpth);
         }
-         public void 定时按_1_2_3_4_左键_右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        public void 定时按_1_2_3_4_左键_右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
 
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key1, tt.Key1));
@@ -2162,9 +2576,9 @@ namespace D3Tool
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
 
 
-           
+
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.RightUp();
                 objdm.LeftUp();
@@ -2179,7 +2593,7 @@ namespace D3Tool
         public void 定时按_1_2_3_4_右键_空格不暂停(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
 
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key1, tt.Key1,false));
+            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key1, tt.Key1, false));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key2, tt.Key2, false));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3, false));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4, false));
@@ -2188,7 +2602,7 @@ namespace D3Tool
 
 
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.RightUp();
 
@@ -2203,7 +2617,8 @@ namespace D3Tool
         public void 原地2次_依次按_1_2_3_4_左键_右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Clear();
-            Thread th = new Thread(new ThreadStart(()=>{
+            Thread th = new Thread(new ThreadStart(() =>
+            {
 
                 for (int i = 0; i < 2; i++)
                 {
@@ -2244,11 +2659,11 @@ namespace D3Tool
                     System.Threading.Thread.Sleep(300);
 
                 }
-             }));
+            }));
             th.IsBackground = true;
             th.SetApartmentState(ApartmentState.STA);
             th.Start();
-           
+
         }
 
         public void 原地1次_依次按_1_2_3_4_左键_右键(List<Thread> alth, T_Time tt, List<Thread> althstop)
@@ -2383,7 +2798,7 @@ namespace D3Tool
                         objdm.KeyDown(D3Config.KEYS.Key_Move);
                         this.Sleep(200);
                         objdm.KeyUp(D3Config.KEYS.Key_Move);
-                        this.Sleep(Convert.ToInt32(tt.KeyL * 1000)-200);
+                        this.Sleep(Convert.ToInt32(tt.KeyL * 1000) - 200);
                         objdm.KeyPress(D3Config.KEYS.Key4);
                     }
                     objdm.KeyUp(D3Config.KEYS.Key_Stand);
@@ -2404,25 +2819,25 @@ namespace D3Tool
         {
             alth.Clear();
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
 
                 var rc = Convert.ToInt32(tt.KeyL);
-                if(rc==0)
+                if (rc == 0)
                 {
                     rc = 4;
                 }
-                int rs = Convert.ToInt32(tt.KeyR*1000);
+                int rs = Convert.ToInt32(tt.KeyR * 1000);
                 if (rs == 0)
                 {
                     rs = 350;
                 }
                 while (true)
                 {
-     
-        
-                 
+
+
+
                     if (!isD3)
                     {
                         System.Threading.Thread.Sleep(100);
@@ -2430,7 +2845,7 @@ namespace D3Tool
                     }
                     if (isspack)
                     {
-                 
+
                         System.Threading.Thread.Sleep(50);
                         continue;
                     }
@@ -2440,7 +2855,7 @@ namespace D3Tool
                     //{
                     //    objdm.KeyDown(D3Config.KEYS.Key_Move);
                     //}
-                    if (!iskey3 && tt.Key3>0)
+                    if (!iskey3 && tt.Key3 > 0)
                     {
                         objdm.KeyDown(D3Config.KEYS.Key3);
                     }
@@ -2454,7 +2869,7 @@ namespace D3Tool
                         objdm.RightClick();
                         Sleep(rs);
                     }
-                      
+
                  ;
                 }
             }));
@@ -2463,11 +2878,11 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 iskey3 = false;
                 iskey4 = false;
-               ismove = false;
+                ismove = false;
                 objdm.KeyUp(D3Config.KEYS.Key3);
                 objdm.KeyUp(D3Config.KEYS.Key4);
                 objdm.KeyUp(D3Config.KEYS.Key_Move);
@@ -2488,7 +2903,7 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(CreateMouseLeftPressThread(tt.KeyL));
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
 
@@ -2513,7 +2928,7 @@ namespace D3Tool
 
 
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.RightUp();
                 objdm.LeftUp();
@@ -2532,11 +2947,11 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key2, tt.Key2));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
-   
-      
 
 
-            var th = new Thread(new ThreadStart(delegate()
+
+
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -2555,7 +2970,7 @@ namespace D3Tool
                         System.Threading.Thread.Sleep(50);
                         continue;
                     }
-                   
+
                     if (!isRight)
                     {
                         objdm.RightDown();
@@ -2568,7 +2983,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -2587,10 +3002,10 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(CreateMouseLeftPressThread2(tt.KeyL));
-      
 
 
-            var th = new Thread(new ThreadStart(delegate()
+
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
 
@@ -2608,15 +3023,15 @@ namespace D3Tool
                     if (isspack)
                     {
                         objdm.LeftClick();
-                   
-                            objdm.KeyUp(D3Config.KEYS.Key1);
-                        
+
+                        objdm.KeyUp(D3Config.KEYS.Key1);
+
                         System.Threading.Thread.Sleep(50);
                         continue;
                     }
                     if (isRight)
                     {
-                        if (DateTime.Now >tmp1.AddMilliseconds(1900))
+                        if (DateTime.Now > tmp1.AddMilliseconds(1900))
                         {
 
                             objdm.KeyDown(D3Config.KEYS.Key1);
@@ -2638,7 +3053,7 @@ namespace D3Tool
                     if (!iskey1)
                     {
                         objdm.KeyDown(D3Config.KEYS.Key1);
-    
+
                     }
 
 
@@ -2649,7 +3064,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.LeftUp();
                 objdm.RightUp();
@@ -2676,7 +3091,7 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
 
 
@@ -2693,7 +3108,7 @@ namespace D3Tool
                     //{
                     //    objdm.KeyDown(D3Config.KEYS.Key_Move);
                     //}
-                    if (!iskey1 )
+                    if (!iskey1)
                     {
                         objdm.KeyDown(D3Config.KEYS.Key1);
                     }
@@ -2708,7 +3123,7 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key3);
                 objdm.KeyUp(D3Config.KEYS.Key4);
@@ -2740,7 +3155,7 @@ namespace D3Tool
                 var time4 = DateTime.Now;
                 var timer = DateTime.Now;
                 var timel = DateTime.Now;
-      
+
                 var times = DateTime.Now;
 
                 int isfn1 = 1;
@@ -2752,10 +3167,10 @@ namespace D3Tool
                         continue;
                     }
 
-              
+
                     if (tt.FNType == 1)
                     {
-                  
+
                         isfn1 = 1;
                         if (DateTime.Now > time1.AddMilliseconds(t1) && t1 > 0)
                         {
@@ -2788,7 +3203,7 @@ namespace D3Tool
                             objdm.LeftClick();
                         }
                         Sleep(10);
-                        
+
                     }
                     else
                     {
@@ -2799,7 +3214,7 @@ namespace D3Tool
                         objdm.RightClick();
                         Sleep(50);
                     }
-                    
+
 
                 }
             }));
@@ -2809,7 +3224,96 @@ namespace D3Tool
 
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
+            {
+                objdm.KeyUp(D3Config.KEYS.Key1);
+                objdm.KeyUp(D3Config.KEYS.Key2);
+                objdm.KeyUp(D3Config.KEYS.Key3);
+                objdm.KeyUp(D3Config.KEYS.Key4);
+                objdm.LeftUp();
+                objdm.RightUp();
+                objdm.KeyUp(D3Config.KEYS.Key_Move);
+                objdm.KeyUp(D3Config.KEYS.Key_Stand);
+
+            }));
+            tmpth.IsBackground = true;
+            tmpth.SetApartmentState(ApartmentState.STA);
+            althstop.Add(tmpth);
+
+        }
+        public void 天谴原地(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        {
+            alth.Clear();
+            Thread th = new Thread(new ThreadStart(() =>
+            {
+                var t1 = Convert.ToInt32(tt.Key1 * 1000);
+                var t2 = Convert.ToInt32(tt.Key2 * 1000);
+                var t3 = Convert.ToInt32(tt.Key3 * 1000);
+                var t4 = Convert.ToInt32(tt.Key4 * 1000);
+                var tr = Convert.ToInt32(tt.KeyR * 1000);
+                var tl = Convert.ToInt32(tt.KeyL * 1000);
+                var time1 = DateTime.Now;
+                var time2 = DateTime.Now;
+                var time3 = DateTime.Now;
+                var time4 = DateTime.Now;
+                var timer = DateTime.Now;
+                var timel = DateTime.Now;
+
+                var times = DateTime.Now;
+
+
+                while (true)
+                {
+                    if (!isD3)
+                    {
+                        Sleep(100);
+                        continue;
+                    }
+
+
+
+                    objdm.KeyDown(D3Config.KEYS.Key_Stand);
+                    if (DateTime.Now > time1.AddMilliseconds(t1) && t1 > 0)
+                    {
+                        time1 = DateTime.Now;
+                        objdm.KeyPress(D3Config.KEYS.Key1);
+                    }
+                    else if (DateTime.Now > time2.AddMilliseconds(t2) && t2 > 0)
+                    {
+                        time2 = DateTime.Now;
+                        objdm.KeyPress(D3Config.KEYS.Key2);
+                    }
+                    else if (DateTime.Now > time3.AddMilliseconds(t3) && t3 > 0)
+                    {
+                        time3 = DateTime.Now;
+                        objdm.KeyPress(D3Config.KEYS.Key3);
+                    }
+                    else if (DateTime.Now > time4.AddMilliseconds(t4) && t4 > 0)
+                    {
+                        time4 = DateTime.Now;
+                        objdm.KeyPress(D3Config.KEYS.Key4);
+                    }
+                    else if (DateTime.Now > timer.AddMilliseconds(tr) && tr > 0)
+                    {
+                        timer = DateTime.Now;
+                        objdm.RightClick();
+                    }
+                    else if (DateTime.Now > timel.AddMilliseconds(tl) && tl > 0)
+                    {
+                        timel = DateTime.Now;
+                        objdm.LeftClick();
+                    }
+                    Sleep(10);
+
+                }
+            }));
+            th.IsBackground = true;
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();
+
+            alth.Add(th);
+            althstop.Clear();
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key1);
                 objdm.KeyUp(D3Config.KEYS.Key2);
@@ -2827,14 +3331,13 @@ namespace D3Tool
 
         }
 
-
         public void 死灵放大(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Clear();
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             Thread th = new Thread(new ThreadStart(() =>
             {
-                
+
                 if (tt.Key2 > 0)
                 {
                     this.Sleep(Convert.ToInt32(100));
@@ -2843,7 +3346,7 @@ namespace D3Tool
                 }
                 if (tt.Key3 > 0)
                 {
-                 
+
                     objdm.KeyPress(D3Config.KEYS.Key3);
                     this.Sleep(Convert.ToInt32(tt.Key3 * 1000));
                 }
@@ -2860,13 +3363,13 @@ namespace D3Tool
 
             alth.Add(th);
             althstop.Clear();
-            var tmpth = new Thread(new ThreadStart(delegate()
+            var tmpth = new Thread(new ThreadStart(delegate ()
             {
                 objdm.KeyUp(D3Config.KEYS.Key1);
                 objdm.KeyUp(D3Config.KEYS.Key2);
                 objdm.KeyUp(D3Config.KEYS.Key3);
                 objdm.KeyUp(D3Config.KEYS.Key4);
-         
+
                 iskey2 = false;
                 iskey3 = false;
                 iskey4 = false;
@@ -2910,18 +3413,18 @@ namespace D3Tool
                     objdm.RightDown();
                     this.Sleep(Convert.ToInt32(tt.KeyR * 1000));
                     objdm.RightUp();
-                   
-                 
+
+
                 }
                 objdm.KeyUp(D3Config.KEYS.Key_Stand);
-                
+
             }));
             th.IsBackground = true;
             th.SetApartmentState(ApartmentState.STA);
             th.Start();
 
         }
-   
+
         public void 单次_按3_1_2(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Clear();
@@ -2982,14 +3485,14 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
-          
+
             althstop.Clear();
-            var tmpth=new Thread(new ThreadStart(delegate()
-            {
+            var tmpth = new Thread(new ThreadStart(delegate ()
+              {
 
-                objdm.RightUp();
+                  objdm.RightUp();
 
-            }));
+              }));
             tmpth.IsBackground = true;
             tmpth.SetApartmentState(ApartmentState.STA);
             althstop.Add(tmpth);
@@ -3002,7 +3505,7 @@ namespace D3Tool
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4));
             alth.Add(CreateMouseLeftPressThread(tt.KeyL));
             alth.Add(CreateMouseRightPressThread(tt.KeyR));
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -3013,11 +3516,11 @@ namespace D3Tool
                     }
 
 
-                    if(!ismove)
+                    if (!ismove)
                     {
                         objdm.KeyDown(D3Config.KEYS.Key_Move);
                     }
-                  
+
                     System.Threading.Thread.Sleep(200);
                 }
             }));
@@ -3026,12 +3529,12 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth=new Thread(new ThreadStart(delegate()
-            {
-                objdm.KeyUp(D3Config.KEYS.Key_Move);
-                objdm.RightUp();
+            var tmpth = new Thread(new ThreadStart(delegate ()
+              {
+                  objdm.KeyUp(D3Config.KEYS.Key_Move);
+                  objdm.RightUp();
 
-            }));
+              }));
             tmpth.IsBackground = true;
             tmpth.SetApartmentState(ApartmentState.STA);
             althstop.Add(tmpth);
@@ -3041,13 +3544,13 @@ namespace D3Tool
         public void 先停_按住强制移动定时按_2_3_4_左键_右键_金钟破(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key2, tt.Key2, false));
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3,false));
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4,false));
+            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3, false));
+            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4, false));
             alth.Add(CreateMouseLeftPressThreadStand(tt.KeyL, () => { return false; }));
             alth.Add(CreateMouseRightPressThread(tt.KeyR, () => { return this.iskey1; }));
 
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -3075,7 +3578,7 @@ namespace D3Tool
                         objdm.KeyUp(D3Config.KEYS.Key_Stand);
                     }
 
-                    
+
                     if (!ismove)
                         objdm.KeyDown(D3Config.KEYS.Key_Move);
                     System.Threading.Thread.Sleep(50);
@@ -3086,27 +3589,27 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth=new Thread(new ThreadStart(delegate()
-            {
-                objdm.RightUp();
-                objdm.LeftUp();
-                objdm.KeyUp(D3Config.KEYS.Key_Move);
-                objdm.KeyUp(D3Config.KEYS.Key_Stand);
-            }));
+            var tmpth = new Thread(new ThreadStart(delegate ()
+              {
+                  objdm.RightUp();
+                  objdm.LeftUp();
+                  objdm.KeyUp(D3Config.KEYS.Key_Move);
+                  objdm.KeyUp(D3Config.KEYS.Key_Stand);
+              }));
             tmpth.IsBackground = true;
             tmpth.SetApartmentState(ApartmentState.STA);
             althstop.Add(tmpth);
         }
-          public void 定时按_1_2_3_4_左键_右键_神龙猴子(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        public void 定时按_1_2_3_4_左键_右键_神龙猴子(List<Thread> alth, T_Time tt, List<Thread> althstop)
         {
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key1, tt.Key1));
             alth.Add(CreateKeyPressThread(D3Config.KEYS.Key2, tt.Key2, false));
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3,false));
-            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4,false));
+            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key3, tt.Key3, false));
+            alth.Add(CreateKeyPressThread(D3Config.KEYS.Key4, tt.Key4, false));
             alth.Add(CreateMouseLeftPressThread(tt.KeyL, () => { return this.iskey1; }));
             alth.Add(CreateMouseRightPressThread(tt.KeyR, () => { return this.iskey1; }));
 
-            var th = new Thread(new ThreadStart(delegate()
+            var th = new Thread(new ThreadStart(delegate ()
             {
                 while (true)
                 {
@@ -3115,17 +3618,17 @@ namespace D3Tool
                         System.Threading.Thread.Sleep(100);
                         continue;
                     }
-                 
 
-                    if(iskey1)
+
+                    if (iskey1)
                     {
                         objdm.KeyPress(D3Config.KEYS.Key1);
                         this.Sleep(100);
                         continue;
-                   
+
                     }
 
-                  
+
                     System.Threading.Thread.Sleep(200);
                 }
             }));
@@ -3134,17 +3637,153 @@ namespace D3Tool
             th.Start();
             alth.Add(th);
             althstop.Clear();
-            var tmpth=new Thread(new ThreadStart(delegate()
-            {
-                objdm.RightUp();
-                objdm.LeftUp();
-                objdm.KeyUp(D3Config.KEYS.Key_Stand);
+            var tmpth = new Thread(new ThreadStart(delegate ()
+              {
+                  objdm.RightUp();
+                  objdm.LeftUp();
+                  objdm.KeyUp(D3Config.KEYS.Key_Stand);
 
-            }));
+              }));
             tmpth.IsBackground = true;
             tmpth.SetApartmentState(ApartmentState.STA);
             althstop.Add(tmpth);
         }
+
+
+        public void 设置元素戒指(List<Thread> alth, T_Time tt, List<Thread> althstop)
+        {
+            objdm.LeftClick();
+            YSDateTime = DateTime.Now;
+        }
+
+ 
+        /// <summary>
+        /// 现在帧数
+        /// </summary>
+        public int XianZai_ZhenShu { get; set; }
+        public DateTime XianZai { get; set; }
+        public DateTime KaiShi  { get;set; }
+        /// <summary>
+        /// 休眠帧数
+        /// </summary>
+        /// <param name="zs">帧数</param>
+        public void SleepZS(int zs)
+        {
+
+            if(zs>0)
+            {
+                Sleep(Convert.ToInt32((YSDateTime.AddMilliseconds(((XianZai_ZhenShu + zs) * 1000 / 60)) - DateTime.Now).TotalMilliseconds));
+
+                XianZai_ZhenShu += zs;
+            }
+        
+        }
+        /// <summary>
+        /// 休眠帧数奥陨黑洞
+        /// </summary>
+        /// <param name="zs">帧数</param>
+        public void SleepZSAYHD(int zs,out int QiDong)
+        {
+            QiDong = 0;
+            if (zs > 0)
+            {
+                XianZai = DateTime.Now;
+                while ((XianZai - YSDateTime).TotalMilliseconds - 600 < (XianZai_ZhenShu + zs)*1.0 / 60 * 1000)
+                {
+                    if (((XianZai - YSDateTime).TotalMilliseconds - 600 + 1517) % 16000 < 5)
+                    {
+                        QiDong = 4;
+                    }
+                    else if (((XianZai - YSDateTime).TotalMilliseconds - 600 + 1517 + 3683) % 16000 < 5)
+                    {
+                        QiDong = 3;
+                    }
+                    else if (((XianZai - YSDateTime).TotalMilliseconds - 600 + 1517 + 3683 + 5717) % 16000 < 5)
+                    {
+                        QiDong = 2;
+                    }
+                    else if (((XianZai - YSDateTime).TotalMilliseconds - 600 + 1517 + 3683 + 5717 + 3383) % 16000 < 5)
+                    {
+                        QiDong = 1;
+                    }
+                    Sleep(1);
+                    XianZai = DateTime.Now;
+                }
+                XianZai_ZhenShu += zs;
+            }
+
+        }
+        /// <summary>
+        /// 按下指定技能
+        /// </summary>
+        /// <param name="Key">-1左键，-2右键  </param>
+        /// <param name="ZS">技能的帧数</param>
+        /// <param name="Count">次数</param>
+        /// <param name="XZZS">最后一次的修正帧数</param>
+        public void DownUpKeyCount(int Key,int ZS, int Count=1, int XZZS=0)
+        {
+
+            if (Key == -1)
+            {
+                objdm.KeyDown(D3Config.KEYS.Key_Stand);
+                objdm.LeftDown();
+            }
+            else if (Key == -2)
+            {
+                //右键
+                objdm.RightDown();
+            }
+            else
+            {
+                objdm.KeyDown(Key);
+            }
+            SleepZS(ZS*Count + XZZS);
+            if (Key == -1)
+            {
+                objdm.LeftUp();
+                objdm.KeyUp(D3Config.KEYS.Key_Stand);
+            }
+            else if (Key == -2)
+            {
+                objdm.RightUp();
+            }
+            else
+            {
+                objdm.KeyUp(Key);
+            }
+        }
+        /// <summary>
+        /// 按下就弹起然后休眠
+        /// </summary>
+        /// <param name="Key">-1左键，-2右键</param>
+        /// <param name="ZS">技能的帧数</param>
+        /// <param name="XZZS">修正帧数</param>
+        public void DownUpKeySleepCount(int Key, int ZS, int XZZS = 0)
+        {
+
+            if (Key == -1)
+            {
+                objdm.KeyDown(D3Config.KEYS.Key_Stand);
+                objdm.LeftDown();
+                objdm.LeftUp();
+                objdm.KeyUp(D3Config.KEYS.Key_Stand);
+            }
+            else if (Key == -2)
+            {
+                //右键
+                objdm.RightDown();
+                objdm.RightUp();
+            }
+            else
+            {
+                objdm.KeyDown(Key);
+                objdm.KeyUp(Key);
+            }
+            SleepZS(ZS + XZZS);
+        }
+
+
+
 
         #region
         dmsoftClass objdm = new dmsoftClass();
@@ -3172,6 +3811,9 @@ namespace D3Tool
             }
             objdm.delay(50);
             var c = objdm.BindWindow(this.Handle, "normal", "normal", "windows", 1);
+            objdm.SetKeypadDelay("windows", 0);
+            objdm.SetMouseDelay("normal", 0);
+
         }
         public List<Thread> alth1 = new List<Thread>();
         public List<Thread> alth2 = new List<Thread>();
@@ -3434,7 +4076,34 @@ namespace D3Tool
             { }
 
         }
+        public void FN12(T_Plan tp)
+        {
+            try
+            {
 
+                if (alth1.Count > 0)
+                {
+                    Stop1(true);
+                    FN(alth2, tp.t2, althstop2);
+                    return;
+                }
+                else if (alth2.Count > 0)
+                {             
+                    Stop2(true);
+                    FN(alth1, tp.t1, althstop1);
+                    return;
+                }
+                else
+                {
+                    FN(alth1, tp.t1, althstop1);
+                    return;
+                }
+
+            }
+            catch
+            { }
+
+        }
         public void FN1(T_Plan tp)
         {
             try
@@ -3540,6 +4209,7 @@ namespace D3Tool
         bool isRight = false;
         public void Sleep(int tt)
         {
+            if(tt>0)
             System.Threading.Thread.Sleep(tt);
         }
         public void Sleep(decimal decmail)
@@ -3649,6 +4319,7 @@ namespace D3Tool
         }
         public bool isstand { get; set; }
         public bool ismove { get; set; }
+        public static DateTime YSDateTime { get; set; }
       
                 /// <summary>
         /// 检查D3
