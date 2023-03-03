@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KeyHelper.Common
 {
-    public class D3PlanSetting
+    public class D3FunSetting
     {
         
         public D3KeySetting Keys { get; set; } = new D3KeySetting();
@@ -18,16 +19,10 @@ namespace KeyHelper.Common
         public D3TimeSetting TimeMove { get; set; }
         public D3TimeSetting TimeStand { get; set; }
         public D3TimeSetting TimeDrug { get; set; }
-        public bool RunState
-        {
-            get 
-            {
-                return StartThreadList.Count > 0;
-            }
-        }
-        public List<Thread> StartThreadList { get; set; }
-        public List<Thread> StopThreadList { get; set; }
-        
-        public int HotKey { get; set; }
+      
+
+
+        public Keys HotKey { get; set; }
+ 
     }
 }

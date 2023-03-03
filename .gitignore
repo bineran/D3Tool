@@ -6,7 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+packages/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 KeyHelper/obj/

@@ -5,17 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using KeyHelper.Common;
 
-namespace KeyHelper.FunList
+using DMTools.Config;
+
+namespace DMTools.FunList
 {
-    public class BagPoint
-    { 
-        public int centerX { get; set; }
-        public int centerY { get; set; }
-        public int leftX { get; set; }
-        public int leftY { get; set; }
-    }
+   
     public class D3FJ:BaseD3
     {
        public const EnumD3 enumD3Name = EnumD3.分解传奇;
@@ -169,5 +164,12 @@ namespace KeyHelper.FunList
         }
 
   
+    }
+    public class BagPoint
+    {
+        public int centerX { get; set; }
+        public int centerY { get; set; }
+        public int leftX { get; set; }
+        public int leftY { get; set; }
     }
 }
