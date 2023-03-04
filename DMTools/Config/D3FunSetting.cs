@@ -19,10 +19,11 @@ namespace DMTools.Config
         public D3TimeSetting TimeMove { get; set; }
         public D3TimeSetting TimeStand { get; set; }
         public D3TimeSetting TimeDrug { get; set; }
-      
+        public D3TimeSetting TimeLeft { get; set; }
+        public D3TimeSetting TimeRight { get; set; }
 
 
-        public Keys HotKey { get; set; }
- 
+        public Keys HotKey1 { get; set; }
+        public Keys HotKey2 { get; set; }
     }
 }

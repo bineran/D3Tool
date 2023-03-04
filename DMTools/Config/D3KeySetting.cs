@@ -8,7 +8,6 @@ namespace DMTools.Config
 {
     public class D3KeySetting
     {
-        
         public int Key1 { get; set; } = 49;
         public int Key2 { get; set; } = 50;
         public int Key3 { get; set; } = 51;
@@ -20,7 +19,7 @@ namespace DMTools.Config
         /// </summary>
         public int KeyPause { get; set; } = 32;
         /// <summary>
-        /// 
+        /// 药
         /// </summary>
         public int KeyDrug { get; set; } = 81;
         /**

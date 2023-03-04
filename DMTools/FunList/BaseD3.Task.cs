@@ -37,6 +37,15 @@ namespace DMTools.FunList
         {
             StartTaskList.Add(StartNewTask(action));
         }
+        public bool TaskRunState
+        {
+            get
+            {
+                if (StartTaskList.Count == 0) { return false; }
+                if (StartTaskList.All(r => r.Status == TaskStatus.RanToCompletion)) { return false; }
+                return true;
+            }
+        }
         public   void Sleep(int Sleep)
         {
              Task.Delay(Sleep).Wait(cs.Token);

@@ -13,13 +13,14 @@ namespace DMTools.FunList
 {
     public  abstract partial class BaseD3 : ID3Function
     {
-        
+        public EnumD3 enumD3Name { get; set; } = EnumD3.默认;
         public readonly Logger log=LogManager.GetCurrentClassLogger();
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
         public Idmsoft objdm { get; set; }
         public int Handle { get; set; }
         public D3FunSetting d3FunSetting { get; set; }
+        public D3KeyState d3KeyState { get; set; }
         CancellationTokenSource cs = new CancellationTokenSource();
         
         public BaseD3(Idmsoft objdm, int handle)
@@ -42,7 +43,7 @@ namespace DMTools.FunList
         public  void Stop()
         {
             cs.Cancel();
-           
+            StartTaskList=new List<Task>();
             foreach (var t in StopTaskList)
             {
                 t.Start();
@@ -69,8 +70,9 @@ namespace DMTools.FunList
         /// 子类用override  会优先调用父类的这个方法，
         /// </summary>
         /// <param name="t_Time"></param>
-        public virtual void StartBefore(D3FunSetting _d3FunSetting)
-        { 
+        public virtual void StartBefore(D3FunSetting _d3FunSetting,D3KeyState _d3KeyState)
+        {
+            this.d3KeyState =_d3KeyState;
             this.d3FunSetting = _d3FunSetting;
         }
 

@@ -12,5 +12,17 @@ namespace DMTools
         {
             return dt.ToString("yyyy-MM-dd HH:mm:ss");
         }
+        public static Task TaskRun(this Action action)
+        {
+          return  Task.Run(() =>
+            {
+                try
+                {
+                    action();
+                }
+                catch
+                { }
+            });
+        }
     }
 }

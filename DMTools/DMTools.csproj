@@ -6,15 +6,31 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x86</Platforms>
+    <Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Dll\dm.dll" />
     <None Remove="Dll\Interop.Dm.dll" />
     <None Remove="NLog.config" />
   </ItemGroup>
 
   <ItemGroup>
+    <COMReference Include="Dm">
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>84288aad-ba02-4ef2-85ec-3fad4d11354d</Guid>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Dll\dm.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Dll\Interop.Dm.dll" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -23,12 +39,6 @@
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Interop.Dm">
-      <HintPath>Dll\Interop.Dm.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
