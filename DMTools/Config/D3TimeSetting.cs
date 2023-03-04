@@ -10,47 +10,50 @@ namespace DMTools.Config
     public class D3TimeSetting
     {
 
-        public KeyClickType keyClickType { get; set; } = KeyClickType.None;
+        public KeyClickType keyClickType { get; set; } = KeyClickType.不做操作; 
 
-        public decimal Timer1 { get; set; }
-        public decimal Timer2 { get; set; }
-        public decimal Timer3 { get; set; }
+        public decimal D1 { get; set; }
+        public decimal D2 { get; set; }
+        public decimal D3 { get; set; }
 
-        public decimal Timer4 { get; set; }
+        public decimal D4 { get; set; }
 
         public string Str1 { get; set; }
         public string Str2 { get; set; }
         public string Str3 { get; set; }
         public string Str4 { get; set; }
-        public string Int1 { get; set; }
-        public string Int2 { get; set; }
-        public string Int3 { get; set; }
-        public string Int4 { get; set; }
+        public int Int1 { get; set; }
+        public int Int2 { get; set; }
+        public int Int3 { get; set; }
+        public int Int4 { get; set; }
+        public string Name { get; set; }
+
     }
     /// <summary>
     /// 按钮点击类型
     /// </summary>
     public enum KeyClickType
-    { 
+    {
+
         /// <summary>
         /// 不做操作
         /// </summary>
-        None,
+        不做操作,
         /// <summary>
         /// CD好了就按
         /// </summary>
-        CD,
+        CD好了就按,
         /// <summary>
         /// 每隔几秒按
         /// </summary>
-        SLEEEP,
+        定时按,
         /// <summary>
         /// 按住
         /// </summary>
-        DOWN,
+        按住,
         /// <summary>
         /// 按顺序
         /// </summary>
-        Sort
+        按顺序
     }
 }

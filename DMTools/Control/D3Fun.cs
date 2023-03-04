@@ -1,8 +1,10 @@
 ﻿
 using DMTools.Config;
+using DMTools.FunList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,6 +14,63 @@ namespace DMTools.Control
 {
     public partial class D3Fun
     {
+        D3Param d3Param;
+        public  SortedList<EnumD3, ID3Function> slD3Function = new SortedList<EnumD3, ID3Function>();
+
+
+        public D3Fun(params EnumD3[] enumD3s)
+        {
+            InitD3Function();
+            if (enumD3s != null)
+            {
+                foreach (var e in enumD3s)
+                {
+                    if (slD3Function.ContainsKey(e))
+                    {
+                        this.funList.Add(slD3Function[e]);
+                    }
+                }
+            }
+        }
+        public D3Fun(D3Param _d3Param,params EnumD3[] enumD3s)
+        {
+            this.d3Param= _d3Param;
+            InitD3Function();
+            if (enumD3s != null)
+            { 
+                foreach(var e in enumD3s)
+                {
+                    if (slD3Function.ContainsKey(e))
+                    {
+                        this.funList.Add(slD3Function[e]);
+                    }
+                }
+            }
+        }
+        public void InitD3Function()
+        {
+            slD3Function = new SortedList<EnumD3, ID3Function>();
+            var types = Assembly.GetAssembly(typeof(BaseD3)).GetTypes()
+                         .Where(r => r.BaseType == typeof(BaseD3) && !r.IsInterface
+                                                 && !r.IsAbstract);
+
+            foreach (var t in types)
+            {
+                var field = t.GetField("enumD3Name");
+                if (field == null) continue;
+                var enumD3 = (EnumD3)field.GetRawConstantValue();
+                if (!slD3Function.ContainsKey(enumD3))
+                {
+                    var d3Function = Activator.CreateInstance(t, this.d3Param) as ID3Function;
+                    if (d3Function != null)
+                    {
+                        slD3Function.Add(enumD3, d3Function);
+                    }
+                }
+
+
+            }
+        }
         /// <summary>
         /// 启动前先停止其它功能 默认为true
         /// </summary>
@@ -20,11 +79,11 @@ namespace DMTools.Control
         /// 阻止其它功能停止此功能 默认为true
         /// </summary>
         public bool OtherStopFlag { get; set; } = false;
-        public D3FunSetting d3FunSetting { get; set; } = new D3FunSetting();
-        public Dm.Idmsoft objdm { get; set; }
-        public int Handle { get; set; }
+
+        public Dm.Idmsoft objdm { get { return this.d3Param.objdm; } }
+        public int Handle { get { return this.d3Param.Handle; } }
         
-        public D3Fun() { }
+
 
 
         public void StartAndStop()
@@ -48,32 +107,33 @@ namespace DMTools.Control
 
         public void Start()
         {
-            StartBackgroundTask();
+        
             foreach (var f in funList)
             {
-                f.StartBefore(this.d3FunSetting,this.d3KeyState);
+
                 f.Start();
             }
         }
         public void Stop()
         {
-            cs.Cancel();
+       
             foreach (var f in funList)
             {
                 f.Stop();
             }
+
         }
         
  
-        public List<ID3Function> funList=new List<ID3Function>();
+        public List<ID3Function> funList { get; set; }=new List<ID3Function>();
   
         public Keys HotKey1
         {
-           get{ return d3FunSetting.HotKey1; }
+           get{ return d3Param.d3Timers.HotKey1; }
         }
         public Keys HotKey2
         {
-            get { return d3FunSetting.HotKey2; }
+            get { return d3Param.d3Timers.HotKey2; }
         }
     }
 }

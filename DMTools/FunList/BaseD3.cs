@@ -9,24 +9,26 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
+using DMTools.Control;
+
 namespace DMTools.FunList
 {
     public  abstract partial class BaseD3 : ID3Function
     {
-        public EnumD3 enumD3Name { get; set; } = EnumD3.默认;
+        public const EnumD3 enumD3Name  = EnumD3.默认;
         public readonly Logger log=LogManager.GetCurrentClassLogger();
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
-        public Idmsoft objdm { get; set; }
-        public int Handle { get; set; }
-        public D3FunSetting d3FunSetting { get; set; }
-        public D3KeyState d3KeyState { get; set; }
+        public Idmsoft objdm { get { return this.d3Param.objdm; } }
+        public int Handle { get { return this.d3Param.Handle; } }
+        public D3Param d3Param { get; set; }
+        public D3KeyState d3KeyState { get { return d3Param.d3KeyState; } }
+        public D3Timers d3TimerSetting { get { return d3Param.d3Timers; } }
         CancellationTokenSource cs = new CancellationTokenSource();
         
-        public BaseD3(Idmsoft objdm, int handle)
+        public BaseD3(D3Param _d3Param)
         {
-            this.objdm = objdm;
-            Handle = handle;
+            this.d3Param = _d3Param;
             Init();
         }
        
@@ -44,10 +46,17 @@ namespace DMTools.FunList
         {
             cs.Cancel();
             StartTaskList=new List<Task>();
-            foreach (var t in StopTaskList)
+            if (StopTaskList.Count > 0)
             {
-                t.Start();
+                foreach (var t in StopTaskList)
+                {
+                    t.Start();
+                }
+                Task.WaitAll(StopTaskList.ToArray());
+                StopTaskList=new List<Task>();
             }
+
+
         }
         public virtual void Start()
         {
@@ -70,14 +79,13 @@ namespace DMTools.FunList
         /// 子类用override  会优先调用父类的这个方法，
         /// </summary>
         /// <param name="t_Time"></param>
-        public virtual void StartBefore(D3FunSetting _d3FunSetting,D3KeyState _d3KeyState)
+        public virtual void StartBefore(D3Param _d3Param)
         {
-            this.d3KeyState =_d3KeyState;
-            this.d3FunSetting = _d3FunSetting;
+            this.d3Param = _d3Param;
         }
 
-       
 
-    
+
+
     }
 }

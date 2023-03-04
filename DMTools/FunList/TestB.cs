@@ -1,4 +1,5 @@
 ﻿using Dm;
+using DMTools.Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace DMTools.FunList
 {
     public class TestB : BaseD3
     {
-        public TestB(Idmsoft objdm, int handle) : base(objdm, handle)
+        public const EnumD3 enumD3Name = EnumD3.按1234LRMS;
+        public TestB(D3Param d3Param) : base(d3Param)
         {
            
             this.StartEvent += TestB_StartEvent;

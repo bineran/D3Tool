@@ -12,8 +12,9 @@ namespace DMTools.FunList
         object height = new object();
         object outX = new object();
         object outY = new object();
-        public void Init()
+        public virtual void Init()
         {
+
             try
             {
                 if (objdm != null)

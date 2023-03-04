@@ -8,10 +8,10 @@ using System.Windows.Forms;
 
 namespace DMTools.Config
 {
-    public class D3FunSetting
+    public class D3Timers
     {
         
-        public D3KeySetting Keys { get; set; } = new D3KeySetting();
+
         public D3TimeSetting Time1 { get; set; }
         public D3TimeSetting Time2 { get; set; }
         public D3TimeSetting Time3 { get; set; }

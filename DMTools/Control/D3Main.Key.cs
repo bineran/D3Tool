@@ -8,15 +8,16 @@ using System.Windows.Forms;
 
 namespace DMTools.Control
 {
-    public partial class D3Fun
+    public partial class D3Main
     {
         
         CancellationTokenSource cs = new CancellationTokenSource();
-        public D3KeyState d3KeyState { get; set; } = new D3KeyState();
+ 
 
         public void SetState(int key, bool downState)
         {
-            var keys = this.d3FunSetting.Keys;
+            var d3KeyState = this.d3KeyState;
+            var keys = this.d3KeySetting;
             if (key == keys.Key1)
                 d3KeyState.iskey1 = downState;
             else if(key==keys.Key2)
@@ -39,7 +40,7 @@ namespace DMTools.Control
         /// </summary>
         public void StartBackgroundTask()
         {
-            var keys = this.d3FunSetting.Keys;
+            var keys = this.d3KeySetting;
             List<int> alkey = new List<int>();
             alkey.Add(keys.Key1); alkey.Add(keys.Key2); alkey.Add(keys.Key3); alkey.Add(keys.Key4);
             alkey.Add(keys.KeyMove); alkey.Add(keys.KeyStand); alkey.Add(keys.KeyDrug); alkey.Add(keys.KeyPause);
@@ -66,13 +67,13 @@ namespace DMTools.Control
                     if (cs.IsCancellationRequested)
                     { break; }
                     var hd = objdm.GetMousePointWindow();
-                    if (hd != this.Handle)
+                    if (hd != this.handle)
                     {
-                        d3KeyState.isD3 = false;
+                        this.d3KeyState.isD3 = false;
                     }
                     else
                     {
-                        d3KeyState.isD3 = true;
+                        this.d3KeyState.isD3 = true;
                     }
 
                     Task.Delay(25).Wait();

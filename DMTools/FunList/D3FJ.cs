@@ -7,22 +7,32 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using DMTools.Config;
+using DMTools.Control;
 
 namespace DMTools.FunList
 {
    
     public class D3FJ:BaseD3
     {
-       public const EnumD3 enumD3Name = EnumD3.分解传奇;
+       public  new const EnumD3 enumD3Name = EnumD3.分解传奇;
 
-        SortedList<int, BagPoint> bagPointList;
+       private SortedList<int, BagPoint> bagPointList=new SortedList<int, BagPoint>();
 
-        public D3FJ(Idmsoft objdm, int handle) : base(objdm, handle)
+        public D3FJ(D3Param d3Param) : base(d3Param)
         {
             this.StartEvent += D3FJ_StartEvent;
+            StartBefore(d3Param);
+        }
+        public override void Init()
+        {
+            bagPointList = new SortedList<int, BagPoint>();
+            for (int i = 1; i <= 60; i++)
+            {
+                var bp = getInventorySpaceXY(D3W, D3H, i, "bag");
+                bagPointList.Add(i, bp);
+            }
         }
 
-  
 
         private void D3FJ_StartEvent()
         {
@@ -66,15 +76,7 @@ namespace DMTools.FunList
             objdm.MoveTo(xy.Item1, xy.Item2);
         }
 
-        public override void StartBefore(D3FunSetting d3FunSetting, D3KeyState d3KeyState)
-        {
-            bagPointList = new SortedList<int, BagPoint>();
-            for (int i = 1; i <= 60; i++)
-            {
-                var bp = getInventorySpaceXY(D3W, D3H, i, "bag");
-                bagPointList.Add(i, bp);
-            }
-        }
+
       
  
  

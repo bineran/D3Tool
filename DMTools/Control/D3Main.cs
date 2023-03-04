@@ -1,17 +1,64 @@
 ﻿
+using DMTools.Config;
+using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DMTools.Control
 {
-    public class D3Main
+    public partial class D3Main
     {
-        public D3Main() { }
+        int handle;
+       public Dm.Idmsoft objdm { get; set; } =new Dm.dmsoft();
+        public D3KeyState d3KeyState { get; set; } = new D3KeyState();
+        public D3KeySetting d3KeySetting { get; set; } = new D3KeySetting();
+        public D3Main()
+        {
+         
+
+        }
+        public D3Main(int _handle) {
+            this.handle = _handle;
+        
+        }
+        public void Init()
+        {
+            BindForm();
+            StartBackgroundTask();
+        }
+        public void BindForm()
+        {
+            try
+            {
+                if (objdm.IsBind(this.handle) == 1)
+                {
+                    objdm.UnBindWindow();
+                }
+                objdm.delay(50);
+
+                //long BindWindow(hwnd,display,mouse,keypad,mode)
+                var c = objdm.BindWindow(this.handle, "normal", "normal", "dx", 0);
+                //var c = objdm.BindWindowEx(this.Handle, "normal", "normal", "dx", "dx.public.memory",1);
+                objdm.SetKeypadDelay("dx", 0);
+                objdm.SetKeypadDelay("normal", 0);
+                objdm.SetKeypadDelay("windows", 0);
+
+                objdm.SetMouseDelay("dx", 0);
+                objdm.SetMouseDelay("normal", 0);
+                objdm.SetMouseDelay("windows", 0);
+            }catch
+            (Exception e)
+            {
+                
+            }
+
+        }
         public List<D3Fun> FunList { get; set; }=new List<D3Fun>();
         public Keys StopAllKey { get; set; }
 
@@ -68,7 +115,6 @@ namespace DMTools.Control
             if (tmpList.Count == 1)
             {
                 StartAndStop(tmpList[0]);
-              
             }
             else
             {
@@ -85,15 +131,25 @@ namespace DMTools.Control
             return true;
   
         }
-        public void StopAll(Keys keys)
+        public D3Param NewD3Param(D3Timers d3FunSetting)
         {
-            if (keys == StopAllKey && FunList!= null)
-            {
-                foreach (var f in FunList)
-                {
-                    f.Stop();
-                }
-            }
+            D3Param d3Param = new D3Param();
+            d3Param.objdm = this.objdm;
+            d3Param.Handle = this.handle;
+            d3Param.d3KeyState = this.d3KeyState;
+            d3Param.d3KeySetting = this.d3KeySetting;
+            d3Param.d3Timers = d3FunSetting;
+            return d3Param;
         }
+        public void StopAll()
+        {
+            foreach (var f in FunList)
+            {
+                f.Stop();
+            }
+
+        }
+
+
     }
 }
