@@ -66,7 +66,7 @@ namespace DMTools.FunList
             objdm.MoveTo(xy.Item1, xy.Item2);
         }
 
-        public override void StartBefore(D3FunSetting d3FunSetting)
+        public override void StartBefore(D3FunSetting d3FunSetting, D3KeyState d3KeyState)
         {
             bagPointList = new SortedList<int, BagPoint>();
             for (int i = 1; i <= 60; i++)
