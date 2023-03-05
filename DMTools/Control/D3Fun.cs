@@ -79,6 +79,10 @@ namespace DMTools.Control
         /// 阻止其它功能停止此功能 默认为true
         /// </summary>
         public bool OtherStopFlag { get; set; } = false;
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool EnabledFlag { get; set; }
 
         public Dm.Idmsoft objdm { get { return this.d3Param.objdm; } }
         public int Handle { get { return this.d3Param.Handle; } }
@@ -129,11 +133,12 @@ namespace DMTools.Control
   
         public Keys HotKey1
         {
-           get{ return d3Param.d3Timers.HotKey1; }
+            get;set;
         }
         public Keys HotKey2
         {
-            get { return d3Param.d3Timers.HotKey2; }
+            get;set;
         }
+
     }
 }

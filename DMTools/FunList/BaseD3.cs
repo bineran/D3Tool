@@ -45,6 +45,7 @@ namespace DMTools.FunList
         public  void Stop()
         {
             cs.Cancel();
+            Task.WaitAll(StartTaskList.ToArray());
             StartTaskList=new List<Task>();
             if (StopTaskList.Count > 0)
             {
@@ -61,6 +62,7 @@ namespace DMTools.FunList
         public virtual void Start()
         {
             cs.Cancel();
+            Task.WaitAll(StartTaskList.ToArray());
             cs = new CancellationTokenSource();
             StartTaskList.Clear();
             StopTaskList.Clear();

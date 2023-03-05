@@ -46,13 +46,17 @@ namespace DMTools.FunList
                 return true;
             }
         }
-        public   void Sleep(int Sleep)
+        public void Sleep(int Sleep)
         {
-             Task.Delay(Sleep).Wait(cs.Token);
+            if (cs != null)
+            {
+                Task.Delay(Sleep).Wait(cs.Token);
+            }
             if (cs.IsCancellationRequested)
             {
                 cs.Token.ThrowIfCancellationRequested();
             }
+
         }
         /// <summary>
         /// 执行一个TASK并将他加入到StartTaskList

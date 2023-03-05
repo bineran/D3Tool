@@ -6,18 +6,32 @@ using System.Threading.Tasks;
 
 namespace DMTools.Config
 {
+    public class KeyNameAttribute : Attribute
+    { 
+        public KeyNameAttribute(string name) { this.Name = name; }
+        public string Name { get; set; }
+    }
     public class D3KeySetting
     {
+        [KeyName("1")]
         public int Key1 { get; set; } = 49;
+        [KeyName("2")]
         public int Key2 { get; set; } = 50;
+
+        [KeyName("3")]
         public int Key3 { get; set; } = 51;
+        [KeyName("4")]
         public int Key4 { get; set; } = 52;
+        [KeyName("移动键")]
         public int KeyMove { get; set; } = 87;
+        [KeyName("原地站立键")]
         public int KeyStand { get; set; } = 16;
+        [KeyName("暂停键")]
         /// <summary>
         /// 
         /// </summary>
         public int KeyPause { get; set; } = 32;
+        [KeyName("喝药键")]
         /// <summary>
         /// 药
         /// </summary>

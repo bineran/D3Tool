@@ -10,9 +10,10 @@ namespace DMTools.Control
 {
     public partial class D3Main
     {
-        
+        public Keys StopAllKey { get; set; }
+        public Keys MouseKey { get; set; }
         CancellationTokenSource cs = new CancellationTokenSource();
- 
+        public List<Task> TaskBackList { get; set; }=new List<Task>();
 
         public void SetState(int key, bool downState)
         {
@@ -45,22 +46,24 @@ namespace DMTools.Control
             alkey.Add(keys.Key1); alkey.Add(keys.Key2); alkey.Add(keys.Key3); alkey.Add(keys.Key4);
             alkey.Add(keys.KeyMove); alkey.Add(keys.KeyStand); alkey.Add(keys.KeyDrug); alkey.Add(keys.KeyPause);
             cs.Cancel();
-            cs=new CancellationTokenSource();
+            Task.WaitAll(TaskBackList.ToArray());
+            TaskBackList = new List<Task>();
+            cs =new CancellationTokenSource();
             foreach (var key in alkey)
             {
-                Task.Run(() =>
+                TaskBackList.Add(Task.Run(() =>
                 {
                     while (true)
                     {
-                        if(cs.IsCancellationRequested)
+                        if (cs.IsCancellationRequested)
                         { break; }
                         SetState(key, objdm.GetKeyState(key) == 1);
 
                         Task.Delay(25).Wait();
                     }
-                },cs.Token);
+                }, cs.Token));
             }
-            Task.Run(() =>
+            TaskBackList.Add(Task.Run(() =>
             {
                 while (true)
                 {
@@ -78,7 +81,7 @@ namespace DMTools.Control
 
                     Task.Delay(25).Wait();
                 }
-            }, cs.Token);
+            }, cs.Token));
 
            
 

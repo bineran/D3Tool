@@ -12,11 +12,11 @@ namespace DMTools.Config
 
         public KeyClickType keyClickType { get; set; } = KeyClickType.不做操作; 
 
-        public decimal D1 { get; set; }
-        public decimal D2 { get; set; }
-        public decimal D3 { get; set; }
-
-        public decimal D4 { get; set; }
+        public int D1 { get; set; }
+        public int D2 { get; set; }
+        public int D3 { get; set; }
+               
+        public int D4 { get; set; }
 
         public string Str1 { get; set; }
         public string Str2 { get; set; }
@@ -26,8 +26,8 @@ namespace DMTools.Config
         public int Int2 { get; set; }
         public int Int3 { get; set; }
         public int Int4 { get; set; }
-        public string Name { get; set; }
-
+        public string KeyName { get; set; }
+        public string KeyInfo { get; set; }
     }
     /// <summary>
     /// 按钮点击类型

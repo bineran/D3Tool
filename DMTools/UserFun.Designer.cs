@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -36,18 +37,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,46 +53,32 @@
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ckEnabled = new System.Windows.Forms.CheckBox();
+            this.btnRemoveFun = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.重命名功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(847, 506);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 26);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(839, 476);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "功能设置";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dataGridView1);
             this.groupBox2.Controls.Add(this.checkedListBox1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 57);
+            this.groupBox2.Location = new System.Drawing.Point(0, 54);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(833, 416);
+            this.groupBox2.Size = new System.Drawing.Size(847, 452);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "功能列表";
@@ -110,6 +87,7 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -130,93 +108,14 @@
             this.dataGridView1.Location = new System.Drawing.Point(227, 19);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(603, 394);
+            this.dataGridView1.Size = new System.Drawing.Size(617, 430);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
-            this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.checkedListBox1.Location = new System.Drawing.Point(3, 19);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(224, 394);
-            this.checkedListBox1.TabIndex = 0;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(833, 54);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "启动设置";
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(147, 22);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(159, 21);
-            this.checkBox2.TabIndex = 0;
-            this.checkBox2.Text = "运行时阻止其它功能停止";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 22);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(135, 21);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "启动时先停其它功能";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.dataGridView2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 26);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(839, 476);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "按键设置";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column15,
-            this.Column16});
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(833, 470);
-            this.dataGridView2.TabIndex = 0;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "键名称";
-            this.Column15.Name = "Column15";
-            this.Column15.ReadOnly = true;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "快捷键";
-            this.Column16.Name = "Column16";
+            this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             // 
             // Column1
             // 
-            this.Column1.DataPropertyName = "Name";
+            this.Column1.DataPropertyName = "KeyInfo";
             this.Column1.Frozen = true;
             this.Column1.HeaderText = "键";
             this.Column1.Name = "Column1";
@@ -237,10 +136,10 @@
             // Column3
             // 
             this.Column3.DataPropertyName = "D1";
-            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.Format = "N0";
             dataGridViewCellStyle1.NullValue = null;
             this.Column3.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column3.HeaderText = "小数1";
+            this.Column3.HeaderText = "时间1";
             this.Column3.Name = "Column3";
             this.Column3.Width = 75;
             // 
@@ -257,9 +156,9 @@
             // Column4
             // 
             this.Column4.DataPropertyName = "D2";
-            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.Format = "N0";
             this.Column4.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column4.HeaderText = "小数2";
+            this.Column4.HeaderText = "时间2";
             this.Column4.Name = "Column4";
             this.Column4.Width = 75;
             // 
@@ -275,9 +174,9 @@
             // Column5
             // 
             this.Column5.DataPropertyName = "D3";
-            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.Format = "N0";
             this.Column5.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Column5.HeaderText = "小数3";
+            this.Column5.HeaderText = "时间3";
             this.Column5.Name = "Column5";
             this.Column5.Width = 75;
             // 
@@ -293,9 +192,9 @@
             // Column6
             // 
             this.Column6.DataPropertyName = "D4";
-            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.Format = "N0";
             this.Column6.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Column6.HeaderText = "小数4";
+            this.Column6.HeaderText = "时间4";
             this.Column6.Name = "Column6";
             this.Column6.Width = 75;
             // 
@@ -332,39 +231,165 @@
             this.Column14.HeaderText = "文本4";
             this.Column14.Name = "Column14";
             // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.CheckOnClick = true;
+            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.checkedListBox1.Location = new System.Drawing.Point(3, 19);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(224, 430);
+            this.checkedListBox1.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.ckEnabled);
+            this.groupBox1.Controls.Add(this.btnRemoveFun);
+            this.groupBox1.Controls.Add(this.comboBox2);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(847, 54);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "启动设置";
+            // 
+            // ckEnabled
+            // 
+            this.ckEnabled.AutoSize = true;
+            this.ckEnabled.Location = new System.Drawing.Point(676, 22);
+            this.ckEnabled.Name = "ckEnabled";
+            this.ckEnabled.Size = new System.Drawing.Size(51, 21);
+            this.ckEnabled.TabIndex = 5;
+            this.ckEnabled.Text = "启用";
+            this.ckEnabled.UseVisualStyleBackColor = true;
+            this.ckEnabled.CheckedChanged += new System.EventHandler(this.ckEnabled_CheckedChanged);
+            // 
+            // btnRemoveFun
+            // 
+            this.btnRemoveFun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemoveFun.BackColor = System.Drawing.Color.Linen;
+            this.btnRemoveFun.ContextMenuStrip = this.contextMenuStrip1;
+            this.btnRemoveFun.Location = new System.Drawing.Point(813, 20);
+            this.btnRemoveFun.Name = "btnRemoveFun";
+            this.btnRemoveFun.Size = new System.Drawing.Size(28, 23);
+            this.btnRemoveFun.TabIndex = 4;
+            this.btnRemoveFun.Text = "X";
+            this.btnRemoveFun.UseVisualStyleBackColor = false;
+            this.btnRemoveFun.Click += new System.EventHandler(this.btnRemoveFun_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.重命名功能ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(137, 26);
+            // 
+            // 重命名功能ToolStripMenuItem
+            // 
+            this.重命名功能ToolStripMenuItem.Name = "重命名功能ToolStripMenuItem";
+            this.重命名功能ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.重命名功能ToolStripMenuItem.Text = "重命名功能";
+            this.重命名功能ToolStripMenuItem.Click += new System.EventHandler(this.重命名功能ToolStripMenuItem_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DisplayMember = "KeyName";
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(549, 20);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 25);
+            this.comboBox2.TabIndex = 3;
+            this.comboBox2.ValueMember = "KeyCode";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(504, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 17);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "热键2";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DisplayMember = "KeyName";
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(370, 20);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 25);
+            this.comboBox1.TabIndex = 2;
+            this.comboBox1.ValueMember = "KeyCode";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(325, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "热键1";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(147, 22);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(159, 21);
+            this.checkBox2.TabIndex = 0;
+            this.checkBox2.Text = "运行时阻止其它功能停止";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 22);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(135, 21);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "启动时先停其它功能";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // UserFun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Name = "UserFun";
             this.Size = new System.Drawing.Size(847, 506);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private TabControl tabControl1;
-        private TabPage tabPage2;
-        private DataGridView dataGridView2;
-        private DataGridViewTextBoxColumn Column15;
-        private DataGridViewComboBoxColumn Column16;
-        private TabPage tabPage1;
         private GroupBox groupBox2;
         private CheckedListBox checkedListBox1;
+        private DataGridView dataGridView1;
         private GroupBox groupBox1;
         private CheckBox checkBox2;
         private CheckBox checkBox1;
-        private DataGridView dataGridView1;
+        private Label label2;
+        private ComboBox comboBox1;
+        private Label label1;
+        private ComboBox comboBox2;
+        private Button btnRemoveFun;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem 重命名功能ToolStripMenuItem;
+        private CheckBox ckEnabled;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewComboBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;

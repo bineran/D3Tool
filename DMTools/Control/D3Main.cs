@@ -18,17 +18,16 @@ namespace DMTools.Control
        public Dm.Idmsoft objdm { get; set; } =new Dm.dmsoft();
         public D3KeyState d3KeyState { get; set; } = new D3KeyState();
         public D3KeySetting d3KeySetting { get; set; } = new D3KeySetting();
-        public D3Main()
-        {
-         
 
-        }
-        public D3Main(int _handle) {
+        public D3Main(int _handle,D3KeySetting d3KeySetting) {
             this.handle = _handle;
-        
+            this.d3KeySetting= d3KeySetting; 
+  
         }
+        private bool IsInit { get; set; } = false;
         public void Init()
         {
+            IsInit = true;
             BindForm();
             StartBackgroundTask();
         }
@@ -59,8 +58,16 @@ namespace DMTools.Control
             }
 
         }
+        public bool RunState
+        {
+            get
+            {
+                return this.FunList.Any(r => r.RunState);
+
+            }
+        }
         public List<D3Fun> FunList { get; set; }=new List<D3Fun>();
-        public Keys StopAllKey { get; set; }
+       
 
         private Tuple<D3Fun, D3Fun> GetNextAndRunFun(List<D3Fun> d3Funs)
         {
@@ -108,10 +115,13 @@ namespace DMTools.Control
         }
         public bool ProcessKeys(Keys keys)
         {
-            var tmpList = this.FunList.Where(r => r.HotKey1 == keys || r.HotKey2 == keys).ToList();
+            var tmpList = this.FunList.Where(r => r.EnabledFlag &&( r.HotKey1 == keys || r.HotKey2 == keys)).ToList();
             if (tmpList.Count == 0)
                 return false;
-
+            if(IsInit==false)
+            {
+                Init();
+            }
             if (tmpList.Count == 1)
             {
                 StartAndStop(tmpList[0]);
@@ -128,6 +138,11 @@ namespace DMTools.Control
                 }
 
             }
+            if (this.FunList.All(r => !r.RunState))
+            {
+                cs.Cancel();
+                IsInit = false;
+            }
             return true;
   
         }
@@ -140,6 +155,7 @@ namespace DMTools.Control
             d3Param.d3KeySetting = this.d3KeySetting;
             d3Param.d3Timers = d3FunSetting;
             return d3Param;
+            
         }
         public void StopAll()
         {
@@ -147,9 +163,87 @@ namespace DMTools.Control
             {
                 f.Stop();
             }
+            cs.Cancel();
+            IsInit = false;
 
         }
 
+        public static D3Main BuildD3Main(D3Config d3Config,int hd) {
+            var items=d3Config.d3ConfigItems.Where(r => r.EnabledFlag && r.strfunList.Count > 0);
+            Dm.Idmsoft objdm=new Dm.dmsoft();
+            var d3KeySetting = ConvertD3KeySetting(d3Config);
+            D3Main d3Main=new D3Main(hd,d3KeySetting);
+          
+            foreach (var  item in items)
+            {
+                List<EnumD3> enumD3s = ConvertEnumd3List(item);
+
+                if (enumD3s.Count > 0)
+                {
+                    var d3Timers = ConvertD3Timers(item);
+                    var d3param = d3Main.NewD3Param(d3Timers);
+                    D3Fun d3Fun = new D3Fun(d3param, enumD3s.ToArray());
+                    d3Fun.EnabledFlag = item.EnabledFlag;
+                    d3Fun.StartBeforeStopOther=item.StartBeforeStopOther;
+                    d3Fun.OtherStopFlag= item.OtherStopFlag;
+                    d3Fun.HotKey1= item.HotKey1;
+                    d3Fun.HotKey2 = item.HotKey2;
+                    d3Main.FunList.Add(d3Fun);
+                }
+            }
+            if (d3Main.FunList.Count > 0)
+            {
+                return d3Main;
+            }
+            else
+                return null;
+
+        }
+        private static D3KeySetting ConvertD3KeySetting(D3Config d3Config)
+        {
+            var ps = typeof(D3KeySetting).GetProperties().Where(r => r.PropertyType == typeof(int)).ToList();
+            D3KeySetting d3KeySetting= new D3KeySetting();
+            foreach (var k in d3Config.ConfigKeys)
+            {
+                var p = ps.FirstOrDefault(r => r.Name == k.KeyName);
+                if (p != null)
+                {
+
+   
+                    p.SetValue(d3KeySetting,(int)k.KeyCode);
+                }
+            }
+            return d3KeySetting;
+        }
+        private static D3Timers ConvertD3Timers(D3ConfigItem item)
+        {
+            D3Timers d3Timers = new D3Timers();
+            var ps = typeof(D3Timers).GetProperties().Where(r => r.PropertyType == typeof(D3TimeSetting)).ToList();
+
+            foreach (var t in item.d3TimeSettings)
+            {
+                var p = ps.FirstOrDefault(r => r.Name == t.KeyName);
+                if (p != null)
+                {
+                    p.SetValue(d3Timers,t );
+                }
+            }
+            return d3Timers;
+
+        }
+        private static List<EnumD3> ConvertEnumd3List(D3ConfigItem item)
+        {
+            List<EnumD3> enumD3s = new List<EnumD3>();
+            foreach (var str in item.strfunList)
+            {
+                if (Enum.TryParse(str, out EnumD3 myStatus))
+                {
+                    enumD3s.Add(myStatus);
+                }
+             
+            }
+            return enumD3s;
+        }
 
     }
 }
