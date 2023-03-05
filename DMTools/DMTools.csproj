@@ -11,6 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FormMain.Menu.cs" />
+    <Compile Remove="FormMain.Setting.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Dll\dm.dll" />
     <None Remove="Dll\Interop.Dm.dll" />
     <None Remove="NLog.config" />
@@ -60,6 +65,13 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Forms\FormMain\FormMain.Setting.cs">
+      <SubType>Form</SubType>
+    </None>
+    <None Include="Forms\FormMain\FormMain.Hook.cs" />
   </ItemGroup>
 
 </Project>
