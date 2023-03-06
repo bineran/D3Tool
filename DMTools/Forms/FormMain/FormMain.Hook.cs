@@ -29,7 +29,7 @@ namespace DMTools
         /// <summary>
         /// 左键状态
         /// </summary>
-        public static bool isleft { get; private set; } = false;
+        public static bool isLeft { get; private set; } = false;
         /// <summary>
         /// 右键状态
         /// </summary>
@@ -42,7 +42,7 @@ namespace DMTools
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                isleft = false;
+                isLeft = false;
             }
             return;
             // MessageBox.Show("mouseHook_MouseUp");
@@ -57,7 +57,7 @@ namespace DMTools
                 }
                 else if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    isleft = true;
+                    isLeft = true;
                 }
             }
             catch

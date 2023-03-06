@@ -1,4 +1,6 @@
 ﻿using DMTools.Config;
+using DMTools.FunList;
+using DMTools.Static;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,145 +22,9 @@ namespace DMTools
         public event Action<D3ConfigItem> ReNameFunEvent;
         public static DataTable dtkey= new DataTable();
         static UserFun() {
-            dtkey = GetDT1();
+            dtkey = DTHelper.TableList[DataTableType.HotKey];
         }
-          
-
-        public static DataTable GetDT1()
-        {
-
-
-            DataTable dt = new DataTable();
-            dt.Columns.Add("KeyName");
-            dt.Columns.Add("KeyCode",typeof(Keys));
-            #region code
-            dt.Rows.Add("向下滚", Keys.Control| Keys.PageDown);
-            dt.Rows.Add("向上滚", Keys.Control | Keys.PageUp);
-            dt.Rows.Add("~", 192);
-            dt.Rows.Add("ctrl + / G1", Keys.Control | Keys.Divide);
-            dt.Rows.Add("ctrl + * G2", Keys.Control | Keys.Multiply);
-            dt.Rows.Add("ctrl + - G3", Keys.Control | Keys.Subtract);
-            dt.Rows.Add("ctrl + + G4", Keys.Control | Keys.Add);
-            dt.Rows.Add("小键盘/", 111);
-            dt.Rows.Add("小键盘*", 106);
-            dt.Rows.Add("小键盘-", 109);
-            dt.Rows.Add("小键盘+", 107);
-            dt.Rows.Add("1", 49);
-            dt.Rows.Add("2", 50); dt.Rows.Add("3", 51
-
- ); dt.Rows.Add("4", 52
-
-  ); dt.Rows.Add("5", 53
-
-   ); dt.Rows.Add("6", 54
-
-    ); dt.Rows.Add("7", 55
-
-     ); dt.Rows.Add("8", 56
-
-      ); dt.Rows.Add("9", 57
-
-       ); dt.Rows.Add("0", 48
-
-        );
-            dt.Rows.Add("A", 65
-
-             ); dt.Rows.Add("B", 66
-
-              ); dt.Rows.Add("C", 67
-
-               ); dt.Rows.Add("D", 68
-
-                ); dt.Rows.Add("E", 69
-
-                 ); dt.Rows.Add("F", 70
-
-                  ); dt.Rows.Add("G", 71
-
-                   ); dt.Rows.Add("H", 72
-
-                    ); dt.Rows.Add("I", 73
-
-                     ); dt.Rows.Add("J", 74
-
-                      ); dt.Rows.Add("K", 75
-
-                       ); dt.Rows.Add("L", 76
-
-                        ); dt.Rows.Add("M", 77
-
-                         ); dt.Rows.Add("N", 78
-
-                          ); dt.Rows.Add("O", 79
-
-                           ); dt.Rows.Add("P", 80
-
-                            ); dt.Rows.Add("Q", 81
-
-                             ); dt.Rows.Add("R", 82
-
-                              ); dt.Rows.Add("S", 83
-
-                               ); dt.Rows.Add("T", 84
-
-                                ); dt.Rows.Add("U", 85
-
-                                 ); dt.Rows.Add("V", 86
-
-                                  ); dt.Rows.Add("W", 87
-
-                                   ); dt.Rows.Add("X", 88
-
-                                    ); dt.Rows.Add("Y", 89
-
-                                     ); dt.Rows.Add("Z", 90
-
-
-
-                                      );
-            dt.Rows.Add("CTRL", 17);
-            dt.Rows.Add("ALT", 18);
-            dt.Rows.Add("SHIFT", 16);
-            dt.Rows.Add("WIN", 91);
-            dt.Rows.Add("SPACE", 32);
-            dt.Rows.Add("CAP", 20);
-            dt.Rows.Add("TAB", 9);
-
-            dt.Rows.Add("UP", 38);
-            dt.Rows.Add("DOWN", 40);
-            dt.Rows.Add("LEFT", 37);
-            dt.Rows.Add("RIGHT", 39);
-
-            dt.Rows.Add("HOME", 36);
-            dt.Rows.Add("END", 35);
-            dt.Rows.Add("PGUP", 33);
-            dt.Rows.Add("PGDN", 34);
-            dt.Rows.Add("F1", 112);
-            dt.Rows.Add("F2", 113);
-            dt.Rows.Add("F3", 114);
-            dt.Rows.Add("F4", 115);
-            dt.Rows.Add("F5", 116);
-            dt.Rows.Add("F6", 117);
-            dt.Rows.Add("F7", 118);
-            dt.Rows.Add("F8", 119);
-            dt.Rows.Add("F9", 120);
-            dt.Rows.Add("F10", 121);
-            dt.Rows.Add("F11", 122);
-            dt.Rows.Add("F12", 123);
-            dt.Rows.Add("Num0", 96);
-            dt.Rows.Add("Num1", 97);
-            dt.Rows.Add("Num2", 98);
-            dt.Rows.Add("Num3", 99);
-            dt.Rows.Add("Num4", 100);
-            dt.Rows.Add("Num5", 101);
-            dt.Rows.Add("Num6", 102);
-            dt.Rows.Add("Num7", 103);
-            dt.Rows.Add("Num8", 104);
-            dt.Rows.Add("Num9", 105);
-
-            #endregion
-            return dt;
-        }
+         
         public UserFun(D3ConfigItem d3ConfigItem)
         {
             InitializeComponent();
@@ -173,6 +39,10 @@ namespace DMTools
             Column2.ValueType = typeof(KeyClickType);
             this.comboBox1.DataSource = dtkey.Copy();
             this.comboBox2.DataSource = dtkey.Copy();
+            Column1.DisplayMember = "KeyName";
+            Column1.ValueMember= "KeyCode";
+            Column1.DataPropertyName = "KeyCode";
+            this.Column1.DataSource = DTHelper.TableList[DataTableType.Key].Copy();
             this.d3ConfigItem = d3ConfigItem;
             BindData();
         }
@@ -187,46 +57,30 @@ namespace DMTools
             this.ckEnabled.DataBindings.Add("Checked", d3ConfigItem, "EnabledFlag");
 
             this.checkedListBox1.ClearSelected();
+            bool issetSelect = false;
             for (int i = 0; i < this.checkedListBox1.Items.Count; i++)
             {
-                //this.checkedListBox1.SetItemChecked(i, false);
+                this.checkedListBox1.SetItemChecked(i, false);
                 var cItem = this.checkedListBox1.Items[i];
-                if (d3ConfigItem.strfunList != null && d3ConfigItem.strfunList.Contains(cItem.ToString()))
+                Enum.TryParse(cItem.ToString(), out EnumD3 cenumd3);
+                if (d3ConfigItem.d3ConfigFuns != null && d3ConfigItem.d3ConfigFuns.Any(r=>r.enumD3== cenumd3 && r.EnableFlag))
                 {
+                    if (!issetSelect)
+                    {
+                        this.checkedListBox1.SelectedIndex = i;
+                        issetSelect = true;
+                    }
+
                     this.checkedListBox1.SetItemChecked(i, true);
                 }
             }
-            var ps = typeof(D3Timers).GetProperties().Where(r => r.PropertyType == typeof(D3TimeSetting));
-            List<D3TimeSetting> al = new List<D3TimeSetting>();
-            foreach (var p in ps)
-            {
-                var ka = p.GetCustomAttribute(typeof(KeyNameAttribute)) as KeyNameAttribute;
-                if (d3ConfigItem.d3TimeSettings != null)
-                {
-                    if (d3ConfigItem.d3TimeSettings.Any(r => r.KeyName == p.Name))
-                    {
+            if (this.checkedListBox1.SelectedIndex < 0)
+                this.checkedListBox1.SelectedIndex = 0;
 
-                        var s = d3ConfigItem.d3TimeSettings.FirstOrDefault(r => r.KeyName == p.Name);
-                        if (s != null)
-                        {
-                            if (ka != null)
-                            {
-                                s.KeyInfo = ka.Name;
-                            }
-                            al.Add(s);
-                            continue;
-                        }
-                 
 
-                    }
-                }
-              
-                if (ka == null)
-                    continue;
-                al.Add(new D3TimeSetting() { KeyName = p.Name,KeyInfo= ka.Name });
-            }
-            this.dataGridView1.DataSource = al;
-            this.d3ConfigItem.d3TimeSettings = al;
+
+
+
 
             SetEnabled();
 
@@ -237,12 +91,37 @@ namespace DMTools
         {
             if (this.d3ConfigItem != null)
             {
-                List<string> alfn1 = new List<string>();
-                foreach (var c in this.checkedListBox1.CheckedItems)
+                SortedList<string, List<D3TimeSetting>> alfn1 = new SortedList<string, List<D3TimeSetting>>();
+                foreach (var c in this.checkedListBox1.Items)
                 {
-                    alfn1.Add(c.ToString());
+                    var key = c.ToString();
+                    Enum.TryParse(key, out EnumD3 cenumd3);
+                   var tmpFun= this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == cenumd3);
+                    if (tmpFun != null)
+                    {
+                        var alkey = tmpFun.Times.Where(r =>
+                          r.Rank > 0 ||
+                          r.Int1 > 0 || r.Int2 > 0 || r.Int3 > 0 || r.Int4 > 0 ||
+                          r.D1 > 0 || r.D2 > 0 || r.D3 > 0 || r.D4 > 0 ||
+                          r.Str1.TrimLength() > 0 || r.Str2.TrimLength() > 0 ||
+                          r.Str3.TrimLength() > 0 || r.Str4.TrimLength() > 0 || r.keyClickType != KeyClickType.不做操作)
+                            .ToList();
+                        tmpFun.Times = alkey;
+                        tmpFun.EnableFlag = this.checkedListBox1.CheckedItems.Contains(c);
+                    }
+                  
+                    
+                
+                  
                 }
-                this.d3ConfigItem.strfunList = alfn1;
+
+                //foreach (var s in alfn1)
+                //{
+                //    if (Enum.TryParse(s.Key, out EnumD3 e3))
+                //    { 
+                //        this.d3ConfigItem.d3ConfigFuns.Add(new D3ConfigFun() { enumD3 = e3, Times = s.Value, EnableFlag = true });
+                //    }
+                //}
 
                 if(this.comboBox1.SelectedValue!= null)
                 d3ConfigItem.HotKey1 =(Keys) this.comboBox1.SelectedValue;
@@ -251,11 +130,36 @@ namespace DMTools
                 this.d3ConfigItem.EnabledFlag = this.ckEnabled.Checked;
                 this.d3ConfigItem.OtherStopFlag = this.checkBox2.Checked;
                 this.d3ConfigItem.StartBeforeStopOther = this.checkBox1.Checked;
+           
             }
             
         }
 
-
+        public void AddXYColor(int x,int y,string color,string strClass)
+        {
+  
+            if(this.checkedListBox1.SelectedItem!= null)
+            {
+                var key=this.checkedListBox1.SelectedItem.ToString();
+                if (Enum.TryParse(key, out EnumD3 enumD3))
+                { 
+                    D3TimeSetting ts = new D3TimeSetting();
+                    ts.Int1 = x; ts.Int2 = y;
+                    ts.Str1 = color;
+                    ts.keyClickType = KeyClickType.不做操作;
+                    ts.KeyCode = Keys.NumPad0;
+                    ts.Str4 = strClass;
+                    var fs= this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
+                    if (fs != null)
+                    {
+                        fs.Times.Add(ts);
+                        Application.DoEvents();
+                        
+                    }
+                }
+            }
+        }
+  
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             try
@@ -383,6 +287,88 @@ namespace DMTools
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.Cancel = true;
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string key = checkedListBox1.SelectedItem.ToString() ?? "";
+
+            if (key.TrimLength() == 0) { return; }
+            Enum.TryParse(key, out EnumD3 enumD3);
+            if (!this.d3ConfigItem.d3ConfigFuns.Any(r => r.enumD3 == enumD3))
+            {
+                this.d3ConfigItem.d3ConfigFuns.Add(new D3ConfigFun() { EnableFlag = false, enumD3 = enumD3 });
+            }
+            var tmpFun = this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
+            if (tmpFun == null) { return; }
+
+            List<D3TimeSetting> al = new List<D3TimeSetting>();
+            if (tmpFun.Times != null && tmpFun.Times.Count > 0)
+            {
+                al = tmpFun.Times;
+            }
+            else
+            {
+                al.Add(new D3TimeSetting() { KeyCode = Keys.D1 });
+                al.Add(new D3TimeSetting() { KeyCode = Keys.D2 });
+                al.Add(new D3TimeSetting() { KeyCode = Keys.D3 });
+                al.Add(new D3TimeSetting() { KeyCode = Keys.D4 });
+                al.Add(new D3TimeSetting() { KeyCode = Keys.W });
+                al.Add(new D3TimeSetting() { KeyCode = Keys.Control | Keys.Left });
+                al.Add(new D3TimeSetting() { KeyCode = Keys.Control | Keys.Right });
+                al.Add(new D3TimeSetting() { KeyCode = Keys.Shift | Keys.Left });
+            }
+            this.dataGridView1.DataSource = new BindingList<D3TimeSetting>(al);
+            tmpFun.Times = al;
+
+            this.toolTip1.Show(GetFunInfo(key), this.lbltools, 5000);
+        }
+
+        private string GetFunInfo(string str)
+        {
+            if (Enum.TryParse(str, out EnumD3 enumD3))
+            {
+                var types = Assembly.GetAssembly(typeof(BaseD3)).GetTypes()
+                   .Where(r => r.BaseType == typeof(BaseD3) && !r.IsInterface
+                                           && !r.IsAbstract);
+                foreach (var t in types)
+                {
+                    var field = t.GetField("enumD3Name");
+                    if (field == null) continue;
+                    var enumD3tmp = (EnumD3)field.GetRawConstantValue();
+                    if (enumD3tmp == enumD3)
+                    {
+
+                        var ca = t.CustomAttributes.FirstOrDefault(r => r.AttributeType == typeof(KeyNameAttribute));
+                        if (ca != null)
+                        {
+                            var ka = t.GetCustomAttribute<KeyNameAttribute>();
+                            if (ka != null)
+                              return ka.Name;
+                        }
+
+                        break;
+                    }
+                }
+            }
+            return "";
+        }
+        private void 查看功能说明ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+    
+            if(this.checkedListBox1.SelectedItem!=null)
+            {
+                var str=this.checkedListBox1.SelectedItem.ToString();
+                if(str!=null)
+                {
+                    var str1 = GetFunInfo(str);
+                    if (str1.Length > 0)
+                    {
+                        MessageBox.Show(str1, str);
+                    }
+
+                }
+            }
         }
     }
 }

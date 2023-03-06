@@ -1,6 +1,6 @@
 ﻿namespace DMTools.Forms
 {
-    partial class FrmEditFun
+    partial class FrmCopyFun
     {
         /// <summary>
         /// Required designer variable.
@@ -71,7 +71,7 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // FrmEditFun
+            // FrmCopyFun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -82,9 +82,9 @@
             this.Controls.Add(this.label2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmEditFun";
+            this.Name = "FrmCopyFun";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "修改功能";
+            this.Text = "复制功能";
             this.ResumeLayout(false);
             this.PerformLayout();
 

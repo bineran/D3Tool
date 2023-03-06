@@ -11,20 +11,22 @@ using DMTools.Control;
 
 namespace DMTools.FunList
 {
-   
+
+    [KeyName("建议1920*1080 打开他分解对话框，并点击分解按钮后执行")]
     public class D3FJ:BaseD3
     {
-       public  new const EnumD3 enumD3Name = EnumD3.分解传奇;
+       public  const EnumD3 enumD3Name = EnumD3.分解传奇;
 
        private SortedList<int, BagPoint> bagPointList=new SortedList<int, BagPoint>();
 
-        public D3FJ(D3Param d3Param) : base(d3Param)
+        public D3FJ(D3Param d3Param, EnumD3 enumD3) : base(d3Param, enumD3)
         {
             this.StartEvent += D3FJ_StartEvent;
-            StartBefore(d3Param);
+
         }
         public override void Init()
         {
+            base.Init();
             bagPointList = new SortedList<int, BagPoint>();
             for (int i = 1; i <= 60; i++)
             {
@@ -50,9 +52,9 @@ namespace DMTools.FunList
                 }
 
                 objdm.MoveTo(item.Value.centerX, item.Value.centerY);
-                Thread.Sleep(20);
+                Sleep(20);
                 objdm.LeftClick();
-                Thread.Sleep(20);
+                Sleep(20);
                 var maxtime = DateTime.Now.AddMilliseconds(200);
                 while (true)
                 {
@@ -60,7 +62,7 @@ namespace DMTools.FunList
                     if (isDialogBoXOnScreen())
                     {
                         objdm.KeyPress(13);
-                        Thread.Sleep(10);
+                        Sleep(10);
                     }
                     if (DateTime.Now > maxtime)
                     {
@@ -70,7 +72,7 @@ namespace DMTools.FunList
                     {
                         break;
                     }
-                    Thread.Sleep(10);
+                    Sleep(10);
                 }
             }
             objdm.MoveTo(xy.Item1, xy.Item2);

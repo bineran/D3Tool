@@ -40,10 +40,16 @@ namespace DMTools.Config
         public bool EnabledFlag { get; set; } = true;
         public Keys HotKey1 { get; set; }
         public Keys HotKey2 { get; set; }
-        public List<string> strfunList { get; set; }= new List<string>();
+        
+        public List<D3ConfigFun> d3ConfigFuns { get; set; } = new List<D3ConfigFun>();
 
-        public List<D3TimeSetting> d3TimeSettings { get; set; }=new List<D3TimeSetting>();
+    }
+    public class D3ConfigFun
+    {
+        public EnumD3 enumD3 { get; set; }
 
+        public bool EnableFlag { get; set; }
+        public List<D3TimeSetting> Times { get; set; }=new List<D3TimeSetting>();
     }
     public class D3ConfigKey
     { 

@@ -14,10 +14,10 @@ namespace DMTools.Control
 {
     public partial class D3Fun
     {
-        D3Param d3Param;
+        public D3Param d3Param { get; set; }
         public  SortedList<EnumD3, ID3Function> slD3Function = new SortedList<EnumD3, ID3Function>();
-
-
+        public SortedList<EnumD3, List<D3TimeSetting>> Times { get; set; } = new SortedList<EnumD3, List<D3TimeSetting>>();
+        
         public D3Fun(params EnumD3[] enumD3s)
         {
             InitD3Function();
@@ -53,7 +53,7 @@ namespace DMTools.Control
             var types = Assembly.GetAssembly(typeof(BaseD3)).GetTypes()
                          .Where(r => r.BaseType == typeof(BaseD3) && !r.IsInterface
                                                  && !r.IsAbstract);
-
+            this.Times = this.d3Param.SLTimes;
             foreach (var t in types)
             {
                 var field = t.GetField("enumD3Name");
@@ -61,7 +61,7 @@ namespace DMTools.Control
                 var enumD3 = (EnumD3)field.GetRawConstantValue();
                 if (!slD3Function.ContainsKey(enumD3))
                 {
-                    var d3Function = Activator.CreateInstance(t, this.d3Param) as ID3Function;
+                    var d3Function = Activator.CreateInstance(t, this.d3Param, enumD3) as ID3Function;
                     if (d3Function != null)
                     {
                         slD3Function.Add(enumD3, d3Function);

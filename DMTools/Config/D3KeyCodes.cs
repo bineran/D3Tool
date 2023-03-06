@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DMTools.Config
+namespace DMTools
 {
-    public class KeyNameAttribute : Attribute
-    { 
-        public KeyNameAttribute(string name) { this.Name = name; }
-        public string Name { get; set; }
-    }
-    public class D3KeySetting
+
+    public class D3KeyCodes
     {
         [KeyName("1")]
         public int Key1 { get; set; } = 49;
@@ -213,6 +209,11 @@ namespace DMTools.Config
 
 "/",          191
 **/
+    }
+    public class KeyNameAttribute : Attribute
+    {
+        public KeyNameAttribute(string name) { this.Name = name; }
+        public string Name { get; set; }
     }
 
 }

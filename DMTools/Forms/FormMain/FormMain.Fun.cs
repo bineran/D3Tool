@@ -188,7 +188,14 @@ namespace DMTools
                 windowClass = strClass
             };
             log.Info(objinfo.ToJson());
-
+            if(this.tbfun.TabPages.Count > 1)
+            {
+                var userFun = this.tbfun.TabPages[0].Controls[0] as UserFun;
+                if (userFun != null)
+                {
+                    userFun.AddXYColor((int)x,(int)y,color,strClass);
+                }
+            }
 
         }
         public void StopAll()

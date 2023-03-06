@@ -103,7 +103,25 @@ namespace DMTools
         {
             SaveConfig();
         }
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (this.tbfun.TabPages.Count > 0)
+            {
+                var userFun = this.tbfun.SelectedTab.Controls[0] as UserFun;
+                if (userFun != null)
+                {
+                    FrmCopyFun f = new FrmCopyFun(userFun.d3ConfigItem);
+                    if (f.ShowDialog() == DialogResult.OK)
+                    {
+                        this.d3Config.d3ConfigItems.Add(f.d3ConfigItem);
+                        SaveConfig();
+                    }
+                
+                }
+            }
+        }
         #endregion
+
 
     }
 

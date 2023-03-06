@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DMTools.Static;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,17 +11,48 @@ namespace DMTools.Config
 
     public class D3KeyState
     {
-        public bool iskey1 { get; set; }
-        public bool iskey2 { get; set;}
-        public bool iskey3 { get; set;}
-        public bool iskey4 { get; set;}
-        public bool isMove { get; set;}
-        public bool isStand { get; set;}
-        public bool isPause { get; set;}
-        public bool isDrug { get; set; }
-        public bool isLeft { get;  }
-        public bool isRight { get;  }
-        public bool isD3 { get; set; }
+        public static SortedList<Keys, bool> slkeydata { get; set; }=new SortedList<Keys, bool>();
+        static D3KeyState()
+        {
+            var dt = DTHelper.TableList[DataTableType.Key];
+            foreach (DataRow dr in dt.Rows)
+            {
+                var keys = (Keys)dr["KeyCode"];
 
+                slkeydata.Add(keys, false);
+                
+                
+            }
+        }
+        public void SetState(Keys keys, bool value)
+        { 
+            if(slkeydata.ContainsKey(keys))
+            {
+                slkeydata[keys] = value;    
+            }
+        }
+        public void SetPauseState(Keys keys, bool value)
+        {
+            if (slkeydata.ContainsKey(keys))
+            {
+                slkeydata[keys] = value;
+                this.isPause = value;
+            }
+        }
+        public bool this[Keys k]
+        {
+            get
+            {
+                if (slkeydata.ContainsKey(k))
+                { 
+                    return slkeydata[k]; 
+                }
+                return false;
+            }
+        }
+        public bool isLeft { get { return FormMain.isLeft; } }
+        public bool isRight { get { return FormMain.isRight; } }
+        public bool isD3 { get; set; }
+        public bool isPause { get; set; }
     }
 }

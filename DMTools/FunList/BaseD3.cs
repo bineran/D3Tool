@@ -15,7 +15,9 @@ namespace DMTools.FunList
 {
     public  abstract partial class BaseD3 : ID3Function
     {
-        public const EnumD3 enumD3Name  = EnumD3.默认;
+        public  const  EnumD3 enumD3Name  = EnumD3.默认;
+
+        public virtual EnumD3 enumD3 { get; set; } = EnumD3.默认;
         public readonly Logger log=LogManager.GetCurrentClassLogger();
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
@@ -23,12 +25,19 @@ namespace DMTools.FunList
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
         public D3KeyState d3KeyState { get { return d3Param.d3KeyState; } }
-        public D3Timers d3TimerSetting { get { return d3Param.d3Timers; } }
+        public List<D3TimeSetting> Times
+        {
+            get
+            {
+                return this.d3Param.SLTimes[this.enumD3];
+            }
+        }
         CancellationTokenSource cs = new CancellationTokenSource();
         
-        public BaseD3(D3Param _d3Param)
+        public BaseD3(D3Param _d3Param,EnumD3 enumD3)
         {
             this.d3Param = _d3Param;
+            this.enumD3 = enumD3;
             Init();
         }
        
@@ -86,7 +95,7 @@ namespace DMTools.FunList
             this.d3Param = _d3Param;
         }
 
-
+        
 
 
     }

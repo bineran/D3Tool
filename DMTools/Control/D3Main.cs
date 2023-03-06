@@ -17,9 +17,9 @@ namespace DMTools.Control
         int handle;
        public Dm.Idmsoft objdm { get; set; } =new Dm.dmsoft();
         public D3KeyState d3KeyState { get; set; } = new D3KeyState();
-        public D3KeySetting d3KeySetting { get; set; } = new D3KeySetting();
+        public D3KeyCodes d3KeySetting { get; set; } = new D3KeyCodes();
 
-        public D3Main(int _handle,D3KeySetting d3KeySetting) {
+        public D3Main(int _handle,D3KeyCodes d3KeySetting) {
             this.handle = _handle;
             this.d3KeySetting= d3KeySetting; 
   
@@ -146,14 +146,14 @@ namespace DMTools.Control
             return true;
   
         }
-        public D3Param NewD3Param(D3Timers d3FunSetting)
+        public D3Param NewD3Param(SortedList<EnumD3,List< D3TimeSetting>>   funTimes)
         {
             D3Param d3Param = new D3Param();
             d3Param.objdm = this.objdm;
             d3Param.Handle = this.handle;
             d3Param.d3KeyState = this.d3KeyState;
-            d3Param.d3KeySetting = this.d3KeySetting;
-            d3Param.d3Timers = d3FunSetting;
+            d3Param.KeyCodes = this.d3KeySetting;
+            d3Param.SLTimes = funTimes;
             return d3Param;
             
         }
@@ -169,7 +169,9 @@ namespace DMTools.Control
         }
 
         public static D3Main BuildD3Main(D3Config d3Config,int hd) {
-            var items=d3Config.d3ConfigItems.Where(r => r.EnabledFlag && r.strfunList.Count > 0);
+            var items=d3Config.d3ConfigItems.Where(r => r.EnabledFlag
+            
+            && r.d3ConfigFuns.Count > 0 && r.d3ConfigFuns.Any(p=>p.EnableFlag));
             Dm.Idmsoft objdm=new Dm.dmsoft();
             var d3KeySetting = ConvertD3KeySetting(d3Config);
             D3Main d3Main=new D3Main(hd,d3KeySetting);
@@ -177,11 +179,11 @@ namespace DMTools.Control
             foreach (var  item in items)
             {
                 List<EnumD3> enumD3s = ConvertEnumd3List(item);
-
+                var ts = ConvertTimeList(item);
                 if (enumD3s.Count > 0)
                 {
-                    var d3Timers = ConvertD3Timers(item);
-                    var d3param = d3Main.NewD3Param(d3Timers);
+                    //strfunList[]
+                     var d3param = d3Main.NewD3Param(ts);
                     D3Fun d3Fun = new D3Fun(d3param, enumD3s.ToArray());
                     d3Fun.EnabledFlag = item.EnabledFlag;
                     d3Fun.StartBeforeStopOther=item.StartBeforeStopOther;
@@ -199,10 +201,10 @@ namespace DMTools.Control
                 return null;
 
         }
-        private static D3KeySetting ConvertD3KeySetting(D3Config d3Config)
+        private static D3KeyCodes ConvertD3KeySetting(D3Config d3Config)
         {
-            var ps = typeof(D3KeySetting).GetProperties().Where(r => r.PropertyType == typeof(int)).ToList();
-            D3KeySetting d3KeySetting= new D3KeySetting();
+            var ps = typeof(D3KeyCodes).GetProperties().Where(r => r.PropertyType == typeof(int)).ToList();
+            D3KeyCodes d3KeySetting= new D3KeyCodes();
             foreach (var k in d3Config.ConfigKeys)
             {
                 var p = ps.FirstOrDefault(r => r.Name == k.KeyName);
@@ -215,35 +217,30 @@ namespace DMTools.Control
             }
             return d3KeySetting;
         }
-        private static D3Timers ConvertD3Timers(D3ConfigItem item)
-        {
-            D3Timers d3Timers = new D3Timers();
-            var ps = typeof(D3Timers).GetProperties().Where(r => r.PropertyType == typeof(D3TimeSetting)).ToList();
 
-            foreach (var t in item.d3TimeSettings)
-            {
-                var p = ps.FirstOrDefault(r => r.Name == t.KeyName);
-                if (p != null)
-                {
-                    p.SetValue(d3Timers,t );
-                }
-            }
-            return d3Timers;
-
-        }
         private static List<EnumD3> ConvertEnumd3List(D3ConfigItem item)
         {
             List<EnumD3> enumD3s = new List<EnumD3>();
-            foreach (var str in item.strfunList)
+            foreach (var t in item.d3ConfigFuns.Where(r=>r.EnableFlag))
             {
-                if (Enum.TryParse(str, out EnumD3 myStatus))
-                {
-                    enumD3s.Add(myStatus);
-                }
+               
+                    enumD3s.Add(t.enumD3);
+                
              
             }
             return enumD3s;
         }
+        private static SortedList<EnumD3, List<D3TimeSetting>> ConvertTimeList(D3ConfigItem item)
+        {
+            SortedList<EnumD3, List<D3TimeSetting>> sl = new SortedList<EnumD3, List<D3TimeSetting>>();
+            foreach (var s in item.d3ConfigFuns)
+            {
+                if(s.EnableFlag== true)
+                    sl.Add(s.enumD3, s.Times);
+                
 
+            }
+            return sl;
+        }
     }
 }

@@ -32,6 +32,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbhide = new System.Windows.Forms.ToolStripButton();
             this.tbfun = new System.Windows.Forms.TabControl();
@@ -51,6 +52,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbAdd,
             this.toolStripSeparator2,
+            this.toolStripButton1,
             this.toolStripSeparator1,
             this.tsbhide});
             this.toolStrip1.Location = new System.Drawing.Point(0, 29);
@@ -74,6 +76,16 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton1.Text = "复制功能";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -88,6 +100,7 @@
             this.tsbhide.Name = "tsbhide";
             this.tsbhide.Size = new System.Drawing.Size(72, 22);
             this.tsbhide.Text = "隐蒧主界面";
+            this.tsbhide.Visible = false;
             // 
             // tbfun
             // 
@@ -169,7 +182,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Bineran-DM";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -194,5 +207,6 @@
         private ToolStripMenuItem 另存方案ToolStripMenuItem;
         private ToolStripComboBox cmbfile;
         private ToolStripMenuItem 保存方案ToolStripMenuItem;
+        private ToolStripButton toolStripButton1;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DMTools.Config;
+using DMTools.FunList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,37 +15,35 @@ namespace DMTools.Control
         public Keys MouseKey { get; set; }
         CancellationTokenSource cs = new CancellationTokenSource();
         public List<Task> TaskBackList { get; set; }=new List<Task>();
-
-        public void SetState(int key, bool downState)
-        {
-            var d3KeyState = this.d3KeyState;
-            var keys = this.d3KeySetting;
-            if (key == keys.Key1)
-                d3KeyState.iskey1 = downState;
-            else if(key==keys.Key2)
-                d3KeyState.iskey2 = downState;
-            else if (key == keys.Key3)
-                d3KeyState.iskey3 = downState;
-            else if (key == keys.Key4)
-                d3KeyState.iskey4 = downState;
-            else if (key == keys.KeyStand)
-                d3KeyState.isStand = downState;
-            else if (key == keys.KeyDrug)
-                d3KeyState.isDrug = downState;
-            else if (key == keys.KeyMove)
-                d3KeyState.isMove = downState;
-            else if (key == keys.KeyPause)
-                d3KeyState.isPause = downState;
-        }
+        object loackobj = new object();
+ 
         /// <summary>
         /// 开启后台监控按钮状态
         /// </summary>
         public void StartBackgroundTask()
         {
-            var keys = this.d3KeySetting;
             List<int> alkey = new List<int>();
-            alkey.Add(keys.Key1); alkey.Add(keys.Key2); alkey.Add(keys.Key3); alkey.Add(keys.Key4);
-            alkey.Add(keys.KeyMove); alkey.Add(keys.KeyStand); alkey.Add(keys.KeyDrug); alkey.Add(keys.KeyPause);
+            alkey.Add(this.d3KeySetting.KeyPause);
+            alkey.Add(this.d3KeySetting.KeyStand);
+            var funlist=this.FunList.Where(r => r.EnabledFlag);
+            foreach (var fun in funlist)
+            {
+                foreach (var times in fun.d3Param.SLTimes.Values)
+                {
+                    var ts = times.Where(r => r.keyClickType == Config.KeyClickType.按下
+                     && r.KeyCode > 0 && BaseD3.NoMouseKey(r.KeyCode));
+                    foreach (var t in ts)
+                    {
+                        if (!alkey.Contains((int)t.KeyCode))
+                        {
+                            alkey.Add((int)t.KeyCode);
+                        }
+                    }
+                }
+            }
+
+           
+
             cs.Cancel();
             Task.WaitAll(TaskBackList.ToArray());
             TaskBackList = new List<Task>();
@@ -57,7 +56,14 @@ namespace DMTools.Control
                     {
                         if (cs.IsCancellationRequested)
                         { break; }
-                        SetState(key, objdm.GetKeyState(key) == 1);
+                        
+                        if (key == this.d3KeySetting.KeyPause)
+                        {
+                            this.d3KeyState.SetPauseState((Keys)key, objdm.GetKeyState(key) == 1);
+                        }
+                        else
+                        { this.d3KeyState.SetState((Keys)key, objdm.GetKeyState(key) == 1); }
+
 
                         Task.Delay(25).Wait();
                     }

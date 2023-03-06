@@ -77,7 +77,7 @@ namespace DMTools
             sl = new SortedList<string, D3Config>();
             if (Directory.Exists(path))
             {
-                var fs = Directory.GetFiles(path);
+                var fs = Directory.GetFiles(path,"*.config");
                 var tmp = DateTime.Now.AddYears(-10);
                 FileInfo lastFI = null;
                 D3Config LastConfig = null;
