@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1DF0489-18CE-4932-A744-12671CB8BF90}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DMTool</RootNamespace>
+    <AssemblyName>DMTool</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.1.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\D3Config.cs" />
+    <Compile Include="Config\D3KeyCodes.cs" />
+    <Compile Include="Config\D3KeyState.cs" />
+    <Compile Include="Config\D3TimeSetting.cs" />
+    <Compile Include="Config\EnumD3.cs" />
+    <Compile Include="Config\GlobalHook.cs" />
+    <Compile Include="Config\ID3Function.cs" />
+    <Compile Include="Config\Keyboard.cs" />
+    <Compile Include="Config\MouseHook.cs" />
+    <Compile Include="Control\D3Fun.cs" />
+    <Compile Include="Control\D3Main.cs" />
+    <Compile Include="Control\D3Main.Key.cs" />
+    <Compile Include="Control\D3Param.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMain\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMain\FormMain.Fun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain\FormMain.Hook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain\FormMain.Setting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmAddConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmAddConfig.Designer.cs">
+      <DependentUpon>FrmAddConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmAddFun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmAddFun.Designer.cs">
+      <DependentUpon>FrmAddFun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmCopyFun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmCopyFun.Designer.cs">
+      <DependentUpon>FrmCopyFun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmEditFun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmEditFun.Designer.cs">
+      <DependentUpon>FrmEditFun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmSaveAsConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmSaveAsConfig.Designer.cs">
+      <DependentUpon>FrmSaveAsConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunList\BaseD3.cs" />
+    <Compile Include="FunList\BaseD3.Keys.cs" />
+    <Compile Include="FunList\BaseD3.Point.cs" />
+    <Compile Include="FunList\BaseD3.Task.cs" />
+    <Compile Include="FunList\D3FJ.cs" />
+    <Compile Include="FunList\D3Key.cs" />
+    <Compile Include="FunList\ImageClick.cs" />
+    <Compile Include="FunList\ImageNoClick.cs" />
+    <Compile Include="FunList\PauseClick.cs" />
+    <Compile Include="FunList\PointColor.cs" />
+    <Compile Include="FunList\PointNoColor.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Static\DTHelper.cs" />
+    <Compile Include="Static\Ex_Cloass.cs" />
+    <Compile Include="Static\JsonHelper.cs" />
+    <Compile Include="CustControl\UserFun.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustControl\UserFun.Designer.cs">
+      <DependentUpon>UserFun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustControl\UserKey.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustControl\UserKey.Designer.cs">
+      <DependentUpon>UserKey.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\FormMain\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmAddConfig.resx">
+      <DependentUpon>FrmAddConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmAddFun.resx">
+      <DependentUpon>FrmAddFun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmCopyFun.resx">
+      <DependentUpon>FrmCopyFun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmEditFun.resx">
+      <DependentUpon>FrmEditFun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmSaveAsConfig.resx">
+      <DependentUpon>FrmSaveAsConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="CustControl\UserFun.resx">
+      <DependentUpon>UserFun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustControl\UserKey.resx">
+      <DependentUpon>UserKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dll\dm.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Dm">
+      <Guid>{84288AAD-BA02-4EF2-85EC-3FAD4D11354D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

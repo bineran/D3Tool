@@ -1,4 +1,4 @@
-﻿using DMTools.Config;
+﻿using DMTool.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DMTools.FunList
+namespace DMTool.FunList
 {
     public abstract partial class BaseD3 
     {
@@ -31,26 +31,26 @@ namespace DMTools.FunList
         {
             int key = (int)keys;
             objdm.KeyDown(key);
-            //DateTime tmp = DateTime.Now.AddSeconds(2);
-            var action = () =>
+            DateTime tmp = DateTime.Now.AddSeconds(2);
+            var action = new Action(() =>
             {
-                if(this.d3KeyState.isPause || !this.d3KeyState.isD3)
+                if (this.d3KeyState.isPause || !this.d3KeyState.isD3)
                 {
                     objdm.KeyUp(key);
                     Sleep(sleep);
                     return;
                 }
-              
-                //if (tmp < DateTime.Now)
-                //{
-                //   // objdm.KeyDown(key);
-                //    tmp = DateTime.Now.AddSeconds(2);
-                //}
+
+                if (tmp < DateTime.Now)
+                {
+                    objdm.KeyDown(key);
+                    tmp = DateTime.Now.AddSeconds(2);
+                }
                 if (!this.d3KeyState[keys])
                 {
                     objdm.KeyDown(key);
                 }
-            };
+            });
             StartTaskList.Add(StartNewForTask(action, sleep,false,false));
             AddStopTaskKeysUp(key);
         }
@@ -59,10 +59,10 @@ namespace DMTools.FunList
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
                 int key = (int)ts.KeyCode;
-                var action = () =>
+                var action = new Action(() =>
                 {
                     objdm.KeyPress(key);
-                };
+                });
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
@@ -71,9 +71,9 @@ namespace DMTools.FunList
         {
             if (ts.Rank == 0  && ts.KeyCode== BaseD3.MouseLeft && ts.keyClickType == KeyClickType.按下)
             {
-               // DateTime tmp = DateTime.Now.AddSeconds(2);
+                DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.LeftDown();
-                var action = () =>
+                var action = new Action(() =>
                 {
                     if (this.d3KeyState.isPause || !this.d3KeyState.isD3)
                     {
@@ -81,16 +81,16 @@ namespace DMTools.FunList
                         Sleep(sleep);
                         return;
                     }
-                    //if (tmp < DateTime.Now)
-                    //{
-                    //    objdm.LeftDown();
-                    //    tmp = DateTime.Now.AddSeconds(2);
-                    //}
+                    if (tmp < DateTime.Now)
+                    {
+                        objdm.LeftDown();
+                        tmp = DateTime.Now.AddSeconds(2);
+                    }
                     if (!this.d3KeyState.isLeft)
                     {
                         objdm.LeftDown();
                     }
-                };
+                });
                 StartTaskList.Add(StartNewForTask(action, sleep,false, false));
                 AddStopTaskLeftUp();
             }
@@ -99,9 +99,9 @@ namespace DMTools.FunList
         {
             if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseRight && ts.keyClickType == KeyClickType.按下)
             {
-                //DateTime tmp = DateTime.Now.AddSeconds(2);
+                DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.RightDown();
-                var action = () =>
+                var action = new Action(() =>
                 {
                     if (this.d3KeyState.isPause || !this.d3KeyState.isD3)
                     {
@@ -109,16 +109,16 @@ namespace DMTools.FunList
                         Sleep(sleep);
                         return;
                     }
-                    //if (tmp < DateTime.Now)
-                    //{
-                    //    objdm.RightDown();
-                    //    tmp = DateTime.Now.AddSeconds(2);
-                    //}
+                    if (tmp < DateTime.Now)
+                    {
+                        objdm.RightDown();
+                        tmp = DateTime.Now.AddSeconds(2);
+                    }
                     if (!this.d3KeyState.isRight)
                     {
                         objdm.RightDown();
                     }
-                };
+                });
                 StartTaskList.Add(StartNewForTask(action, sleep, false, false));
                 AddStopTaskRightUp();
             }
@@ -128,10 +128,10 @@ namespace DMTools.FunList
         {
             if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseShiftLeft && ts.keyClickType == KeyClickType.按下)
             {
-               // DateTime tmp = DateTime.Now.AddSeconds(2);
+                DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                 objdm.LeftDown();
-                var action = () =>
+                var action = new Action(() =>
                 {
                     if (this.d3KeyState.isPause || !this.d3KeyState.isD3)
                     {
@@ -140,17 +140,17 @@ namespace DMTools.FunList
                         Sleep(sleep);
                         return;
                     }
-                    //if (tmp < DateTime.Now)
-                    //{
-                    //    objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
-                    //    objdm.LeftDown();
-                    //    tmp = DateTime.Now.AddSeconds(2);
-                    //}
+                    if (tmp < DateTime.Now)
+                    {
+                        objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                        objdm.LeftDown();
+                        tmp = DateTime.Now.AddSeconds(2);
+                    }
                     if (!this.d3KeyState.isLeft)
                     {
                         objdm.LeftDown();
                     }
-                };
+                });
                 StartTaskList.Add(StartNewForTask(action, sleep, false, false));
                 AddStopTaskLeftUp();
                 AddStopTaskKeysUpStand();
@@ -161,12 +161,12 @@ namespace DMTools.FunList
             if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseShiftLeft && ts.keyClickType == KeyClickType.点击)
             {
 
-                var action = () =>
+                var action = new Action(() =>
                 {
                     objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                     objdm.LeftClick();
                     objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
-                };
+                });
                 StartTaskList.Add(StartNewForTask(action, sleep));
                 AddStopTaskKeysUpStand();
             }
@@ -176,10 +176,10 @@ namespace DMTools.FunList
         {
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
-                var action = () =>
+                var action = new Action(() =>
                 {
                     objdm.LeftClick();
-                };
+                });
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
@@ -187,10 +187,10 @@ namespace DMTools.FunList
         {
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
-                var action = () =>
+                var action = new Action(() =>
                 {
                     objdm.RightClick();
-                };
+                });
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
