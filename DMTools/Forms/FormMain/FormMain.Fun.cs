@@ -1,5 +1,6 @@
 ﻿using DMTools.Config;
 using DMTools.Control;
+using DMTools.libs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace DMTools
     public partial class FormMain
     {
         public object lockObject { get; set; } = new object();
-        Dm.dmsoft objdm = new Dm.dmsoft();
+        DmSoftCustomClassName objdm = new DmSoftCustomClassName();
         public SortedList<int, D3Main> sld3 = new SortedList<int, D3Main>();
         public List<Keys> GetALLHotKey(D3Config d3Config)
         {
@@ -39,10 +40,12 @@ namespace DMTools
         {
             try
             {
-                if (this.d3Config == null)
-                    return false;
                 if (!d3Config.ALLHotKeys.Contains(key))
                     return false;
+                if ((DateTime.Now - D_Time).TotalSeconds < 0.2)
+                {
+                    return false;
+                }
                 D_Time = DateTime.Now;
                 var ck = d3Config.ConfigKeys.Where(r => UserKey.HotKeys.Contains(r.KeyName) && r.KeyCode == key).FirstOrDefault();
                 if (ck != null)
@@ -133,8 +136,10 @@ namespace DMTools
         {
             try
             {
+      
                 for (int i = 0; i < sld3.Count; i++)
                 {
+                    
                     RestD3Main(d3Config, sld3.Keys[i]);
                 }
             }
@@ -157,8 +162,8 @@ namespace DMTools
             var strClass = items.Item3;
 
 
-            object x = new object();
-            object y = new object();
+            int x ;
+            int y ;
             objdm.GetCursorPos(out x, out y);
             var color = objdm.GetColor(Convert.ToInt32(x), Convert.ToInt32(y));
             if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))

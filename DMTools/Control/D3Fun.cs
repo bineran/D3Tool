@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
-
+using Idmsoft = DMTools.libs.DmSoftCustomClassName;
 namespace DMTools.Control
 {
     public partial class D3Fun
@@ -84,7 +84,7 @@ namespace DMTools.Control
         /// </summary>
         public bool EnabledFlag { get; set; }
 
-        public Dm.Idmsoft objdm { get { return this.d3Param.objdm; } }
+        public Idmsoft objdm { get { return this.d3Param.objdm; } }
         public int Handle { get { return this.d3Param.Handle; } }
         
 

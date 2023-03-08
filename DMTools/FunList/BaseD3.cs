@@ -1,4 +1,4 @@
-﻿using Dm;
+﻿using DMTools.libs;
 using DMTools.Config;
 
 using System;
@@ -10,7 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using DMTools.Control;
-
+using System.Reflection.Metadata;
+using Idmsoft = DMTools.libs.DmSoftCustomClassName;
 namespace DMTools.FunList
 {
     public  abstract partial class BaseD3 : ID3Function
@@ -40,7 +41,14 @@ namespace DMTools.FunList
             this.enumD3 = enumD3;
             Init();
         }
-       
+        public Idmsoft CreateAndBindDm()
+        {
+            Idmsoft objdm = new Idmsoft();
+            objdm.SetShowErrorMsg(0);
+            D3Main.BindForm(objdm, this.Handle);
+            return objdm;
+        }
+
 
         public bool RunState
         {

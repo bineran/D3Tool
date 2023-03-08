@@ -93,10 +93,7 @@ namespace DMTools
         }
         private void Kh_OnKeyDownEvent(object? sender, KeyEventArgs e)
         {
-            if ((DateTime.Now - D_Time).TotalSeconds < 0.6)
-            {
-                return;
-            }
+          
             e.Handled = this.ProcessKey(e.KeyData);
         }
         #endregion

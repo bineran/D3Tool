@@ -16,7 +16,7 @@ namespace DMTools.Static
     }
     public sealed class DTHelper
     {
-
+        
         public static SortedList<DataTableType, DataTable> TableList { get; set; } = new SortedList<DataTableType, DataTable>();
         static DTHelper()
         {

@@ -16,20 +16,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="libs\dm.dll" />
-    <None Remove="libs\DmReg.dll" />
-    <None Remove="libs\Interop.Dm.dll" />
+    <None Remove="Dll\dm.dll" />
+    <None Remove="Dll\Interop.Dm.dll" />
     <None Remove="NLog.config" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="libs\dm.dll">
+    <COMReference Include="Dm">
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>84288aad-ba02-4ef2-85ec-3fad4d11354d</Guid>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>True</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+      <Private>True</Private>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Dll\dm.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="libs\DmReg.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="libs\Interop.Dm.dll" />
+    <Content Include="Dll\Interop.Dm.dll" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -67,6 +76,14 @@
       <SubType>Form</SubType>
     </None>
     <None Include="Forms\FormMain\FormMain.Hook.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.Dm">
+      <HintPath>Dll\Interop.Dm.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
 
 </Project>
