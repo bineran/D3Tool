@@ -53,10 +53,13 @@ namespace DMTools
             {
                 if (e.Button == System.Windows.Forms.MouseButtons.Right)
                 {
+                    ReplayMouseEventArgs(e);
+
                     isRight = true;
                 }
                 else if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
+                    ReplayMouseEventArgs(e);
                     isLeft = true;
                 }
             }
