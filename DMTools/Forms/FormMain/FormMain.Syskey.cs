@@ -14,7 +14,72 @@ namespace DMTools
 {
     public partial class FormMain
     {
-        public void ProcessSysKey(D3ConfigKey keys)
+        public bool ProcessKey(Keys key)
+        {
+            try
+            {
+                if (d3Config == null)
+                {
+                    return false;
+                }
+ 
+                if (!d3Config.ALLHotKeys.Contains(key))
+                    return false;
+                ReplayProcessKey(key);
+                if ((DateTime.Now - D_Time).TotalSeconds < 0.2)
+                {
+                    return false;
+                }
+                D_Time = DateTime.Now;
+                var ck = d3Config.ConfigKeys.Where(r => UserKey.HotKeys.Contains(r.KeyName) && r.KeyCode == key).FirstOrDefault();
+                if (ck != null)
+                {
+                    ProcessSysKey(ck);
+
+                    return true;
+                }
+
+                ProcessFunKey(d3Config, key);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+            return false;
+        }
+
+
+        void ProcessFunKey(D3Config d3Config, Keys keys)
+        {
+            try
+            {
+                if (d3Config.WindowClass == null)
+                    return;
+
+                var items = HDINFO();
+                var hd = items.Item1;
+                var isbl = items.Item2;
+                var strClass = items.Item3;
+                if (!d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
+                {
+                    return;
+                }
+
+                if (!isbl)
+                {
+                    RestD3Main(d3Config, hd);
+                }
+                if (sld3.ContainsKey(hd))
+                    sld3[hd].ProcessKeys(keys);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        void ProcessSysKey(D3ConfigKey keys)
         {
             switch (keys.KeyName)
             {
@@ -29,6 +94,8 @@ namespace DMTools
                     break;
             }
         }
+
+
         public void SetMouseInfo()
         {
 
@@ -38,8 +105,8 @@ namespace DMTools
             var strClass = items.Item3;
 
 
-            int x;
-            int y;
+            object x;
+            object y;
             objdm.GetCursorPos(out x, out y);
             var color = objdm.GetColor(Convert.ToInt32(x), Convert.ToInt32(y));
             if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
@@ -103,13 +170,18 @@ namespace DMTools
         public void Replay()
         {
             ReplayFlag = !ReplayFlag;
-            if (!ReplayFlag)
+            if (ReplayFlag)
             {
-                var ss = ReplayList.ToJson();
-            }
-            else {
                 ReplayLastTime = DateTime.Now;
-                ReplayList=new List<D3TimeSetting>();
+                ReplayList = new List<D3TimeSetting>();
+
+            }
+            else
+            {
+                if (this.d3Config != null && ReplayList.Count>0)
+                {
+                    this.d3Config.DebugTimes.AddRange(ReplayList.ToArray());
+                }
             }
         }
         public void ReplayMouseEventArgs(MouseEventArgs e)
@@ -118,28 +190,18 @@ namespace DMTools
             {
                 return;
             }
-            DateTime dateTime = ReplayLastTime;
-             D3TimeSetting ds= new D3TimeSetting();
-            ds.keyClickType = KeyClickType.点击;
-            ds.Int1=e.X; ds.Int2=e.Y;
-            ReplayLastTime = DateTime.Now;
-            var d1 = Convert.ToInt32((DateTime.Now - dateTime).TotalMilliseconds);
-            if (d1 == 0)
-            { 
-                
-            }
-            ds.D1 = d1;
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                ds.KeyCode = BaseD3.MouseRight;
+                ReplayProcessKey(BaseD3.MouseRight);
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                ds.KeyCode = BaseD3.MouseLeft;
+                ReplayProcessKey(BaseD3.MouseLeft);
             }
-            ReplayList.Add(ds);
+
+          
         }
-        public void ReplayKeyEventArgs(Keys key)
+        public void ReplayProcessKey(Keys key)
         {
             if (!ReplayFlag)
             {
@@ -150,12 +212,17 @@ namespace DMTools
             ds.keyClickType = KeyClickType.点击;
             ReplayLastTime = DateTime.Now;
             var d1 = Convert.ToInt32((DateTime.Now - dateTime).TotalMilliseconds);
-            if (d1 == 0)
-            {
 
-            }
+            object x;
+            object y;
+            objdm.GetCursorPos(out x, out y);
+            ds.Int1 = Convert.ToInt32(x); ds.Int2 = Convert.ToInt32(y);
+            var color = objdm.GetColor(ds.Int1, ds.Int2);
+            ds.Str1 = color;
+
             ds.D1 = d1;
             ds.KeyCode = key;
+            ds.Str4 = $"new PointCheckColor({x},{y}, \"{color}\")";
             ReplayList.Add(ds);
         }
     }

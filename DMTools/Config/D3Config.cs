@@ -22,6 +22,8 @@ namespace DMTools.Config
 
         public List<D3ConfigKey>   ConfigKeys { get; set; }=new List<D3ConfigKey>();
         public string WindowClass { get; set; } = "";
+        public List<D3TimeSetting> DebugTimes { get; set; } = new List<D3TimeSetting>();
+
     }
     public class D3ConfigItem
     {

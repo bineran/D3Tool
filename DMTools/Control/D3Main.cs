@@ -2,6 +2,7 @@
 
 using DMTools.Config;
 using DMTools.libs;
+using DMTools.PlugIn;
 using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,15 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Idmsoft = DMTools.libs.DmSoftCustomClassName;
+using DMTools.PlugIn;
+
 namespace DMTools.Control
 {
     public partial class D3Main
     {
         int handle;
-       public Idmsoft objdm { get; set; } =new Idmsoft();
+       public DMP objDMP { get; set; } =new DMP();
+        public Idmsoft objdm { get { return objDMP.DM; } }
         public D3KeyState d3KeyState { get; set; } = new D3KeyState();
         public D3KeyCodes d3KeySetting { get; set; } = new D3KeyCodes();
 
@@ -33,7 +36,7 @@ namespace DMTools.Control
             D3Main.BindForm(this.objdm,this.handle);
             StartBackgroundTask();
         }
-        public static void BindForm(DmSoftCustomClassName objdm,int handle)
+        public static void BindForm(PlugIn.Idmsoft objdm,int handle)
         {
             try
             {
@@ -174,7 +177,7 @@ namespace DMTools.Control
             var items=d3Config.d3ConfigItems.Where(r => r.EnabledFlag
             
             && r.d3ConfigFuns.Count > 0 && r.d3ConfigFuns.Any(p=>p.EnableFlag));
-            Idmsoft objdm=new Idmsoft();
+    
             var d3KeySetting = ConvertD3KeySetting(d3Config);
             D3Main d3Main=new D3Main(hd,d3KeySetting);
           

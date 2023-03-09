@@ -5,11 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
-using Idmsoft = DMTools.libs.DmSoftCustomClassName;
+using DMTools.PlugIn;
 namespace DMTools.Control
 {
     public partial class D3Fun

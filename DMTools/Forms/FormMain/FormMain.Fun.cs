@@ -1,6 +1,6 @@
 ﻿using DMTools.Config;
 using DMTools.Control;
-using DMTools.libs;
+using DMTools.PlugIn;
 
 
 namespace DMTools
@@ -8,8 +8,12 @@ namespace DMTools
     public partial class FormMain
     {
         public object lockObject { get; set; } = new object();
-        DmSoftCustomClassName objdm = new DmSoftCustomClassName();
+        DMP objDMP = new DMP();
         public SortedList<int, D3Main> sld3 = new SortedList<int, D3Main>();
+        public PlugIn.Idmsoft objdm
+        {
+            get { return objDMP.DM; }
+        }
         public List<Keys> GetALLHotKey(D3Config d3Config)
         {
             List<Keys> keys = new List<Keys>();
@@ -31,65 +35,6 @@ namespace DMTools
             return keys;
         }
 
-        public bool ProcessKey(Keys key)
-        {
-            try
-            {
-                ReplayKeyEventArgs(key);
-                if (!d3Config.ALLHotKeys.Contains(key))
-                    return false;
-                if ((DateTime.Now - D_Time).TotalSeconds < 0.2)
-                {
-                    return false;
-                }
-                D_Time = DateTime.Now;
-                var ck = d3Config.ConfigKeys.Where(r => UserKey.HotKeys.Contains(r.KeyName) && r.KeyCode == key).FirstOrDefault();
-                if (ck != null)
-                {
-                    ProcessSysKey(ck);
-
-                    return true;
-                }
-
-                ProcessFunKey(d3Config, key);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-            return false;
-        }
-   
-
-        void ProcessFunKey(D3Config d3Config, Keys keys)
-        {
-            try
-            {
-                if (d3Config.WindowClass == null)
-                    return;
-
-                var items = HDINFO();
-                var hd = items.Item1;
-                var isbl = items.Item2;
-                var strClass = items.Item3;
-                if (!d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
-                {
-                    return;
-                }
-
-                if (!isbl)
-                {
-                    RestD3Main(d3Config, hd);
-                }
-                if (sld3.ContainsKey(hd))
-                    sld3[hd].ProcessKeys(keys);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
 
         public void RestD3Main(D3Config d3Config, int hd)
         {

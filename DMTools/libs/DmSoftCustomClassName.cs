@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 
 namespace DMTools.libs
 {
-    public class DmSoftCustomClassName
+    public class DmSoftCustomClassName2222
     {
         private Type obj = null;
         private object obj_object = null;
 
-        public DmSoftCustomClassName()
+        public DmSoftCustomClassName2222()
         {
             obj = Type.GetTypeFromProgID("dm.dmsoft");
             obj_object = Activator.CreateInstance(obj);
@@ -25,7 +25,7 @@ namespace DMTools.libs
             }
         }
 
-        ~DmSoftCustomClassName()
+        ~DmSoftCustomClassName2222()
         {
             ReleaseObj();
         }

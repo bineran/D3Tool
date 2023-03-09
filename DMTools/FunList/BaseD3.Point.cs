@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Idmsoft = DMTools.libs.DmSoftCustomClassName;
+using DMTools.PlugIn;
 namespace DMTools.FunList
 {
     public abstract partial class BaseD3 
@@ -22,7 +22,7 @@ namespace DMTools.FunList
             {
                 if (objdm != null)
                 {
-                    int width, height;
+              
                     objdm.GetClientSize(this.Handle, out width, out height);
                     D3W = Convert.ToInt32(width);
                     D3H = Convert.ToInt32(height);
@@ -38,7 +38,7 @@ namespace DMTools.FunList
         /// <returns></returns>
         public Tuple<int, int> GetPointXY()
         {
-            int outX, outY;
+    
             var color = objdm.GetCursorPos(out outX, out outY);
             var x = Convert.ToInt32(outX);
             var y = Convert.ToInt32(outY);
@@ -74,7 +74,7 @@ namespace DMTools.FunList
         {
             return y.newHeight(this.D3H);
         }
-        private void DMKeyPress(Idmsoft objdm, Keys key)
+        private void DMKeyPress(PlugIn.Idmsoft objdm, Keys key)
         {
             if (key == BaseD3.MouseLeft)
                 objdm.LeftClick();
@@ -201,8 +201,8 @@ namespace DMTools.FunList
 
                 var action = () =>
                 {
-                    int  x;
-                    int y;
+                    object  x;
+                    object y;
                     var ret=objdm.FindPic(x1, y1, x2, y2, allpic, "101010", 0.4, 0, out x, out y);
                     int ix = 0, iy = 0;
                     ix = Convert.ToInt32(x);

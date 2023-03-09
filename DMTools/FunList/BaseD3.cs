@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using NLog;
 using DMTools.Control;
 using System.Reflection.Metadata;
-using Idmsoft = DMTools.libs.DmSoftCustomClassName;
+using DMTools.PlugIn;
 namespace DMTools.FunList
 {
     public  abstract partial class BaseD3 : ID3Function
@@ -22,7 +22,8 @@ namespace DMTools.FunList
         public readonly Logger log=LogManager.GetCurrentClassLogger();
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
-        public Idmsoft objdm { get { return this.d3Param.objdm; } }
+        public DMP objDMP { get; set; } = new DMP();
+        public PlugIn.Idmsoft objdm { get { return this.objDMP.DM; } }
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
         public D3KeyState d3KeyState { get { return d3Param.d3KeyState; } }
@@ -41,12 +42,12 @@ namespace DMTools.FunList
             this.enumD3 = enumD3;
             Init();
         }
-        public Idmsoft CreateAndBindDm()
+        public PlugIn.Idmsoft CreateAndBindDm()
         {
-            Idmsoft objdm = new Idmsoft();
-            objdm.SetShowErrorMsg(0);
-            D3Main.BindForm(objdm, this.Handle);
-            return objdm;
+            DMP dMP = new DMP();
+            dMP.DM.SetShowErrorMsg(0);
+            D3Main.BindForm(dMP.DM, this.Handle);
+            return dMP.DM;
         }
 
 
