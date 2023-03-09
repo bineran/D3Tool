@@ -1,10 +1,12 @@
-﻿using DMTools.Config;
+﻿using DMTools.libs;
+using DMTools.Config;
+using DMTools.Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Idmsoft = DMTools.libs.DmSoftCustomClassName;
 namespace DMTools.FunList
 {
     public abstract partial class BaseD3 
@@ -20,6 +22,7 @@ namespace DMTools.FunList
             {
                 if (objdm != null)
                 {
+                    int width, height;
                     objdm.GetClientSize(this.Handle, out width, out height);
                     D3W = Convert.ToInt32(width);
                     D3H = Convert.ToInt32(height);
@@ -35,6 +38,7 @@ namespace DMTools.FunList
         /// <returns></returns>
         public Tuple<int, int> GetPointXY()
         {
+            int outX, outY;
             var color = objdm.GetCursorPos(out outX, out outY);
             var x = Convert.ToInt32(outX);
             var y = Convert.ToInt32(outY);
@@ -62,7 +66,15 @@ namespace DMTools.FunList
         }
         public int D3W { get; set; }
         public int D3H { get; set; }
-        private void DMKeyPress(Keys key)
+        public int NewX(int x)
+        {
+            return x.newWidth(this.D3W);
+        }
+        public int NewY(int y)
+        {
+            return y.newHeight(this.D3H);
+        }
+        private void DMKeyPress(Idmsoft objdm, Keys key)
         {
             if (key == BaseD3.MouseLeft)
                 objdm.LeftClick();
@@ -88,15 +100,22 @@ namespace DMTools.FunList
             var key = (int)ts.KeyCode;
             var keyCode = ts.KeyCode;
             var sleepInt = ts.D1;
+            var tagColor = ts.Str1.Trim().ToLower();
+            this.GetPointRGB(x, y, true);
+            var objdm = CreateAndBindDm();
             var action = () =>
             {
                 var color = objdm.GetColor(x, y);
-                if (color.ToLower() == ts.Str1.Trim().ToLower())
+                if (color == tagColor)
                 {
-                    this.DMKeyPress(keyCode);
+                    this.DMKeyPress(objdm,keyCode);
                 }
             };
             StartNewForTask(action, sleepInt);
+            if (ts.KeyCode == BaseD3.MouseShiftLeft)
+            {
+                AddStopTaskKeysUpStand();
+            }
         }
         /// <summary>
         /// 指定位置等于指定颜色按键
@@ -109,17 +128,22 @@ namespace DMTools.FunList
             var keyCode = ts.KeyCode;
             var key = (int)ts.KeyCode;
             var sleepInt = ts.D1;
+            var tagColor = ts.Str1.Trim().ToLower();
             this.GetPointRGB(x, y,true);
-
+            var objdm = CreateAndBindDm();
             var action = () =>
             {
                 var color = objdm.GetColor(x, y);
-                if (color.ToLower() != ts.Str1.Trim().ToLower())
+                if (color != tagColor)
                 {
-                    DMKeyPress(keyCode);
+                    DMKeyPress(objdm,keyCode);
                 }
             };
             StartNewForTask(action, sleepInt);
+            if (ts.KeyCode == BaseD3.MouseShiftLeft)
+            {
+                AddStopTaskKeysUpStand();
+            }
         }
         
 
@@ -132,6 +156,7 @@ namespace DMTools.FunList
 
             try
             {
+                var objdm = CreateAndBindDm();
                 var files = ts.Str1.Split('|');
                 var pngPath = Application.StartupPath + "Image\\png\\";
                 var bmpPath0 = Application.StartupPath + "Image\\bmp";
@@ -173,24 +198,29 @@ namespace DMTools.FunList
                 var KeyCode = ts.KeyCode;
                 var key = (int)ts.KeyCode;
                 var sleepInt = ts.D1;
+
                 var action = () =>
                 {
-                    object x;
-                    object y;
+                    int  x;
+                    int y;
                     var ret=objdm.FindPic(x1, y1, x2, y2, allpic, "101010", 0.4, 0, out x, out y);
                     int ix = 0, iy = 0;
                     ix = Convert.ToInt32(x);
                     iy = Convert.ToInt32(y);
                     if (imgFlag && ret>=0)
                     {
-                        this.DMKeyPress(KeyCode);
+                        this.DMKeyPress(objdm,KeyCode);
                     }
                     if (!imgFlag && ret==-1)
                     {
-                        this.DMKeyPress(KeyCode);
+                        this.DMKeyPress(objdm, KeyCode);
                     }
                 };
                 StartNewForTask(action, sleepInt);
+                if(ts.KeyCode==BaseD3.MouseShiftLeft)
+                {
+                    AddStopTaskKeysUpStand();
+                }
             }
             catch { }
 

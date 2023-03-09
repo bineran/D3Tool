@@ -1,4 +1,5 @@
-﻿using DMTools.Config;
+﻿using DMTools.libs;
+using DMTools.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,20 @@ namespace DMTools.FunList
         public const Keys MouseLeft= Keys.Control | Keys.Left;
         public const Keys MouseRight = Keys.Control | Keys.Right;
         public const Keys MouseShiftLeft = Keys.Shift | Keys.Left;
+        public const Keys HotKeyMouseUp = Keys.Control | Keys.PageUp;
+        public const Keys HotKeyMouseDown = Keys.Control | Keys.PageDown;
+        /// <summary>
+        /// 验证是否为上下滚轮
+        /// </summary>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static bool IsHotKeyMouseUpDown(Keys k)
+        { 
+            if(k==HotKeyMouseUp) return true;
+            else if(k==HotKeyMouseDown) return true;
+            return false;
+        }
+
         public static bool NoMouseKey(Keys k)
         {
             if (k == MouseLeft)
@@ -29,6 +44,7 @@ namespace DMTools.FunList
         /// <param name="action"></param>
         public void AddKeyDownForTask(Keys keys, int sleep = 100)
         {
+            var objdm = CreateAndBindDm();
             int key = (int)keys;
             objdm.KeyDown(key);
             //DateTime tmp = DateTime.Now.AddSeconds(2);
@@ -56,8 +72,10 @@ namespace DMTools.FunList
         }
         public void AddKeyPressForTask(D3TimeSetting ts)
         {
+        
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
+                var  objdm = CreateAndBindDm();
                 int key = (int)ts.KeyCode;
                 var action = () =>
                 {
@@ -69,9 +87,11 @@ namespace DMTools.FunList
 
         public void AddLeftDownForTask(D3TimeSetting ts, int sleep = 100)
         {
+          
             if (ts.Rank == 0  && ts.KeyCode== BaseD3.MouseLeft && ts.keyClickType == KeyClickType.按下)
             {
-               // DateTime tmp = DateTime.Now.AddSeconds(2);
+                var objdm = CreateAndBindDm();
+                // DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.LeftDown();
                 var action = () =>
                 {
@@ -97,8 +117,10 @@ namespace DMTools.FunList
         }
         public void AddRightDownForTask(D3TimeSetting ts, int sleep = 100)
         {
+         
             if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseRight && ts.keyClickType == KeyClickType.按下)
             {
+                var objdm = CreateAndBindDm();
                 //DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.RightDown();
                 var action = () =>
@@ -126,9 +148,11 @@ namespace DMTools.FunList
 
         public void AddShiftLeftDownForTask(D3TimeSetting ts, int sleep = 100)
         {
+          
             if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseShiftLeft && ts.keyClickType == KeyClickType.按下)
             {
-               // DateTime tmp = DateTime.Now.AddSeconds(2);
+                var objdm = CreateAndBindDm();
+                // DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                 objdm.LeftDown();
                 var action = () =>
@@ -158,9 +182,10 @@ namespace DMTools.FunList
         }
         public void AddShiftLeftClickForTask(D3TimeSetting ts, int sleep = 100)
         {
+         
             if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseShiftLeft && ts.keyClickType == KeyClickType.点击)
             {
-
+                var objdm = CreateAndBindDm();
                 var action = () =>
                 {
                     objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
@@ -174,6 +199,7 @@ namespace DMTools.FunList
 
         public void AddLeftClickForTask(D3TimeSetting ts)
         {
+            var objdm = CreateAndBindDm();
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
                 var action = () =>
@@ -185,6 +211,7 @@ namespace DMTools.FunList
         }
         public void AddRightClickForTask(D3TimeSetting ts)
         {
+            var objdm = CreateAndBindDm();
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
                 var action = () =>

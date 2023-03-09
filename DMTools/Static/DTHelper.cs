@@ -16,7 +16,7 @@ namespace DMTools.Static
     }
     public sealed class DTHelper
     {
-
+        
         public static SortedList<DataTableType, DataTable> TableList { get; set; } = new SortedList<DataTableType, DataTable>();
         static DTHelper()
         {
@@ -96,6 +96,8 @@ namespace DMTools.Static
             dt.Rows.Add("LEFT", 37);
             dt.Rows.Add("RIGHT", 39);
 
+            dt.Rows.Add("Pause", Keys.Pause);
+            
             dt.Rows.Add("HOME", 36);
             dt.Rows.Add("END", 35);
             dt.Rows.Add("PGUP", 33);

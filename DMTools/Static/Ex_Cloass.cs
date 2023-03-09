@@ -9,6 +9,19 @@ namespace DMTools
 {
     public static class Ex_Cloass
     {
+        public static int newWidth(this int x, int newWidth=1920, int orgWidth = 1920)
+        {
+
+            var p = Math.Round(Convert.ToDouble(newWidth) / Convert.ToDouble(orgWidth), 2);
+
+            return Convert.ToInt32(x * p);
+        }
+        public static int newHeight(this int x, int newHeight=1080, int orgHeight = 1080)
+        {
+            var p = Math.Round(Convert.ToDouble(newHeight) / Convert.ToDouble(orgHeight), 2);
+
+            return Convert.ToInt32(x * p);
+        }
         public static string ToNowString(this DateTime dt)
         {
             return dt.ToString("yyyy-MM-dd HH:mm:ss");

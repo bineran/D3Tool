@@ -40,6 +40,24 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.查看功能说明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lbltools = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ckEnabled = new System.Windows.Forms.CheckBox();
+            this.btnRemoveFun = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.重命名功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Column1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,31 +73,13 @@
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.查看功能说明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ckEnabled = new System.Windows.Forms.CheckBox();
-            this.btnRemoveFun = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.重命名功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lbltools = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -123,137 +123,15 @@
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             // 
-            // Column1
+            // panel1
             // 
-            this.Column1.DataPropertyName = "KeyCode";
-            this.Column1.Frozen = true;
-            this.Column1.HeaderText = "键";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "keyClickType";
-            this.Column2.Frozen = true;
-            this.Column2.HeaderText = "类型";
-            this.Column2.Items.AddRange(new object[] {
-            "不做操作",
-            "CD好了就按",
-            "定时按",
-            "按住",
-            "按顺序"});
-            this.Column2.Name = "Column2";
-            // 
-            // Column15
-            // 
-            this.Column15.DataPropertyName = "Rank";
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.Column15.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column15.Frozen = true;
-            this.Column15.HeaderText = "顺序";
-            this.Column15.Name = "Column15";
-            this.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "D1";
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Column3.HeaderText = "时间1";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 75;
-            // 
-            // Column11
-            // 
-            this.Column11.DataPropertyName = "Str1";
-            this.Column11.HeaderText = "文本1";
-            this.Column11.Name = "Column11";
-            // 
-            // Column7
-            // 
-            this.Column7.DataPropertyName = "Int1";
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column7.HeaderText = "整数1";
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 75;
-            // 
-            // Column8
-            // 
-            this.Column8.DataPropertyName = "Int2";
-            dataGridViewCellStyle4.Format = "d";
-            this.Column8.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Column8.HeaderText = "整数2";
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 75;
-            // 
-            // Column9
-            // 
-            this.Column9.DataPropertyName = "Int3";
-            dataGridViewCellStyle5.Format = "d";
-            this.Column9.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Column9.HeaderText = "整数3";
-            this.Column9.Name = "Column9";
-            this.Column9.Width = 75;
-            // 
-            // Column10
-            // 
-            this.Column10.DataPropertyName = "Int4";
-            dataGridViewCellStyle6.Format = "d";
-            this.Column10.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Column10.HeaderText = "整数4";
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 75;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "D2";
-            dataGridViewCellStyle7.Format = "N0";
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Column4.HeaderText = "时间2";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 75;
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "D3";
-            dataGridViewCellStyle8.Format = "N0";
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Column5.HeaderText = "时间3";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 75;
-            // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "D4";
-            dataGridViewCellStyle9.Format = "N0";
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle9;
-            this.Column6.HeaderText = "时间4";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 75;
-            // 
-            // Column12
-            // 
-            this.Column12.DataPropertyName = "Str2";
-            this.Column12.HeaderText = "文本2";
-            this.Column12.Name = "Column12";
-            // 
-            // Column13
-            // 
-            this.Column13.DataPropertyName = "Str3";
-            this.Column13.HeaderText = "文本3";
-            this.Column13.Name = "Column13";
-            // 
-            // Column14
-            // 
-            this.Column14.DataPropertyName = "Str4";
-            this.Column14.HeaderText = "文本4";
-            this.Column14.Name = "Column14";
+            this.panel1.Controls.Add(this.checkedListBox1);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(3, 19);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 430);
+            this.panel1.TabIndex = 2;
             // 
             // checkedListBox1
             // 
@@ -280,6 +158,23 @@
             this.查看功能说明ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.查看功能说明ToolStripMenuItem.Text = "查看功能说明";
             this.查看功能说明ToolStripMenuItem.Click += new System.EventHandler(this.查看功能说明ToolStripMenuItem_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.lbltools);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 396);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 34);
+            this.panel2.TabIndex = 3;
+            // 
+            // lbltools
+            // 
+            this.lbltools.AutoSize = true;
+            this.lbltools.Location = new System.Drawing.Point(3, 9);
+            this.lbltools.Name = "lbltools";
+            this.lbltools.Size = new System.Drawing.Size(0, 17);
+            this.lbltools.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -397,32 +292,138 @@
             this.checkBox1.Text = "启动时先停其它功能";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // Column1
             // 
-            this.panel1.Controls.Add(this.checkedListBox1);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(3, 19);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 430);
-            this.panel1.TabIndex = 2;
+            this.Column1.DataPropertyName = "KeyCode";
+            this.Column1.Frozen = true;
+            this.Column1.HeaderText = "键";
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
-            // panel2
+            // Column2
             // 
-            this.panel2.Controls.Add(this.lbltools);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 396);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 34);
-            this.panel2.TabIndex = 3;
+            this.Column2.DataPropertyName = "keyClickType";
+            this.Column2.Frozen = true;
+            this.Column2.HeaderText = "类型";
+            this.Column2.Items.AddRange(new object[] {
+            "不做操作",
+            "CD好了就按",
+            "定时按",
+            "按住",
+            "按顺序"});
+            this.Column2.Name = "Column2";
             // 
-            // lbltools
+            // Column15
             // 
-            this.lbltools.AutoSize = true;
-            this.lbltools.Location = new System.Drawing.Point(3, 9);
-            this.lbltools.Name = "lbltools";
-            this.lbltools.Size = new System.Drawing.Size(0, 17);
-            this.lbltools.TabIndex = 0;
+            this.Column15.DataPropertyName = "Rank";
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            this.Column15.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Column15.Frozen = true;
+            this.Column15.HeaderText = "顺序";
+            this.Column15.Name = "Column15";
+            this.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column15.Width = 60;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "D1";
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Column3.HeaderText = "时间1";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 75;
+            // 
+            // Column11
+            // 
+            this.Column11.DataPropertyName = "Str1";
+            this.Column11.HeaderText = "文本1";
+            this.Column11.Name = "Column11";
+            // 
+            // Column7
+            // 
+            this.Column7.DataPropertyName = "Int1";
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column7.HeaderText = "整数1";
+            this.Column7.Name = "Column7";
+            this.Column7.Width = 75;
+            // 
+            // Column8
+            // 
+            this.Column8.DataPropertyName = "Int2";
+            dataGridViewCellStyle4.Format = "d";
+            this.Column8.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Column8.HeaderText = "整数2";
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 75;
+            // 
+            // Column9
+            // 
+            this.Column9.DataPropertyName = "Int3";
+            dataGridViewCellStyle5.Format = "d";
+            this.Column9.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Column9.HeaderText = "整数3";
+            this.Column9.Name = "Column9";
+            this.Column9.Width = 75;
+            // 
+            // Column10
+            // 
+            this.Column10.DataPropertyName = "Int4";
+            dataGridViewCellStyle6.Format = "d";
+            this.Column10.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Column10.HeaderText = "整数4";
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 75;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "D2";
+            dataGridViewCellStyle7.Format = "N0";
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle7;
+            this.Column4.HeaderText = "时间2";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 75;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "D3";
+            dataGridViewCellStyle8.Format = "N0";
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Column5.HeaderText = "时间3";
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 75;
+            // 
+            // Column6
+            // 
+            this.Column6.DataPropertyName = "D4";
+            dataGridViewCellStyle9.Format = "N0";
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle9;
+            this.Column6.HeaderText = "时间4";
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 75;
+            // 
+            // Column12
+            // 
+            this.Column12.DataPropertyName = "Str2";
+            this.Column12.HeaderText = "文本2";
+            this.Column12.Name = "Column12";
+            // 
+            // Column13
+            // 
+            this.Column13.DataPropertyName = "Str3";
+            this.Column13.HeaderText = "文本3";
+            this.Column13.Name = "Column13";
+            // 
+            // Column14
+            // 
+            this.Column14.DataPropertyName = "Str4";
+            this.Column14.HeaderText = "文本4";
+            this.Column14.Name = "Column14";
             // 
             // UserFun
             // 
@@ -434,13 +435,13 @@
             this.Size = new System.Drawing.Size(847, 506);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.contextMenuStrip2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -461,6 +462,11 @@
         private ToolStripMenuItem 重命名功能ToolStripMenuItem;
         private CheckBox ckEnabled;
         private ContextMenuStrip contextMenuStrip2;
+        private ToolStripMenuItem 查看功能说明ToolStripMenuItem;
+        private ToolTip toolTip1;
+        private Panel panel1;
+        private Panel panel2;
+        private Label lbltools;
         private DataGridViewComboBoxColumn Column1;
         private DataGridViewComboBoxColumn Column2;
         private DataGridViewTextBoxColumn Column15;
@@ -476,10 +482,5 @@
         private DataGridViewTextBoxColumn Column12;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column14;
-        private ToolStripMenuItem 查看功能说明ToolStripMenuItem;
-        private ToolTip toolTip1;
-        private Panel panel1;
-        private Panel panel2;
-        private Label lbltools;
     }
 }

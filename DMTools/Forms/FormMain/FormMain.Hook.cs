@@ -53,10 +53,13 @@ namespace DMTools
             {
                 if (e.Button == System.Windows.Forms.MouseButtons.Right)
                 {
+                    ReplayMouseEventArgs(e);
+
                     isRight = true;
                 }
                 else if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
+                    ReplayMouseEventArgs(e);
                     isLeft = true;
                 }
             }
@@ -93,10 +96,7 @@ namespace DMTools
         }
         private void Kh_OnKeyDownEvent(object? sender, KeyEventArgs e)
         {
-            if ((DateTime.Now - D_Time).TotalSeconds < 0.6)
-            {
-                return;
-            }
+          
             e.Handled = this.ProcessKey(e.KeyData);
         }
         #endregion

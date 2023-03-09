@@ -1,5 +1,7 @@
 ﻿
+
 using DMTools.Config;
+using DMTools.libs;
 using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,13 +11,13 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Idmsoft = DMTools.libs.DmSoftCustomClassName;
 namespace DMTools.Control
 {
     public partial class D3Main
     {
         int handle;
-       public Dm.Idmsoft objdm { get; set; } =new Dm.dmsoft();
+       public Idmsoft objdm { get; set; } =new Idmsoft();
         public D3KeyState d3KeyState { get; set; } = new D3KeyState();
         public D3KeyCodes d3KeySetting { get; set; } = new D3KeyCodes();
 
@@ -28,21 +30,21 @@ namespace DMTools.Control
         public void Init()
         {
             IsInit = true;
-            BindForm();
+            D3Main.BindForm(this.objdm,this.handle);
             StartBackgroundTask();
         }
-        public void BindForm()
+        public static void BindForm(DmSoftCustomClassName objdm,int handle)
         {
             try
             {
-                if (objdm.IsBind(this.handle) == 1)
+                if (objdm.IsBind(handle) == 1)
                 {
                     objdm.UnBindWindow();
                 }
                 objdm.delay(50);
 
                 //long BindWindow(hwnd,display,mouse,keypad,mode)
-                var c = objdm.BindWindow(this.handle, "normal", "normal", "dx", 0);
+                var c = objdm.BindWindow(handle, "dx", "normal", "dx", 0);
                 //var c = objdm.BindWindowEx(this.Handle, "normal", "normal", "dx", "dx.public.memory",1);
                 objdm.SetKeypadDelay("dx", 0);
                 objdm.SetKeypadDelay("normal", 0);
@@ -172,7 +174,7 @@ namespace DMTools.Control
             var items=d3Config.d3ConfigItems.Where(r => r.EnabledFlag
             
             && r.d3ConfigFuns.Count > 0 && r.d3ConfigFuns.Any(p=>p.EnableFlag));
-            Dm.Idmsoft objdm=new Dm.dmsoft();
+            Idmsoft objdm=new Idmsoft();
             var d3KeySetting = ConvertD3KeySetting(d3Config);
             D3Main d3Main=new D3Main(hd,d3KeySetting);
           

@@ -1,4 +1,4 @@
-﻿using Dm;
+﻿using DMTools.libs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,12 +34,70 @@ namespace DMTools.FunList
                 bagPointList.Add(i, bp);
             }
         }
+        /// <summary>
+        /// 判断是否打开储物箱
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckCWX()
+        {
+            List<PointCheckColor> points = new List<PointCheckColor>();
+            points.AddRange(new[]{
+                new PointCheckColor(287, 58, "15af60"),
+                new PointCheckColor(274, 93, "15ad71"),
+                new PointCheckColor(240, 71, "10ba7b")
+            });
+            return CheckPointListColor(points);
 
+        }
+        /// <summary>
+        /// 赌博
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckKLX()
+        {
+            List<PointCheckColor> points = new List<PointCheckColor>();
+            points.AddRange(new[]{
+            new PointCheckColor(85,38, "1f0600"),
+            new PointCheckColor(64,70, "240600"),
+            new PointCheckColor(106,97, "240803")
+            });
+            return CheckPointListColor(points);
+
+        }
+
+        public bool CheckPointListColor(List<PointCheckColor> points)
+        {
+            List<Task<bool>   > tasks = new List<Task<bool>>();
+            var ssss = "";
+            foreach (var point in points)
+            {
+                //var sss = objdm.GetColor(NewX(point.x), NewY(point.y));
+                tasks.Add(Task.Run(() =>
+                {
+                    return objdm.GetColor(NewX(point.x), NewY(point.y)) == point.color;
+                }));
+                //ssss += "," + sss;
+            }
+            Task.WaitAll(tasks.ToArray());
+            return tasks.All(r => r.Result);
+        }
 
         private void D3FJ_StartEvent()
         {
             var xy = this.GetPointXY();
-
+            if (this.CheckCWX() || this.CheckKLX())
+            {
+                AddRightClickForTask(new D3TimeSetting() { keyClickType = KeyClickType.点击, D1 = 15 });
+            }
+            else
+            {
+                ZBFJ();
+            }
+        
+            objdm.MoveTo(xy.Item1, xy.Item2);
+        }
+        public void ZBFJ()
+        {
             foreach (var item in bagPointList)
             {
                 if (item.Key == 1)
@@ -75,14 +133,7 @@ namespace DMTools.FunList
                     Sleep(10);
                 }
             }
-            objdm.MoveTo(xy.Item1, xy.Item2);
         }
-
-
-      
- 
- 
-
         bool isDialogBoXOnScreen()
         {
 
@@ -168,6 +219,18 @@ namespace DMTools.FunList
         }
 
   
+    }
+    public class PointCheckColor
+    {
+        public PointCheckColor(int x, int y, string color)
+        { 
+            this.color = color;
+            this.x= x;
+            this.y= y;
+        }
+        public int x { get; set; }
+        public int y { get; set; }
+        public string color { get; set; }
     }
     public class BagPoint
     {

@@ -1,3 +1,4 @@
+using DMTools.libs;
 using System.Diagnostics;
 using System.Text;
 
@@ -36,9 +37,9 @@ namespace DMTools
             // RegisterDM();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-    
 
 
+            var registerDmSoftDllResult = RegisterDmSoft.RegisterDmSoftDll();
             ApplicationConfiguration.Initialize();
             Application.Run(new FormMain());
         }

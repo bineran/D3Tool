@@ -156,6 +156,7 @@ namespace DMTools
                         Application.DoEvents();
                         
                     }
+                    ts.Str4 = $"new PointCheckColor({x},{y}, \"{color}\")";
                 }
             }
         }

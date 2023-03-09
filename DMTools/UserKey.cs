@@ -19,6 +19,7 @@ namespace DMTools
     {
         public const string HotKeyMouse = "MouseKey";
         public const string HotKeyStopAll = "StopAllKey";
+        public const string ReplayKey = "Replay";
 
         public static List<string> HotKeys { get; set; }=new List<string>();
         D3Config d3Config;
@@ -39,6 +40,8 @@ namespace DMTools
             ConfigKeys = GetConfigKey();
             HotKeys.Add(UserKey.HotKeyStopAll);
             HotKeys.Add(UserKey.HotKeyMouse);
+            HotKeys.Add(UserKey.ReplayKey);
+            
         }
         public static List<D3ConfigKey> ConfigKeys = new List<D3ConfigKey>();
         public static List<D3ConfigKey> GetConfigKey()
@@ -61,7 +64,7 @@ namespace DMTools
             }
             _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "获取鼠标处信息", KeyName =  UserKey.HotKeyMouse, KeyCode = Keys.Home });
             _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "停止所有功能", KeyName =UserKey.HotKeyStopAll, KeyCode = Keys.End });
-
+            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "录制功能", KeyName = UserKey.ReplayKey, KeyCode = Keys.Pause });
             return _d3ConfigKeys;
 
         }

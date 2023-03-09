@@ -1,18 +1,14 @@
 ﻿using DMTools.Config;
 using DMTools.Control;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using DMTools.libs;
+
 
 namespace DMTools
 {
     public partial class FormMain
     {
         public object lockObject { get; set; } = new object();
-        Dm.dmsoft objdm = new Dm.dmsoft();
+        DmSoftCustomClassName objdm = new DmSoftCustomClassName();
         public SortedList<int, D3Main> sld3 = new SortedList<int, D3Main>();
         public List<Keys> GetALLHotKey(D3Config d3Config)
         {
@@ -39,10 +35,13 @@ namespace DMTools
         {
             try
             {
-                if (this.d3Config == null)
-                    return false;
+                ReplayKeyEventArgs(key);
                 if (!d3Config.ALLHotKeys.Contains(key))
                     return false;
+                if ((DateTime.Now - D_Time).TotalSeconds < 0.2)
+                {
+                    return false;
+                }
                 D_Time = DateTime.Now;
                 var ck = d3Config.ConfigKeys.Where(r => UserKey.HotKeys.Contains(r.KeyName) && r.KeyCode == key).FirstOrDefault();
                 if (ck != null)
@@ -61,18 +60,8 @@ namespace DMTools
             }
             return false;
         }
-        void ProcessSysKey(D3ConfigKey keys)
-        {
-            switch (keys.KeyName)
-            {
-                case UserKey.HotKeyMouse:
-                    SetMouseInfo();
-                    break;
-                case UserKey.HotKeyStopAll:
-                    StopAll();
-                    break;
-            }
-        }
+   
+
         void ProcessFunKey(D3Config d3Config, Keys keys)
         {
             try
@@ -133,8 +122,10 @@ namespace DMTools
         {
             try
             {
+      
                 for (int i = 0; i < sld3.Count; i++)
                 {
+                    
                     RestD3Main(d3Config, sld3.Keys[i]);
                 }
             }
@@ -148,72 +139,7 @@ namespace DMTools
             var str = objdm.GetWindowClass(hd);
             return new Tuple<int, bool, string>(hd, isbl, str);
         }
-        public void SetMouseInfo()
-        {
 
-            var items = HDINFO();
-            var hd = items.Item1;
-            var isbl = items.Item2;
-            var strClass = items.Item3;
-
-
-            object x = new object();
-            object y = new object();
-            objdm.GetCursorPos(out x, out y);
-            var color = objdm.GetColor(Convert.ToInt32(x), Convert.ToInt32(y));
-            if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
-            {
-                if (this.d3Config.WindowClass != null && this.d3Config.WindowClass.Length > 0)
-                {
-                    this.d3Config.WindowClass += ",";
-                }
-                this.d3Config.WindowClass += strClass;
-                SaveConfig();
-            }
-            var r = Convert.ToInt32(color.Substring(0, 2), 16);
-            var g = Convert.ToInt32(color.Substring(2, 2), 16);
-            var b = Convert.ToInt32(color.Substring(4, 2), 16);
-            var objinfo = new
-            {
-                x = x.ToString(),
-                y = y.ToString(),
-                color = new
-                {
-                    color,
-                    r,
-                    g,
-                    b
-                },
-                Handle = hd,
-                windowClass = strClass
-            };
-            log.Info(objinfo.ToJson());
-            if(this.tbfun.TabPages.Count > 1)
-            {
-                var userFun = this.tbfun.TabPages[0].Controls[0] as UserFun;
-                if (userFun != null)
-                {
-                    userFun.AddXYColor((int)x,(int)y,color,strClass);
-                }
-            }
-
-        }
-        public void StopAll()
-        {
-
-            int hd;
-            bool isbl;
-            string strClass;
-            var items = HDINFO();
-            hd = items.Item1;
-            isbl = items.Item2;
-            strClass = items.Item3;
-            if (isbl)
-            {
-                sld3[hd].StopAll();
-            }
-
-        }
 
     }
 }

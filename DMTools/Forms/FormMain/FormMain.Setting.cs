@@ -20,7 +20,9 @@ namespace DMTools
             this.tbfun.TabPages.Clear();
             if (d3Config == null)
                 return;
-            foreach (var item in d3Config.d3ConfigItems)
+            var al=d3Config.d3ConfigItems.OrderByDescending(r=>r.EnabledFlag).ToList(); 
+
+            foreach (var item in al)
             {
                 TabPage tp = new TabPage();
                 tp.Tag = item;
@@ -58,7 +60,6 @@ namespace DMTools
             this.d3Config.d3ConfigItems.Remove(obj);
             BindTabControl();
         }
-
 
         public void LoadFile()
         {
@@ -108,10 +109,12 @@ namespace DMTools
                         d3Config.FilePath = f;
                         d3Config.ALLHotKeys = GetALLHotKey(d3Config);
                         sl.Add(d3Config.ConfigName, d3Config);
+                   
                     }
 
                 }
                 this.cmbfile.Items.Clear();
+            
                 foreach (var s in sl)
                 {
                     this.cmbfile.Items.Add(s.Key);
