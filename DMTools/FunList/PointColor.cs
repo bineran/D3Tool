@@ -29,7 +29,7 @@ namespace DMTools.FunList
             && 0<=r.Int1  && r.Int1 <=D3W
             && 0 <= r.Int2 && r.Int2 <= D3H
             && r.KeyCode>0
-            && r.Str1.ToColor()!=null
+            && r.Str1.ToColors().Count>0
             && r.D1>0
             );
             foreach (var k in kl)

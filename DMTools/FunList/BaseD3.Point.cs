@@ -100,13 +100,13 @@ namespace DMTools.FunList
             var key = (int)ts.KeyCode;
             var keyCode = ts.KeyCode;
             var sleepInt = ts.D1;
-            var tagColor = ts.Str1.Trim().ToLower();
+            var tagColor = ts.Str1.ToColorStrList();
             this.GetPointRGB(x, y, true);
             var objdm = CreateAndBindDm();
             var action = () =>
             {
                 var color = objdm.GetColor(x, y);
-                if (color == tagColor)
+                if (tagColor.Contains(color))
                 {
                     this.DMKeyPress(objdm,keyCode);
                 }
@@ -128,13 +128,13 @@ namespace DMTools.FunList
             var keyCode = ts.KeyCode;
             var key = (int)ts.KeyCode;
             var sleepInt = ts.D1;
-            var tagColor = ts.Str1.Trim().ToLower();
+            var tagColor = ts.Str1.ToColorStrList();
             this.GetPointRGB(x, y,true);
             var objdm = CreateAndBindDm();
             var action = () =>
             {
                 var color = objdm.GetColor(x, y);
-                if (color != tagColor)
+                if (!tagColor.Contains(color))
                 {
                     DMKeyPress(objdm,keyCode);
                 }
