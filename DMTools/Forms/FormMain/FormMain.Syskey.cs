@@ -1,5 +1,6 @@
 ﻿using DMTools.Config;
 using DMTools.FunList;
+using DMTools.Static;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -157,6 +158,21 @@ namespace DMTools
             ds.D1 = d1;
             ds.KeyCode = key;
             ReplayList.Add(ds);
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Hotkey.UnRegist(this.Handle);
+        }
+
+        public void RegistHotKey()
+        {
+            //Hotkey.Regist(this.Handle, HotkeyModifiers.MOD_ALT, Keys.F1, ScreenCapture);
+        }
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            Hotkey.ProcessHotKey(m);
         }
     }
 }

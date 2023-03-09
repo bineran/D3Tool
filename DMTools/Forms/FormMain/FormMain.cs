@@ -2,6 +2,7 @@ using DMTools.Config;
 using DMTools.Control;
 using DMTools.Forms;
 using DMTools.FunList;
+using DMTools.Static;
 using NLog;
 using System.Text;
 
@@ -120,9 +121,10 @@ namespace DMTools
                 }
             }
         }
+
         #endregion
 
-
+     
     }
 
 
