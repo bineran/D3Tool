@@ -14,11 +14,9 @@ namespace DMTools.PlugIn
         private object obj_object = null;
         public Idmsoft DM { get; set; }
         public DMP() {
-            var dt1 = DateTime.Now;
             obj = Type.GetTypeFromProgID("dm.dmsoft");
             obj_object = Activator.CreateInstance(obj);
             DM = obj_object as Idmsoft;
-          
             //var sss=DM.Ver();
         }
         public void ReleaseObj()
