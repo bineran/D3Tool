@@ -32,7 +32,7 @@ namespace DMTools
                     return false;
                 }
                 D_Time = DateTime.Now;
-                var ck = d3Config.ConfigKeys.Where(r => UserKey.HotKeys.Contains(r.KeyName) && r.KeyCode == key).FirstOrDefault();
+                var ck = d3Config.ConfigKeys.Where(r => Hotkey.HotKeys.Contains(r.KeyName) && r.KeyCode == key).FirstOrDefault();
                 if (ck != null)
                 {
                     ProcessSysKey(ck);
@@ -84,13 +84,13 @@ namespace DMTools
         {
             switch (keys.KeyName)
             {
-                case UserKey.HotKeyMouse:
+                case Hotkey.HotKeyMouse:
                     SetMouseInfo();
                     break;
-                case UserKey.HotKeyStopAll:
+                case Hotkey.HotKeyStopAll:
                     StopAll();
                     break;
-                case UserKey.ReplayKey:
+                case Hotkey.HotReplayKey:
                     Replay();
                     break;
             }
@@ -166,7 +166,7 @@ namespace DMTools
         }
 
         public bool ReplayFlag { get; set; } = false;
-        public List<D3TimeSetting> ReplayList { get; set; }
+        public List<KeyTimeSetting> ReplayList { get; set; }
         public DateTime ReplayLastTime{ get; set; }
         public void Replay()
         {
@@ -174,7 +174,7 @@ namespace DMTools
             if (ReplayFlag)
             {
                 ReplayLastTime = DateTime.Now;
-                ReplayList = new List<D3TimeSetting>();
+                ReplayList = new List<KeyTimeSetting>();
 
             }
             else
@@ -193,11 +193,11 @@ namespace DMTools
             }
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                ReplayProcessKey(BaseD3.MouseRight);
+                ReplayProcessKey(ConvertKeys.MouseRight);
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                ReplayProcessKey(BaseD3.MouseLeft);
+                ReplayProcessKey(ConvertKeys.MouseLeft);
             }
 
           
@@ -209,7 +209,7 @@ namespace DMTools
                 return;
             }
             DateTime dateTime = ReplayLastTime;
-            D3TimeSetting ds = new D3TimeSetting();
+            KeyTimeSetting ds = new KeyTimeSetting();
             ds.keyClickType = KeyClickType.点击;
             ReplayLastTime = DateTime.Now;
             var d1 = Convert.ToInt32((DateTime.Now - dateTime).TotalMilliseconds);

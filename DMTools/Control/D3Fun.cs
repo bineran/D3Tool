@@ -5,14 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DMTools.PlugIn;
+using DMTools.libs;
+
 namespace DMTools.Control
 {
     public partial class D3Fun
     {
+        public const string enumD3Name = "enumD3Name";
         public D3Param d3Param { get; set; }
         public  SortedList<EnumD3, ID3Function> slD3Function = new SortedList<EnumD3, ID3Function>();
-        public SortedList<EnumD3, List<D3TimeSetting>> Times { get; set; } = new SortedList<EnumD3, List<D3TimeSetting>>();
+        public SortedList<EnumD3, List<KeyTimeSetting>> Times { get; set; } = new SortedList<EnumD3, List<KeyTimeSetting>>();
         
         public D3Fun(params EnumD3[] enumD3s)
         {
@@ -52,7 +54,7 @@ namespace DMTools.Control
             this.Times = this.d3Param.SLTimes;
             foreach (var t in types)
             {
-                var field = t.GetField("enumD3Name");
+                var field = t.GetField(D3Fun.enumD3Name);
                 if (field == null) continue;
                 var enumD3 = (EnumD3)field.GetRawConstantValue();
                 if (!slD3Function.ContainsKey(enumD3))

@@ -30,7 +30,7 @@ namespace DMTools.Control
             {
                 foreach (var times in fun.d3Param.SLTimes.Values)
                 {
-                    var ts = times.Where(r => r.keyClickType == Config.KeyClickType.按下
+                    var ts = times.Where(r => r.keyClickType == KeyClickType.按下
                      && r.KeyCode > 0 && BaseD3.NoMouseKey(r.KeyCode));
                     foreach (var t in ts)
                     {

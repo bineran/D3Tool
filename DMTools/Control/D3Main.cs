@@ -2,7 +2,6 @@
 
 using DMTools.Config;
 using DMTools.libs;
-using DMTools.PlugIn;
 using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DMTools.PlugIn;
 
 namespace DMTools.Control
 {
@@ -36,7 +34,7 @@ namespace DMTools.Control
             D3Main.BindForm(this.objdm,this.handle);
             StartBackgroundTask();
         }
-        public static void BindForm(PlugIn.Idmsoft objdm,int handle)
+        public static void BindForm(Idmsoft objdm,int handle)
         {
             try
             {
@@ -151,7 +149,7 @@ namespace DMTools.Control
             return true;
   
         }
-        public D3Param NewD3Param(SortedList<EnumD3,List< D3TimeSetting>>   funTimes)
+        public D3Param NewD3Param(SortedList<EnumD3,List< KeyTimeSetting>>   funTimes)
         {
             D3Param d3Param = new D3Param();
             d3Param.objdm = this.objdm;
@@ -235,9 +233,9 @@ namespace DMTools.Control
             }
             return enumD3s;
         }
-        private static SortedList<EnumD3, List<D3TimeSetting>> ConvertTimeList(D3ConfigItem item)
+        private static SortedList<EnumD3, List<KeyTimeSetting>> ConvertTimeList(D3ConfigItem item)
         {
-            SortedList<EnumD3, List<D3TimeSetting>> sl = new SortedList<EnumD3, List<D3TimeSetting>>();
+            SortedList<EnumD3, List<KeyTimeSetting>> sl = new SortedList<EnumD3, List<KeyTimeSetting>>();
             foreach (var s in item.d3ConfigFuns)
             {
                 if(s.EnableFlag== true)

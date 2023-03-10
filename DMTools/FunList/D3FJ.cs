@@ -87,7 +87,7 @@ namespace DMTools.FunList
             var xy = this.GetPointXY();
             if (this.CheckCWX() || this.CheckKLX())
             {
-                AddRightClickForTask(new D3TimeSetting() { keyClickType = KeyClickType.点击, D1 = 15 });
+                AddRightClickForTask(new KeyTimeSetting() { keyClickType = KeyClickType.点击, D1 = 15 });
             }
             else
             {

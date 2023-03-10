@@ -11,23 +11,22 @@ using System.Threading.Tasks;
 using NLog;
 using DMTools.Control;
 using System.Reflection.Metadata;
-using DMTools.PlugIn;
 namespace DMTools.FunList
 {
     public  abstract partial class BaseD3 : ID3Function
     {
-        public  const  EnumD3 enumD3Name  = EnumD3.默认;
+        //public  const  EnumD3 enumD3Name  = EnumD3.默认;
 
         public virtual EnumD3 enumD3 { get; set; } = EnumD3.默认;
         public readonly Logger log=LogManager.GetCurrentClassLogger();
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
         public DMP objDMP { get; set; } = new DMP();
-        public PlugIn.Idmsoft objdm { get { return this.objDMP.DM; } }
+        public Idmsoft objdm { get { return this.objDMP.DM; } }
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
         public D3KeyState d3KeyState { get { return d3Param.d3KeyState; } }
-        public List<D3TimeSetting> Times
+        public List<KeyTimeSetting> Times
         {
             get
             {
@@ -42,7 +41,7 @@ namespace DMTools.FunList
             this.enumD3 = enumD3;
             Init();
         }
-        public PlugIn.Idmsoft CreateAndBindDm()
+        public Idmsoft CreateAndBindDm()
         {
             DMP dMP = new DMP();
             dMP.DM.SetShowErrorMsg(0);

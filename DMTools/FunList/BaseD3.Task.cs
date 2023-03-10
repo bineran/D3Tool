@@ -159,21 +159,21 @@ namespace DMTools.FunList
         }
         public void StartKeyDown()
         {
-            var list = this.Times.Where(r => r.keyClickType == Config.KeyClickType.按下
+            var list = this.Times.Where(r => r.keyClickType == KeyClickType.按下
              && r.KeyCode > 0 && r.Rank == 0).ToList();
             foreach (var kt in list)
             {
                 if (NoMouseKey(kt.KeyCode))
                     AddKeyDownForTask(kt.KeyCode);
-                else if (kt.KeyCode == BaseD3.MouseLeft)
+                else if (kt.KeyCode == ConvertKeys.MouseLeft)
                 {
                     AddLeftDownForTask(kt);
                 }
-                else if (kt.KeyCode == BaseD3.MouseRight)
+                else if (kt.KeyCode == ConvertKeys.MouseRight)
                 {
                     AddRightDownForTask(kt);
                 }
-                else if (kt.KeyCode == BaseD3.MouseShiftLeft)
+                else if (kt.KeyCode == ConvertKeys.MouseShiftLeft)
                 {
                     AddShiftLeftDownForTask(kt);
                 }
@@ -181,21 +181,21 @@ namespace DMTools.FunList
         }
         public void StartKeyPress()
         {
-            var list = this.Times.Where(r => r.keyClickType == Config.KeyClickType.点击
+            var list = this.Times.Where(r => r.keyClickType == KeyClickType.点击
              && r.KeyCode > 0 && r.Rank == 0 && NoMouseKey(r.KeyCode)).ToList();
             foreach (var kt in list)
             {
                 if (NoMouseKey(kt.KeyCode))
                     AddKeyPressForTask(kt);
-                else if (kt.KeyCode == BaseD3.MouseLeft)
+                else if (kt.KeyCode == ConvertKeys.MouseLeft)
                 {
                     AddLeftClickForTask(kt);
                 }
-                else if (kt.KeyCode == BaseD3.MouseRight)
+                else if (kt.KeyCode == ConvertKeys.MouseRight)
                 {
                     AddRightClickForTask(kt);
                 }
-                else if (kt.KeyCode == BaseD3.MouseShiftLeft)
+                else if (kt.KeyCode == ConvertKeys.MouseShiftLeft)
                 {
                     AddShiftLeftClickForTask(kt);
                 }
@@ -205,7 +205,7 @@ namespace DMTools.FunList
         public void StartKeyRank()
         {
 
-            var list = this.Times.Where(r => r.keyClickType != Config.KeyClickType.不做操作
+            var list = this.Times.Where(r => r.keyClickType != KeyClickType.不做操作
              && r.KeyCode > 0 && r.Rank > 0).OrderBy(r => r.Rank);
             bool addStand = false;
             bool addLeft = false;
@@ -216,69 +216,69 @@ namespace DMTools.FunList
                 {
                     switch (ts.keyClickType)
                     {
-                        case Config.KeyClickType.点击:
+                        case KeyClickType.点击:
                             KeyPress(ts);
                             break;
-                        case Config.KeyClickType.按下:
+                        case KeyClickType.按下:
                             KeyDown(ts);
                             break;
-                        case Config.KeyClickType.弹起:
+                        case KeyClickType.弹起:
                             KeyUp(ts);
                             break;
                     }
                 }
                 else
                 {
-                    if (ts.KeyCode == BaseD3.MouseLeft)
+                    if (ts.KeyCode == ConvertKeys.MouseLeft)
                     {
                         switch (ts.keyClickType)
                         {
-                            case Config.KeyClickType.点击:
+                            case KeyClickType.点击:
                                 objdm.LeftClick(); Sleep(ts.D1);
                                 break;
-                            case Config.KeyClickType.按下:
+                            case KeyClickType.按下:
                                 addLeft = true;
                                 objdm.LeftDown(); Sleep(ts.D1);
                                 break;
-                            case Config.KeyClickType.弹起:
+                            case KeyClickType.弹起:
                                 objdm.LeftUp(); Sleep(ts.D1);
                                 break;
                         }
                     }
-                    else if (ts.KeyCode == BaseD3.MouseRight)
+                    else if (ts.KeyCode == ConvertKeys.MouseRight)
                     {
                         switch (ts.keyClickType)
                         {
-                            case Config.KeyClickType.点击:
+                            case KeyClickType.点击:
                                 objdm.RightClick(); Sleep(ts.D1);
                                 break;
-                            case Config.KeyClickType.按下:
+                            case KeyClickType.按下:
                                 addRight = true;
                                 objdm.RightDown(); Sleep(ts.D1);
                                 break;
-                            case Config.KeyClickType.弹起:
+                            case KeyClickType.弹起:
                                 objdm.RightUp(); Sleep(ts.D1);
                                 break;
                         }
                     }
-                    else if (ts.KeyCode == BaseD3.MouseShiftLeft)
+                    else if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
                     {
                         switch (ts.keyClickType)
                         {
-                            case Config.KeyClickType.点击:
+                            case KeyClickType.点击:
                                 addStand = true;
                                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                                 objdm.LeftClick();
                                 objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
                                 Sleep(ts.D1);
                                 break;
-                            case Config.KeyClickType.按下:
+                            case KeyClickType.按下:
                                 addLeft = true;
                                 addStand = true;
                                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                                 objdm.LeftDown(); Sleep(ts.D1);
                                 break;
-                            case Config.KeyClickType.弹起:
+                            case KeyClickType.弹起:
                                 objdm.LeftUp();
                                 objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
                                 Sleep(ts.D1);
@@ -322,7 +322,7 @@ namespace DMTools.FunList
 
         public void StartPointColor()
         {
-            var kl = this.Times.Where(r => r.keyClickType == Config.KeyClickType.颜色匹配点击
+            var kl = this.Times.Where(r => r.keyClickType == KeyClickType.颜色匹配点击
              && 0 <= r.Int1 && r.Int1 <= D3W
              && 0 <= r.Int2 && r.Int2 <= D3H
              && r.KeyCode > 0
@@ -336,7 +336,7 @@ namespace DMTools.FunList
         }
         public void StartPointNoColor()
         {
-            var kl = this.Times.Where(r => r.keyClickType == Config.KeyClickType.颜色不匹配点击
+            var kl = this.Times.Where(r => r.keyClickType == KeyClickType.颜色不匹配点击
              && 0 <= r.Int1 && r.Int1 <= D3W
              && 0 <= r.Int2 && r.Int2 <= D3H
              && r.KeyCode > 0
@@ -351,7 +351,7 @@ namespace DMTools.FunList
         public void StartImageTask()
         {
             var kl = this.Times.Where(r => 
-            (r.keyClickType == Config.KeyClickType.图片找到点击
+            (r.keyClickType == KeyClickType.图片找到点击
             || r.keyClickType== KeyClickType.图片未找到点击)
              && 0 <= r.Int1 && r.Int1 <= D3W
              && 0 <= r.Int2 && r.Int2 <= D3H

@@ -91,7 +91,7 @@ namespace DMTools
         {
             if (this.d3ConfigItem != null)
             {
-                SortedList<string, List<D3TimeSetting>> alfn1 = new SortedList<string, List<D3TimeSetting>>();
+                SortedList<string, List<KeyTimeSetting>> alfn1 = new SortedList<string, List<KeyTimeSetting>>();
                 foreach (var c in this.checkedListBox1.Items)
                 {
                     var key = c.ToString();
@@ -143,7 +143,7 @@ namespace DMTools
                 var key=this.checkedListBox1.SelectedItem.ToString();
                 if (Enum.TryParse(key, out EnumD3 enumD3))
                 { 
-                    D3TimeSetting ts = new D3TimeSetting();
+                    KeyTimeSetting ts = new KeyTimeSetting();
                     ts.Int1 = x; ts.Int2 = y;
                     ts.Str1 = color;
                     ts.keyClickType = KeyClickType.不做操作;
@@ -303,23 +303,23 @@ namespace DMTools
             var tmpFun = this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
             if (tmpFun == null) { return; }
 
-            List<D3TimeSetting> al = new List<D3TimeSetting>();
+            List<KeyTimeSetting> al = new List<KeyTimeSetting>();
             if (tmpFun.Times != null && tmpFun.Times.Count > 0)
             {
                 al = tmpFun.Times;
             }
             else
             {
-                al.Add(new D3TimeSetting() { KeyCode = Keys.D1 });
-                al.Add(new D3TimeSetting() { KeyCode = Keys.D2 });
-                al.Add(new D3TimeSetting() { KeyCode = Keys.D3 });
-                al.Add(new D3TimeSetting() { KeyCode = Keys.D4 });
-                al.Add(new D3TimeSetting() { KeyCode = Keys.W });
-                al.Add(new D3TimeSetting() { KeyCode = Keys.Control | Keys.Left });
-                al.Add(new D3TimeSetting() { KeyCode = Keys.Control | Keys.Right });
-                al.Add(new D3TimeSetting() { KeyCode = Keys.Shift | Keys.Left });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.D1 });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.D2 });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.D3 });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.D4 });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.W });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Left });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Right });
+                al.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
             }
-            this.dataGridView1.DataSource = new BindingList<D3TimeSetting>(al);
+            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(al);
             tmpFun.Times = al;
 
             this.toolTip1.Show(GetFunInfo(key), this.lbltools, 5000);

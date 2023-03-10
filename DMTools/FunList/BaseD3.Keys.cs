@@ -11,11 +11,7 @@ namespace DMTools.FunList
 {
     public abstract partial class BaseD3 
     {
-        public const Keys MouseLeft= Keys.Control | Keys.Left;
-        public const Keys MouseRight = Keys.Control | Keys.Right;
-        public const Keys MouseShiftLeft = Keys.Shift | Keys.Left;
-        public const Keys HotKeyMouseUp = Keys.Control | Keys.PageUp;
-        public const Keys HotKeyMouseDown = Keys.Control | Keys.PageDown;
+
         /// <summary>
         /// 验证是否为上下滚轮
         /// </summary>
@@ -23,18 +19,18 @@ namespace DMTools.FunList
         /// <returns></returns>
         public static bool IsHotKeyMouseUpDown(Keys k)
         { 
-            if(k==HotKeyMouseUp) return true;
-            else if(k==HotKeyMouseDown) return true;
+            if(k== ConvertKeys.HotKeyMouseUp) return true;
+            else if(k== ConvertKeys.HotKeyMouseDown) return true;
             return false;
         }
 
         public static bool NoMouseKey(Keys k)
         {
-            if (k == MouseLeft)
+            if (k == ConvertKeys.MouseLeft)
                 return false;
-            else if (k == MouseRight)
+            else if (k == ConvertKeys.MouseRight)
                 return false;
-            else if (k == MouseShiftLeft)
+            else if (k == ConvertKeys.MouseShiftLeft)
                 return false;
             return true;
         }
@@ -70,7 +66,7 @@ namespace DMTools.FunList
             StartTaskList.Add(StartNewForTask(action, sleep,false,false));
             AddStopTaskKeysUp(key);
         }
-        public void AddKeyPressForTask(D3TimeSetting ts)
+        public void AddKeyPressForTask(KeyTimeSetting ts)
         {
         
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
@@ -85,10 +81,10 @@ namespace DMTools.FunList
             }
         }
 
-        public void AddLeftDownForTask(D3TimeSetting ts, int sleep = 100)
+        public void AddLeftDownForTask(KeyTimeSetting ts, int sleep = 100)
         {
           
-            if (ts.Rank == 0  && ts.KeyCode== BaseD3.MouseLeft && ts.keyClickType == KeyClickType.按下)
+            if (ts.Rank == 0  && ts.KeyCode== ConvertKeys.MouseLeft && ts.keyClickType == KeyClickType.按下)
             {
                 var objdm = CreateAndBindDm();
                 // DateTime tmp = DateTime.Now.AddSeconds(2);
@@ -115,10 +111,10 @@ namespace DMTools.FunList
                 AddStopTaskLeftUp();
             }
         }
-        public void AddRightDownForTask(D3TimeSetting ts, int sleep = 100)
+        public void AddRightDownForTask(KeyTimeSetting ts, int sleep = 100)
         {
          
-            if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseRight && ts.keyClickType == KeyClickType.按下)
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseRight && ts.keyClickType == KeyClickType.按下)
             {
                 var objdm = CreateAndBindDm();
                 //DateTime tmp = DateTime.Now.AddSeconds(2);
@@ -146,10 +142,10 @@ namespace DMTools.FunList
             }
         }
 
-        public void AddShiftLeftDownForTask(D3TimeSetting ts, int sleep = 100)
+        public void AddShiftLeftDownForTask(KeyTimeSetting ts, int sleep = 100)
         {
           
-            if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseShiftLeft && ts.keyClickType == KeyClickType.按下)
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.按下)
             {
                 var objdm = CreateAndBindDm();
                 // DateTime tmp = DateTime.Now.AddSeconds(2);
@@ -180,10 +176,10 @@ namespace DMTools.FunList
                 AddStopTaskKeysUpStand();
             }
         }
-        public void AddShiftLeftClickForTask(D3TimeSetting ts, int sleep = 100)
+        public void AddShiftLeftClickForTask(KeyTimeSetting ts, int sleep = 100)
         {
          
-            if (ts.Rank == 0 && ts.KeyCode == BaseD3.MouseShiftLeft && ts.keyClickType == KeyClickType.点击)
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.点击)
             {
                 var objdm = CreateAndBindDm();
                 var action = () =>
@@ -197,7 +193,7 @@ namespace DMTools.FunList
             }
         }
 
-        public void AddLeftClickForTask(D3TimeSetting ts)
+        public void AddLeftClickForTask(KeyTimeSetting ts)
         {
             var objdm = CreateAndBindDm();
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
@@ -209,7 +205,7 @@ namespace DMTools.FunList
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
-        public void AddRightClickForTask(D3TimeSetting ts)
+        public void AddRightClickForTask(KeyTimeSetting ts)
         {
             var objdm = CreateAndBindDm();
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
@@ -221,17 +217,17 @@ namespace DMTools.FunList
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
-        public void KeyPress(D3TimeSetting ts)
+        public void KeyPress(KeyTimeSetting ts)
         {
             objdm.KeyPress((int)ts.KeyCode);
             Sleep(ts.D1);
         }
-        public void KeyDown(D3TimeSetting ts)
+        public void KeyDown(KeyTimeSetting ts)
         {
             objdm.KeyDown((int)ts.KeyCode);
             Sleep(ts.D1);
         }
-        public void KeyUp(D3TimeSetting ts)
+        public void KeyUp(KeyTimeSetting ts)
         {
             objdm.KeyUp((int)ts.KeyCode);
             Sleep(ts.D1);

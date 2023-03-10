@@ -22,7 +22,7 @@ namespace DMTools.Config
 
         public List<D3ConfigKey>   ConfigKeys { get; set; }=new List<D3ConfigKey>();
         public string WindowClass { get; set; } = "";
-        public List<D3TimeSetting> DebugTimes { get; set; } = new List<D3TimeSetting>();
+        public List<KeyTimeSetting> DebugTimes { get; set; } = new List<KeyTimeSetting>();
 
     }
     public class D3ConfigItem
@@ -54,7 +54,7 @@ namespace DMTools.Config
         public EnumD3 enumD3 { get; set; }
 
         public bool EnableFlag { get; set; }
-        public List<D3TimeSetting> Times { get; set; }=new List<D3TimeSetting>();
+        public List<KeyTimeSetting> Times { get; set; }=new List<KeyTimeSetting>();
     }
     public class D3ConfigKey
     { 

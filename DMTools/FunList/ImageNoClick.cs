@@ -25,7 +25,7 @@ namespace DMTools.FunList
 
         private void ImageNoClick_StartEvent()
         {
-           var kl= this.Times.Where(r => r.keyClickType== Config.KeyClickType.点击 
+           var kl= this.Times.Where(r => r.keyClickType== KeyClickType.点击 
             && 0<=r.Int1  && r.Int1 <=D3W
             && 0 <= r.Int2 && r.Int2 <= D3H
             && 0 <= r.Int3 && r.Int3 <= D3W

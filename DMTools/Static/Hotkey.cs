@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DMTools.Config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +11,44 @@ namespace DMTools.Static
 {
     public static class Hotkey
     {
+        public const string HotKeyMouse = "MouseKey";
+        public const string HotKeyStopAll = "StopAllKey";
+        public const string HotReplayKey = "Replay";
+        public const string HotPtrScr = "PtrScr";
+        public static List<string> HotKeys { get; set; } = new List<string>();
+        static Hotkey()
+        {
+            ConfigKeys = GetConfigKey();
+            HotKeys.Add(Hotkey.HotKeyStopAll);
+            HotKeys.Add(Hotkey.HotKeyMouse);
+            HotKeys.Add(Hotkey.HotReplayKey);
 
+        }
+        public static List<D3ConfigKey> ConfigKeys = new List<D3ConfigKey>();
+        public static List<D3ConfigKey> GetConfigKey()
+        {
+            var ps = typeof(D3KeyCodes).GetProperties().Where(r => r.PropertyType == typeof(int));
+            List<D3ConfigKey> _d3ConfigKeys = new List<D3ConfigKey>();
+            foreach (var p in ps)
+            {
+
+                var ka = p.GetCustomAttribute(typeof(KeyNameAttribute)) as KeyNameAttribute;
+                if (ka == null)
+                    continue;
+                D3KeyCodes keySetting = new D3KeyCodes();
+                int keyCode = Convert.ToInt32(p.GetValue(keySetting));
+                D3ConfigKey d = new D3ConfigKey();
+                d.KeyInfo = ka.Name;
+                d.KeyCode = (Keys)keyCode;
+                d.KeyName = p.Name;
+                _d3ConfigKeys.Add(d);
+            }
+            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "获取鼠标处信息", KeyName = Hotkey.HotKeyMouse, KeyCode = Keys.Home });
+            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "停止所有功能", KeyName = Hotkey.HotKeyStopAll, KeyCode = Keys.End });
+            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "录制功能", KeyName = Hotkey.HotReplayKey, KeyCode = Keys.Pause });
+            return _d3ConfigKeys;
+
+        }
         #region 系统api
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]

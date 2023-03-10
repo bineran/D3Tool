@@ -1,7 +1,7 @@
 ﻿using DMTools.Config;
 using DMTools.Control;
-using DMTools.PlugIn;
-
+using DMTools.libs;
+using DMTools.Static;
 
 namespace DMTools
 {
@@ -10,7 +10,7 @@ namespace DMTools
         public object lockObject { get; set; } = new object();
         DMP objDMP = new DMP();
         public SortedList<int, D3Main> sld3 = new SortedList<int, D3Main>();
-        public PlugIn.Idmsoft objdm
+        public Idmsoft objdm
         {
             get { return objDMP.DM; }
         }
@@ -26,7 +26,7 @@ namespace DMTools
                     keys.Add(item.HotKey2);
 
             }
-            var cks = d3Config.ConfigKeys.Where(r => UserKey.HotKeys.Contains(r.KeyName));
+            var cks = d3Config.ConfigKeys.Where(r => Hotkey.HotKeys.Contains(r.KeyName));
             foreach (var ck in cks)
             {
                 if (!keys.Contains(ck.KeyCode))

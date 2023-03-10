@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DMTools.PlugIn;
 namespace DMTools.FunList
 {
     public abstract partial class BaseD3 
@@ -74,13 +73,13 @@ namespace DMTools.FunList
         {
             return y.newHeight(this.D3H);
         }
-        private void DMKeyPress(PlugIn.Idmsoft objdm, Keys key)
+        private void DMKeyPress(Idmsoft objdm, Keys key)
         {
-            if (key == BaseD3.MouseLeft)
+            if (key == ConvertKeys.MouseLeft)
                 objdm.LeftClick();
-            else if (key == BaseD3.MouseRight)
+            else if (key == ConvertKeys.MouseRight)
                 objdm.RightClick();
-            else if (key == BaseD3.MouseShiftLeft)
+            else if (key == ConvertKeys.MouseShiftLeft)
             {
                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                 objdm.LeftClick();
@@ -93,7 +92,7 @@ namespace DMTools.FunList
         /// 指定位置等于指定颜色按键
         /// </summary>
         /// <param name="ts"></param>
-        public void AddPointColorTask(D3TimeSetting ts)
+        public void AddPointColorTask(KeyTimeSetting ts)
         {
             var x = ts.Int1;
             var y = ts.Int2;
@@ -112,7 +111,7 @@ namespace DMTools.FunList
                 }
             };
             StartNewForTask(action, sleepInt);
-            if (ts.KeyCode == BaseD3.MouseShiftLeft)
+            if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
             {
                 AddStopTaskKeysUpStand();
             }
@@ -121,7 +120,7 @@ namespace DMTools.FunList
         /// 指定位置等于指定颜色按键
         /// </summary>
         /// <param name="ts"></param>
-        public void AddPointNoColorTask(D3TimeSetting ts)
+        public void AddPointNoColorTask(KeyTimeSetting ts)
         {
             var x = ts.Int1;
             var y = ts.Int2;
@@ -140,7 +139,7 @@ namespace DMTools.FunList
                 }
             };
             StartNewForTask(action, sleepInt);
-            if (ts.KeyCode == BaseD3.MouseShiftLeft)
+            if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
             {
                 AddStopTaskKeysUpStand();
             }
@@ -151,7 +150,7 @@ namespace DMTools.FunList
         /// 
         /// </summary>
         /// <param name="ts"></param>
-        public void AddImageClickTask(D3TimeSetting ts,bool imgFlag=true)
+        public void AddImageClickTask(KeyTimeSetting ts,bool imgFlag=true)
         {
 
             try
@@ -217,7 +216,7 @@ namespace DMTools.FunList
                     }
                 };
                 StartNewForTask(action, sleepInt);
-                if(ts.KeyCode==BaseD3.MouseShiftLeft)
+                if(ts.KeyCode==ConvertKeys.MouseShiftLeft)
                 {
                     AddStopTaskKeysUpStand();
                 }

@@ -18,7 +18,6 @@
   <ItemGroup>
     <None Remove="libs\dm.dll" />
     <None Remove="libs\DmReg.dll" />
-    <None Remove="libs\Interop.Dm.dll" />
     <None Remove="NLog.config" />
   </ItemGroup>
 
@@ -29,7 +28,6 @@
     <Content Include="libs\DmReg.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="libs\Interop.Dm.dll" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

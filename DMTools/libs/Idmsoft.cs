@@ -1,8 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-namespace DMTools.PlugIn
+
+namespace DMTools.libs
 {
-   [ComImport]
+    [ComImport]
     [Guid("F3F54BC2-D6D1-4A85-B943-16287ECEA64C")]
     [TypeLibType(TypeLibTypeFlags.FDual | TypeLibTypeFlags.FDispatchable)]
     public interface Idmsoft
