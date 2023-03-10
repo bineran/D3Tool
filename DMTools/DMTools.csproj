@@ -18,6 +18,7 @@
   <ItemGroup>
     <None Remove="libs\dm.dll" />
     <None Remove="libs\DmReg.dll" />
+    <None Remove="libs\PrScrn.dll" />
     <None Remove="NLog.config" />
   </ItemGroup>
 
@@ -26,6 +27,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="libs\DmReg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\PrScrn.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NLog.config">

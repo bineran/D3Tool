@@ -10,7 +10,7 @@ namespace DMTools.Static
 
     public class PrScrnHelper
     {
-        [DllImport("PrScrn.dll", EntryPoint = "PrScrn")]
+        [DllImport("./libs/PrScrn.dll", EntryPoint = "PrScrn")]
 
         public extern static int PrScrn();//与dll中一致   
     }

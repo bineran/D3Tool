@@ -90,12 +90,15 @@ namespace DMTools
                 case Hotkey.HotKeyStopAll:
                     StopAll();
                     break;
-                case Hotkey.HotReplayKey:
+                case Hotkey.HotKeyReplay:
                     Replay();
+                    break;
+                case Hotkey.HotKeyPtrScr:
+                    PrScrnHelper.PrScrn();
                     break;
             }
         }
-
+        
 
         public void SetMouseInfo()
         {

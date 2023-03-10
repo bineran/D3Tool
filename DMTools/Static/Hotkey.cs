@@ -13,16 +13,24 @@ namespace DMTools.Static
     {
         public const string HotKeyMouse = "MouseKey";
         public const string HotKeyStopAll = "StopAllKey";
-        public const string HotReplayKey = "Replay";
-        public const string HotPtrScr = "PtrScr";
+        public const string HotKeyReplay = "Replay";
+        public const string HotKeyPtrScr = "PtrScr";
         public static List<string> HotKeys { get; set; } = new List<string>();
         static Hotkey()
         {
             ConfigKeys = GetConfigKey();
-            HotKeys.Add(Hotkey.HotKeyStopAll);
-            HotKeys.Add(Hotkey.HotKeyMouse);
-            HotKeys.Add(Hotkey.HotReplayKey);
-
+            var ps=  typeof(Hotkey).GetFields();
+            foreach (var p in ps)
+            {
+                if (p.Name.StartsWith("HotKey") && p.FieldType== typeof(string))
+                {
+                    HotKeys.Add(p.GetRawConstantValue().ToString());
+                }
+            }
+            //HotKeys.Add(Hotkey.HotKeyStopAll);
+            //HotKeys.Add(Hotkey.HotKeyMouse);
+            //HotKeys.Add(Hotkey.HotKeyReplay);
+            //HotKeys.Add(Hotkey.HotKeyPtrScr);
         }
         public static List<D3ConfigKey> ConfigKeys = new List<D3ConfigKey>();
         public static List<D3ConfigKey> GetConfigKey()
@@ -45,7 +53,8 @@ namespace DMTools.Static
             }
             _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "获取鼠标处信息", KeyName = Hotkey.HotKeyMouse, KeyCode = Keys.Home });
             _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "停止所有功能", KeyName = Hotkey.HotKeyStopAll, KeyCode = Keys.End });
-            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "录制功能", KeyName = Hotkey.HotReplayKey, KeyCode = Keys.Pause });
+            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "录制功能", KeyName = Hotkey.HotKeyReplay, KeyCode = Keys.Pause });
+            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "截屏", KeyName = Hotkey.HotKeyPtrScr, KeyCode = Keys.PrintScreen });
             return _d3ConfigKeys;
 
         }
