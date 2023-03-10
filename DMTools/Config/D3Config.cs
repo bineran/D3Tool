@@ -42,7 +42,10 @@ namespace DMTools.Config
         public Keys HotKey2 { get; set; }
         
         public List<D3ConfigFun> d3ConfigFuns { get; set; } = new List<D3ConfigFun>();
-
+        /// <summary>
+        /// 排 序
+        /// </summary>
+        public int ItemRank { get; set; } = 0;
     }
     public class D3ConfigFun
     {

@@ -148,7 +148,7 @@ namespace DMTools.FunList
         
 
         /// <summary>
-        /// 查找指定范围的图片 不存在即点击
+        /// 
         /// </summary>
         /// <param name="ts"></param>
         public void AddImageClickTask(D3TimeSetting ts,bool imgFlag=true)

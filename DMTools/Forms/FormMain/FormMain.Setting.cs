@@ -20,7 +20,9 @@ namespace DMTools
             this.tbfun.TabPages.Clear();
             if (d3Config == null)
                 return;
-            var al=d3Config.d3ConfigItems.OrderByDescending(r=>r.EnabledFlag).ToList(); 
+            var al=d3Config.d3ConfigItems.OrderByDescending(r=>r.EnabledFlag)
+                .ThenBy(r=>r.ItemRank)
+                .ToList(); 
 
             foreach (var item in al)
             {
@@ -31,6 +33,8 @@ namespace DMTools
                 u.RemoveFunEvent += U_RemoveFunEvent;
                 u.ReNameFunEvent += U_ReNameFunEvent;
                 u.Dock = DockStyle.Fill;
+                tp.AllowDrop = item.EnabledFlag;
+
                 tp.Controls.Add(u);
                 this.tbfun.TabPages.Add(tp);
             }
@@ -136,11 +140,13 @@ namespace DMTools
         {
             if (this.d3Config == null)
                 return;
+            var index = 0;
             foreach (TabPage tp in this.tbfun.TabPages)
             {
                 var uf = tp.Controls[0] as UserFun;
                 if (uf != null)
                 {
+                    uf.d3ConfigItem.ItemRank= index++;
                     uf.SaveData();
                 }
             }

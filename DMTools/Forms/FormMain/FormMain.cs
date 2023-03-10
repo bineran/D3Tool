@@ -5,6 +5,7 @@ using DMTools.FunList;
 using DMTools.Static;
 using NLog;
 using System.Text;
+using System.Windows.Forms;
 
 namespace DMTools
 {
@@ -122,10 +123,42 @@ namespace DMTools
             }
         }
 
-        #endregion
+        private void tbfun_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            try
+            {
+                Color c = Color.White;
 
-     
-    }
+                var uf = this.tbfun.TabPages[e.Index].Controls[0] as UserFun;
+                if (uf != null)
+                {
+                    if (!uf.d3ConfigItem.EnabledFlag)
+                    {
+                        c = Color.LightGray;
+                    }
+                }
+                using (Brush br = new SolidBrush(c))
+                {
+                    e.Graphics.FillRectangle(br, e.Bounds);
+                    SizeF sz = e.Graphics.MeasureString(tbfun.TabPages[e.Index].Text, e.Font);
+                    e.Graphics.DrawString(tbfun.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + (e.Bounds.Width - sz.Width) / 2, e.Bounds.Top + (e.Bounds.Height - sz.Height) / 2 + 1);
+                    Rectangle rect = e.Bounds;
+                    rect.Offset(0, 1);
+                    rect.Inflate(0, -1);
+                    e.Graphics.DrawRectangle(Pens.DarkGray, rect);
+                    e.DrawFocusRectangle();
+                }
+            }
+            catch
+            { }
+        }
+
+
+            #endregion
+
+
+        }
 
 
 

@@ -35,7 +35,7 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbhide = new System.Windows.Forms.ToolStripButton();
-            this.tbfun = new System.Windows.Forms.TabControl();
+            this.tbfun = new DMTools.MyTabControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新增方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,12 +104,15 @@
             // 
             // tbfun
             // 
+            this.tbfun.AllowDrop = true;
             this.tbfun.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbfun.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tbfun.Location = new System.Drawing.Point(0, 54);
             this.tbfun.Name = "tbfun";
             this.tbfun.SelectedIndex = 0;
             this.tbfun.Size = new System.Drawing.Size(898, 474);
             this.tbfun.TabIndex = 2;
+            this.tbfun.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tbfun_DrawItem);
             // 
             // menuStrip1
             // 
@@ -200,7 +203,7 @@
         private ToolStripButton tsbAdd;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton tsbhide;
-        private TabControl tbfun;
+        private MyTabControl tbfun;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem 方案ToolStripMenuItem;
         private ToolStripMenuItem 新增方案ToolStripMenuItem;
