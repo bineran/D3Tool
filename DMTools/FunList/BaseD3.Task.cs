@@ -320,6 +320,54 @@ namespace DMTools.FunList
            StartTaskList.Add(StartNewForTask(action,50,false));
         }
 
+        public void StartPointColor()
+        {
+            var kl = this.Times.Where(r => r.keyClickType == Config.KeyClickType.颜色匹配点击
+             && 0 <= r.Int1 && r.Int1 <= D3W
+             && 0 <= r.Int2 && r.Int2 <= D3H
+             && r.KeyCode > 0
+             && r.Str1.ToColors().Count > 0
+             && r.D1 > 0
+             );
+            foreach (var k in kl)
+            {
+                AddPointColorTask(k);
+            }
+        }
+        public void StartPointNoColor()
+        {
+            var kl = this.Times.Where(r => r.keyClickType == Config.KeyClickType.颜色不匹配点击
+             && 0 <= r.Int1 && r.Int1 <= D3W
+             && 0 <= r.Int2 && r.Int2 <= D3H
+             && r.KeyCode > 0
+             && r.Str1.ToColors().Count > 0
+             && r.D1 > 0
+             );
+            foreach (var k in kl)
+            {
+                AddPointNoColorTask(k);
+            }
+        }
+        public void StartImageTask()
+        {
+            var kl = this.Times.Where(r => 
+            (r.keyClickType == Config.KeyClickType.图片找到点击
+            || r.keyClickType== KeyClickType.图片未找到点击)
+             && 0 <= r.Int1 && r.Int1 <= D3W
+             && 0 <= r.Int2 && r.Int2 <= D3H
+             && 0 <= r.Int3 && r.Int3 <= D3W
+             && 0 <= r.Int4 && r.Int4 <= D3H
+             && r.KeyCode > 0
+             && r.Str1.TrimLength() > 0
+             && r.D1 > 0
+             );
+
+            foreach (var k in kl)
+            {
+
+                AddImageClickTask(k,k.keyClickType== KeyClickType.图片找到点击);
+            }
+        }
 
     }
 }

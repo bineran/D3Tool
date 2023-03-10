@@ -11,6 +11,7 @@ namespace DMTools.Config
     {
 
         public KeyClickType keyClickType { get; set; } = KeyClickType.不做操作;
+        public string TSRemark { get; set; } = "";
         /// <summary>
         ///顺序执行,大于0且是点击的才执行
         /// </summary>
@@ -53,7 +54,23 @@ namespace DMTools.Config
         /// <summary>
         /// 按住
         /// </summary>
-        弹起=30
+        弹起=30,
+        /// <summary>
+        /// 颜色匹配按键
+        /// </summary>
+        颜色匹配点击 = 40,
+        /// <summary>
+        /// 颜色不匹配按键
+        /// </summary>
+        颜色不匹配点击 = 50,
+        /// <summary>
+        /// 图片找到点击
+        /// </summary>
+        图片找到点击 = 60,
+        /// <summary>
+        /// 图片未找到点击
+        /// </summary>
+        图片未找到点击 = 70
     }
     
 }

@@ -61,6 +61,7 @@
             this.Column1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,6 +103,7 @@
             this.Column1,
             this.Column2,
             this.Column15,
+            this.Column16,
             this.Column3,
             this.Column11,
             this.Column7,
@@ -313,6 +315,7 @@
             "按住",
             "按顺序"});
             this.Column2.Name = "Column2";
+            this.Column2.Width = 120;
             // 
             // Column15
             // 
@@ -326,6 +329,13 @@
             this.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column15.Width = 60;
+            // 
+            // Column16
+            // 
+            this.Column16.DataPropertyName = "TSRemark";
+            this.Column16.Frozen = true;
+            this.Column16.HeaderText = "备注";
+            this.Column16.Name = "Column16";
             // 
             // Column3
             // 
@@ -470,6 +480,7 @@
         private DataGridViewComboBoxColumn Column1;
         private DataGridViewComboBoxColumn Column2;
         private DataGridViewTextBoxColumn Column15;
+        private DataGridViewTextBoxColumn Column16;
         private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column7;

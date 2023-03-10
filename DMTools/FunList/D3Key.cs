@@ -27,6 +27,9 @@ namespace DMTools.FunList
             StartKeyDown();
             StartKeyPress();
             StartKeyRank();
+            StartPointColor();
+            StartPointNoColor();
+            StartImageTask();
         }
 
     }

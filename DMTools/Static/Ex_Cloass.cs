@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,24 +44,66 @@ namespace DMTools
             if (str == null) { return 0; }
             return str.Trim().Length;
         }
-        public static Color? ToColor(this string str)
+        public static List<Color> ToColors(this string str)
         {
-            if (str == null) { return null; }
+            var colors = new List<Color>();
             try
             {
-                if (str.TrimLength() == 6)
-                { 
-                    str=str.Trim();
-                    var r = Convert.ToInt32(str.Substring(0, 2), 16);
-                    var g = Convert.ToInt32(str.Substring(2, 2), 16);
-                    var b = Convert.ToInt32(str.Substring(4, 2), 16);
-                    return Color.FromArgb(r, g, b);
+                if (str.TrimLength() > 0)
+                {
+                    var cs = str.Split('|');
+
+                    foreach (var c in cs)
+                    {
+                        if (c.TrimLength() == 6)
+                        {
+                            var r = Convert.ToInt32(str.Substring(0, 2), 16);
+                            var g = Convert.ToInt32(str.Substring(2, 2), 16);
+                            var b = Convert.ToInt32(str.Substring(4, 2), 16);
+
+                            colors.Add(Color.FromArgb(r, g, b));
+                        }
+                    }
                 }
+
             }
-            catch {
-              
+            catch
+            {
+                colors.Clear();
             }
-            return null;
+
+            return colors;
+        }
+        public static List<String> ToColorStrList(this string str)
+        {
+            var colors = new List<string>();
+
+            try
+            {
+                if (str.TrimLength() > 0)
+                {
+                    var cs = str.Split('|');
+
+                    foreach (var c in cs)
+                    {
+                        if (c.TrimLength() == 6)
+                        {
+                            var r = Convert.ToInt32(str.Substring(0, 2), 16);
+                            var g = Convert.ToInt32(str.Substring(2, 2), 16);
+                            var b = Convert.ToInt32(str.Substring(4, 2), 16);
+                            colors.Add(c.Trim().ToLower());
+                        }
+                    }
+                }
+
+            }
+            catch
+            {
+                colors.Clear();
+                
+            }
+
+            return colors;
         }
     }
 }
