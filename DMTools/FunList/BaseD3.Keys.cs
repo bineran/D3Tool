@@ -64,7 +64,7 @@ namespace DMTools.FunList
                 }
             };
             StartTaskList.Add(StartNewForTask(action, sleep,false,false));
-            AddStopTaskKeysUp(key);
+            AddStopTaskKeysUp(objdm,key);
         }
         public void AddKeyPressForTask(KeyTimeSetting ts)
         {
@@ -108,7 +108,7 @@ namespace DMTools.FunList
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep,false, false));
-                AddStopTaskLeftUp();
+                AddStopTaskLeftUp(objdm);
             }
         }
         public void AddRightDownForTask(KeyTimeSetting ts, int sleep = 100)
@@ -138,7 +138,7 @@ namespace DMTools.FunList
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep, false, false));
-                AddStopTaskRightUp();
+                AddStopTaskRightUp(objdm);
             }
         }
 
@@ -172,8 +172,8 @@ namespace DMTools.FunList
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep, false, false));
-                AddStopTaskLeftUp();
-                AddStopTaskKeysUpStand();
+                AddStopTaskLeftUp(objdm);
+                AddStopTaskKeysUpStand(objdm);
             }
         }
         public void AddShiftLeftClickForTask(KeyTimeSetting ts, int sleep = 100)
@@ -189,7 +189,7 @@ namespace DMTools.FunList
                     objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep));
-                AddStopTaskKeysUpStand();
+                AddStopTaskKeysUpStand(objdm);
             }
         }
 
@@ -217,17 +217,17 @@ namespace DMTools.FunList
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
-        public void KeyPress(KeyTimeSetting ts)
+        public void KeyPress (KeyTimeSetting ts,Idmsoft objdm)
         {
             objdm.KeyPress((int)ts.KeyCode);
             Sleep(ts.D1);
         }
-        public void KeyDown(KeyTimeSetting ts)
+        public void KeyDown(KeyTimeSetting ts, Idmsoft objdm)
         {
             objdm.KeyDown((int)ts.KeyCode);
             Sleep(ts.D1);
         }
-        public void KeyUp(KeyTimeSetting ts)
+        public void KeyUp(KeyTimeSetting ts, Idmsoft objdm)
         {
             objdm.KeyUp((int)ts.KeyCode);
             Sleep(ts.D1);

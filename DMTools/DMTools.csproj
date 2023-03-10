@@ -43,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\FrmCopyFun.cs">
       <SubType>Form</SubType>
     </Compile>

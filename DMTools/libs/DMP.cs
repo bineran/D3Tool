@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DMTools.libs
 {
@@ -18,15 +19,16 @@ namespace DMTools.libs
             obj = Type.GetTypeFromProgID("dm.dmsoft");
             obj_object = Activator.CreateInstance(obj);
             DM = obj_object as Idmsoft;
-            //var sss=DM.Ver();
+            var sss=DM.Ver();
+          
         }
         public void ReleaseObj()
         {
-            if (obj_object != null)
-            {
-                Marshal.ReleaseComObject(obj_object);
-                obj_object = null;
-            }
+            //if (obj_object != null)
+            //{
+            //    Marshal.ReleaseComObject(obj_object);
+            //    obj_object = null;
+            //}
         }
 
         ~DMP()

@@ -11,7 +11,7 @@ namespace DMTools.Control
     public  class D3Param
     {
         public D3Param() { }
-        public Idmsoft objdm { get; set; }
+       // public Idmsoft objdm { get; set; }
         public int Handle { get; set; }
         public D3KeyCodes KeyCodes { get; set; }
         public SortedList<EnumD3, List<KeyTimeSetting>> SLTimes { get; set; }

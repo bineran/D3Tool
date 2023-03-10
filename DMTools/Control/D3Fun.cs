@@ -82,7 +82,7 @@ namespace DMTools.Control
         /// </summary>
         public bool EnabledFlag { get; set; }
 
-        public Idmsoft objdm { get { return this.d3Param.objdm; } }
+
         public int Handle { get { return this.d3Param.Handle; } }
         
 

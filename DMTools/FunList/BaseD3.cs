@@ -22,7 +22,7 @@ namespace DMTools.FunList
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
         public DMP objDMP { get; set; } = new DMP();
-        public Idmsoft objdm { get { return this.objDMP.DM; } }
+        public Idmsoft DM { get { return this.objDMP.DM; } }
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
         public D3KeyState d3KeyState { get { return d3Param.d3KeyState; } }

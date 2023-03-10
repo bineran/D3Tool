@@ -16,16 +16,15 @@ namespace DMTools.FunList
         object outY = new object();
         public virtual void Init()
         {
-      
+
             try
             {
-                if (objdm != null)
-                {
-              
-                    objdm.GetClientSize(this.Handle, out width, out height);
-                    D3W = Convert.ToInt32(width);
-                    D3H = Convert.ToInt32(height);
-                }
+
+             
+                this.DM.GetClientSize(this.Handle, out width, out height);
+                D3W = Convert.ToInt32(width);
+                D3H = Convert.ToInt32(height);
+
             }
             catch (Exception ex) { log.Error(ex); }
         }
@@ -35,7 +34,7 @@ namespace DMTools.FunList
         /// <param name="pointX"></param>
         /// <param name="pointY"></param>
         /// <returns></returns>
-        public Tuple<int, int> GetPointXY()
+        public Tuple<int, int> GetPointXY(Idmsoft objdm)
         {
     
             var color = objdm.GetCursorPos(out outX, out outY);
@@ -43,9 +42,9 @@ namespace DMTools.FunList
             var y = Convert.ToInt32(outY);
             return new Tuple<int, int>(x, y);
         }
-        public Tuple<int, int, int,string> GetPointRGB(int pointX, int pointY,bool print=false)
+        public Tuple<int, int, int,string> GetPointRGB(Idmsoft newdm, int pointX, int pointY,bool print=false)
         {
-            var color = objdm.GetColor(pointX, pointY);
+            var color = newdm.GetColor(pointX, pointY);
             var r = Convert.ToInt32(color.Substring(0, 2), 16);
             var g = Convert.ToInt32(color.Substring(2, 2), 16);
             var b = Convert.ToInt32(color.Substring(4, 2), 16);
@@ -57,10 +56,11 @@ namespace DMTools.FunList
         }
         public void ImageToBmp(string img)
         {
+
             var pic_nameNew = img.ToLower().Replace(".png", ".bmp");
             if (!System.IO.File.Exists(pic_nameNew))
             {
-                objdm.ImageToBmp(img, pic_nameNew);
+                DM.ImageToBmp(img, pic_nameNew);
             }
         }
         public int D3W { get; set; }
@@ -100,20 +100,21 @@ namespace DMTools.FunList
             var keyCode = ts.KeyCode;
             var sleepInt = ts.D1;
             var tagColor = ts.Str1.ToColorStrList();
-            this.GetPointRGB(x, y, true);
-            var objdm = CreateAndBindDm();
+            var newdm = CreateAndBindDm();
+            this.GetPointRGB(newdm,x, y, true);
+     
             var action = () =>
             {
-                var color = objdm.GetColor(x, y);
+                var color = newdm.GetColor(x, y);
                 if (tagColor.Contains(color))
                 {
-                    this.DMKeyPress(objdm,keyCode);
+                    this.DMKeyPress(newdm, keyCode);
                 }
             };
             StartNewForTask(action, sleepInt);
             if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
             {
-                AddStopTaskKeysUpStand();
+                AddStopTaskKeysUpStand(newdm);
             }
         }
         /// <summary>
@@ -128,8 +129,9 @@ namespace DMTools.FunList
             var key = (int)ts.KeyCode;
             var sleepInt = ts.D1;
             var tagColor = ts.Str1.ToColorStrList();
-            this.GetPointRGB(x, y,true);
             var objdm = CreateAndBindDm();
+            this.GetPointRGB(objdm,x, y,true);
+     
             var action = () =>
             {
                 var color = objdm.GetColor(x, y);
@@ -141,7 +143,7 @@ namespace DMTools.FunList
             StartNewForTask(action, sleepInt);
             if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
             {
-                AddStopTaskKeysUpStand();
+                AddStopTaskKeysUpStand(objdm);
             }
         }
         
@@ -218,7 +220,7 @@ namespace DMTools.FunList
                 StartNewForTask(action, sleepInt);
                 if(ts.KeyCode==ConvertKeys.MouseShiftLeft)
                 {
-                    AddStopTaskKeysUpStand();
+                    AddStopTaskKeysUpStand(objdm);
                 }
             }
             catch { }

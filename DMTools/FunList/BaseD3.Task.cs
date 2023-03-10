@@ -1,4 +1,5 @@
 ﻿using DMTools.Config;
+using DMTools.libs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,26 +102,26 @@ namespace DMTools.FunList
         {
             StopTaskList.Add(CreateTask(action));
         }
-        public void AddStopTaskKeysUp(Keys key)
+        public void AddStopTaskKeysUp(Idmsoft objdm, Keys key)
         {
-            AddStopTaskKeysUp((int)key);
+            AddStopTaskKeysUp(objdm,(int)key);
            
         }
-        public void AddStopTaskKeysUp(int key)
+        public void AddStopTaskKeysUp(Idmsoft objdm,int key)
         {
             StopTaskList.Add(CreateTask(() => { objdm.KeyUp(key); }));
         }
-        public void AddStopTaskKeysUpStand()
+        public void AddStopTaskKeysUpStand(Idmsoft objdm)
         {
-            AddStopTaskKeysUp(this.d3Param.KeyCodes.KeyStand);
+            AddStopTaskKeysUp( objdm, this.d3Param.KeyCodes.KeyStand);
  
         }
         
-        public void AddStopTaskLeftUp()
+        public void AddStopTaskLeftUp(Idmsoft objdm)
         {
             StopTaskList.Add(CreateTask(() => { objdm.LeftUp(); }));
         }
-        public void AddStopTaskRightUp()
+        public void AddStopTaskRightUp(Idmsoft objdm)
         {
             StopTaskList.Add(CreateTask(() => { objdm.RightUp(); }));
         }
@@ -210,6 +211,7 @@ namespace DMTools.FunList
             bool addStand = false;
             bool addLeft = false;
             bool addRight = false;
+            var objdm = CreateAndBindDm();
             foreach (var ts in list)
             {
                 if (NoMouseKey(ts.KeyCode))
@@ -217,13 +219,13 @@ namespace DMTools.FunList
                     switch (ts.keyClickType)
                     {
                         case KeyClickType.点击:
-                            KeyPress(ts);
+                            KeyPress(ts, objdm);
                             break;
                         case KeyClickType.按下:
-                            KeyDown(ts);
+                            KeyDown(ts, objdm);
                             break;
                         case KeyClickType.弹起:
-                            KeyUp(ts);
+                            KeyUp(ts, objdm);
                             break;
                     }
                 }
@@ -310,6 +312,7 @@ namespace DMTools.FunList
         public bool IsHandle{ get { return this.d3KeyState.isD3; } }
         public void AddPauseClick()
         {
+            var objdm=CreateAndBindDm();
             Action action = () =>
             {
                 if (this.d3KeyState.isPause)

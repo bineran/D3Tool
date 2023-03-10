@@ -31,8 +31,15 @@ namespace DMTools.Control
         public void Init()
         {
             IsInit = true;
-            D3Main.BindForm(this.objdm,this.handle);
+ 
             StartBackgroundTask();
+        }
+        public Idmsoft CreateAndBindDm()
+        {
+            DMP dMP = new DMP();
+            dMP.DM.SetShowErrorMsg(0);
+            D3Main.BindForm(dMP.DM, this.handle);
+            return dMP.DM;
         }
         public static void BindForm(Idmsoft objdm,int handle)
         {
@@ -152,7 +159,7 @@ namespace DMTools.Control
         public D3Param NewD3Param(SortedList<EnumD3,List< KeyTimeSetting>>   funTimes)
         {
             D3Param d3Param = new D3Param();
-            d3Param.objdm = this.objdm;
+   
             d3Param.Handle = this.handle;
             d3Param.d3KeyState = this.d3KeyState;
             d3Param.KeyCodes = this.d3KeySetting;

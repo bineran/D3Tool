@@ -48,44 +48,62 @@ namespace DMTools.Control
             Task.WaitAll(TaskBackList.ToArray());
             TaskBackList = new List<Task>();
             cs =new CancellationTokenSource();
+
             foreach (var key in alkey)
             {
+                
                 TaskBackList.Add(Task.Run(() =>
                 {
-                    while (true)
+                    try
                     {
-                        if (cs.IsCancellationRequested)
-                        { break; }
-                        
-                        if (key == this.d3KeySetting.KeyPause)
+                        var newDM = CreateAndBindDm();
+                        while (true)
                         {
-                            this.d3KeyState.SetPauseState((Keys)key, objdm.GetKeyState(key) == 1);
+
+
+                            if (key == this.d3KeySetting.KeyPause)
+                            {
+                                this.d3KeyState.SetPauseState((Keys)key, newDM.GetKeyState(key) == 1);
+                            }
+                            else
+                            {
+                                this.d3KeyState.SetState((Keys)key, newDM.GetKeyState(key) == 1);
+                            }
+
+
+                            Task.Delay(50).Wait(cs.Token);
                         }
-                        else
-                        { this.d3KeyState.SetState((Keys)key, objdm.GetKeyState(key) == 1); }
-
-
-                        Task.Delay(25).Wait();
+                    }
+                    catch 
+                    {
+                        //不记录 取消的日志
                     }
                 }, cs.Token));
             }
             TaskBackList.Add(Task.Run(() =>
             {
-                while (true)
+                try
                 {
-                    if (cs.IsCancellationRequested)
-                    { break; }
-                    var hd = objdm.GetMousePointWindow();
-                    if (hd != this.handle)
+                    var newDM = CreateAndBindDm();
+                    while (true)
                     {
-                        this.d3KeyState.isD3 = false;
-                    }
-                    else
-                    {
-                        this.d3KeyState.isD3 = true;
-                    }
+                        if (cs.IsCancellationRequested)
+                        { break; }
+                        var hd = newDM.GetMousePointWindow();
+                        if (hd != this.handle)
+                        {
+                            this.d3KeyState.isD3 = false;
+                        }
+                        else
+                        {
+                            this.d3KeyState.isD3 = true;
+                        }
 
-                    Task.Delay(25).Wait();
+                        Task.Delay(25).Wait(cs.Token);
+                    }
+                }
+                catch
+                {
                 }
             }, cs.Token));
 

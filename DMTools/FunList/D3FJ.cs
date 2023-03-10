@@ -38,7 +38,7 @@ namespace DMTools.FunList
         /// 判断是否打开储物箱
         /// </summary>
         /// <returns></returns>
-        public bool CheckCWX()
+        public bool CheckCWX(Idmsoft objdm)
         {
             List<PointCheckColor> points = new List<PointCheckColor>();
             points.AddRange(new[]{
@@ -46,14 +46,14 @@ namespace DMTools.FunList
                 new PointCheckColor(274, 93, "15ad71"),
                 new PointCheckColor(240, 71, "10ba7b")
             });
-            return CheckPointListColor(points);
+            return CheckPointListColor(objdm,points);
 
         }
         /// <summary>
         /// 赌博
         /// </summary>
         /// <returns></returns>
-        public bool CheckKLX()
+        public bool CheckKLX(Idmsoft objdm)
         {
             List<PointCheckColor> points = new List<PointCheckColor>();
             points.AddRange(new[]{
@@ -61,11 +61,11 @@ namespace DMTools.FunList
             new PointCheckColor(64,70, "240600"),
             new PointCheckColor(106,97, "240803")
             });
-            return CheckPointListColor(points);
+            return CheckPointListColor(objdm,points);
 
         }
 
-        public bool CheckPointListColor(List<PointCheckColor> points)
+        public bool CheckPointListColor(Idmsoft objdm, List<PointCheckColor> points)
         {
             List<Task<bool>   > tasks = new List<Task<bool>>();
             var ssss = "";
@@ -84,19 +84,20 @@ namespace DMTools.FunList
 
         private void D3FJ_StartEvent()
         {
-            var xy = this.GetPointXY();
-            if (this.CheckCWX() || this.CheckKLX())
+            Idmsoft objdm=CreateAndBindDm();
+            var xy = this.GetPointXY(objdm);
+            if (this.CheckCWX(objdm) || this.CheckKLX(objdm))
             {
                 AddRightClickForTask(new KeyTimeSetting() { keyClickType = KeyClickType.点击, D1 = 15 });
             }
             else
             {
-                ZBFJ();
+                ZBFJ(objdm);
             }
         
             objdm.MoveTo(xy.Item1, xy.Item2);
         }
-        public void ZBFJ()
+        public void ZBFJ(Idmsoft objdm)
         {
             foreach (var item in bagPointList)
             {
@@ -104,7 +105,7 @@ namespace DMTools.FunList
                 {
                     objdm.MoveTo(item.Value.centerX, item.Value.centerY);
                 }
-                if (isInventorySpaceEmpty(item.Key))
+                if (isInventorySpaceEmpty(objdm,item.Key))
                 {
                     continue;
                 }
@@ -117,7 +118,7 @@ namespace DMTools.FunList
                 while (true)
                 {
 
-                    if (isDialogBoXOnScreen())
+                    if (isDialogBoXOnScreen(objdm))
                     {
                         objdm.KeyPress(13);
                         Sleep(10);
@@ -126,7 +127,7 @@ namespace DMTools.FunList
                     {
                         break;
                     }
-                    if (isInventorySpaceEmpty(item.Key))
+                    if (isInventorySpaceEmpty(objdm,item.Key))
                     {
                         break;
                     }
@@ -134,7 +135,7 @@ namespace DMTools.FunList
                 }
             }
         }
-        bool isDialogBoXOnScreen()
+        bool isDialogBoXOnScreen(Idmsoft objdm)
         {
 
             int x1 = D3W / 2 - (3440 / 2 - 1655) * D3H / 1440;
@@ -142,8 +143,8 @@ namespace DMTools.FunList
 
             int x2 = D3W / 2 + (3440 / 2 - 1800) * D3H / 1440;
             int y2 = 500 * D3H / 1440;
-            var c1 = GetPointRGB(x1, y1);
-            var c2 = GetPointRGB(x2, y2);
+            var c1 = GetPointRGB(objdm,x1, y1);
+            var c2 = GetPointRGB(objdm, x2, y2);
             if (c1.Item1 > c1.Item2 && c1.Item2 > c1.Item3 && c1.Item3 < 5 && c1.Item2 < 15 && c1.Item1 > 25 && c2.Item1 > c2.Item2 && c2.Item2 > c2.Item3 && c2.Item3 < 5 && c2.Item2 < 15 && c2.Item1 > 25)
             {
                 return true;
@@ -202,13 +203,13 @@ namespace DMTools.FunList
         /// <param name="ID"></param>
         /// <param name="zone"></param>
         /// <returns></returns>
-        bool isInventorySpaceEmpty(int ID)
+        bool isInventorySpaceEmpty(Idmsoft objdm, int ID)
         {
             int _spaceSizeInnerW = 64;
             int _spaceSizeInnerH = 63;
             var m = bagPointList[ID];
 
-            var c = GetPointRGB(Convert.ToInt32(Math.Round(m.leftX + 0.2 * _spaceSizeInnerW)), Convert.ToInt32(Math.Round(m.leftY + 0.2 * _spaceSizeInnerH)));
+            var c = GetPointRGB(objdm, Convert.ToInt32(Math.Round(m.leftX + 0.2 * _spaceSizeInnerW)), Convert.ToInt32(Math.Round(m.leftY + 0.2 * _spaceSizeInnerH)));
 
 
             if (c.Item1 > 25 || c.Item2 > 25 || c.Item3 > 25)

@@ -14,6 +14,7 @@ namespace DMTools
     {
         public MyTabControl()
         {
+            this.DrawMode = TabDrawMode.OwnerDrawFixed;
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -26,6 +27,40 @@ namespace DMTools
             }
         }
 
+        protected override void OnDrawItem(DrawItemEventArgs e)
+        {
+           // e.DrawBackground();
+            try
+            {
+                var  backgroundColor = Brushes.White;
+                var fontColor = Brushes.Black;
+                var uf = this.TabPages[e.Index].Controls[0] as UserFun;
+                if (uf != null)
+                {
+                    if (!uf.d3ConfigItem.EnabledFlag)
+                    {
+                        backgroundColor = Brushes.White;
+                        fontColor = Brushes.DarkGray;
+                    }
+                }
+              
+               
+                    e.Graphics.FillRectangle(backgroundColor, e.Bounds);
+                    SizeF sz = e.Graphics.MeasureString(this.TabPages[e.Index].Text, e.Font);
+                    e.Graphics.DrawString(this.TabPages[e.Index].Text, e.Font,
+                        fontColor,
+                        e.Bounds.Left + (e.Bounds.Width - sz.Width) / 2,
+                        e.Bounds.Top + (e.Bounds.Height - sz.Height) / 2 + 1);
+                    //Rectangle rect = e.Bounds;
+                    //rect.Offset(0, -1);
+                    //rect.Inflate(0, -1);
+                    //e.Graphics.DrawRectangle(Pens.DarkGray, rect);
+                    //e.DrawFocusRectangle();
+                
+            }
+            catch
+            { }
+        }
         private TabPage GetTabPageByTab(Point point)
         {
             for (int i = 0; i < this.TabPages.Count; i++)
