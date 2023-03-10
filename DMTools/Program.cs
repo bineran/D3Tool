@@ -1,11 +1,14 @@
 using DMTools.libs;
+using DMTools.Static;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 
 namespace DMTools
 {
     internal static class Program
     {
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -15,7 +18,7 @@ namespace DMTools
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
 
-
+            //LoadResourceDll.RegistDLL();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             //处理UI线程异常
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
@@ -85,5 +88,6 @@ namespace DMTools
             sb.AppendLine("***************************************************************");
             return sb.ToString();
         }
+
     }
 }

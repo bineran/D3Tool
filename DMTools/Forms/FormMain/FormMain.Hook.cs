@@ -96,7 +96,6 @@ namespace DMTools
         }
         private void Kh_OnKeyDownEvent(object? sender, KeyEventArgs e)
         {
-          
             e.Handled = this.ProcessKey(e.KeyData);
         }
         #endregion
