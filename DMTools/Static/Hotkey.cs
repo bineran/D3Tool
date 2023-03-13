@@ -15,6 +15,7 @@ namespace DMTools.Static
         public const string HotKeyStopAll = "StopAllKey";
         public const string HotKeyReplay = "Replay";
         public const string HotKeyPtrScr = "PtrScr";
+        public const string HotKeyTestBind = "Bind";
         public static List<string> HotKeys { get; set; } = new List<string>();
         static Hotkey()
         {
@@ -55,6 +56,7 @@ namespace DMTools.Static
             _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "停止所有功能", KeyName = Hotkey.HotKeyStopAll, KeyCode = Keys.End });
             _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "录制功能", KeyName = Hotkey.HotKeyReplay, KeyCode = Keys.Pause });
             _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "截屏", KeyName = Hotkey.HotKeyPtrScr, KeyCode = Keys.PrintScreen });
+            _d3ConfigKeys.Add(new D3ConfigKey() { KeyInfo = "测试绑定", KeyName = Hotkey.HotKeyTestBind, KeyCode = Keys.F12 });
             return _d3ConfigKeys;
 
         }

@@ -1,8 +1,11 @@
-﻿using DMTools.Config;
+﻿//using Dm;
+using DMTools.Config;
+using DMTools.Control;
 using DMTools.libs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,72 +14,93 @@ namespace DMTools.FunList
 {
     public abstract partial class BaseD3 
     {
+        public  Task BuildTask(Action<Idmsoft> action, bool runStart = true)
+        {
+            DMP dMP= new DMP();
+            Idmsoft objdm = dMP.DM;
+            D3Main.BindForm(objdm, funTaskParam.Handle);
+            Task task;
+            if (funTaskParam.cancellationTokenSource != null)
+            {
+                task = new Task(() =>
+                {
+                    action(objdm);
+                }, funTaskParam.cancellationTokenSource.Token);
+            }
+            else
+            {
+                task = new Task(() =>
+                {
+                    action(objdm);
+                });
+            }
+
+            if (runStart)
+            {
+                task.Start();
+            }
+            return task;
+        }
+
+     
+        private Task CreateTask(Action action)
+        {
+            return new Task(() =>
+            {
+                try
+                { action(); }
+                catch (OperationCanceledException ex)
+                {
+                    //不记录 取消的日志
+                }
+                catch (Exception ex) { log.Error(ex); }
+            }, cs.Token);
+
+
+        }
+        private Task CreateTaskNoCS(Action action)
+        {
+            return new Task(() =>
+            {
+                try
+                { action(); }
+                catch (Exception ex) { log.Error(ex); }
+            });
+        }
         private Task StartNewTask(Action action)
         {
-
-            var t= Task.Factory.StartNew(() =>
-            {
-                try
-                {
-                    action();
-                }
-                catch (OperationCanceledException ex)
-                {
-                    //不记录 取消的日志
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
-            }, cs.Token);
-            return t;
-
+            var task = CreateTask(action);
+            task.Start();
+            return task;
         }
-        private Task StartNewForTask(Action action,int sleep, bool checkPause = true,bool checkHandle=true)
+        private Task StartNewForTask(Action action, int sleep, bool checkPause = true, bool checkHandle = true)
         {
-
-            var t = Task.Factory.StartNew(() =>
+            var actionFor = () =>
             {
-                try
+                if (sleep < 1)
                 {
-                    while (true)
+                    return;
+                }
+                while (true)
+                {
+                    if (checkHandle && !this.d3KeyState.isD3)
                     {
-                        if (checkHandle && !this.d3KeyState.isD3)
-                        {
-                            Sleep(50);
-                            continue;
-                        }
-                        if (checkPause && this.d3KeyState.isPause)
-                        {
-                            Sleep(50);
-                            continue;
-                        }
-                      
-                        action();
-                        Sleep(sleep);
+                        Sleep(50);
+                        continue;
                     }
-                }
-                catch (OperationCanceledException ex)
-                {
-                    //不记录 取消的日志
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
-            }, cs.Token);
-            
-            return t;
+                    if (checkPause && this.d3KeyState.isPause)
+                    {
+                        Sleep(50);
+                        continue;
+                    }
 
+                    action();
+                    Sleep(sleep);
+                }
+            };
+            return StartNewTask(actionFor);
         }
-        /// <summary>
-        /// 执行一个TASK并将他加入到StartTaskList
-        /// </summary>
-        /// <param name="action"></param>
-        public void AddStartTask(Action action)
-        {
-            StartTaskList.Add(StartNewTask(action));
-        }
+       
 
         public void Sleep(int Sleep)
         {
@@ -94,77 +118,16 @@ namespace DMTools.FunList
             }
 
         }
-        /// <summary>
-        /// 执行一个TASK并将他加入到StartTaskList
-        /// </summary>
-        /// <param name="action"></param>
-        public void AddStopTask(Action action)
-        {
-            StopTaskList.Add(CreateTask(action));
-        }
-        public void AddStopTaskKeysUp(Idmsoft objdm, Keys key)
-        {
-            AddStopTaskKeysUp(objdm,(int)key);
-           
-        }
-        public void AddStopTaskKeysUp(Idmsoft objdm,int key)
-        {
-            StopTaskList.Add(CreateTask(() => { objdm.KeyUp(key); }));
-        }
-        public void AddStopTaskKeysUpStand(Idmsoft objdm)
-        {
-            AddStopTaskKeysUp( objdm, this.d3Param.KeyCodes.KeyStand);
- 
-        }
-        
-        public void AddStopTaskLeftUp(Idmsoft objdm)
-        {
-            StopTaskList.Add(CreateTask(() => { objdm.LeftUp(); }));
-        }
-        public void AddStopTaskRightUp(Idmsoft objdm)
-        {
-            StopTaskList.Add(CreateTask(() => { objdm.RightUp(); }));
-        }
+       
 
 
-        private Task CreateTask(Action action)
-        {
-            return new Task(() =>
-            {
-                try
-                { action(); }
-                catch (Exception ex) { log.Error(ex); }
-            });
-
-        }
-        private Task CreateForTask(Action action,int sleepTime,bool checkHandle=true)
-        {
-            return new Task(() =>
-            {
-                try
-                {
-                    while (true)
-                    { 
-                        if(checkHandle && !this.IsHandle)
-                        {
-                            Sleep(50);
-                            continue;
-                        }
-                        action();
-                        Sleep(sleepTime);
-                    }
-                  }
-                catch (Exception ex) { log.Error(ex); }
-            });
-
-        }
         public void StartKeyDown()
         {
             var list = this.Times.Where(r => r.keyClickType == KeyClickType.按下
              && r.KeyCode > 0 && r.Rank == 0).ToList();
             foreach (var kt in list)
             {
-                if (NoMouseKey(kt.KeyCode))
+                if (ConvertKeys.NoMouseKey(kt.KeyCode))
                     AddKeyDownForTask(kt.KeyCode);
                 else if (kt.KeyCode == ConvertKeys.MouseLeft)
                 {
@@ -183,49 +146,40 @@ namespace DMTools.FunList
         public void StartKeyPress()
         {
             var list = this.Times.Where(r => r.keyClickType == KeyClickType.点击
-             && r.KeyCode > 0 && r.Rank == 0 && NoMouseKey(r.KeyCode)).ToList();
+             && r.KeyCode > 0 && r.Rank == 0).ToList();
             foreach (var kt in list)
             {
-                if (NoMouseKey(kt.KeyCode))
-                    AddKeyPressForTask(kt);
-                else if (kt.KeyCode == ConvertKeys.MouseLeft)
-                {
-                    AddLeftClickForTask(kt);
-                }
-                else if (kt.KeyCode == ConvertKeys.MouseRight)
-                {
-                    AddRightClickForTask(kt);
-                }
-                else if (kt.KeyCode == ConvertKeys.MouseShiftLeft)
-                {
-                    AddShiftLeftClickForTask(kt);
-                }
+                AddKeyPressForTask(kt);
             }
         }
 
         public void StartKeyRank()
         {
-
-            var list = this.Times.Where(r => r.keyClickType != KeyClickType.不做操作
-             && r.KeyCode > 0 && r.Rank > 0).OrderBy(r => r.Rank);
+            var objdm = this.CreateDM();
+             var list = this.Times.Where(r => r.keyClickType != KeyClickType.不做操作
+             && r.KeyCode > 0 && r.Rank > 0).OrderBy(r => r.Rank).ToList();
             bool addStand = false;
             bool addLeft = false;
             bool addRight = false;
-            var objdm = CreateAndBindDm();
+ 
+            Sleep(150);
             foreach (var ts in list)
             {
-                if (NoMouseKey(ts.KeyCode))
+                if (ConvertKeys.NoMouseKey(ts.KeyCode))
                 {
                     switch (ts.keyClickType)
                     {
                         case KeyClickType.点击:
-                            KeyPress(ts, objdm);
+                            objdm.KeyPress((int)ts.KeyCode);
+                            Sleep(ts.D1);
                             break;
                         case KeyClickType.按下:
-                            KeyDown(ts, objdm);
+                            objdm.KeyDown((int)ts.KeyCode);
+                            Sleep(ts.D1);
                             break;
                         case KeyClickType.弹起:
-                            KeyUp(ts, objdm);
+                            objdm.KeyUp((int)ts.KeyCode);
+                            Sleep(ts.D1);
                             break;
                     }
                 }
@@ -312,7 +266,7 @@ namespace DMTools.FunList
         public bool IsHandle{ get { return this.d3KeyState.isD3; } }
         public void AddPauseClick()
         {
-            var objdm=CreateAndBindDm();
+            var objdm = CreateDM();
             Action action = () =>
             {
                 if (this.d3KeyState.isPause)
@@ -323,54 +277,7 @@ namespace DMTools.FunList
            StartTaskList.Add(StartNewForTask(action,50,false));
         }
 
-        public void StartPointColor()
-        {
-            var kl = this.Times.Where(r => r.keyClickType == KeyClickType.颜色匹配点击
-             && 0 <= r.Int1 && r.Int1 <= D3W
-             && 0 <= r.Int2 && r.Int2 <= D3H
-             && r.KeyCode > 0
-             && r.Str1.ToColors().Count > 0
-             && r.D1 > 0
-             );
-            foreach (var k in kl)
-            {
-                AddPointColorTask(k);
-            }
-        }
-        public void StartPointNoColor()
-        {
-            var kl = this.Times.Where(r => r.keyClickType == KeyClickType.颜色不匹配点击
-             && 0 <= r.Int1 && r.Int1 <= D3W
-             && 0 <= r.Int2 && r.Int2 <= D3H
-             && r.KeyCode > 0
-             && r.Str1.ToColors().Count > 0
-             && r.D1 > 0
-             );
-            foreach (var k in kl)
-            {
-                AddPointNoColorTask(k);
-            }
-        }
-        public void StartImageTask()
-        {
-            var kl = this.Times.Where(r => 
-            (r.keyClickType == KeyClickType.图片找到点击
-            || r.keyClickType== KeyClickType.图片未找到点击)
-             && 0 <= r.Int1 && r.Int1 <= D3W
-             && 0 <= r.Int2 && r.Int2 <= D3H
-             && 0 <= r.Int3 && r.Int3 <= D3W
-             && 0 <= r.Int4 && r.Int4 <= D3H
-             && r.KeyCode > 0
-             && r.Str1.TrimLength() > 0
-             && r.D1 > 0
-             );
 
-            foreach (var k in kl)
-            {
-
-                AddImageClickTask(k,k.keyClickType== KeyClickType.图片找到点击);
-            }
-        }
 
     }
 }

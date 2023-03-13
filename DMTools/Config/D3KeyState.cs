@@ -39,6 +39,14 @@ namespace DMTools.Config
                 this.isPause = value;
             }
         }
+        public bool this[int key]
+        {
+            get
+            {
+                return this[(Keys)key];
+            }
+        }
+    
         public bool this[Keys k]
         {
             get

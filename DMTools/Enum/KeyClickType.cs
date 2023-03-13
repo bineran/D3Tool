@@ -37,6 +37,10 @@ namespace DMTools
         /// <summary>
         /// 图片未找到点击
         /// </summary>
-        图片未找到点击 = 70
+        图片未找到点击 = 70,
+        /// <summary>
+        /// 调试
+        /// </summary>
+        调试 = 99
     }
 }

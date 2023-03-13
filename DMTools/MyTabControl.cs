@@ -32,14 +32,22 @@ namespace DMTools
            // e.DrawBackground();
             try
             {
-                var  backgroundColor = Brushes.White;
+                var  backgroundColor = Brushes.GreenYellow;
                 var fontColor = Brushes.Black;
+                if (this.SelectedIndex == e.Index)
+                {
+                    backgroundColor = Brushes.BlueViolet;
+                }
                 var uf = this.TabPages[e.Index].Controls[0] as UserFun;
                 if (uf != null)
                 {
                     if (!uf.d3ConfigItem.EnabledFlag)
                     {
                         backgroundColor = Brushes.White;
+                        if (this.SelectedIndex == e.Index)
+                        {
+                            backgroundColor = Brushes.BlueViolet;
+                        }
                         fontColor = Brushes.DarkGray;
                     }
                 }

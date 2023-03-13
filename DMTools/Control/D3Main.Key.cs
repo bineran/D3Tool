@@ -1,5 +1,6 @@
 ﻿using DMTools.Config;
 using DMTools.FunList;
+using DMTools.libs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace DMTools.Control
         /// </summary>
         public void StartBackgroundTask()
         {
-            List<int> alkey = new List<int>();
+           List<int> alkey = new List<int>();
             alkey.Add(this.d3KeySetting.KeyPause);
             alkey.Add(this.d3KeySetting.KeyStand);
             var funlist=this.FunList.Where(r => r.EnabledFlag);
@@ -31,7 +32,7 @@ namespace DMTools.Control
                 foreach (var times in fun.d3Param.SLTimes.Values)
                 {
                     var ts = times.Where(r => r.keyClickType == KeyClickType.按下
-                     && r.KeyCode > 0 && BaseD3.NoMouseKey(r.KeyCode));
+                     && r.KeyCode > 0 && ConvertKeys.NoMouseKey(r.KeyCode));
                     foreach (var t in ts)
                     {
                         if (!alkey.Contains((int)t.KeyCode))
@@ -45,51 +46,56 @@ namespace DMTools.Control
            
 
             cs.Cancel();
-            Task.WaitAll(TaskBackList.ToArray());
+            if (TaskBackList.Count > 0)
+            {
+                Task.WaitAll(TaskBackList.ToArray());
+            }
+          
             TaskBackList = new List<Task>();
             cs =new CancellationTokenSource();
 
+            //alkey.Clear();
             foreach (var key in alkey)
             {
-                
-                TaskBackList.Add(Task.Run(() =>
+
+                TaskBackList.Add(StartTask(() =>
                 {
                     try
                     {
-                        var newDM = CreateAndBindDm();
+                        var objdm = DMP.CreateDM();
                         while (true)
                         {
 
 
                             if (key == this.d3KeySetting.KeyPause)
                             {
-                                this.d3KeyState.SetPauseState((Keys)key, newDM.GetKeyState(key) == 1);
+                                this.d3KeyState.SetPauseState((Keys)key, objdm.GetKeyState(key) == 1);
                             }
                             else
                             {
-                                this.d3KeyState.SetState((Keys)key, newDM.GetKeyState(key) == 1);
+                                this.d3KeyState.SetState((Keys)key, objdm.GetKeyState(key) == 1);
                             }
 
 
                             Task.Delay(50).Wait(cs.Token);
                         }
                     }
-                    catch 
+                    catch
                     {
                         //不记录 取消的日志
                     }
-                }, cs.Token));
+                }));
             }
-            TaskBackList.Add(Task.Run(() =>
+            TaskBackList.Add(StartTask(() =>
             {
                 try
                 {
-                    var newDM = CreateAndBindDm();
+                    var objdm = DMP.CreateDM();
                     while (true)
                     {
                         if (cs.IsCancellationRequested)
                         { break; }
-                        var hd = newDM.GetMousePointWindow();
+                        var hd = objdm.GetMousePointWindow();
                         if (hd != this.handle)
                         {
                             this.d3KeyState.isD3 = false;
@@ -99,17 +105,23 @@ namespace DMTools.Control
                             this.d3KeyState.isD3 = true;
                         }
 
-                        Task.Delay(25).Wait(cs.Token);
+                        Task.Delay(50).Wait(cs.Token);
                     }
                 }
                 catch
                 {
                 }
-            }, cs.Token));
+            }));
 
            
 
         }
-        
+        public Task StartTask(Action action)
+        {
+            Task task= new Task(action, this.cs.Token);
+            task.Start();
+            return task;
     }
+    }
+
 }

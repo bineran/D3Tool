@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using NLog;
 using DMTools.Control;
 using System.Reflection.Metadata;
+using System.Runtime.Intrinsics.Arm;
+//using Dm;
+
 namespace DMTools.FunList
 {
     public  abstract partial class BaseD3 : ID3Function
@@ -21,8 +24,14 @@ namespace DMTools.FunList
         public readonly Logger log=LogManager.GetCurrentClassLogger();
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
-        public DMP objDMP { get; set; } = new DMP();
-        public Idmsoft DM { get { return this.objDMP.DM; } }
+        public DMP objDMP { get; set; } =new DMP();
+        private Idmsoft objdm { get { return this.objDMP.DM; } }
+        public Idmsoft CreateDM()
+        {
+            DMP dMP=new DMP();
+            Idmsoft objdm = dMP.DM;
+            return D3Main.BindForm(objdm, this.Handle);
+        }
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
         public D3KeyState d3KeyState { get { return d3Param.d3KeyState; } }
@@ -33,65 +42,91 @@ namespace DMTools.FunList
                 return this.d3Param.SLTimes[this.enumD3];
             }
         }
-        CancellationTokenSource cs = new CancellationTokenSource();
+        public FunTaskParam funTaskParam { get; set; }
+        public CancellationTokenSource cs { get; set; }
         
         public BaseD3(D3Param _d3Param,EnumD3 enumD3)
         {
+            this.cs=new CancellationTokenSource();
+
             this.d3Param = _d3Param;
             this.enumD3 = enumD3;
+            funTaskParam=new FunTaskParam();
+            funTaskParam.Handle = d3Param.Handle;
+            funTaskParam.sysConfig = d3Param.sysConfig;
+            funTaskParam.cancellationTokenSource = this.cs;
             Init();
         }
-        public Idmsoft CreateAndBindDm()
-        {
-            DMP dMP = new DMP();
-            dMP.DM.SetShowErrorMsg(0);
-            D3Main.BindForm(dMP.DM, this.Handle);
-            return dMP.DM;
-        }
+    
 
 
-        public bool RunState
-        {
-            get
+        public bool RunState  
+        { 
+            get 
             {
-                return StartTaskList.Count > 0;
-            }
-        }
+                if (this.StartTaskList.Count == 0)
+                    return false;
+                var x = 0;
+                for (int i=0;i< this.StartTaskList.Count;i++)
+                {
+                    var item = this.StartTaskList[i];
+                    if (item.Status == TaskStatus.RanToCompletion)
+                    {
+                        x++;
+                    }
+                }
+             
+                return this.StartTaskList.Count > 0 && this.StartTaskList.Count!=x; 
+            } 
+        } 
+
+       
         public List<Task> StartTaskList { get; set; } = new List<Task>();
         public List<Task> StopTaskList { get; set; } = new List<Task>();
         public  void Stop()
         {
+            log.Info($"============Stop  begin ");
             cs.Cancel();
+            for (int i = 0; i < StartTaskList.Count; i++)
+            {
+                log.Info($"i={i}, Status:{StartTaskList[i].Status}");
+            }
             Task.WaitAll(StartTaskList.ToArray());
             StartTaskList=new List<Task>();
             if (StopTaskList.Count > 0)
             {
+                var t1=DateTime.Now;
+               // log.Info("Stop11111=====" + DateTime.Now.ToString());
                 foreach (var t in StopTaskList)
                 {
                     t.Start();
                 }
                 Task.WaitAll(StopTaskList.ToArray());
-                StopTaskList=new List<Task>();
+              //  log.Info("Stop22222=====" + DateTime.Now.ToString());
+
+                StopTaskList =new List<Task>();
             }
-
-
+            log.Info($"============Stop  end ");
         }
         public virtual void Start()
         {
+            log.Info($"============Start  begin ");
             cs.Cancel();
             Task.WaitAll(StartTaskList.ToArray());
             cs = new CancellationTokenSource();
             StartTaskList.Clear();
             StopTaskList.Clear();
-           
             if (this.StartEvent != null)
             {
-                AddStartTask(this.StartEvent);
+                var task = StartNewTask(this.StartEvent);
+                StartTaskList.Add(task);
             }
             if (this.StopEvent != null)
             {
                 AddStopTask(this.StopEvent);
+        
             }
+            log.Info($"============Start  end ");
         }
 
         /// <summary>

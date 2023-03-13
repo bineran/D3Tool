@@ -1,7 +1,9 @@
 ﻿
 
+//using Dm;
 using DMTools.Config;
 using DMTools.libs;
+using Microsoft.VisualBasic.Devices;
 using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,15 +19,17 @@ namespace DMTools.Control
     public partial class D3Main
     {
         int handle;
-       public DMP objDMP { get; set; } =new DMP();
-        public Idmsoft objdm { get { return objDMP.DM; } }
+        public DMP objDMP { get; set; }=new DMP();
+        public  Idmsoft objdm { get { return objDMP.DM; } }
+        static NLog.Logger log= NLog.LogManager.GetCurrentClassLogger();
         public D3KeyState d3KeyState { get; set; } = new D3KeyState();
         public D3KeyCodes d3KeySetting { get; set; } = new D3KeyCodes();
-
+        TaskScheduler taskScheduler;
         public D3Main(int _handle,D3KeyCodes d3KeySetting) {
             this.handle = _handle;
-            this.d3KeySetting= d3KeySetting; 
-  
+            this.d3KeySetting= d3KeySetting;
+            taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
         }
         private bool IsInit { get; set; } = false;
         public void Init()
@@ -34,38 +38,29 @@ namespace DMTools.Control
  
             StartBackgroundTask();
         }
-        public Idmsoft CreateAndBindDm()
-        {
-            DMP dMP = new DMP();
-            dMP.DM.SetShowErrorMsg(0);
-            D3Main.BindForm(dMP.DM, this.handle);
-            return dMP.DM;
-        }
-        public static void BindForm(Idmsoft objdm,int handle)
+
+        public static Idmsoft BindForm(Idmsoft objdm,int handle,string display= "normal", string mouse= "normal", string keypad= "normal",int mode=0)
         {
             try
             {
+                //if (display == "normal" && display == "normal" && display == "normal" && mode == 0)
+                //{
+                //    return;
+                //}
                 if (objdm.IsBind(handle) == 1)
                 {
                     objdm.UnBindWindow();
                 }
                 objdm.delay(50);
+                var c = objdm.BindWindow(handle, display, mouse, keypad, mode);
 
-                //long BindWindow(hwnd,display,mouse,keypad,mode)
-                var c = objdm.BindWindow(handle, "dx", "normal", "dx", 0);
-                //var c = objdm.BindWindowEx(this.Handle, "normal", "normal", "dx", "dx.public.memory",1);
-                objdm.SetKeypadDelay("dx", 0);
-                objdm.SetKeypadDelay("normal", 0);
-                objdm.SetKeypadDelay("windows", 0);
-
-                objdm.SetMouseDelay("dx", 0);
-                objdm.SetMouseDelay("normal", 0);
-                objdm.SetMouseDelay("windows", 0);
-            }catch
-            (Exception e)
+           
+            }
+            catch(Exception e)
             {
                 
             }
+            return objdm;
 
         }
         public bool RunState
@@ -113,9 +108,8 @@ namespace DMTools.Control
                 {
                     if (f != fun)
                     {
-                        if (f.OtherStopFlag)
+                        if (!f.OtherStopFlag)
                         {
-                            if (f.RunState)
                                 f.Stop();
                         }
                     }
@@ -150,16 +144,15 @@ namespace DMTools.Control
             }
             if (this.FunList.All(r => !r.RunState))
             {
-                cs.Cancel();
                 IsInit = false;
             }
             return true;
   
         }
-        public D3Param NewD3Param(SortedList<EnumD3,List< KeyTimeSetting>>   funTimes)
+        public D3Param NewD3Param(SortedList<EnumD3,List< KeyTimeSetting>>   funTimes,SysConfig sysConfig)
         {
             D3Param d3Param = new D3Param();
-   
+            d3Param.sysConfig= sysConfig;
             d3Param.Handle = this.handle;
             d3Param.d3KeyState = this.d3KeyState;
             d3Param.KeyCodes = this.d3KeySetting;
@@ -193,7 +186,7 @@ namespace DMTools.Control
                 if (enumD3s.Count > 0)
                 {
                     //strfunList[]
-                     var d3param = d3Main.NewD3Param(ts);
+                     var d3param = d3Main.NewD3Param(ts, d3Config.sysConfig);
                     D3Fun d3Fun = new D3Fun(d3param, enumD3s.ToArray());
                     d3Fun.EnabledFlag = item.EnabledFlag;
                     d3Fun.StartBeforeStopOther=item.StartBeforeStopOther;
@@ -220,8 +213,6 @@ namespace DMTools.Control
                 var p = ps.FirstOrDefault(r => r.Name == k.KeyName);
                 if (p != null)
                 {
-
-   
                     p.SetValue(d3KeySetting,(int)k.KeyCode);
                 }
             }
@@ -247,8 +238,6 @@ namespace DMTools.Control
             {
                 if(s.EnableFlag== true)
                     sl.Add(s.enumD3, s.Times);
-                
-
             }
             return sl;
         }

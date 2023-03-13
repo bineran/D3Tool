@@ -11,6 +11,7 @@ namespace DMTools
 {
     public partial class FormMain : Form
     {
+        
         public readonly Logger log = LogManager.GetCurrentClassLogger();
 
         public FormMain()

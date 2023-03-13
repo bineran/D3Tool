@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using DMTools.libs;
+using Microsoft.VisualBasic.Logging;
+using NLog.Fluent;
 
 namespace DMTools.Control
 {
     public partial class D3Fun
     {
+        NLog.Logger log= NLog.LogManager.GetCurrentClassLogger();
         public const string enumD3Name = "enumD3Name";
         public D3Param d3Param { get; set; }
         public  SortedList<EnumD3, ID3Function> slD3Function = new SortedList<EnumD3, ID3Function>();
@@ -18,7 +21,8 @@ namespace DMTools.Control
         
         public D3Fun(params EnumD3[] enumD3s)
         {
-            InitD3Function();
+     
+            InitD3Function( enumD3s);
             if (enumD3s != null)
             {
                 foreach (var e in enumD3s)
@@ -33,7 +37,7 @@ namespace DMTools.Control
         public D3Fun(D3Param _d3Param,params EnumD3[] enumD3s)
         {
             this.d3Param= _d3Param;
-            InitD3Function();
+            InitD3Function(enumD3s);
             if (enumD3s != null)
             { 
                 foreach(var e in enumD3s)
@@ -45,7 +49,7 @@ namespace DMTools.Control
                 }
             }
         }
-        public void InitD3Function()
+        public void InitD3Function(EnumD3[] enumD3s)
         {
             slD3Function = new SortedList<EnumD3, ID3Function>();
             var types = Assembly.GetAssembly(typeof(BaseD3)).GetTypes()
@@ -55,8 +59,14 @@ namespace DMTools.Control
             foreach (var t in types)
             {
                 var field = t.GetField(D3Fun.enumD3Name);
-                if (field == null) continue;
+                if (field == null)
+                    continue;
+
                 var enumD3 = (EnumD3)field.GetRawConstantValue();
+                if (!enumD3s.Contains(enumD3))
+                {
+                    continue;
+                }
                 if (!slD3Function.ContainsKey(enumD3))
                 {
                     var d3Function = Activator.CreateInstance(t, this.d3Param, enumD3) as ID3Function;
@@ -92,10 +102,12 @@ namespace DMTools.Control
         {
             if (this.RunState)
             {
+                log.Info("StartAndStop.Stop");
                 Stop();
             }
             else
             {
+                log.Info("StartAndStop.Start");
                 Start();
             }
         }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
+//using Dm;
 
 namespace DMTools.FunList
 {
@@ -24,58 +26,61 @@ namespace DMTools.FunList
             return false;
         }
 
-        public static bool NoMouseKey(Keys k)
-        {
-            if (k == ConvertKeys.MouseLeft)
-                return false;
-            else if (k == ConvertKeys.MouseRight)
-                return false;
-            else if (k == ConvertKeys.MouseShiftLeft)
-                return false;
-            return true;
-        }
+  
         /// <summary>
         /// 添加一直接住的键的TASK
         /// </summary>
         /// <param name="action"></param>
-        public void AddKeyDownForTask(Keys keys, int sleep = 100)
+        public void AddKeyDownForTask(Keys keys, int sleepTime=100)
         {
-            var objdm = CreateAndBindDm();
+            var objdm = this.CreateDM();
             int key = (int)keys;
             objdm.KeyDown(key);
-            //DateTime tmp = DateTime.Now.AddSeconds(2);
             var action = () =>
             {
                 if(this.d3KeyState.isPause || !this.d3KeyState.isD3)
                 {
                     objdm.KeyUp(key);
-                    Sleep(sleep);
+                    Sleep(sleepTime);
                     return;
                 }
-              
-                //if (tmp < DateTime.Now)
-                //{
-                //   // objdm.KeyDown(key);
-                //    tmp = DateTime.Now.AddSeconds(2);
-                //}
+                //return;
                 if (!this.d3KeyState[keys])
                 {
                     objdm.KeyDown(key);
                 }
             };
-            StartTaskList.Add(StartNewForTask(action, sleep,false,false));
-            AddStopTaskKeysUp(objdm,key);
+            StartTaskList.Add(StartNewForTask(action, sleepTime, false,false));
+            AddStopTaskKeysUp(key);
         }
         public void AddKeyPressForTask(KeyTimeSetting ts)
         {
         
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
-                var  objdm = CreateAndBindDm();
+         
                 int key = (int)ts.KeyCode;
+                var objdm=CreateDM();
                 var action = () =>
                 {
-                    objdm.KeyPress(key);
+             
+                    switch (ts.KeyCode)
+                    {
+                        case ConvertKeys.MouseLeft:
+                            objdm.LeftClick();
+                            break;
+                        case ConvertKeys.MouseRight:
+                            objdm.RightClick();
+                            break;
+                        case ConvertKeys.MouseShiftLeft:
+                            objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                            objdm.LeftClick();
+                            objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                            break;
+                        default:
+                            objdm.KeyPress(key);
+                            break;
+                    }
                 };
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
@@ -86,7 +91,7 @@ namespace DMTools.FunList
           
             if (ts.Rank == 0  && ts.KeyCode== ConvertKeys.MouseLeft && ts.keyClickType == KeyClickType.按下)
             {
-                var objdm = CreateAndBindDm();
+                var objdm = CreateDM();
                 // DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.LeftDown();
                 var action = () =>
@@ -108,17 +113,17 @@ namespace DMTools.FunList
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep,false, false));
-                AddStopTaskLeftUp(objdm);
+                AddStopTaskLeftUp();
             }
         }
         public void AddRightDownForTask(KeyTimeSetting ts, int sleep = 100)
         {
          
-            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseRight && ts.keyClickType == KeyClickType.按下)
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseRight && ts.keyClickType == KeyClickType.按下 && sleep>0)
             {
-                var objdm = CreateAndBindDm();
-                //DateTime tmp = DateTime.Now.AddSeconds(2);
+                var objdm = CreateDM();
                 objdm.RightDown();
+           
                 var action = () =>
                 {
                     if (this.d3KeyState.isPause || !this.d3KeyState.isD3)
@@ -127,28 +132,22 @@ namespace DMTools.FunList
                         Sleep(sleep);
                         return;
                     }
-                    //if (tmp < DateTime.Now)
-                    //{
-                    //    objdm.RightDown();
-                    //    tmp = DateTime.Now.AddSeconds(2);
-                    //}
                     if (!this.d3KeyState.isRight)
                     {
                         objdm.RightDown();
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep, false, false));
-                AddStopTaskRightUp(objdm);
+                AddStopTaskRightUp();
             }
         }
 
         public void AddShiftLeftDownForTask(KeyTimeSetting ts, int sleep = 100)
         {
           
-            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.按下)
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.按下  && sleep > 0)
             {
-                var objdm = CreateAndBindDm();
-                // DateTime tmp = DateTime.Now.AddSeconds(2);
+                var objdm = CreateDM();
                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                 objdm.LeftDown();
                 var action = () =>
@@ -160,28 +159,26 @@ namespace DMTools.FunList
                         Sleep(sleep);
                         return;
                     }
-                    //if (tmp < DateTime.Now)
-                    //{
-                    //    objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
-                    //    objdm.LeftDown();
-                    //    tmp = DateTime.Now.AddSeconds(2);
-                    //}
+                    if (!this.d3KeyState[this.d3Param.KeyCodes.KeyStand])
+                    {
+                        objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                    }
                     if (!this.d3KeyState.isLeft)
                     {
                         objdm.LeftDown();
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep, false, false));
-                AddStopTaskLeftUp(objdm);
-                AddStopTaskKeysUpStand(objdm);
+                AddStopTaskLeftUp();
+                AddStopTaskKeysUpStand();
             }
         }
         public void AddShiftLeftClickForTask(KeyTimeSetting ts, int sleep = 100)
         {
          
-            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.点击)
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.点击 && sleep>0)
             {
-                var objdm = CreateAndBindDm();
+                var objdm = this.CreateDM();
                 var action = () =>
                 {
                     objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
@@ -189,15 +186,15 @@ namespace DMTools.FunList
                     objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep));
-                AddStopTaskKeysUpStand(objdm);
+                AddStopTaskKeysUpStand();
             }
         }
 
         public void AddLeftClickForTask(KeyTimeSetting ts)
         {
-            var objdm = CreateAndBindDm();
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
+                var objdm = this.CreateDM();
                 var action = () =>
                 {
                     objdm.LeftClick();
@@ -207,9 +204,9 @@ namespace DMTools.FunList
         }
         public void AddRightClickForTask(KeyTimeSetting ts)
         {
-            var objdm = CreateAndBindDm();
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
+                var objdm = this.CreateDM();
                 var action = () =>
                 {
                     objdm.RightClick();
@@ -217,20 +214,6 @@ namespace DMTools.FunList
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
-        public void KeyPress (KeyTimeSetting ts,Idmsoft objdm)
-        {
-            objdm.KeyPress((int)ts.KeyCode);
-            Sleep(ts.D1);
-        }
-        public void KeyDown(KeyTimeSetting ts, Idmsoft objdm)
-        {
-            objdm.KeyDown((int)ts.KeyCode);
-            Sleep(ts.D1);
-        }
-        public void KeyUp(KeyTimeSetting ts, Idmsoft objdm)
-        {
-            objdm.KeyUp((int)ts.KeyCode);
-            Sleep(ts.D1);
-        }
+      
     }
 }

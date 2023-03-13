@@ -1,5 +1,6 @@
 ﻿using DMTools.Config;
 using DMTools.FunList;
+using DMTools.libs;
 using DMTools.Static;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -153,14 +155,15 @@ namespace DMTools
                     if (fs != null)
                     {
                         fs.Times.Add(ts);
-                        Application.DoEvents();
-                        
+                      
                     }
-                    ts.Str4 = $"new PointCheckColor({x},{y}, \"{color}\")";
+                    //ts.Str4 = $"new PointCheckColor({x},{y}, \"{color}\")";
                 }
             }
         }
-  
+ 
+        
+
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             try
@@ -247,7 +250,14 @@ namespace DMTools
                 e.Handled=true;
             }
         }
+        public void RestDebugDataGridView()
+        {
+            this.Invoke(() =>
+            {
+                this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(this.selectKTSList);
+            });
 
+        }
         private void btnRemoveFun_Click(object sender, EventArgs e)
         {
             if (RemoveFunEvent != null)
@@ -281,15 +291,13 @@ namespace DMTools
         private void ckEnabled_CheckedChanged(object sender, EventArgs e)
         {
             SetEnabled();
-
-
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.Cancel = true;
         }
-
+        public List<KeyTimeSetting> selectKTSList=new List<KeyTimeSetting>();
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string key = checkedListBox1.SelectedItem.ToString() ?? "";
@@ -303,24 +311,24 @@ namespace DMTools
             var tmpFun = this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
             if (tmpFun == null) { return; }
 
-            List<KeyTimeSetting> al = new List<KeyTimeSetting>();
+            selectKTSList = new List<KeyTimeSetting>();
             if (tmpFun.Times != null && tmpFun.Times.Count > 0)
             {
-                al = tmpFun.Times;
+                selectKTSList = tmpFun.Times;
             }
             else
             {
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.D1 });
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.D2 });
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.D3 });
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.D4 });
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.W });
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Left });
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Right });
-                al.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D1 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D2 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D3 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D4 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.W });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Left });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Right });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
             }
-            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(al);
-            tmpFun.Times = al;
+            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+            tmpFun.Times = selectKTSList;
 
             this.toolTip1.Show(GetFunInfo(key), this.lbltools, 5000);
         }
@@ -368,6 +376,79 @@ namespace DMTools
                         MessageBox.Show(str1, str);
                     }
 
+                }
+            }
+        }
+
+        private void 粘贴调试的功能ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DMP dmp = new DMP();
+           var str= dmp.DM.GetClipboard();
+            if (str != null)
+            {
+                var al = str.FromJson<List<KeyTimeSetting>>();
+                if (al != null && al.Count > 0)
+                {
+                    selectKTSList.AddRange(al.ToArray());
+                    this.Invoke(() => {
+                        this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+                    });
+                   // dmp.DM.SetClipboard("");
+                }
+            }
+        }
+
+        private void 复制调试的功能ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<KeyTimeSetting> alkts = new List<KeyTimeSetting>();
+            foreach (DataGridViewRow dr in this.dataGridView1.SelectedRows)
+            {
+                var kts = dr.DataBoundItem as KeyTimeSetting;
+                alkts.Add(kts);
+
+            }
+            alkts = alkts.JsonCopy();
+            alkts.ForEach(r => { r.ImageFile = null; });
+            if (alkts.Count > 0)
+            {
+                DMP dMP = new DMP();
+                dMP.DM.SetClipboard(alkts.ToJson());
+            }
+        }
+
+        private void 粘贴坐标和颜色ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DMP dmp = new DMP();
+            var str = dmp.DM.GetClipboard();
+            if (str != null)
+            {
+                var al = str.FromJson<List<KeyTimeSetting>>();
+                if (al != null && al.Count == 1 && this.dataGridView1.SelectedRows.Count == 1)
+                {
+                    var kt=this.dataGridView1.SelectedRows[0].DataBoundItem as KeyTimeSetting;
+                    if(kt!=null)
+                    {
+                        var ks = al[0];
+                        kt.D1 = ks.D1;
+                        kt.D2 = ks.D2;
+                        kt.D3 = ks.D3;
+                        kt.D4 = ks.D4;
+
+                        kt.Int1 = ks.Int1;
+                        kt.Int2 = ks.Int2;
+                        kt.Int3 = ks.Int3;
+                        kt.Int4 = ks.Int4;
+                        kt.Str1 = ks.Str1;
+                        kt.Str2 = ks.Str2;
+                        kt.Str3 = ks.Str3;
+                        kt.Str4 = ks.Str4;
+                    }
+
+
+                    this.Invoke(() => {
+                        this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+                    });
+                    // dmp.DM.SetClipboard("");
                 }
             }
         }

@@ -130,8 +130,47 @@ namespace DMTools
                 throw ex;
             }
         }
-
-
+       
+        /// <summary>
+        /// 将对象转化成json字符串，并格式 化
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string ToJsonFormat(this object obj)
+        {
+            return   ConvertJsonString(obj.ToJson());
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+          private static string ConvertJsonString(string str)
+        {
+            if (str == null)
+                return null;
+            //格式化json字符串
+            JsonSerializer serializer = new JsonSerializer();
+            TextReader tr = new StringReader(str);
+            JsonTextReader jtr = new JsonTextReader(tr);
+            object obj = serializer.Deserialize(jtr);
+            if (obj != null)
+            {
+                StringWriter textWriter = new StringWriter();
+                JsonTextWriter jsonWriter = new JsonTextWriter(textWriter)
+                {
+                    Formatting = Formatting.Indented,
+                    Indentation = 4,
+                    IndentChar = ' '
+                };
+                serializer.Serialize(jsonWriter, obj);
+                return textWriter.ToString();
+            }
+            else
+            {
+                return str;
+            }
+        }
         /// <summary>  
         /// 将指定的对象序列化成 JSON 数据。  
         /// </summary>  

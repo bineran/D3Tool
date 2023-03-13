@@ -12,6 +12,7 @@ namespace DMTools.Config
     {
         [JsonIgnore]
         public List<Keys> ALLHotKeys { get; set; }=new List<Keys>();
+        public SysConfig sysConfig { get; set; }=new SysConfig();
         [JsonIgnore]
         public string FilePath { get; set; }
         /// <summary>

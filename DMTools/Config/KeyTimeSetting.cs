@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,10 @@ namespace DMTools.Config
         public int Int3 { get; set; }
         public int Int4 { get; set; }
         public Keys KeyCode { get; set; }
+        [JsonIgnore]
+        public Image ImageFile { get; set; }
+
+
     }
 
     

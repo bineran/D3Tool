@@ -66,29 +66,29 @@ namespace DMTools
             catch
             { }
         }
+        
         void mouseHook_MouseWheel(object? sender, MouseEventArgs e)
         {
             try
             {
-                if (e.Delta == 120)
-                {
-                    //向上
-                    if ((DateTime.Now - S_Time).TotalSeconds > 0.6)
-                    {
-                        S_Time = DateTime.Now;
-                        this.ProcessKey(Keys.Control | Keys.PageUp);
-                    }
-                }
-                else
-                {
-                    //向下
-                    if ((DateTime.Now - X_Time).TotalSeconds > 0.6)
-                    {
-                        X_Time = DateTime.Now;
-                        this.ProcessKey(Keys.Control | Keys.PageDown);
 
+                    if (e.Delta == 120)
+                    {
+                        if ((DateTime.Now - S_Time).TotalSeconds > 1.5)
+                        {
+                            S_Time = DateTime.Now;
+                            this.ProcessKey(Keys.Control | Keys.PageUp);
+                        }
                     }
-                }
+                    else
+                    {
+                        if ((DateTime.Now - X_Time).TotalSeconds > 1.5)
+                        {
+                            X_Time = DateTime.Now;
+                            this.ProcessKey(Keys.Control | Keys.PageDown);
+                        }
+                    }
+                
             }
             catch
             { }
@@ -96,7 +96,7 @@ namespace DMTools
         }
         private void Kh_OnKeyDownEvent(object? sender, KeyEventArgs e)
         {
-            e.Handled = this.ProcessKey(e.KeyData);
+          this.ProcessKey(e.KeyData);
         }
         #endregion
     }

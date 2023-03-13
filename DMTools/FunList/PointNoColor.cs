@@ -10,7 +10,7 @@ namespace DMTools.FunList
 {
     [KeyName(@"如果指定时点颜色不是配置的颜色，则按键
 类型：点击
-文本1：2e3238    颜色，可以通过微信截图去找指定点的颜色和位置
+文本1：2e3238    ffffff-202020|000000-000000"" 这个表示白色偏色为202020,和黑色偏色为000000
 整数1：pointX,整数2：pointY
 ")]
     public class PointNoColor : BaseD3
@@ -25,6 +25,7 @@ namespace DMTools.FunList
 
         private void Pause_StartEvent()
         {
+
            var kl= this.Times.Where(r => r.keyClickType== KeyClickType.点击 
             && 0<=r.Int1  && r.Int1 <=D3W
             && 0 <= r.Int2 && r.Int2 <= D3H
@@ -34,7 +35,7 @@ namespace DMTools.FunList
             );
             foreach (var k in kl)
             {
-                AddPointNoColorTask(k);
+                AddPointColorTask(k, false);
             }
             
         }

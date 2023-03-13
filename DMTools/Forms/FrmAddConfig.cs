@@ -45,16 +45,35 @@ namespace DMTools.Forms
 
 
         }
+        public static void RemoveDebugData(D3Config d3Config)
+        {
+            d3Config.DebugTimes = new List<KeyTimeSetting>();
+            d3Config.d3ConfigItems.ForEach(
+               r =>
+               {
+                   r.d3ConfigFuns.ForEach(f =>
+                   {
+                       var kts = f.Times.Where(t => t.keyClickType == KeyClickType.调试).ToList();
+                       kts.ForEach(kt => f.Times.Remove(kt));
+
+                   });
+               }
+            );
+
+        }
         public static bool SaveConfig(D3Config d3Config, bool isAdd = false)
         {
-            var r = d3Config.ToJson();
+            RemoveDebugData(d3Config);
+       
+            
+            var r = d3Config.ToJsonFormat();
             var path = Application.StartupPath + "Config";
             if (!System.IO.Directory.Exists(path))
             {
                 System.IO.Directory.CreateDirectory(path);
             }
             var filePath = path + "\\" + d3Config.ConfigName.Trim() + ".config";
-            r = ConvertJsonString(r);
+        
             if (isAdd)
             {
 
@@ -82,29 +101,6 @@ namespace DMTools.Forms
 
 
         }
-        private static string ConvertJsonString(string str)
-        {
-            //格式化json字符串
-            JsonSerializer serializer = new JsonSerializer();
-            TextReader tr = new StringReader(str);
-            JsonTextReader jtr = new JsonTextReader(tr);
-            object obj = serializer.Deserialize(jtr);
-            if (obj != null)
-            {
-                StringWriter textWriter = new StringWriter();
-                JsonTextWriter jsonWriter = new JsonTextWriter(textWriter)
-                {
-                    Formatting = Formatting.Indented,
-                    Indentation = 4,
-                    IndentChar = ' '
-                };
-                serializer.Serialize(jsonWriter, obj);
-                return textWriter.ToString();
-            }
-            else
-            {
-                return str;
-            }
-        }
+      
     }
 }

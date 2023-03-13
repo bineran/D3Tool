@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{277C282A-4188-495B-B3F2-C23F6185D074}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		..\..\..\..\Desktop\DmSoft.cs = ..\..\..\..\Desktop\DmSoft.cs
+		..\..\..\Desktop\DmSoft.cs = ..\..\..\Desktop\DmSoft.cs
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMTools", "DMTools\DMTools.csproj", "{72389F3B-08C5-4C78-8B4C-420769D6A4DB}"

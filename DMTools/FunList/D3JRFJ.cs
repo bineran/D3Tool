@@ -14,13 +14,13 @@ namespace DMTools.FunList
 {
 
     [KeyName("建议1920*1080 打开他分解对话框，并点击分解按钮后执行")]
-    public class D3FJ:BaseD3
+    public class D3JRFJ : BaseD3
     {
-       public  const EnumD3 enumD3Name = EnumD3.分解传奇;
+       public  const EnumD3 enumD3Name = EnumD3.记录背包的物品;
 
        private SortedList<int, BagPoint> bagPointList=new SortedList<int, BagPoint>();
 
-        public D3FJ(D3Param d3Param, EnumD3 enumD3) : base(d3Param, enumD3)
+        public D3JRFJ(D3Param d3Param, EnumD3 enumD3) : base(d3Param, enumD3)
         {
             this.StartEvent += D3FJ_StartEvent;
 
@@ -39,7 +39,7 @@ namespace DMTools.FunList
         /// 判断是否打开储物箱
         /// </summary>
         /// <returns></returns>
-        public bool CheckCWX( Idmsoft objdm )
+        public bool CheckCWX()
         {
             List<PointCheckColor> points = new List<PointCheckColor>();
             points.AddRange(new[]{
@@ -54,7 +54,7 @@ namespace DMTools.FunList
         /// 赌博
         /// </summary>
         /// <returns></returns>
-        public bool CheckKLX(Idmsoft objdm )
+        public bool CheckKLX()
         {
             List<PointCheckColor> points = new List<PointCheckColor>();
             points.AddRange(new[]{
@@ -72,11 +72,11 @@ namespace DMTools.FunList
          
             foreach (var point in points)
             {
-              
+                var objdm = this.CreateDM();
                 //var sss = objdm.GetColor(NewX(point.x), NewY(point.y));
                 tasks.Add(Task.Run(() =>
                 {
-                    var objdm = this.CreateDM();
+
                     return objdm.GetColor(NewX(point.x), NewY(point.y)) == point.color;
                 }));
                 //ssss += "," + sss;
@@ -87,21 +87,45 @@ namespace DMTools.FunList
 
         private void D3FJ_StartEvent()
         {
-            var objdm=this.CreateDM();
+            var objdm = this.CreateDM();
             var xy = this.GetPointXY(objdm);
-            if (this.CheckCWX(objdm) || this.CheckKLX(objdm))
+            if (this.CheckCWX() || this.CheckKLX())
             {
                 AddRightClickForTask(new KeyTimeSetting() { keyClickType = KeyClickType.点击, D1 = 15 });
             }
             else
             {
-                ZBFJ(objdm);
+                ZBFJSaveImage();
             }
         
             objdm.MoveTo(xy.Item1, xy.Item2);
-
         }
- 
+        public void ZBFJSaveImage()
+        {
+            var objdm=CreateDM();
+            var path = FileConfig.D3_BAG_PATH;
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+
+            foreach (var item in bagPointList)
+            {
+                if (isInventorySpaceEmpty(objdm,item.Key))
+                {
+                    continue;
+                }
+
+                var maxtime = DateTime.Now.AddMilliseconds(200);
+                var imgaize = 5;
+                var filename = "Auto-" + DateTime.Now.ToString("yyyyMMhhddmmssfff") + ".bmp";
+                objdm.Capture(item.Value.centerX - imgaize, item.Value.centerY - imgaize,
+                    item.Value.centerX + imgaize,
+                    item.Value.centerY + imgaize, path+"\\"+ filename);
+                Sleep(5);
+
+            }
+        }
 
         /// <summary>
         /// 校验是否是背包中的物品
@@ -115,7 +139,7 @@ namespace DMTools.FunList
         {
             object outx;
             object outy;
-           var ret= objdm.FindPic(x - size, y - size, x + size, y + size, picname, "000000", 0.9, 0, out outx, out outy);
+           var ret= objdm.FindPic(x - size, y - size, x + size, y + size, picname, "101010", 0.4, 0, out outx, out outy);
             if(ret > -1) {
                 return true;
             }
@@ -132,59 +156,11 @@ namespace DMTools.FunList
                 {
                     str += "|";
                 }
-                str += f.Name;
+                str += f.FullName;
             }
             return str;
         }
-        public void ZBFJ(Idmsoft objdm)
-        {
-            objdm.SetPath(FileConfig.D3_BAG_PATH);
-            var picname=BagImage();
-            foreach (var item in bagPointList)
-            {
-                if (item.Key == 1)
-                {
-                    objdm.MoveTo(item.Value.centerX, item.Value.centerY);
-                }
-                if (isInventorySpaceEmpty(objdm, item.Key))
-                {
-                    continue;
-                }
-                if (CheckNoFJImage(objdm,item.Value.centerX, item.Value.centerY, 11, picname))
-                {
-                    continue;
-                }
-
-                objdm.MoveTo(item.Value.centerX, item.Value.centerY);
-                Sleep(20);
-                objdm.LeftClick();
-                Sleep(20);
-                var maxtime = DateTime.Now.AddMilliseconds(200);
-                while (true)
-                {
-
-                    if (isDialogBoXOnScreen(objdm))
-                    {
-                        objdm.KeyPress(13);
-                        Sleep(10);
-                    }
-                    if (DateTime.Now > maxtime)
-                    {
-                        //var imgaize = 5;
-                        //var filename = "aaa";
-                        //objdm.Capture(item.Value.centerX - imgaize, item.Value.centerY - imgaize,
-                        //    item.Value.centerX + imgaize,
-                        //    item.Value.centerY + imgaize, filename);
-                        break;
-                    }
-                    if (isInventorySpaceEmpty(objdm, item.Key))
-                    {
-                        break;
-                    }
-                    Sleep(10);
-                }
-            }
-        }
+   
         bool isDialogBoXOnScreen(Idmsoft objdm)
         {
 
@@ -193,7 +169,7 @@ namespace DMTools.FunList
 
             int x2 = D3W / 2 + (3440 / 2 - 1800) * D3H / 1440;
             int y2 = 500 * D3H / 1440;
-            var c1 = GetPointRGB(objdm,  x1, y1);
+            var c1 = GetPointRGB( objdm,x1, y1);
             var c2 = GetPointRGB(objdm, x2, y2);
             if (c1.Item1 > c1.Item2 && c1.Item2 > c1.Item3 && c1.Item3 < 5 && c1.Item2 < 15 && c1.Item1 > 25 && c2.Item1 > c2.Item2 && c2.Item2 > c2.Item3 && c2.Item3 < 5 && c2.Item2 < 15 && c2.Item1 > 25)
             {
@@ -259,7 +235,7 @@ namespace DMTools.FunList
             int _spaceSizeInnerH = 63;
             var m = bagPointList[ID];
 
-            var c = GetPointRGB(objdm, Convert.ToInt32(Math.Round(m.leftX + 0.2 * _spaceSizeInnerW)), Convert.ToInt32(Math.Round(m.leftY + 0.2 * _spaceSizeInnerH)));
+            var c = GetPointRGB( objdm, Convert.ToInt32(Math.Round(m.leftX + 0.2 * _spaceSizeInnerW)), Convert.ToInt32(Math.Round(m.leftY + 0.2 * _spaceSizeInnerH)));
 
 
             if (c.Item1 > 25 || c.Item2 > 25 || c.Item3 > 25)
@@ -271,23 +247,5 @@ namespace DMTools.FunList
 
   
     }
-    public class PointCheckColor
-    {
-        public PointCheckColor(int x, int y, string color)
-        { 
-            this.color = color;
-            this.x= x;
-            this.y= y;
-        }
-        public int x { get; set; }
-        public int y { get; set; }
-        public string color { get; set; }
-    }
-    public class BagPoint
-    {
-        public int centerX { get; set; }
-        public int centerY { get; set; }
-        public int leftX { get; set; }
-        public int leftY { get; set; }
-    }
+    
 }

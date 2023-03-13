@@ -27,6 +27,9 @@ namespace DMTools
  
                 if (!d3Config.ALLHotKeys.Contains(key))
                     return false;
+
+   
+                log.Info(key);
                 ReplayProcessKey(key);
                 if ((DateTime.Now - D_Time).TotalSeconds < 0.2)
                 {
@@ -97,9 +100,71 @@ namespace DMTools
                 case Hotkey.HotKeyPtrScr:
                     PrScrnHelper.PrScrn();
                     break;
+                case Hotkey.HotKeyTestBind:
+                    TestBind();
+                    break;
             }
         }
+        public void TestBind()
+        {
+            List<string> listDisplay = new List<string>();
+            listDisplay.Add("normal");
+            listDisplay.Add("gdi");
+            listDisplay.Add("gdi2");
+            listDisplay.Add("dx2");
+            listDisplay.Add("dx3");
+            listDisplay.Add("dx");
+
+
+            List<string> listMouse = new List<string>();
+            listMouse.Add("normal");
+            listMouse.Add("windows");
+            listMouse.Add("windows2");
+            listMouse.Add("windows3");
+            listMouse.Add("dx");
+            listMouse.Add("dx2");
+            List<string> listKey = new List<string>();
+            listKey.Add("normal");
+            listKey.Add("windows");
+            listKey.Add("dx");
+            var hd = objdm.GetMousePointWindow();
+            log.Debug("BindWindow Begin=======");
+            List<string> list = new List<string>();
+            foreach (var d in listDisplay)
+            {
+                foreach (var k in listKey)
+                {
+                    foreach (var m in listMouse)
+                    {
+                        DMP dMP = new DMP();
+                        var ret = dMP.DM.BindWindow(hd, d, m, k, 0);
+                     
+                        if (ret == 1)
+                        {
+                            
+                            var str = $"Display：{d},Mouse：{m},Key：{k}";
+                            list.Add(str);
+                            dMP.DM.UnBindWindow();
+                        }
+                      
+                    }
+                }
+            }
+            if (this.tbfun.TabPages.Count > 1)
+            {
+                foreach(TabPage tb in this.tbfun.TabPages)
+                {
+                    var userKey = tb.Controls[0] as UserKey;
+                    if (userKey != null)
+                    {
+                        userKey.SetDebugText(list.ToJsonFormat());
+                    }
+                }
+               
+            }
         
+            //log.Debug("BindWindow End=======");
+        }
 
         public void SetMouseInfo()
         {
@@ -108,12 +173,8 @@ namespace DMTools
             var hd = items.Item1;
             var isbl = items.Item2;
             var strClass = items.Item3;
+            var tsPointColor = BaseD3.GetKTSPointColor(objdm);
 
-
-            object x;
-            object y;
-            objdm.GetCursorPos(out x, out y);
-            var color = objdm.GetColor(Convert.ToInt32(x), Convert.ToInt32(y));
             if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
             {
                 if (this.d3Config.WindowClass != null && this.d3Config.WindowClass.Length > 0)
@@ -123,33 +184,34 @@ namespace DMTools
                 this.d3Config.WindowClass += strClass;
                 SaveConfig();
             }
-            var r = Convert.ToInt32(color.Substring(0, 2), 16);
-            var g = Convert.ToInt32(color.Substring(2, 2), 16);
-            var b = Convert.ToInt32(color.Substring(4, 2), 16);
-            var objinfo = new
+            KeyTimeSetting tsImage= new KeyTimeSetting(); 
+            foreach (TabPage tp in this.tbfun.TabPages)
             {
-                x = x.ToString(),
-                y = y.ToString(),
-                color = new
+                var uk = tp.Controls[0] as UserKey;
+                if (uk != null)
                 {
-                    color,
-                    r,
-                    g,
-                    b
-                },
-                Handle = hd,
-                windowClass = strClass
-            };
-            log.Info(objinfo.ToJson());
-            if (this.tbfun.TabPages.Count > 1)
-            {
-                var userFun = this.tbfun.TabPages[0].Controls[0] as UserFun;
-                if (userFun != null)
-                {
-                    userFun.AddXYColor((int)x, (int)y, color, strClass);
+                   // uk.d3Config.DebugTimes.Add(tsPointColor);
+                    tsImage = BaseD3.SavePointImage(this.objdm, uk.d3Config.sysConfig);
+                   // uk.d3Config.DebugTimes.Add(tsImage);
+                   // uk.RestDebugDataGridView();
                 }
             }
-
+            if (this.tbfun.SelectedTab != null)
+            {
+                var uf = this.tbfun.SelectedTab.Controls[0] as UserFun;
+                if(uf != null )
+                {
+                    tsPointColor.keyClickType = KeyClickType.调试;
+                    tsImage.keyClickType = KeyClickType.调试;
+                    uf.selectKTSList.Add(tsPointColor);
+                    uf.selectKTSList.Add(tsImage);
+                    uf.RestDebugDataGridView();
+                }
+            }
+        }
+        public void RestDebugDataGridBind()
+        {
+           
         }
         public void StopAll()
         {
