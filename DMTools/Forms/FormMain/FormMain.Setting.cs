@@ -141,13 +141,17 @@ namespace DMTools
         {
             if (this.d3Config == null)
                 return;
-            var index = 0;
+            var index = 1;
             foreach (TabPage tp in this.tbfun.TabPages)
             {
                 var uf = tp.Controls[0] as UserFun;
                 if (uf != null)
                 {
                     uf.d3ConfigItem.ItemRank= index++;
+                    if(tp== this.tbfun.SelectedTab && uf.d3ConfigItem.EnabledFlag)
+                    {
+                        uf.d3ConfigItem.ItemRank = 0;
+                    }
                     uf.SaveData();
                 }
             }
