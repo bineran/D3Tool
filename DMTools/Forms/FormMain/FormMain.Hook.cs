@@ -39,10 +39,13 @@ namespace DMTools
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 isRight = false;
+                this.ProcessKey(ConvertKeys.HotKeyRightUp);
+
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 isLeft = false;
+                this.ProcessKey(ConvertKeys.HotKeyLeftUp);
             }
             return;
             // MessageBox.Show("mouseHook_MouseUp");
@@ -56,11 +59,13 @@ namespace DMTools
                     ReplayMouseEventArgs(e);
 
                     isRight = true;
+                    this.ProcessKey(ConvertKeys.HotKeyRightDown);
                 }
                 else if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
                     ReplayMouseEventArgs(e);
                     isLeft = true;
+                    this.ProcessKey(ConvertKeys.HotKeyLeftDown);
                 }
             }
             catch

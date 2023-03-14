@@ -139,15 +139,15 @@ Str1 药的图片，不要太大
 
                 while (true)
                 {
-                    var byteStr = objdm.ReadData(this.Handle, address1, 8 * 8);
+                    //var byteStr = objdm.ReadData(this.Handle, address1, 8 * 8);
 
-                    var bytes = byteStr.HexStringToByteArray();
-                    var tagList = GetMemoryData<TagStat>(bytes, 8);
+                    //var bytes = byteStr.HexStringToByteArray();
+                    //var tagList = GetMemoryData<TagStat>(bytes, 8);
 
-                    var items = ConvertCache(tagList);
+                    //var items = ConvertCache(tagList);
 
 
-                    //var items = mainWindow.GetLifeStatu();
+                    var items = mainWindow.GetLifeStatu();
                     if (items.Item1 * 100.0 / items.Item2 <= ts.D1)
                     {
                         FindeYS(ts, objdm, allpic);

@@ -145,6 +145,22 @@ namespace DMTools.FunList
                 {
                     AddShiftLeftDownForTask(kt);
                 }
+                else if (kt.KeyCode == ConvertKeys.MouseShiftLeft)
+                {
+                    AddShiftLeftDownForTask(kt);
+                }
+                else if (kt.KeyCode == ConvertKeys.MouseShiftLeft)
+                {
+                    AddShiftLeftDownForTask(kt);
+                }
+                else if (kt.KeyCode == ConvertKeys.HotKeyRightWhereShiftDown)
+                {
+                    AddWhereRightDownShiftForTask(kt,25);
+                }
+                else if (kt.KeyCode == ConvertKeys.HotKeyLeftWhereShiftDown)
+                {
+                    AddWhereLeftDownShiftForTask(kt,25);
+                }
             }
         }
         public void StartKeyPress()

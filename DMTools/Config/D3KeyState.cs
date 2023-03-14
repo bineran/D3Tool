@@ -46,7 +46,7 @@ namespace DMTools.Config
                 return this[(Keys)key];
             }
         }
-    
+
         public bool this[Keys k]
         {
             get

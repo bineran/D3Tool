@@ -117,6 +117,7 @@ namespace DMTools.Control
             }
             fun.StartAndStop();
         }
+
         public bool ProcessKeys(Keys keys)
         {
             var tmpList = this.FunList.Where(r => r.EnabledFlag &&( r.HotKey1 == keys || r.HotKey2 == keys)).ToList();

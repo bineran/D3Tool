@@ -17,6 +17,7 @@ namespace DMTools
 {
     public partial class FormMain
     {
+        public SortedList<Keys, bool> slKeys = new SortedList<Keys, bool>();
         public bool ProcessKey(Keys key)
         {
             try
@@ -25,14 +26,25 @@ namespace DMTools
                 {
                     return false;
                 }
- 
+
                 if (!d3Config.ALLHotKeys.Contains(key))
                     return false;
 
-   
+                if (!slKeys.ContainsKey(key))
+                {
+                    slKeys.Add(key, false);
+                }
+                if (slKeys[key] == true)
+                {
+                    return false;
+                }
+                slKeys[key] = true;
+
+
+
                 log.Info(key);
                 ReplayProcessKey(key);
-                if ((DateTime.Now - D_Time).TotalSeconds < 0.2)
+                if ((DateTime.Now - D_Time).TotalSeconds < 0.05)
                 {
                     return false;
                 }
@@ -41,19 +53,22 @@ namespace DMTools
                 if (ck != null)
                 {
                     ProcessSysKey(ck);
-
+                    slKeys[key] = false;
                     return true;
                 }
 
                 ProcessFunKey(d3Config, key);
+                slKeys[key] = false;
                 return true;
             }
             catch (Exception ex)
             {
+                slKeys[key] = false;
                 log.Error(ex);
             }
             return false;
         }
+
 
 
         void ProcessFunKey(D3Config d3Config, Keys keys)

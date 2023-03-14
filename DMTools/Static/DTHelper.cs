@@ -35,6 +35,8 @@ namespace DMTools.Static
             #region code
             dt.Rows.Add("向下滚", Keys.Control | Keys.PageDown);
             dt.Rows.Add("向上滚", Keys.Control | Keys.PageUp);
+            dt.Rows.Add("左键按下", ConvertKeys.HotKeyLeftDown);
+            dt.Rows.Add("右键按下", ConvertKeys.HotKeyRightDown);
             dt.Rows.Add("~", 192);
             dt.Rows.Add("G1(ctrl + / )", Keys.Control | Keys.Divide);
             dt.Rows.Add("G2(ctrl + * )", Keys.Control | Keys.Multiply);
@@ -148,7 +150,8 @@ namespace DMTools.Static
             dt.Rows.Add("左键", ConvertKeys.MouseLeft);
             dt.Rows.Add("右键", ConvertKeys.MouseRight);
             dt.Rows.Add("原地左键", ConvertKeys.MouseShiftLeft);
-           
+            dt.Rows.Add("左键↓shift↑", ConvertKeys.HotKeyLeftWhereShiftDown);
+            dt.Rows.Add("右键↓shift↑", ConvertKeys.HotKeyRightWhereShiftDown);
 
             dt.Rows.Add("Q", 81);
             dt.Rows.Add("E", 69);

@@ -214,6 +214,63 @@ namespace DMTools.FunList
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
-      
+        public void AddWhereRightDownShiftForTask(KeyTimeSetting ts, int sleep = 100)
+        {
+
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.HotKeyRightWhereShiftDown && ts.keyClickType == KeyClickType.按下 && sleep > 0)
+            {
+                var objdm = this.CreateDM();
+                var action = () =>
+                {
+                    if (this.d3Param.d3KeyState.isRight)
+                    {
+                        if (!this.d3Param.d3KeyState[this.d3Param.KeyCodes.KeyStand])
+                        {
+                            objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                        }
+                    
+                    }
+                    else
+                    {
+                        if (this.d3Param.d3KeyState[this.d3Param.KeyCodes.KeyStand])
+                        {
+                            objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                        }
+                       
+                    }
+                };
+                StartTaskList.Add(StartNewForTask(action, sleep));
+                AddStopTaskKeysUp(Keys.Alt);
+                AddStopTaskKeysUp(Keys.Control);
+                AddStopTaskKeysUp(Keys.Right);
+                AddStopTaskKeysUpStand();
+            }
+        }
+
+        public void AddWhereLeftDownShiftForTask(KeyTimeSetting ts, int sleep = 100)
+        {
+
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.HotKeyLeftWhereShiftDown && ts.keyClickType == KeyClickType.按下 && sleep > 0)
+            {
+                var objdm = this.CreateDM();
+                var action = () =>
+                {
+                    if (this.d3Param.d3KeyState.isLeft)
+                    {
+                        objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                    }
+                    else
+                    {
+                        objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                    }
+                };
+                StartTaskList.Add(StartNewForTask(action, sleep));
+                AddStopTaskKeysUp(Keys.Alt);
+                AddStopTaskKeysUp(Keys.Control);
+                AddStopTaskKeysUp(Keys.Left);
+                AddStopTaskKeysUpStand();
+            }
+        }
+
     }
 }
