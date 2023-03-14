@@ -279,33 +279,32 @@ namespace DMTools
            
         }
 
-        private string GetFunInfo(string str)
+        private string GetFunInfo(EnumD3 enumD3)
         {
-            if (Enum.TryParse(str, out EnumD3 enumD3))
+
+            var types = Assembly.GetAssembly(typeof(BaseD3)).GetTypes()
+               .Where(r => r.BaseType == typeof(BaseD3) && !r.IsInterface
+                                       && !r.IsAbstract);
+            foreach (var t in types)
             {
-                var types = Assembly.GetAssembly(typeof(BaseD3)).GetTypes()
-                   .Where(r => r.BaseType == typeof(BaseD3) && !r.IsInterface
-                                           && !r.IsAbstract);
-                foreach (var t in types)
+                var field = t.GetField("enumD3Name");
+                if (field == null) continue;
+                var enumD3tmp = (EnumD3)field.GetRawConstantValue();
+                if (enumD3tmp == enumD3)
                 {
-                    var field = t.GetField("enumD3Name");
-                    if (field == null) continue;
-                    var enumD3tmp = (EnumD3)field.GetRawConstantValue();
-                    if (enumD3tmp == enumD3)
+
+                    var ca = t.CustomAttributes.FirstOrDefault(r => r.AttributeType == typeof(KeyNameAttribute));
+                    if (ca != null)
                     {
-
-                        var ca = t.CustomAttributes.FirstOrDefault(r => r.AttributeType == typeof(KeyNameAttribute));
-                        if (ca != null)
-                        {
-                            var ka = t.GetCustomAttribute<KeyNameAttribute>();
-                            if (ka != null)
-                              return ka.Name;
-                        }
-
-                        break;
+                        var ka = t.GetCustomAttribute<KeyNameAttribute>();
+                        if (ka != null)
+                            return ka.Name;
                     }
+
+                    break;
                 }
             }
+
             return "";
         }
         private void 查看功能说明ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -316,10 +315,10 @@ namespace DMTools
                 var fun = this.dataGridView2.CurrentRow.DataBoundItem as Funitem;
                 if(fun != null)
                 {
-                    var str1 = GetFunInfo(fun.ToString());
+                    var str1 = GetFunInfo(fun.enumD3);
                     if (str1.Length > 0)
                     {
-                        MessageBox.Show(str1, fun.ToString());
+                        MessageBox.Show(str1, Enum.GetName(typeof(EnumD3), fun.enumD3));
                     }
 
                 }
@@ -489,6 +488,10 @@ namespace DMTools
             tmpFun.Times = selectKTSList;
 
            // this.toolTip1.Show(GetFunInfo(key), this.lbltools, 10000);
+        }
+
+        private void dataGridView1_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
         }
     }
 }

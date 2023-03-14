@@ -64,6 +64,8 @@
             this.粘贴坐标2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.Column17 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.查看功能说明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -80,8 +82,6 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.Column17 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip3.SuspendLayout();
@@ -134,6 +134,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(641, 430);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
+            this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             // 
             // Column1
@@ -354,6 +355,21 @@
             this.dataGridView2.TabIndex = 4;
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
             // 
+            // Column17
+            // 
+            this.Column17.DataPropertyName = "isSelect";
+            this.Column17.HeaderText = "";
+            this.Column17.Name = "Column17";
+            this.Column17.Width = 35;
+            // 
+            // Column18
+            // 
+            this.Column18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column18.DataPropertyName = "enumD3";
+            this.Column18.HeaderText = "功能列表";
+            this.Column18.Name = "Column18";
+            this.Column18.ReadOnly = true;
+            // 
             // contextMenuStrip2
             // 
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -500,21 +516,6 @@
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "启动时先停其它功能";
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // Column17
-            // 
-            this.Column17.DataPropertyName = "isSelect";
-            this.Column17.HeaderText = "";
-            this.Column17.Name = "Column17";
-            this.Column17.Width = 35;
-            // 
-            // Column18
-            // 
-            this.Column18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column18.DataPropertyName = "enumD3";
-            this.Column18.HeaderText = "功能列表";
-            this.Column18.Name = "Column18";
-            this.Column18.ReadOnly = true;
             // 
             // UserFun
             // 

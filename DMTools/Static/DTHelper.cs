@@ -150,9 +150,9 @@ namespace DMTools.Static
             dt.Rows.Add("左键", ConvertKeys.MouseLeft);
             dt.Rows.Add("右键", ConvertKeys.MouseRight);
             dt.Rows.Add("原地左键", ConvertKeys.MouseShiftLeft);
-            dt.Rows.Add("左键↓shift↑", ConvertKeys.HotKeyLeftWhereShiftDown);
-            dt.Rows.Add("右键↓shift↑", ConvertKeys.HotKeyRightWhereShiftDown);
-
+            dt.Rows.Add("左键?↓shift↓", ConvertKeys.HotKeyLeftWhereShiftDown);
+            dt.Rows.Add("右键?↓shift↓", ConvertKeys.HotKeyRightWhereShiftDown);
+            //"↑"
             dt.Rows.Add("Q", 81);
             dt.Rows.Add("E", 69);
             dt.Rows.Add("R", 82);
