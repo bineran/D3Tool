@@ -240,9 +240,7 @@ namespace DMTools.FunList
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep));
-                AddStopTaskKeysUp(Keys.Alt);
-                AddStopTaskKeysUp(Keys.Control);
-                AddStopTaskKeysUp(Keys.Right);
+
                 AddStopTaskKeysUpStand();
             }
         }
@@ -265,9 +263,7 @@ namespace DMTools.FunList
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep));
-                AddStopTaskKeysUp(Keys.Alt);
-                AddStopTaskKeysUp(Keys.Control);
-                AddStopTaskKeysUp(Keys.Left);
+
                 AddStopTaskKeysUpStand();
             }
         }

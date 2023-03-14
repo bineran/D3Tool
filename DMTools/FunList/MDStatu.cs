@@ -29,7 +29,7 @@ Str1 药的图片，不要太大
         public MDStatu(D3Param d3Param, EnumD3 enumD3) : base(d3Param, enumD3)
         {
             this.StartEvent += MDStatu_StartEvent;
-            //mainWindow;= new MainWindow();
+            mainWindow= new MainWindow();
         }
 
         public List<T> GetMemoryData<T>(byte[] bytes, int structSize)
