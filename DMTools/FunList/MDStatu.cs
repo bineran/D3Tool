@@ -4,8 +4,10 @@ using DMTools.libs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static DMTools.Stats;
 
 namespace DMTools.FunList
 {
@@ -23,21 +25,64 @@ Str1 药的图片，不要太大
         public const EnumD3 enumD3Name = EnumD3.魔电血量;
 
         private SortedList<int, BagPoint> bagPointList = new SortedList<int, BagPoint>();
-        MainWindow mainWindow = new MainWindow();
+        MainWindow mainWindow;
         public MDStatu(D3Param d3Param, EnumD3 enumD3) : base(d3Param, enumD3)
         {
             this.StartEvent += MDStatu_StartEvent;
-
+            //mainWindow;= new MainWindow();
         }
 
+        public List<T> GetMemoryData<T>(byte[] bytes, int structSize)
+        {
+
+            T[] structure = new T[bytes.Length/structSize];
+
+            byte[] buffer = new byte[structSize];
+            int structureIndex = 0;
+            for (int i = 0; i < bytes.Length; i += structSize)
+            {
+                Buffer.BlockCopy(bytes, i, buffer, 0, structSize);
+
+                GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+                structure[structureIndex] = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+                handle.Free();
+
+                structureIndex++;
+            }
+           
+            return new List<T>(structure);
+        }
+      
+        private Tuple<int,int> ConvertCache(List<TagStat> al)
+        {
+             int[] cacheStats = new int[8];
+            for (int i = 0; i < al.Count; i++)
+            {
+                int wStatIndex = (int)al[i].wStatIndex;
+                if (wStatIndex < 1024)
+                {
+                    int dwStatValue = al[i].dwStatValue;
+                    int num2 = wStatIndex;
+                    if (num2 >= 6 && num2 <= 11)
+                    {
+                        cacheStats[ wStatIndex] += dwStatValue / 256;
+                    }
+                    else
+                    {
+                        cacheStats[ wStatIndex] += dwStatValue;
+                    }
+                }
+            }
+            return new Tuple<int, int>(cacheStats[6], cacheStats[7]);
+        }
         private void MDStatu_StartEvent()
         {
             var objdm = this.CreateDM();
 
             //0x6fab0000
-    
-            //var address1 = "[[<D2Client.dll>+0011BBFC]+5C]+48";
 
+            var address1 = "[[[<D2Client.dll>+0011BBFC]+5C]+48]";
+  
             //var sss = objdm.GetModuleBaseAddr(this.Handle, "D2Client.dll");
             //var sssdfsdfs=new IntPtr(sss);
             //var num1 = objdm.READ(this.Handle, address1, 0);
@@ -90,10 +135,19 @@ Str1 药的图片，不要太大
                 {
                     return;
                 }
-              
-                while(true)
+
+
+                while (true)
                 {
-                    var items = mainWindow.GetLifeStatu();
+                    var byteStr = objdm.ReadData(this.Handle, address1, 8 * 8);
+
+                    var bytes = byteStr.HexStringToByteArray();
+                    var tagList = GetMemoryData<TagStat>(bytes, 8);
+
+                    var items = ConvertCache(tagList);
+
+
+                    //var items = mainWindow.GetLifeStatu();
                     if (items.Item1 * 100.0 / items.Item2 <= ts.D1)
                     {
                         FindeYS(ts, objdm, allpic);

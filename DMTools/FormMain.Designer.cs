@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbAdd = new System.Windows.Forms.ToolStripButton();
@@ -43,6 +44,7 @@
             this.另存方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmbfile = new System.Windows.Forms.ToolStripComboBox();
             this.保存方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -94,13 +96,13 @@
             // tsbhide
             // 
             this.tsbhide.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbhide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbhide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbhide.Image = ((System.Drawing.Image)(resources.GetObject("tsbhide.Image")));
             this.tsbhide.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbhide.Name = "tsbhide";
-            this.tsbhide.Size = new System.Drawing.Size(72, 22);
+            this.tsbhide.Size = new System.Drawing.Size(23, 22);
             this.tsbhide.Text = "隐蒧主界面";
-            this.tsbhide.Visible = false;
+            this.tsbhide.Click += new System.EventHandler(this.tsbhide_Click);
             // 
             // tbfun
             // 
@@ -174,6 +176,12 @@
             this.保存方案ToolStripMenuItem.Text = "保存方案";
             this.保存方案ToolStripMenuItem.Click += new System.EventHandler(this.保存方案ToolStripMenuItem_Click);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "BineranDM";
+            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -182,6 +190,7 @@
             this.Controls.Add(this.tbfun);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -212,5 +221,6 @@
         private ToolStripComboBox cmbfile;
         private ToolStripMenuItem 保存方案ToolStripMenuItem;
         private ToolStripButton toolStripButton1;
+        private NotifyIcon notifyIcon1;
     }
 }

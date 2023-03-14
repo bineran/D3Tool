@@ -10,6 +10,20 @@ namespace DMTools
 {
     public static class Ex_Cloass
     {
+        public static byte[] HexStringToByteArray(this string hex)
+        {
+            hex = hex.Replace(" ", "");
+            // Remove "0x" at the start of the string.
+            if (hex.StartsWith("0x"))
+            {
+                hex = hex.Substring(2);
+            }
+
+            return Enumerable.Range(0, hex.Length)
+                             .Where(x => x % 2 == 0)
+                             .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                             .ToArray();
+        }
         public static int newWidth(this int x, int newWidth=1920, int orgWidth = 1920)
         {
 

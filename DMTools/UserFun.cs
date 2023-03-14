@@ -26,16 +26,23 @@ namespace DMTools
         static UserFun() {
             dtkey = DTHelper.TableList[DataTableType.HotKey];
         }
-         
+        private class Funitem
+        {
+            public EnumD3 enumD3 { get; set; } = EnumD3.默认;
+            public bool isSelect { get; set; } = false;
+        }
+        private List<Funitem> FunItems { get; set; }
         public UserFun(D3ConfigItem d3ConfigItem)
         {
             InitializeComponent();
             this.dataGridView1.AutoGenerateColumns = false;
-            this.checkedListBox1.Items.Clear();
+            this.dataGridView2.AutoGenerateColumns = false;
+            FunItems=new List<Funitem>();
+
             foreach (EnumD3 hs1 in Enum.GetValues(typeof(EnumD3)))
             {
                 if (hs1 != EnumD3.默认)
-                    this.checkedListBox1.Items.Add(hs1.ToString());
+                    FunItems.Add(new Funitem() { enumD3 = hs1, isSelect = false });
             }
             Column2.DataSource = Enum.GetValues(typeof(KeyClickType));
             Column2.ValueType = typeof(KeyClickType);
@@ -58,26 +65,20 @@ namespace DMTools
             this.comboBox2.SelectedValue = d3ConfigItem.HotKey2;
             this.ckEnabled.DataBindings.Add("Checked", d3ConfigItem, "EnabledFlag");
 
-            this.checkedListBox1.ClearSelected();
-            bool issetSelect = false;
-            for (int i = 0; i < this.checkedListBox1.Items.Count; i++)
-            {
-                this.checkedListBox1.SetItemChecked(i, false);
-                var cItem = this.checkedListBox1.Items[i];
-                Enum.TryParse(cItem.ToString(), out EnumD3 cenumd3);
-                if (d3ConfigItem.d3ConfigFuns != null && d3ConfigItem.d3ConfigFuns.Any(r=>r.enumD3== cenumd3 && r.EnableFlag))
-                {
-                    if (!issetSelect)
-                    {
-                        this.checkedListBox1.SelectedIndex = i;
-                        issetSelect = true;
-                    }
+           
+            FunItems.ForEach(r=>r.isSelect=false);
 
-                    this.checkedListBox1.SetItemChecked(i, true);
+            bool issetSelect = false;
+            for (int i = 0; i < this.FunItems.Count; i++)
+            {
+                var enumD3 = this.FunItems[i].enumD3;
+                if (d3ConfigItem.d3ConfigFuns != null && d3ConfigItem.d3ConfigFuns.Any(r=>r.enumD3== enumD3 && r.EnableFlag))
+                {
+                    this.FunItems[i].isSelect = true;
                 }
             }
-            if (this.checkedListBox1.SelectedIndex < 0)
-                this.checkedListBox1.SelectedIndex = 0;
+            var al=this.FunItems.OrderByDescending(r => r.isSelect).ThenBy(r=>r.enumD3).ToList();
+            this.dataGridView2.DataSource = new BindingList<Funitem>(al);
 
 
 
@@ -94,10 +95,10 @@ namespace DMTools
             if (this.d3ConfigItem != null)
             {
                 SortedList<string, List<KeyTimeSetting>> alfn1 = new SortedList<string, List<KeyTimeSetting>>();
-                foreach (var c in this.checkedListBox1.Items)
+                foreach (var c in this.FunItems)
                 {
-                    var key = c.ToString();
-                    Enum.TryParse(key, out EnumD3 cenumd3);
+                    var cenumd3=c.enumD3;
+
                    var tmpFun= this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == cenumd3);
                     if (tmpFun != null)
                     {
@@ -109,7 +110,7 @@ namespace DMTools
                           r.Str3.TrimLength() > 0 || r.Str4.TrimLength() > 0 || r.keyClickType != KeyClickType.不做操作)
                             .ToList();
                         tmpFun.Times = alkey;
-                        tmpFun.EnableFlag = this.checkedListBox1.CheckedItems.Contains(c);
+                        tmpFun.EnableFlag = c.isSelect;
                     }
                   
                     
@@ -137,31 +138,6 @@ namespace DMTools
             
         }
 
-        public void AddXYColor(int x,int y,string color,string strClass)
-        {
-  
-            if(this.checkedListBox1.SelectedItem!= null)
-            {
-                var key=this.checkedListBox1.SelectedItem.ToString();
-                if (Enum.TryParse(key, out EnumD3 enumD3))
-                { 
-                    KeyTimeSetting ts = new KeyTimeSetting();
-                    ts.Int1 = x; ts.Int2 = y;
-                    ts.Str1 = color;
-                    ts.keyClickType = KeyClickType.不做操作;
-                    ts.KeyCode = Keys.NumPad0;
-                    ts.Str4 = strClass;
-                    var fs= this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
-                    if (fs != null)
-                    {
-                        fs.Times.Add(ts);
-                      
-                    }
-                    //ts.Str4 = $"new PointCheckColor({x},{y}, \"{color}\")";
-                }
-            }
-        }
- 
         
 
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -286,7 +262,7 @@ namespace DMTools
             this.comboBox1.Enabled = ckEnabled.Checked;
             this.comboBox2.Enabled = ckEnabled.Checked;
             this.dataGridView1.Enabled = ckEnabled.Checked;
-            this.checkedListBox1.Enabled = ckEnabled.Checked;
+            this.dataGridView2.Enabled = ckEnabled.Checked;
         }
         private void ckEnabled_CheckedChanged(object sender, EventArgs e)
         {
@@ -300,37 +276,7 @@ namespace DMTools
         public List<KeyTimeSetting> selectKTSList=new List<KeyTimeSetting>();
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string key = checkedListBox1.SelectedItem.ToString() ?? "";
-
-            if (key.TrimLength() == 0) { return; }
-            Enum.TryParse(key, out EnumD3 enumD3);
-            if (!this.d3ConfigItem.d3ConfigFuns.Any(r => r.enumD3 == enumD3))
-            {
-                this.d3ConfigItem.d3ConfigFuns.Add(new D3ConfigFun() { EnableFlag = false, enumD3 = enumD3 });
-            }
-            var tmpFun = this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
-            if (tmpFun == null) { return; }
-
-            selectKTSList = new List<KeyTimeSetting>();
-            if (tmpFun.Times != null && tmpFun.Times.Count > 0)
-            {
-                selectKTSList = tmpFun.Times;
-            }
-            else
-            {
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D1 });
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D2 });
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D3 });
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D4 });
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.W });
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Left });
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Right });
-                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
-            }
-            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
-            tmpFun.Times = selectKTSList;
-
-            this.toolTip1.Show(GetFunInfo(key), this.lbltools, 5000);
+           
         }
 
         private string GetFunInfo(string str)
@@ -365,15 +311,15 @@ namespace DMTools
         private void 查看功能说明ToolStripMenuItem_Click(object sender, EventArgs e)
         {
     
-            if(this.checkedListBox1.SelectedItem!=null)
+            if(this.dataGridView2.CurrentRow!=null)
             {
-                var str=this.checkedListBox1.SelectedItem.ToString();
-                if(str!=null)
+                var fun = this.dataGridView2.CurrentRow.DataBoundItem as Funitem;
+                if(fun != null)
                 {
-                    var str1 = GetFunInfo(str);
+                    var str1 = GetFunInfo(fun.ToString());
                     if (str1.Length > 0)
                     {
-                        MessageBox.Show(str1, str);
+                        MessageBox.Show(str1, fun.ToString());
                     }
 
                 }
@@ -506,6 +452,43 @@ namespace DMTools
                     // dmp.DM.SetClipboard("");
                 }
             }
+        }
+
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            if (this.dataGridView2.CurrentRow == null) return;
+            var fun = dataGridView2.CurrentRow.DataBoundItem as Funitem;
+            var key = fun.enumD3.ToString();
+
+            if (key.TrimLength() == 0) { return; }
+            Enum.TryParse(key, out EnumD3 enumD3);
+            if (!this.d3ConfigItem.d3ConfigFuns.Any(r => r.enumD3 == enumD3))
+            {
+                this.d3ConfigItem.d3ConfigFuns.Add(new D3ConfigFun() { EnableFlag = false, enumD3 = enumD3 });
+            }
+            var tmpFun = this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
+            if (tmpFun == null) { return; }
+
+            selectKTSList = new List<KeyTimeSetting>();
+            if (tmpFun.Times != null && tmpFun.Times.Count > 0)
+            {
+                selectKTSList = tmpFun.Times;
+            }
+            else
+            {
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D1 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D2 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D3 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.D4 });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.W });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Left });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Right });
+                selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
+            }
+            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+            tmpFun.Times = selectKTSList;
+
+           // this.toolTip1.Show(GetFunInfo(key), this.lbltools, 10000);
         }
     }
 }
