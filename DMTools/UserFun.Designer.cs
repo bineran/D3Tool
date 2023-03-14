@@ -63,7 +63,6 @@
             this.粘贴坐标1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.粘贴坐标2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.查看功能说明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -80,6 +79,7 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip3.SuspendLayout();
@@ -330,19 +330,6 @@
             this.panel1.Size = new System.Drawing.Size(200, 430);
             this.panel1.TabIndex = 2;
             // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.ContextMenuStrip = this.contextMenuStrip2;
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.checkedListBox1.Location = new System.Drawing.Point(0, 0);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(200, 396);
-            this.checkedListBox1.Sorted = true;
-            this.checkedListBox1.TabIndex = 0;
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
-            // 
             // contextMenuStrip2
             // 
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -490,6 +477,19 @@
             this.checkBox1.Text = "启动时先停其它功能";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.ContextMenuStrip = this.contextMenuStrip2;
+            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.checkedListBox1.Location = new System.Drawing.Point(0, 0);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(200, 396);
+            this.checkedListBox1.Sorted = true;
+            this.checkedListBox1.TabIndex = 0;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
             // UserFun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -514,7 +514,6 @@
 
         #endregion
         private GroupBox groupBox2;
-        private CheckedListBox checkedListBox1;
         private DataGridView dataGridView1;
         private GroupBox groupBox1;
         private CheckBox checkBox2;
@@ -555,5 +554,6 @@
         private DataGridViewTextBoxColumn Column14;
         private ToolStripMenuItem 粘贴坐标1ToolStripMenuItem;
         private ToolStripMenuItem 粘贴坐标2ToolStripMenuItem;
+        private CheckedListBox checkedListBox1;
     }
 }
