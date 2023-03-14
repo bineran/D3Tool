@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -173,8 +174,9 @@ namespace DMTools
             var hd = items.Item1;
             var isbl = items.Item2;
             var strClass = items.Item3;
+            Control.D3Main.BindForm(objdm, hd);
             var tsPointColor = BaseD3.GetKTSPointColor(objdm);
-
+       
             if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
             {
                 if (this.d3Config.WindowClass != null && this.d3Config.WindowClass.Length > 0)
@@ -201,12 +203,14 @@ namespace DMTools
                 var uf = this.tbfun.SelectedTab.Controls[0] as UserFun;
                 if(uf != null )
                 {
-                    tsPointColor.keyClickType = KeyClickType.调试;
-                    tsImage.keyClickType = KeyClickType.调试;
                     uf.selectKTSList.Add(tsPointColor);
                     uf.selectKTSList.Add(tsImage);
                     uf.RestDebugDataGridView();
                 }
+            }
+            if (objdm.IsBind(hd) == 1)
+            {
+                objdm.UnBindWindow();
             }
         }
         public void RestDebugDataGridBind()

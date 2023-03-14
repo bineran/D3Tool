@@ -53,7 +53,7 @@ namespace DMTools.Forms
                {
                    r.d3ConfigFuns.ForEach(f =>
                    {
-                       var kts = f.Times.Where(t => t.keyClickType == KeyClickType.调试).ToList();
+                       var kts = f.Times.Where(t => t.KeyCode == ConvertKeys.HotKeyDebug).ToList();
                        kts.ForEach(kt => f.Times.Remove(kt));
 
                    });

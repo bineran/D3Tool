@@ -66,32 +66,38 @@ namespace DMTools
             catch
             { }
         }
-        
+
+        bool isMouseWheelRun = false;
         void mouseHook_MouseWheel(object? sender, MouseEventArgs e)
         {
             try
             {
+                if (isMouseWheelRun)
+                {
+                    return;
+                }
+                isMouseWheelRun = !isMouseWheelRun;
+                if (e.Delta == 120)
+                {
+                    if ((DateTime.Now - S_Time).TotalSeconds > 0.5)
+                    {
+                        S_Time = DateTime.Now;
+                        this.ProcessKey(Keys.Control | Keys.PageUp);
+                    }
+                }
+                else
+                {
+                    if ((DateTime.Now - X_Time).TotalSeconds > 0.5)
+                    {
+                        X_Time = DateTime.Now;
+                        this.ProcessKey(Keys.Control | Keys.PageDown);
+                    }
+                }
 
-                    if (e.Delta == 120)
-                    {
-                        if ((DateTime.Now - S_Time).TotalSeconds > 1.5)
-                        {
-                            S_Time = DateTime.Now;
-                            this.ProcessKey(Keys.Control | Keys.PageUp);
-                        }
-                    }
-                    else
-                    {
-                        if ((DateTime.Now - X_Time).TotalSeconds > 1.5)
-                        {
-                            X_Time = DateTime.Now;
-                            this.ProcessKey(Keys.Control | Keys.PageDown);
-                        }
-                    }
-                
             }
             catch
             { }
+            finally { isMouseWheelRun = !isMouseWheelRun; }
 
         }
         private void Kh_OnKeyDownEvent(object? sender, KeyEventArgs e)

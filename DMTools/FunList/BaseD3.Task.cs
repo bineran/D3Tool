@@ -67,13 +67,13 @@ namespace DMTools.FunList
                 catch (Exception ex) { log.Error(ex); }
             });
         }
-        private Task StartNewTask(Action action)
+        public Task StartNewTask(Action action)
         {
             var task = CreateTask(action);
             task.Start();
             return task;
         }
-        private Task StartNewForTask(Action action, int sleep, bool checkPause = true, bool checkHandle = true)
+        public Task StartNewForTask(Action action, int sleep, bool checkPause = true, bool checkHandle = true)
         {
             var actionFor = () =>
             {
@@ -93,8 +93,12 @@ namespace DMTools.FunList
                         Sleep(50);
                         continue;
                     }
-
-                    action();
+                    try
+                    {
+                        action();
+                    }
+                    catch (Exception ex)
+                    { log.Error(ex); }
                     Sleep(sleep);
                 }
             };

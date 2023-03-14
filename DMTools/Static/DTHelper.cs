@@ -139,16 +139,17 @@ namespace DMTools.Static
             dt.Columns.Add("KeyName");
             dt.Columns.Add("KeyCode", typeof(Keys));
             #region code
-     
+            dt.Rows.Add("调试", ConvertKeys.HotKeyDebug);
             dt.Rows.Add("1", 49);
             dt.Rows.Add("2", 50);
             dt.Rows.Add("3", 51);
             dt.Rows.Add("4", 52);
             dt.Rows.Add("W", 87);
-            dt.Rows.Add("左键", Keys.Control | Keys.Left);
-            dt.Rows.Add("右键", Keys.Control | Keys.Right);
-            dt.Rows.Add("原地左键", Keys.Shift | Keys.Left);
-     
+            dt.Rows.Add("左键", ConvertKeys.MouseLeft);
+            dt.Rows.Add("右键", ConvertKeys.MouseRight);
+            dt.Rows.Add("原地左键", ConvertKeys.MouseShiftLeft);
+           
+
             dt.Rows.Add("Q", 81);
             dt.Rows.Add("E", 69);
             dt.Rows.Add("R", 82);

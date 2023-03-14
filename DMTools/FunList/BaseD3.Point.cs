@@ -66,31 +66,34 @@ namespace DMTools.FunList
         /// <returns></returns>
         public static KeyTimeSetting SavePointImage(Idmsoft objdm,SysConfig sysConfig)
         {
+
             object ox;
             object oy;
             objdm.GetCursorPos(out ox, out oy);
             int x=Convert.ToInt32(ox);
             int y=Convert.ToInt32(oy);
-            var path = Application.StartupPath + "Image\\png";
+            objdm.MoveTo(0, 0);
+            Task.Delay(100).Wait();
+            var path = FileConfig.DM_BMP_PATH;
             if (!System.IO.Directory.Exists(path))
             {
                 System.IO.Directory.CreateDirectory(path);
             }
             objdm.SetPath(path);
             var imgaize = sysConfig.image_size;
-            var filename = "Auto-"+DateTime.Now.ToString("yyyyMMddhh-mmss") + ".png";
-            objdm.CapturePng(x - imgaize, y - imgaize,
+            var filename = "Auto-"+DateTime.Now.ToString("yyyyMMdd-hhmmss") +  ".bmp";
+            objdm.Capture(x - imgaize, y - imgaize,
                         x + imgaize,
                         y + imgaize, filename);
             KeyTimeSetting ts = new KeyTimeSetting();
             ts.Str1 = filename;
-            ts.D1 = 200;
-            ts.keyClickType = KeyClickType.图片找到点击;
-            ts.Int1 = x - sysConfig.image_size - 2;
+            ts.D1 = 1000;
+            ts.keyClickType = KeyClickType.图片未找到点击;
+            ts.Int1 = x - sysConfig.image_size-2;
             ts.Int2 = y - sysConfig.image_size - 2;
             ts.Int3 = x + sysConfig.image_size + 2;
             ts.Int4 = y + sysConfig.image_size + 2;
-            ts.KeyCode = Keys.NumPad0;
+            ts.KeyCode = ConvertKeys.HotKeyDebug;
             ts.Rank = 0;
             return ts;
         }
@@ -107,8 +110,8 @@ namespace DMTools.FunList
             ts.Int1 = x; ts.Int2 = y;
             ts.D1 = 200;
             ts.Str1 = color;
-            ts.keyClickType = KeyClickType.颜色匹配点击;
-            ts.KeyCode = Keys.NumPad0;
+            ts.keyClickType = KeyClickType.颜色不匹配点击;
+            ts.KeyCode = ConvertKeys.HotKeyDebug;
             ts.Rank = 0;
 
 
@@ -166,7 +169,7 @@ namespace DMTools.FunList
                     this.DMKeyPress(objdm, keyCode);
                 }
             };
-            StartNewForTask(action, sleepInt);
+            StartTaskList.Add(StartNewForTask(action, sleepInt));
             if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
             {
                 AddStopTaskKeysUpStand();
@@ -178,7 +181,7 @@ namespace DMTools.FunList
         /// 
         /// </summary>
         /// <param name="ts"></param>
-        public void AddImageClickTask(KeyTimeSetting ts,bool imgFlag=true)
+        public void AddImageClickTask(KeyTimeSetting ts, bool imgFlag = true)
         {
 
             try
@@ -189,34 +192,31 @@ namespace DMTools.FunList
                 string allpic = "";
                 foreach (var f in files)
                 {
-                    try
-                    {
-                        var sourceFile = "";
-                        if (f.ToLower().Contains(".png"))
-                        {
-                            sourceFile = f.DmPngPath();
-                        }
-                        var newName = f.ToLower().Trim().Replace(".png", ".bmp");
-                        var tagFile = newName.DmBmpPath(); ;
 
-                        if (!File.Exists(tagFile) && File.Exists(sourceFile))
+                    var sourceFile = "";
+                    if (f.ToLower().Contains(".png"))
+                    {
+                        sourceFile = f.DmPngPath();
+                    }
+                    var newName = f.ToLower().Trim().Replace(".png", ".bmp");
+                    var tagFile = newName.DmBmpPath(); ;
+
+                    if (!File.Exists(tagFile) && File.Exists(sourceFile))
+                    {
+                        objdm.ImageToBmp(sourceFile, tagFile);
+                    }
+                    if (File.Exists(tagFile))
+                    {
+                        if (allpic.Length > 0)
                         {
-                            objdm.ImageToBmp(sourceFile, tagFile);
+                            allpic += "|" + newName;
                         }
-                        if (File.Exists(tagFile))
+                        else
                         {
-                            if (allpic.Length > 0)
-                            {
-                                allpic += "|" + newName;
-                            }
-                            else
-                            {
-                                allpic = newName;
-                            }
+                            allpic = newName;
                         }
                     }
-                    catch
-                    { }
+
                 }
                 if (allpic.Length == 0)
                 {
@@ -229,31 +229,47 @@ namespace DMTools.FunList
                 var KeyCode = ts.KeyCode;
                 var key = (int)ts.KeyCode;
                 var sleepInt = ts.D1;
+                //if (files.Length == 1)
+                //{
+                //    var tmpTagName = files[0].ToLower().Trim().Replace(".png", ".bmp").Replace(".bmp", "-tag.bmp");
+                //    if (!File.Exists(tmpTagName.DmBmpPath()))
+                //    {
+                //        //x = 0:y = 0
+                        
+                //        //objdm.Capture(x1, y1, x2, y2, tmpTagName);
+
+                //    }
+
+                //}
+
+
 
                 var action = () =>
-                {
-                    object x;
-                    object y;
-                    var ret = objdm.FindPic(x1, y1, x2, y2, allpic,this.d3Param.sysConfig.delta_color, this.d3Param.sysConfig.sim, 0, out x, out y);
-                    //int ix = 0, iy = 0;
-                    //ix = Convert.ToInt32(x);
-                    //iy = Convert.ToInt32(y);
-                    if (imgFlag && ret >= 0)
-                    {
-                        this.DMKeyPress(objdm, KeyCode);
-                    }
-                    if (!imgFlag && ret == -1)
-                    {
-                        this.DMKeyPress(objdm, KeyCode);
-                    }
-                };
-                StartNewForTask(action, sleepInt);
+                 {
+                     object x;
+                     object y;
+                     var ret = objdm.FindPic(x1, y1, x2, y2, allpic, this.d3Param.sysConfig.delta_color, this.d3Param.sysConfig.sim, 0, out x, out y);
+                     //int ix = 0, iy = 0;
+                     //ix = Convert.ToInt32(x);
+                     //iy = Convert.ToInt32(y);
+                     if (imgFlag && ret >= 0)
+                     {
+                         this.DMKeyPress(objdm, KeyCode);
+                     }
+                     if (!imgFlag && ret == -1)
+                     {
+                         this.DMKeyPress(objdm, KeyCode);
+                     }
+                 };
+                StartTaskList.Add(StartNewForTask(action, sleepInt));
                 if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
                 {
                     AddStopTaskKeysUpStand();
                 }
             }
-            catch { }
+            catch(Exception ex) {
+                log.Error(ex);
+            }
 
 
         }

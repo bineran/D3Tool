@@ -429,10 +429,7 @@ namespace DMTools
                     if(kt!=null)
                     {
                         var ks = al[0];
-                        kt.D1 = ks.D1;
-                        kt.D2 = ks.D2;
-                        kt.D3 = ks.D3;
-                        kt.D4 = ks.D4;
+
 
                         kt.Int1 = ks.Int1;
                         kt.Int2 = ks.Int2;
@@ -442,6 +439,64 @@ namespace DMTools
                         kt.Str2 = ks.Str2;
                         kt.Str3 = ks.Str3;
                         kt.Str4 = ks.Str4;
+                    }
+
+
+                    this.Invoke(() => {
+                        this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+                    });
+                    // dmp.DM.SetClipboard("");
+                }
+            }
+        }
+
+        private void 粘贴坐标1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DMP dmp = new DMP();
+            var str = dmp.DM.GetClipboard();
+            if (str != null)
+            {
+                var al = str.FromJson<List<KeyTimeSetting>>();
+                if (al != null && al.Count == 1 && this.dataGridView1.SelectedRows.Count == 1)
+                {
+                    var kt = this.dataGridView1.SelectedRows[0].DataBoundItem as KeyTimeSetting;
+                    if (kt != null)
+                    {
+                        var ks = al[0];
+
+
+                        kt.Int1 = ks.Int1;
+                        kt.Int2 = ks.Int2;
+
+                    }
+
+
+                    this.Invoke(() => {
+                        this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+                    });
+                    // dmp.DM.SetClipboard("");
+                }
+            }
+        }
+
+        private void 粘贴坐标2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DMP dmp = new DMP();
+            var str = dmp.DM.GetClipboard();
+            if (str != null)
+            {
+                var al = str.FromJson<List<KeyTimeSetting>>();
+                if (al != null && al.Count == 1 && this.dataGridView1.SelectedRows.Count == 1)
+                {
+                    var kt = this.dataGridView1.SelectedRows[0].DataBoundItem as KeyTimeSetting;
+                    if (kt != null)
+                    {
+                        var ks = al[0];
+
+
+                        kt.Int3 = ks.Int3;
+                        kt.Int4 = ks.Int4;
+
                     }
 
 
