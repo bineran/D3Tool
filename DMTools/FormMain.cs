@@ -165,21 +165,28 @@ namespace DMTools
 
         private void tsbhide_Click(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
-            {
+     
                 this.notifyIcon1.Visible = true;
                 this.Visible = false;
                 this.ShowInTaskbar = true;
-            }
+            
         }
 
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if (!this.Visible)
             {
+             
                 this.Visible = true;
                 this.notifyIcon1.Visible = false;
+                this.WindowState = lastState;
             }
+        }
+        FormWindowState lastState= FormWindowState.Normal;
+
+        private void FormMain_SizeChanged(object sender, EventArgs e)
+        {
+            lastState = this.WindowState;
         }
     }
 
