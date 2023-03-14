@@ -29,7 +29,7 @@ Str1 药的图片，不要太大
         public MDStatu(D3Param d3Param, EnumD3 enumD3) : base(d3Param, enumD3)
         {
             this.StartEvent += MDStatu_StartEvent;
-            mainWindow= new MainWindow();
+           // mainWindow= new MainWindow();
         }
 
         public List<T> GetMemoryData<T>(byte[] bytes, int structSize)
@@ -55,7 +55,7 @@ Str1 药的图片，不要太大
       
         private Tuple<int,int> ConvertCache(List<TagStat> al)
         {
-             int[] cacheStats = new int[8];
+             int[] cacheStats = new int[1024];
             for (int i = 0; i < al.Count; i++)
             {
                 int wStatIndex = (int)al[i].wStatIndex;
@@ -75,23 +75,29 @@ Str1 药的图片，不要太大
             }
             return new Tuple<int, int>(cacheStats[6], cacheStats[7]);
         }
+        public Tuple<int, int> DMReadXL(Idmsoft objdm,string address1)
+        {
+         
+
+            var byteStr = objdm.ReadData(this.Handle, address1, 8 * 8);
+
+            var bytes = byteStr.HexStringToByteArray();
+            var tagList = GetMemoryData<TagStat>(bytes, 8);
+            // log.Info($"生命:{items.Item1}/{items.Item2}");
+            return ConvertCache(tagList);
+        }
         private void MDStatu_StartEvent()
         {
             var objdm = this.CreateDM();
 
             //0x6fab0000
-
             var address1 = "[[[<D2Client.dll>+0011BBFC]+5C]+48]";
-  
-            //var sss = objdm.GetModuleBaseAddr(this.Handle, "D2Client.dll");
-            //var sssdfsdfs=new IntPtr(sss);
-            //var num1 = objdm.READ(this.Handle, address1, 0);
-            //var num2 = objdm.ReadData(this.Handle, address1, 0);
-
-            //log.Info($"生命:{num1}/{num2}");
 
 
-            var ts = this.Times.FirstOrDefault(r =>
+
+
+
+              var ts = this.Times.FirstOrDefault(r =>
             r.keyClickType== KeyClickType.点击 &&
             r.D1<=100 &&
             r.Int1>0 && r.Int2>0 &&
@@ -139,15 +145,11 @@ Str1 药的图片，不要太大
 
                 while (true)
                 {
-                    //var byteStr = objdm.ReadData(this.Handle, address1, 8 * 8);
-
-                    //var bytes = byteStr.HexStringToByteArray();
-                    //var tagList = GetMemoryData<TagStat>(bytes, 8);
-
-                    //var items = ConvertCache(tagList);
+             
+                    var items =            DMReadXL(objdm, address1);
 
 
-                    var items = mainWindow.GetLifeStatu();
+                   // var items = mainWindow.GetLifeStatu();
                     if (items.Item1 * 100.0 / items.Item2 <= ts.D1)
                     {
                         FindeYS(ts, objdm, allpic);
