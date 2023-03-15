@@ -147,7 +147,7 @@
             // 
             this.隐藏ToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.隐藏ToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.隐藏ToolStripMenuItem.Image = global::DMTools.Properties.Resources._22;
+            this.隐藏ToolStripMenuItem.Image = global::DMTools.Properties.Resources.appbmp;
             this.隐藏ToolStripMenuItem.Name = "隐藏ToolStripMenuItem";
             this.隐藏ToolStripMenuItem.Size = new System.Drawing.Size(28, 25);
             this.隐藏ToolStripMenuItem.Text = "隐藏";
