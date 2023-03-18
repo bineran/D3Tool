@@ -25,7 +25,7 @@ namespace DMTools.FunList
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
         public DMP objDMP { get; set; } =new DMP();
-        private Idmsoft objdm { get { return this.objDMP.DM; } }
+        public Idmsoft objdm { get { return this.objDMP.DM; } }
         public Idmsoft CreateDM()
         {
             DMP dMP=new DMP();
@@ -118,7 +118,7 @@ namespace DMTools.FunList
             StopTaskList.Clear();
             if (this.StartEvent != null)
             {
-                var task = StartNewTask(this.StartEvent);
+                var task = StartNewTask(this.StartEvent,true);
                 StartTaskList.Add(task);
             }
             if (this.StopEvent != null)

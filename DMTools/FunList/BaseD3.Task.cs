@@ -43,12 +43,23 @@ namespace DMTools.FunList
         }
 
      
-        private Task CreateTask(Action action)
+        /// <summary>
+        /// 是否需要初始化大漠
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="isInitDM"></param>
+        /// <returns></returns>
+        private Task CreateTask(Action action,bool isInitDM=false)
         {
             return new Task(() =>
             {
                 try
-                { action(); }
+                {
+                    if (isInitDM)
+                    {
+                        this.Init();
+                    }
+                    action(); }
                 catch (OperationCanceledException ex)
                 {
                     //不记录 取消的日志
@@ -67,9 +78,9 @@ namespace DMTools.FunList
                 catch (Exception ex) { log.Error(ex); }
             });
         }
-        public Task StartNewTask(Action action)
+        public Task StartNewTask(Action action, bool isInitDM = false)
         {
-            var task = CreateTask(action);
+            var task = CreateTask(action,  isInitDM);
             task.Start();
             return task;
         }
@@ -175,7 +186,7 @@ namespace DMTools.FunList
 
         public void StartKeyRank()
         {
-            var objdm = this.CreateDM();
+            //var objdm = this.CreateDM();
              var list = this.Times.Where(r => r.keyClickType != KeyClickType.不做操作
              && r.KeyCode > 0 && r.Rank > 0).OrderBy(r => r.Rank).ToList();
             bool addStand = false;
@@ -286,15 +297,13 @@ namespace DMTools.FunList
         public bool IsHandle{ get { return this.d3KeyState.isD3; } }
         public void AddPauseClick()
         {
-            var objdm = CreateDM();
-            Action action = () =>
+            var list = this.Times.Where(r => r.keyClickType == KeyClickType.点击
+           && r.KeyCode > 0 && r.Rank == 0).ToList();
+            foreach (var kt in list)
             {
-                if (this.d3KeyState.isPause)
-                {
-                    objdm.LeftClick();
-                }
-            };
-           StartTaskList.Add(StartNewForTask(action,50,false));
+                AddPauseKeyPressForTask(kt);
+            }
+           
         }
 
 

@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace DMTools.FunList
 {
-    [KeyName(@"按住暂停键时不停点左键，不需要配置，只需要启用功能即可
-")]
+    [KeyName(@"按住暂停键时执行点击的设置")]
     public class PauseClick : BaseD3
     {
-        public  const EnumD3 enumD3Name = EnumD3.暂停时点左键;
+        public  const EnumD3 enumD3Name = EnumD3.暂停时点击;
         public PauseClick(D3Param d3Param,EnumD3 enumD3) : base(d3Param,enumD3)
         {
            

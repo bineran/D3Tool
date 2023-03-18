@@ -24,12 +24,22 @@ namespace DMTools.FunList
         }
         private void D3Key_StartEvent()
         {
+
             StartKeyDown();
             StartKeyPress();
             this.StartKeyRank();
             StartPointColor();
             StartPointNoColor();
             StartImageTask();
+            //Test();
+        }
+        public void Test()
+        { 
+            while(true)
+            {
+                objdm.KeyPressChar("A");
+                this.Sleep(500);
+            }
         }
 
     }

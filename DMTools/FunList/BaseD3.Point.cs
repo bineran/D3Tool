@@ -21,6 +21,8 @@ namespace DMTools.FunList
 
             try
             {
+                objDMP=new DMP();
+                
                 this.objdm.SetShowErrorMsg(0);
                 D3Main.BindForm(this.objdm, this.Handle);
                 this.objdm.GetClientSize(this.Handle, out width, out height);
@@ -36,7 +38,7 @@ namespace DMTools.FunList
         /// <param name="pointX"></param>
         /// <param name="pointY"></param>
         /// <returns></returns>
-        public Tuple<int, int> GetPointXY(Idmsoft objdm)
+        public Tuple<int, int> GetPointXY()
         {
     
             var color = objdm.GetCursorPos(out outX, out outY);
@@ -44,7 +46,7 @@ namespace DMTools.FunList
             var y = Convert.ToInt32(outY);
             return new Tuple<int, int>(x, y);
         }
-        public Tuple<int, int, int,string> GetPointRGB(Idmsoft objdm,  int pointX, int pointY,bool print=false)
+        public Tuple<int, int, int,string> GetPointRGB(  int pointX, int pointY,bool print=false)
         {
             var color = objdm.GetColor(pointX, pointY);
             var r = Convert.ToInt32(color.Substring(0, 2), 16);
@@ -127,7 +129,7 @@ namespace DMTools.FunList
         {
             return y.newHeight(this.D3H);
         }
-        private void DMKeyPress(Idmsoft objdm, Keys key)
+        private void DMKeyPress( Keys key)
         {
             if (key == ConvertKeys.MouseLeft)
                 objdm.LeftClick();
@@ -154,19 +156,19 @@ namespace DMTools.FunList
             var keyCode = ts.KeyCode;
             var sleepInt = ts.D1;
             var tagColor = ts.Str1;
-            var objdm = CreateDM();
-            this.GetPointRGB(objdm,x, y, true);
+            //var objdm = CreateDM();
+            this.GetPointRGB(x, y, true);
      
             var action = () =>
             {
                 var ret = objdm.CmpColor(x, y, tagColor,this.d3Param.sysConfig.color_sim);
                 if (ret==0 && ColorFalg )
                 {
-                    this.DMKeyPress(objdm, keyCode);
+                    this.DMKeyPress( keyCode);
                 }
                 else if (ret == 1 && ColorFalg==false)
                 {
-                    this.DMKeyPress(objdm, keyCode);
+                    this.DMKeyPress( keyCode);
                 }
             };
             StartTaskList.Add(StartNewForTask(action, sleepInt));
@@ -186,7 +188,7 @@ namespace DMTools.FunList
 
             try
             {
-                var objdm = CreateDM();
+                //var objdm = CreateDM();
                 var files = ts.Str1.Split('|');
                 objdm.SetPath(FileConfig.DM_BMP_PATH);
                 string allpic = "";
@@ -254,11 +256,11 @@ namespace DMTools.FunList
                      //iy = Convert.ToInt32(y);
                      if (imgFlag && ret >= 0)
                      {
-                         this.DMKeyPress(objdm, KeyCode);
+                         this.DMKeyPress( KeyCode);
                      }
                      if (!imgFlag && ret == -1)
                      {
-                         this.DMKeyPress(objdm, KeyCode);
+                         this.DMKeyPress( KeyCode);
                      }
                  };
                 StartTaskList.Add(StartNewForTask(action, sleepInt));
