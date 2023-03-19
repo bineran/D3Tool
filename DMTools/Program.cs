@@ -30,7 +30,6 @@ namespace DMTools
             {
                 if (p.Id != Process.GetCurrentProcess().Id)
                 {
-
                     p.Kill();
 
                 }
