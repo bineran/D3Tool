@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
+using NLog.Fluent;
 //using Dm;
 
 namespace DMTools.FunList
@@ -36,19 +37,40 @@ namespace DMTools.FunList
             //var objdm = this.CreateDM();
             int key = (int)keys;
             objdm.KeyDown(key);
+
             var action = () =>
             {
                 if(this.d3KeyState.isPause || !this.d3KeyState.isD3)
                 {
-                    objdm.KeyUp(key);
+                    if (this.d3KeyState[this.d3Param.KeyCodes.KeyMove])
+                    {
+                       // log.Debug("AddKeyDownForTask   --- move1");
+                        objdm.KeyUp(key);
+                    }
                     Sleep(sleepTime);
                     return;
+                }
+                if ((int)keys == this.d3Param.KeyCodes.KeyMove)
+                {
+                    if (this.d3KeyState[this.d3Param.KeyCodes.Key1] || this.d3KeyState[this.d3Param.KeyCodes.Key2] || this.d3KeyState[this.d3Param.KeyCodes.Key3] || this.d3KeyState[this.d3Param.KeyCodes.Key4])
+                    {
+
+                        if (this.d3KeyState[this.d3Param.KeyCodes.KeyMove])
+                        {
+                            //log.Debug("AddKeyDownForTask   --- move2");
+                            objdm.KeyUp(key);
+                        }
+                        Sleep(20);
+                        return;
+                    }
                 }
                 //return;
                 if (!this.d3KeyState[keys])
                 {
+                   // log.Debug("AddKeyDownForTask   --- KeyDown");
                     objdm.KeyDown(key);
                 }
+
             };
             StartTaskList.Add(StartNewForTask(action, sleepTime, false,false));
             AddStopTaskKeysUp(key);
