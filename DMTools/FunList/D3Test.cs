@@ -11,6 +11,7 @@ using DMTools.Control;
 //using Microsoft.ML.OnnxRuntime;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Collections.Concurrent;
 //using Dm;
 
 namespace DMTools.FunList
@@ -54,6 +55,11 @@ namespace DMTools.FunList
                 }
             }
         }
+        public struct StructCapture
+        {
+            public DateTime ImageTime { get; set; }
+            public string ImageName { get; set; }
+        }
         private void D3FJ_StartEvent()
         {
             var TempPath = Application.StartupPath + "\\Temp";
@@ -66,7 +72,6 @@ namespace DMTools.FunList
             int count = 100;
             int retOK = 0;
             int retBlack = 0;
-           var st= new Stopwatch();
             //st.Start();
             //for (int i=0; i<count; i++) {
             //    //object obj1=new object();
@@ -83,39 +88,45 @@ namespace DMTools.FunList
             //st.Stop();
             //log.Info($"==========截图结束========={st.ElapsedMilliseconds}毫秒,成功数量：{retOK}张，平均一张:{st.ElapsedMilliseconds*1.0/ count}毫秒");
            // DirectXScreenCapturer dx=new DirectXScreenCapturer();
-            List <Task> tasks = new List<Task>();
-            st.Restart();
-            retOK = 0;
-            retBlack = 0;
+           
 
-
-            for (int i = 0; i < count; i++)
-            {
-
-                //object obj1=new object();
-                //object obj2=new object();
-                //retOK+= objdm.Capture(0, 0, 1920, 1080, Application.StartupPath+"Temp\\"+ i.ToString()+".bmp");
-                tasks.Add(Task.Run(() =>
+            StructCapture structCapture = new StructCapture() {  ImageTime = DateTime.Now, ImageName = "" };
+            ConcurrentStack< StructCapture > structCaptures = new ConcurrentStack< StructCapture >();
+            StartNewTask(() => {
+                while(!cs.IsCancellationRequested)
                 {
-                   objdm.Capture(0, 0, this.D3W, this.D3H, TempPath + "\\" + i.ToString() + ".bmp");
-                    //var (result, isBlackFrame, image) = dx.GetFrameImage(10);
-                    //if (result.Success )
-                    //{
-                    //    retOK += 1;
-                    //    //image.Save($@"{TempPath}\{DateTime.Now.Ticks}.jpg", ImageFormat.Jpeg);
-                    //}
-                    //if(isBlackFrame)
-                    //{
-                    //    retBlack += 1;
-                    //}
-                    //image?.Dispose();
-                }));
-                Task.Delay(10).Wait();
-            }
-            Task.WaitAll(tasks.ToArray());
-            st.Stop();
-            log.Info($"==========DX截图结束========={st.ElapsedMilliseconds}毫秒,成功:{retOK}张、黑屏:{retBlack}张、总数：{count}张，平均一张:{st.ElapsedMilliseconds * 1.0 / count}毫秒");
+                    var popCount = 10;
+                    StructCapture[] sc=new StructCapture[popCount];
+                    structCaptures.TryPopRange(sc, 0, popCount);
+                    Parallel.For(0, popCount, (i) =>
+                    {
 
+                    });
+                    this.Sleep(5);
+                }
+            });
+            StartNewTask(()=>
+            {
+                while (!cs.IsCancellationRequested)
+                {
+                    StartNewTask(() =>
+                    {
+                        var imgPath = TempPath + "\\" +  Guid.NewGuid().ToString() + ".bmp";
+                        objdm.Capture(0, 0, this.D3W, this.D3H, imgPath);
+                        DateTime t2 = DateTime.Now;
+                        if (structCapture.ImageTime < t2)
+                        {
+                            structCapture.ImageTime = t2;
+                            structCaptures.Push(new StructCapture() {  ImageTime = t2, ImageName = imgPath });
+                        }
+                        else
+                        {
+                            System.IO.File.Delete(imgPath);
+                        }
+                    });
+                    this.Sleep(5);
+                }
+            });
         }
 
     }

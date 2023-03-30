@@ -12,6 +12,7 @@ using NLog;
 using DMTools.Control;
 using System.Reflection.Metadata;
 using System.Runtime.Intrinsics.Arm;
+using System.Diagnostics;
 //using Dm;
 
 namespace DMTools.FunList
@@ -107,12 +108,14 @@ namespace DMTools.FunList
         public List<Task> StopTaskList { get; set; } = new List<Task>();
         public  void Stop()
         {
-            log.Info($"============Stop  begin ");
+            stopwatch.Stop();
+            log.Info($"------运行时长： {stopwatch.ElapsedMilliseconds * 1.0 / 1000}秒,     {stopwatch.ElapsedMilliseconds}毫秒");
+            //log.Info($"============Stop  begin ");
             cs.Cancel();
-            for (int i = 0; i < StartTaskList.Count; i++)
-            {
-                log.Info($"i={i}, Status:{StartTaskList[i].Status}");
-            }
+            //for (int i = 0; i < StartTaskList.Count; i++)
+            //{
+            //    log.Info($"i={i}, Status:{StartTaskList[i].Status}");
+            //}
             Task.WaitAll(StartTaskList.ToArray());
             StartTaskList=new List<Task>();
             if (StopTaskList.Count > 0)
@@ -128,11 +131,13 @@ namespace DMTools.FunList
 
                 StopTaskList =new List<Task>();
             }
-            log.Info($"============Stop  end ");
+            //log.Info($"============Stop  end ");
         }
+       public System.Diagnostics.Stopwatch stopwatch { get; set; }
         public virtual void Start()
         {
-            log.Info($"============Start  begin ");
+            stopwatch.Restart();
+           // log.Info($"***Start  begin ");
             cs.Cancel();
             Task.WaitAll(StartTaskList.ToArray());
             cs = new CancellationTokenSource();
@@ -148,7 +153,7 @@ namespace DMTools.FunList
                 AddStopTask(this.StopEvent);
         
             }
-            log.Info($"============Start  end ");
+           // log.Info($"====Start  end ");
         }
 
         /// <summary>
