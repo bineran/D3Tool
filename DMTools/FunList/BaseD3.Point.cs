@@ -24,7 +24,7 @@ namespace DMTools.FunList
                 objDMP=new DMP();
                 
                 this.objdm.SetShowErrorMsg(0);
-                D3Main.BindForm(this.objdm, this.Handle);
+                this.BindForm(this.objdm, this.Handle,this.d3Param.sysConfig);
                 this.objdm.GetClientSize(this.Handle, out width, out height);
                 D3W = Convert.ToInt32(width);
                 D3H = Convert.ToInt32(height);

@@ -14,6 +14,8 @@
   <ItemGroup>
     <Compile Remove="FormMain.Menu.cs" />
     <Compile Remove="FormMain.Setting.cs" />
+    <Compile Remove="FunList\D3Test.cs" />
+    <Compile Remove="FunList\DirectXScreenCapturer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +37,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

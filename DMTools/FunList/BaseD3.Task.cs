@@ -14,33 +14,7 @@ namespace DMTools.FunList
 {
     public abstract partial class BaseD3 
     {
-        public  Task BuildTask(Action<Idmsoft> action, bool runStart = true)
-        {
-            DMP dMP= new DMP();
-            Idmsoft objdm = dMP.DM;
-            D3Main.BindForm(objdm, funTaskParam.Handle);
-            Task task;
-            if (funTaskParam.cancellationTokenSource != null)
-            {
-                task = new Task(() =>
-                {
-                    action(objdm);
-                }, funTaskParam.cancellationTokenSource.Token);
-            }
-            else
-            {
-                task = new Task(() =>
-                {
-                    action(objdm);
-                });
-            }
-
-            if (runStart)
-            {
-                task.Start();
-            }
-            return task;
-        }
+       
 
      
         /// <summary>

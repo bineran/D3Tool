@@ -24,11 +24,11 @@ namespace DMTools.Control
         static NLog.Logger log= NLog.LogManager.GetCurrentClassLogger();
         public D3KeyState d3KeyState { get; set; } = new D3KeyState();
         public D3KeyCodes d3KeySetting { get; set; } = new D3KeyCodes();
-        TaskScheduler taskScheduler;
-        public D3Main(int _handle,D3KeyCodes d3KeySetting) {
+        public SysConfig sysConfig { get;init; } =new SysConfig();
+        public D3Main(int _handle,D3KeyCodes d3KeySetting, SysConfig sysConfig) {
             this.handle = _handle;
             this.d3KeySetting= d3KeySetting;
-            taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            this.sysConfig= sysConfig; 
 
         }
         private bool IsInit { get; set; } = false;
@@ -38,31 +38,9 @@ namespace DMTools.Control
  
             StartBackgroundTask();
         }
+ 
+      
 
-        public static Idmsoft BindForm(Idmsoft objdm,int handle,string display= "normal", string mouse= "normal", string keypad= "normal",int mode=0)
-        {
-            try
-            {
-                //if (display == "normal" && display == "normal" && display == "normal" && mode == 0)
-                //{
-                //    return;
-                //}
-                if (objdm.IsBind(handle) == 1)
-                {
-                    objdm.UnBindWindow();
-                }
-                objdm.delay(50);
-                var c = objdm.BindWindow(handle, display, mouse, keypad, mode);
-
-           
-            }
-            catch(Exception e)
-            {
-                
-            }
-            return objdm;
-
-        }
         public bool RunState
         {
             get
@@ -178,7 +156,7 @@ namespace DMTools.Control
             && r.d3ConfigFuns.Count > 0 && r.d3ConfigFuns.Any(p=>p.EnableFlag));
     
             var d3KeySetting = ConvertD3KeySetting(d3Config);
-            D3Main d3Main=new D3Main(hd,d3KeySetting);
+            D3Main d3Main=new D3Main(hd,d3KeySetting, d3Config.sysConfig);
           
             foreach (var  item in items)
             {

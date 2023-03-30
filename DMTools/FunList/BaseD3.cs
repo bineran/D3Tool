@@ -30,7 +30,32 @@ namespace DMTools.FunList
         {
             DMP dMP=new DMP();
             Idmsoft objdm = dMP.DM;
-            return D3Main.BindForm(objdm, this.Handle);
+            return this.BindForm(objdm, this.Handle,this.d3Param.sysConfig);
+        }
+        public  Idmsoft BindForm(Idmsoft objdm, int handle, SysConfig sysConfig)
+        {
+            try
+            {
+                //if (display == "normal" && display == "normal" && display == "normal" && mode == 0)
+                //{
+                //    return;
+                //}
+                if (objdm.IsBind(handle) == 1)
+                {
+                    objdm.UnBindWindow();
+                }
+                objdm.delay(50);
+
+                var c = objdm.BindWindow(handle, sysConfig.display, sysConfig.mouse, sysConfig.keypad, sysConfig.mode);
+
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            return objdm;
+
         }
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
