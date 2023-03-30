@@ -97,11 +97,14 @@ namespace DMTools.FunList
                 {
                     var popCount = 10;
                     StructCapture[] sc=new StructCapture[popCount];
-                    structCaptures.TryPopRange(sc, 0, popCount);
-                    Parallel.For(0, popCount, (i) =>
+                    var itemsCount= structCaptures.TryPopRange(sc, 0, popCount);
+                    if (itemsCount > 0)
                     {
+                        Parallel.For(0, itemsCount, (i) =>
+                        {
 
-                    });
+                        });
+                    }
                     this.Sleep(5);
                 }
             });
