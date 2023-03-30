@@ -67,7 +67,7 @@ namespace DMTools.FunList
                 return this.d3Param.SLTimes[this.enumD3];
             }
         }
-        public FunTaskParam funTaskParam { get; set; }
+
         public CancellationTokenSource cs { get; set; }
         
         public BaseD3(D3Param _d3Param,EnumD3 enumD3)
@@ -76,10 +76,7 @@ namespace DMTools.FunList
 
             this.d3Param = _d3Param;
             this.enumD3 = enumD3;
-            funTaskParam=new FunTaskParam();
-            funTaskParam.Handle = d3Param.Handle;
-            funTaskParam.sysConfig = d3Param.sysConfig;
-            funTaskParam.cancellationTokenSource = this.cs;
+ 
             Init();
         }
     
