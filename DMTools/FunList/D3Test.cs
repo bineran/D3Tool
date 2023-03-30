@@ -8,7 +8,7 @@ using System.Threading;
 
 using DMTools.Config;
 using DMTools.Control;
-using Microsoft.ML.OnnxRuntime;
+//using Microsoft.ML.OnnxRuntime;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 //using Dm;
@@ -82,7 +82,7 @@ namespace DMTools.FunList
             //}
             //st.Stop();
             //log.Info($"==========截图结束========={st.ElapsedMilliseconds}毫秒,成功数量：{retOK}张，平均一张:{st.ElapsedMilliseconds*1.0/ count}毫秒");
-            DirectXScreenCapturer dx=new DirectXScreenCapturer();
+           // DirectXScreenCapturer dx=new DirectXScreenCapturer();
             List <Task> tasks = new List<Task>();
             st.Restart();
             retOK = 0;
@@ -97,7 +97,7 @@ namespace DMTools.FunList
                 //retOK+= objdm.Capture(0, 0, 1920, 1080, Application.StartupPath+"Temp\\"+ i.ToString()+".bmp");
                 tasks.Add(Task.Run(() =>
                 {
-                   objdm.Capture(0, 0, 1920, 1080, TempPath + "\\" + i.ToString() + ".bmp");
+                   objdm.Capture(0, 0, this.D3W, this.D3H, TempPath + "\\" + i.ToString() + ".bmp");
                     //var (result, isBlackFrame, image) = dx.GetFrameImage(10);
                     //if (result.Success )
                     //{

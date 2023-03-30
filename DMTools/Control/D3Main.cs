@@ -98,9 +98,13 @@ namespace DMTools.Control
 
         public bool ProcessKeys(Keys keys)
         {
-            var tmpList = this.FunList.Where(r => r.EnabledFlag &&( r.HotKey1 == keys || r.HotKey2 == keys)).ToList();
+            var tmpList = this.FunList.Where(r => r.EnabledFlag &&( r.HotKey1 == keys || r.HotKey2 == keys) && r.funList.Count>0).ToList();
             if (tmpList.Count == 0)
+            {
+                log.Info("未找到可以执行的方法");
                 return false;
+            }
+      
             if(IsInit==false)
             {
                 Init();

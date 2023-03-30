@@ -14,7 +14,6 @@
   <ItemGroup>
     <Compile Remove="FormMain.Menu.cs" />
     <Compile Remove="FormMain.Setting.cs" />
-    <Compile Remove="FunList\D3Test.cs" />
     <Compile Remove="FunList\DirectXScreenCapturer.cs" />
   </ItemGroup>
 
