@@ -60,18 +60,23 @@ namespace DMTools.FunList
             public DateTime ImageTime { get; set; }
             public string ImageName { get; set; }
         }
+        public void FindLabel(StructCapture sc)
+        { 
+            
+        }
         private void D3FJ_StartEvent()
         {
             var TempPath = Application.StartupPath + "\\Temp";
+            if (!Directory.Exists(TempPath))
+            {
+                Directory.CreateDirectory(TempPath);
+            }
             DeleteFolder(TempPath);
 
             //SessionOptions sessionOptions = new SessionOptions();
             //sessionOptions.GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL;
             //sessionOptions.AppendExecutionProvider_DML(1);
             log.Info("=================截图开始================" );
-            int count = 100;
-            int retOK = 0;
-            int retBlack = 0;
             //st.Start();
             //for (int i=0; i<count; i++) {
             //    //object obj1=new object();
@@ -92,43 +97,47 @@ namespace DMTools.FunList
 
             StructCapture structCapture = new StructCapture() {  ImageTime = DateTime.Now, ImageName = "" };
             ConcurrentStack< StructCapture > structCaptures = new ConcurrentStack< StructCapture >();
-            StartNewTask(() => {
-                while(!cs.IsCancellationRequested)
+            ConcurrentStack<int>  ints = new ConcurrentStack<int>();
+            int fileCount = 0;
+            StartNewTaskToList(() => {
+                while(true)
                 {
-                    var popCount = 10;
-                    StructCapture[] sc=new StructCapture[popCount];
-                    var itemsCount= structCaptures.TryPopRange(sc, 0, popCount);
+                    var popCount = 100;
+                    StructCapture[] scs=new StructCapture[popCount];
+                    var itemsCount= structCaptures.TryPopRange(scs, 0, popCount);
                     if (itemsCount > 0)
                     {
                         Parallel.For(0, itemsCount, (i) =>
                         {
-
+                            //File.Delete(scs[i].ImageName);
                         });
                     }
-                    this.Sleep(5);
+                    this.Sleep(500);
                 }
             });
-            StartNewTask(()=>
+            StartNewTaskToList(()=>
             {
-                while (!cs.IsCancellationRequested)
+                while (true)
                 {
-                    StartNewTask(() =>
+                    StartNewTaskToList(() =>
                     {
                         var imgPath = TempPath + "\\" +  Guid.NewGuid().ToString() + ".bmp";
-                        objdm.Capture(0, 0, this.D3W, this.D3H, imgPath);
-                        DateTime t2 = DateTime.Now;
-                        if (structCapture.ImageTime < t2)
+                        if (objdm.Capture(0, 0, this.D3W, this.D3H, imgPath) > 0)
                         {
-                            structCapture.ImageTime = t2;
-                            structCaptures.Push(new StructCapture() {  ImageTime = t2, ImageName = imgPath });
+                            Interlocked.Increment(ref fileCount);
                         }
-                        else
-                        {
-                            System.IO.File.Delete(imgPath);
-                        }
+   
+                        structCaptures.Push(new StructCapture() {  ImageTime = DateTime.Now, ImageName = imgPath });
+                        ints.Push(0);
+                        
+
                     });
                     this.Sleep(5);
                 }
+            });
+            AddStopTask(() =>
+            {
+                log.Info($"==========截图结束=========执行时间：{this.stopwatch.ElapsedMilliseconds}毫秒,生成文件数量：{fileCount}张，平均每张耗时:{ Math.Round(stopwatch.ElapsedMilliseconds * 1.0 / fileCount,2)}毫秒");
             });
         }
 

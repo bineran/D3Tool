@@ -58,6 +58,12 @@ namespace DMTools.FunList
             task.Start();
             return task;
         }
+        public void StartNewTaskToList(Action action, bool isInitDM = false)
+        {
+            this.StartTaskList.Add(StartNewTask(action, isInitDM));
+
+        }
+
         public Task StartNewForTask(Action action, int sleep, bool checkPause = true, bool checkHandle = true)
         {
             var actionFor = () =>

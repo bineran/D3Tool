@@ -39,8 +39,12 @@ namespace DMTools
             // RegisterDM();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            var path = Application.StartupPath + $@"NLogs\Info\{DateTime.Now.ToString("yyyy-MM-dd")}.txt";
 
-
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
             var registerDmSoftDllResult = RegisterDmSoft.RegisterDmSoftDll();
             ApplicationConfiguration.Initialize();
             Application.Run(new FormMain());

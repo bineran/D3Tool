@@ -77,7 +77,7 @@ namespace DMTools.FunList
 
             this.d3Param = _d3Param;
             this.enumD3 = enumD3;
- 
+            stopwatch = new Stopwatch();
             Init();
         }
     
