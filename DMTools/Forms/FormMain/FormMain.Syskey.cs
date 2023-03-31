@@ -69,8 +69,10 @@ namespace DMTools
             return false;
         }
 
-
-
+        /// <summary>
+        /// 最后一次的Handle
+        /// </summary>
+        public static int LastHandle { get; private set; }
         void ProcessFunKey(D3Config d3Config, Keys keys)
         {
             try
@@ -146,6 +148,10 @@ namespace DMTools
             var hd = objdm.GetMousePointWindow();
             log.Debug("BindWindow Begin=======");
             List<string> list = new List<string>();
+            List<string> listd = new List<string>();
+            List<string> listm = new List<string>();
+            List<string> listk = new List<string>();
+
             foreach (var d in listDisplay)
             {
                 foreach (var k in listKey)
@@ -157,15 +163,32 @@ namespace DMTools
                      
                         if (ret == 1)
                         {
-                            
-                            var str = $"Display：{d},Mouse：{m},Key：{k}";
-                            list.Add(str);
+                            if (!listd.Contains(d))
+                            {
+                                listd.Add(d);
+                            }
+                            if (!listm.Contains(m))
+                            {
+                                listm.Add(m);
+                            }
+                            if (!listk.Contains(k))
+                            {
+                                listk.Add(k);
+                            }
+
+                           // var str = $"显示：{d.PadRight(8)}、鼠标：{m.PadRight(8)}、键盘：{k.PadRight(8)}";
+                           // list.Add(str);
                             dMP.DM.UnBindWindow();
                         }
                       
                     }
                 }
             }
+            list.Add("大漠绑定支持的模式");
+            list.Add($"显示:  " + string.Join("、", listd.ToArray()));
+            list.Add($"鼠标:  " + string.Join("、", listm.ToArray()));
+            list.Add($"键盘:  " + string.Join("、", listk.ToArray()));
+            list.Add("性能从高到低");
             if (this.tbfun.TabPages.Count > 1)
             {
                 foreach(TabPage tb in this.tbfun.TabPages)
@@ -173,7 +196,7 @@ namespace DMTools
                     var userKey = tb.Controls[0] as UserKey;
                     if (userKey != null)
                     {
-                        userKey.SetDebugText(list.ToJsonFormat());
+                        userKey.SetDebugText(string.Join("\r\n", list));
                     }
                 }
                
@@ -181,7 +204,31 @@ namespace DMTools
         
             //log.Debug("BindWindow End=======");
         }
+        public  Idmsoft BindForm(Idmsoft objdm, int handle, SysConfig sysConfig)
+        {
+            try
+            {
+                //if (display == "normal" && display == "normal" && display == "normal" && mode == 0)
+                //{
+                //    return;
+                //}
+                if (objdm.IsBind(handle) == 1)
+                {
+                    objdm.UnBindWindow();
+                }
+                objdm.delay(50);
 
+                var c = objdm.BindWindow(handle, sysConfig.display, sysConfig.mouse, sysConfig.keypad, sysConfig.mode);
+
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            return objdm;
+
+        }
         public void SetMouseInfo()
         {
 
@@ -189,7 +236,8 @@ namespace DMTools
             var hd = items.Item1;
             var isbl = items.Item2;
             var strClass = items.Item3;
-            Control.D3Main.BindForm(objdm, hd);
+            this.BindForm(objdm, hd,new SysConfig());
+
             var tsPointColor = BaseD3.GetKTSPointColor(objdm);
        
             if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))

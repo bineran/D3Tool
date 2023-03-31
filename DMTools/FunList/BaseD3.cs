@@ -12,6 +12,7 @@ using NLog;
 using DMTools.Control;
 using System.Reflection.Metadata;
 using System.Runtime.Intrinsics.Arm;
+using System.Diagnostics;
 //using Dm;
 
 namespace DMTools.FunList
@@ -25,12 +26,37 @@ namespace DMTools.FunList
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;
         public DMP objDMP { get; set; } =new DMP();
-        private Idmsoft objdm { get { return this.objDMP.DM; } }
+        public Idmsoft objdm { get { return this.objDMP.DM; } }
         public Idmsoft CreateDM()
         {
             DMP dMP=new DMP();
             Idmsoft objdm = dMP.DM;
-            return D3Main.BindForm(objdm, this.Handle);
+            return this.BindForm(objdm, this.Handle,this.d3Param.sysConfig);
+        }
+        public  Idmsoft BindForm(Idmsoft objdm, int handle, SysConfig sysConfig)
+        {
+            try
+            {
+                //if (display == "normal" && display == "normal" && display == "normal" && mode == 0)
+                //{
+                //    return;
+                //}
+                if (objdm.IsBind(handle) == 1)
+                {
+                    objdm.UnBindWindow();
+                }
+                objdm.delay(50);
+
+                var c = objdm.BindWindow(handle, sysConfig.display, sysConfig.mouse, sysConfig.keypad, sysConfig.mode);
+
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            return objdm;
+
         }
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
@@ -42,7 +68,7 @@ namespace DMTools.FunList
                 return this.d3Param.SLTimes[this.enumD3];
             }
         }
-        public FunTaskParam funTaskParam { get; set; }
+
         public CancellationTokenSource cs { get; set; }
         
         public BaseD3(D3Param _d3Param,EnumD3 enumD3)
@@ -51,10 +77,7 @@ namespace DMTools.FunList
 
             this.d3Param = _d3Param;
             this.enumD3 = enumD3;
-            funTaskParam=new FunTaskParam();
-            funTaskParam.Handle = d3Param.Handle;
-            funTaskParam.sysConfig = d3Param.sysConfig;
-            funTaskParam.cancellationTokenSource = this.cs;
+ 
             Init();
         }
     
@@ -85,12 +108,14 @@ namespace DMTools.FunList
         public List<Task> StopTaskList { get; set; } = new List<Task>();
         public  void Stop()
         {
-            log.Info($"============Stop  begin ");
+            stopwatch.Stop();
+            log.Info($"------运行时长： {stopwatch.ElapsedMilliseconds * 1.0 / 1000}秒,     {stopwatch.ElapsedMilliseconds}毫秒");
+            //log.Info($"============Stop  begin ");
             cs.Cancel();
-            for (int i = 0; i < StartTaskList.Count; i++)
-            {
-                log.Info($"i={i}, Status:{StartTaskList[i].Status}");
-            }
+            //for (int i = 0; i < StartTaskList.Count; i++)
+            //{
+            //    log.Info($"i={i}, Status:{StartTaskList[i].Status}");
+            //}
             Task.WaitAll(StartTaskList.ToArray());
             StartTaskList=new List<Task>();
             if (StopTaskList.Count > 0)
@@ -106,11 +131,13 @@ namespace DMTools.FunList
 
                 StopTaskList =new List<Task>();
             }
-            log.Info($"============Stop  end ");
+            //log.Info($"============Stop  end ");
         }
+       public System.Diagnostics.Stopwatch stopwatch { get; set; }
         public virtual void Start()
         {
-            log.Info($"============Start  begin ");
+            stopwatch.Restart();
+           // log.Info($"***Start  begin ");
             cs.Cancel();
             Task.WaitAll(StartTaskList.ToArray());
             cs = new CancellationTokenSource();
@@ -118,7 +145,7 @@ namespace DMTools.FunList
             StopTaskList.Clear();
             if (this.StartEvent != null)
             {
-                var task = StartNewTask(this.StartEvent);
+                var task = StartNewTask(this.StartEvent,true);
                 StartTaskList.Add(task);
             }
             if (this.StopEvent != null)
@@ -126,7 +153,7 @@ namespace DMTools.FunList
                 AddStopTask(this.StopEvent);
         
             }
-            log.Info($"============Start  end ");
+           // log.Info($"====Start  end ");
         }
 
         /// <summary>

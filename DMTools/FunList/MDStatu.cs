@@ -88,7 +88,7 @@ Str1 药的图片，不要太大
         }
         private void MDStatu_StartEvent()
         {
-            var objdm = this.CreateDM();
+            //var objdm = this.CreateDM();
 
             //0x6fab0000
             var address1 = "[[[<D2Client.dll>+0011BBFC]+5C]+48]";

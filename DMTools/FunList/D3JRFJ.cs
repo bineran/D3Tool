@@ -72,7 +72,7 @@ namespace DMTools.FunList
          
             foreach (var point in points)
             {
-                var objdm = this.CreateDM();
+                //var objdm = this.CreateDM();
                 //var sss = objdm.GetColor(NewX(point.x), NewY(point.y));
                 tasks.Add(Task.Run(() =>
                 {
@@ -87,8 +87,8 @@ namespace DMTools.FunList
 
         private void D3FJ_StartEvent()
         {
-            var objdm = this.CreateDM();
-            var xy = this.GetPointXY(objdm);
+            //var objdm = this.CreateDM();
+            var xy = this.GetPointXY();
             if (this.CheckCWX() || this.CheckKLX())
             {
                 AddRightClickForTask(new KeyTimeSetting() { keyClickType = KeyClickType.点击, D1 = 15 });
@@ -102,7 +102,7 @@ namespace DMTools.FunList
         }
         public void ZBFJSaveImage()
         {
-            var objdm=CreateDM();
+            //var objdm=CreateDM();
             var path = FileConfig.D3_BAG_PATH;
             if (!System.IO.Directory.Exists(path))
             {
@@ -169,8 +169,8 @@ namespace DMTools.FunList
 
             int x2 = D3W / 2 + (3440 / 2 - 1800) * D3H / 1440;
             int y2 = 500 * D3H / 1440;
-            var c1 = GetPointRGB( objdm,x1, y1);
-            var c2 = GetPointRGB(objdm, x2, y2);
+            var c1 = GetPointRGB( x1, y1);
+            var c2 = GetPointRGB( x2, y2);
             if (c1.Item1 > c1.Item2 && c1.Item2 > c1.Item3 && c1.Item3 < 5 && c1.Item2 < 15 && c1.Item1 > 25 && c2.Item1 > c2.Item2 && c2.Item2 > c2.Item3 && c2.Item3 < 5 && c2.Item2 < 15 && c2.Item1 > 25)
             {
                 return true;
@@ -235,7 +235,7 @@ namespace DMTools.FunList
             int _spaceSizeInnerH = 63;
             var m = bagPointList[ID];
 
-            var c = GetPointRGB( objdm, Convert.ToInt32(Math.Round(m.leftX + 0.2 * _spaceSizeInnerW)), Convert.ToInt32(Math.Round(m.leftY + 0.2 * _spaceSizeInnerH)));
+            var c = GetPointRGB(  Convert.ToInt32(Math.Round(m.leftX + 0.2 * _spaceSizeInnerW)), Convert.ToInt32(Math.Round(m.leftY + 0.2 * _spaceSizeInnerH)));
 
 
             if (c.Item1 > 25 || c.Item2 > 25 || c.Item3 > 25)

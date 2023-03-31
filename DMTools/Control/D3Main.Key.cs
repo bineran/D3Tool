@@ -26,6 +26,10 @@ namespace DMTools.Control
            List<int> alkey = new List<int>();
             alkey.Add(this.d3KeySetting.KeyPause);
             alkey.Add(this.d3KeySetting.KeyStand);
+            alkey.Add(this.d3KeySetting.KeyMove);
+            alkey.AddRange(new[] { this.d3KeySetting.Key1, this.d3KeySetting.Key2, this.d3KeySetting.Key3, this.d3KeySetting.Key4 });
+
+
             var funlist=this.FunList.Where(r => r.EnabledFlag);
             foreach (var fun in funlist)
             {

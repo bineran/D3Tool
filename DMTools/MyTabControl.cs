@@ -91,6 +91,10 @@ namespace DMTools
                 if (target != null)
                 {
                     e.Effect = DragDropEffects.Move;
+                    if (this.TabPages[this.TabPages.Count - 1] == target || this.TabPages[this.TabPages.Count - 1] == source)
+                    {
+                        return;
+                    }
                     MoveTabPage(source, target);
                 }
                 else

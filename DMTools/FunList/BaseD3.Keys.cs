@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
+using NLog.Fluent;
 //using Dm;
 
 namespace DMTools.FunList
@@ -33,22 +34,43 @@ namespace DMTools.FunList
         /// <param name="action"></param>
         public void AddKeyDownForTask(Keys keys, int sleepTime=100)
         {
-            var objdm = this.CreateDM();
+            //var objdm = this.CreateDM();
             int key = (int)keys;
             objdm.KeyDown(key);
+
             var action = () =>
             {
                 if(this.d3KeyState.isPause || !this.d3KeyState.isD3)
                 {
-                    objdm.KeyUp(key);
+                    if (this.d3KeyState[this.d3Param.KeyCodes.KeyMove])
+                    {
+                       // log.Debug("AddKeyDownForTask   --- move1");
+                        objdm.KeyUp(key);
+                    }
                     Sleep(sleepTime);
                     return;
+                }
+                if ((int)keys == this.d3Param.KeyCodes.KeyMove)
+                {
+                    if (this.d3KeyState[this.d3Param.KeyCodes.Key1] || this.d3KeyState[this.d3Param.KeyCodes.Key2] || this.d3KeyState[this.d3Param.KeyCodes.Key3] || this.d3KeyState[this.d3Param.KeyCodes.Key4])
+                    {
+
+                        if (this.d3KeyState[this.d3Param.KeyCodes.KeyMove])
+                        {
+                            //log.Debug("AddKeyDownForTask   --- move2");
+                            objdm.KeyUp(key);
+                        }
+                        Sleep(20);
+                        return;
+                    }
                 }
                 //return;
                 if (!this.d3KeyState[keys])
                 {
+                   // log.Debug("AddKeyDownForTask   --- KeyDown");
                     objdm.KeyDown(key);
                 }
+
             };
             StartTaskList.Add(StartNewForTask(action, sleepTime, false,false));
             AddStopTaskKeysUp(key);
@@ -60,7 +82,7 @@ namespace DMTools.FunList
             {
          
                 int key = (int)ts.KeyCode;
-                var objdm=CreateDM();
+                //var objdm=CreateDM();
                 var action = () =>
                 {
              
@@ -85,13 +107,46 @@ namespace DMTools.FunList
                 StartTaskList.Add(StartNewForTask(action, ts.D1));
             }
         }
+        public void AddPauseKeyPressForTask(KeyTimeSetting ts)
+        {
 
+            if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
+            {
+
+                int key = (int)ts.KeyCode;
+                //var objdm=CreateDM();
+                var action = () =>
+                {
+                    if (this.d3KeyState.isPause)
+                    {
+                        switch (ts.KeyCode)
+                        {
+                            case ConvertKeys.MouseLeft:
+                                objdm.LeftClick();
+                                break;
+                            case ConvertKeys.MouseRight:
+                                objdm.RightClick();
+                                break;
+                            case ConvertKeys.MouseShiftLeft:
+                                objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                                objdm.LeftClick();
+                                objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                                break;
+                            default:
+                                objdm.KeyPress(key);
+                                break;
+                        }
+                    }
+                };
+                StartTaskList.Add(StartNewForTask(action, ts.D1,false));
+            }
+        }
         public void AddLeftDownForTask(KeyTimeSetting ts, int sleep = 100)
         {
           
             if (ts.Rank == 0  && ts.KeyCode== ConvertKeys.MouseLeft && ts.keyClickType == KeyClickType.按下)
             {
-                var objdm = CreateDM();
+                //var objdm = CreateDM();
                 // DateTime tmp = DateTime.Now.AddSeconds(2);
                 objdm.LeftDown();
                 var action = () =>
@@ -121,7 +176,7 @@ namespace DMTools.FunList
          
             if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseRight && ts.keyClickType == KeyClickType.按下 && sleep>0)
             {
-                var objdm = CreateDM();
+                //var objdm = CreateDM();
                 objdm.RightDown();
            
                 var action = () =>
@@ -147,7 +202,7 @@ namespace DMTools.FunList
           
             if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.按下  && sleep > 0)
             {
-                var objdm = CreateDM();
+                //var objdm = CreateDM();
                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                 objdm.LeftDown();
                 var action = () =>
@@ -178,7 +233,7 @@ namespace DMTools.FunList
          
             if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftLeft && ts.keyClickType == KeyClickType.点击 && sleep>0)
             {
-                var objdm = this.CreateDM();
+                //var objdm = this.CreateDM();
                 var action = () =>
                 {
                     objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
@@ -194,7 +249,7 @@ namespace DMTools.FunList
         {
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
-                var objdm = this.CreateDM();
+                //var objdm = this.CreateDM();
                 var action = () =>
                 {
                     objdm.LeftClick();
@@ -206,7 +261,7 @@ namespace DMTools.FunList
         {
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
-                var objdm = this.CreateDM();
+                //var objdm = this.CreateDM();
                 var action = () =>
                 {
                     objdm.RightClick();
@@ -219,7 +274,7 @@ namespace DMTools.FunList
 
             if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.HotKeyRightWhereShiftDown && ts.keyClickType == KeyClickType.按下 && sleep > 0)
             {
-                var objdm = this.CreateDM();
+                //var objdm = this.CreateDM();
                 var action = () =>
                 {
                     if (this.d3Param.d3KeyState.isRight)
@@ -250,7 +305,7 @@ namespace DMTools.FunList
 
             if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.HotKeyLeftWhereShiftDown && ts.keyClickType == KeyClickType.按下 && sleep > 0)
             {
-                var objdm = this.CreateDM();
+                //var objdm = this.CreateDM();
                 var action = () =>
                 {
                     if (this.d3Param.d3KeyState.isLeft)

@@ -2,6 +2,7 @@
 using DMTools.Control;
 using DMTools.libs;
 using DMTools.Static;
+using System.Threading;
 
 namespace DMTools
 {
@@ -80,6 +81,7 @@ namespace DMTools
         Tuple<int, bool, string> HDINFO()
         {
             var hd = objdm.GetMousePointWindow();
+            LastHandle = hd;
             var isbl = sld3.ContainsKey(hd);
             var str = objdm.GetWindowClass(hd);
             return new Tuple<int, bool, string>(hd, isbl, str);
