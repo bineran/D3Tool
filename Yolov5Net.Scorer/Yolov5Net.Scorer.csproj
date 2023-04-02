@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Product>Yolov5Net</Product>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>Preview</LangVersion>
+        <Version>1.1.0</Version>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
+        <FileVersion>1.1.0.0</FileVersion>
+        <PackageId>Yolov5Net</PackageId>
+        <Description>YOLOv5 object detection with C#, ML.NET, ONNX.</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>c-sharp machine-learning object-detection yolo yolov5 ml-net onnx</PackageTags>
+        <RepositoryUrl>https://github.com/techwingslab/yolov5-net</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/techwingslab/yolov5-net</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <NeutralLanguage>en</NeutralLanguage>
+        <Copyright>© TechWings 2021-2023</Copyright>
+        <Authors>TechWings</Authors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="Abstract\**" />
+        <EmbeddedResource Remove="Abstract\**" />
+        <None Remove="Abstract\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.ML.OnnxRuntime.Managed" Version="1.14.1" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.0.0" />
+    </ItemGroup>
+
+</Project>

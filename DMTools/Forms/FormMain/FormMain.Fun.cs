@@ -3,7 +3,7 @@ using DMTools.Control;
 using DMTools.libs;
 using DMTools.Static;
 using System.Threading;
-
+using Idmsoft = DMTools.libs.Idmsoft;
 namespace DMTools
 {
     public partial class FormMain

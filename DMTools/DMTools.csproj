@@ -10,6 +10,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <ApplicationIcon>Resources\app.ico</ApplicationIcon>
     <SignAssembly>False</SignAssembly>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,8 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.14.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="NLog" Version="5.1.2" />
+    <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -85,6 +88,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Yolov5Net.Scorer\Yolov5Net.Scorer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Lvhang.WindowsCapture">
+      <HintPath>..\WpfApp1\Lvhang.WindowsCapture.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts">
+      <HintPath>libs\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp">
+      <HintPath>libs\SixLabors.ImageSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp.Drawing">
+      <HintPath>libs\SixLabors.ImageSharp.Drawing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -96,6 +118,394 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\microsoft.ai.directml\1.10.1\build\..\bin\x86-win\DirectML.Debug.dll" />
   </ItemGroup>
 
 </Project>

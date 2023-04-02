@@ -2,6 +2,7 @@
 using DMTools.Config;
 using DMTools.Control;
 using DMTools.libs;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,26 @@ namespace DMTools.FunList
         public void StartNewTaskToList(Action action, bool isInitDM = false)
         {
             this.StartTaskList.Add(StartNewTask(action, isInitDM));
+
+        }
+        /// <summary>
+        /// 开启一个根据cs.IsCancellationRequested 的Thread
+        /// </summary>
+        /// <param name="action"></param>
+        public void StartForThreadToList(Action action)
+        {
+
+            Thread th = new Thread(() =>
+            {
+                while (!cs.IsCancellationRequested)
+                {
+                    action();
+                }
+            });
+            th.IsBackground = true;
+            // th.SetApartmentState(ApartmentState.STA);
+            th.Start();
+            this.StartThreadList.Add(th);
 
         }
 

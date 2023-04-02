@@ -35,8 +35,8 @@ namespace DMTools
                 }
 
             }
-     
-            // RegisterDM();
+          //var pathDMDLL=  Application.StartupPath + "Lib\\dm.dll";
+           // RegisterDmSoft.AutoRegCom($"regsvr32 -s {pathDMDLL}");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var path = Application.StartupPath + $@"NLogs\Info\{DateTime.Now.ToString("yyyy-MM-dd")}.txt";

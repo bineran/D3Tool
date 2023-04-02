@@ -12,7 +12,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Idmsoft = DMTools.libs.Idmsoft;
 namespace DMTools
 {
     public partial class FormMain

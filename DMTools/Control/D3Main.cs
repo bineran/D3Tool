@@ -13,14 +13,14 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Idmsoft = DMTools.libs.Idmsoft;
 namespace DMTools.Control
 {
     public partial class D3Main
     {
         int handle;
         public DMP objDMP { get; set; }=new DMP();
-        public  Idmsoft objdm { get { return objDMP.DM; } }
+        public Idmsoft objdm { get { return objDMP.DM; } }
         static NLog.Logger log= NLog.LogManager.GetCurrentClassLogger();
         public D3KeyState d3KeyState { get; set; } = new D3KeyState();
         public D3KeyCodes d3KeySetting { get; set; } = new D3KeyCodes();

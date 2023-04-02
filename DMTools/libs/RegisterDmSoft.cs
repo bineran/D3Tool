@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 
 namespace DMTools.libs
@@ -26,6 +27,32 @@ namespace DMTools.libs
             }
 
             return true;
+        }
+
+        public static string AutoRegCom(string strCmd)
+        {
+            string rInfo;
+
+            try
+            {
+                Process myProcess = new Process();
+                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo("cmd.exe");
+                myProcessStartInfo.UseShellExecute = false;
+                myProcessStartInfo.CreateNoWindow = true;
+                myProcessStartInfo.RedirectStandardOutput = true;
+                myProcess.StartInfo = myProcessStartInfo;
+                myProcessStartInfo.Arguments = "/c " + strCmd;
+                myProcess.Start();
+                StreamReader myStreamReader = myProcess.StandardOutput;
+                rInfo = myStreamReader.ReadToEnd();
+                myProcess.Close();
+                rInfo = strCmd + "\r\n" + rInfo;
+                return rInfo;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
     }

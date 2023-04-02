@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static DMTools.Stats;
-
+using Idmsoft = DMTools.libs.Idmsoft;
 namespace DMTools.FunList
 {
     [KeyName(@"

@@ -6,13 +6,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace DMTools.libs
 {
     public class DMP
     {
         public static Idmsoft CreateDM()
         {
+            //return new Dm.dmsoft();
             var obj = Type.GetTypeFromProgID("dm.dmsoft");
             return Activator.CreateInstance(obj) as Idmsoft;
 
@@ -23,8 +23,9 @@ namespace DMTools.libs
         public DMP()
         {
             obj = Type.GetTypeFromProgID("dm.dmsoft");
-            obj_object= Activator.CreateInstance(obj);
-            DM= obj_object as Idmsoft;
+            DM = Activator.CreateInstance(obj) as Idmsoft;
+
+
 
         }
         public void ReleaseObj()

@@ -12,7 +12,21 @@ using DMTools.Control;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Collections.Concurrent;
+using Yolov5Net.Scorer.Models;
+using Yolov5Net.Scorer;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Drawing.Processing;
+using Pen = SixLabors.ImageSharp.Drawing.Processing.Pen;
+using SixLabors.ImageSharp;
+using Microsoft.ML.OnnxRuntime;
+using SixLabors.ImageSharp.Drawing;
+using static DMTools.FunList.D3Test;
+using PointF = SixLabors.ImageSharp.PointF;
+
 //using Dm;
+
 
 namespace DMTools.FunList
 {
@@ -21,12 +35,23 @@ namespace DMTools.FunList
     public class D3Test : BaseD3
     {
         public const EnumD3 enumD3Name = EnumD3.测试;
+        SixLabors.Fonts.Font font = new SixLabors.Fonts.Font(new FontCollection().Add("Assets/consola.ttf"), 16);
 
+        string jpgName = "Assets\\test.jpg";
+        string onnxName = "Assets\\Weights\\csgo.onnx";
+        int LabelCount = 2;
+        YoloScorer<YoloCocoP5Model> yoloScorer;
         private SortedList<int, BagPoint> bagPointList = new SortedList<int, BagPoint>();
 
         public D3Test(D3Param d3Param, EnumD3 enumD3) : base(d3Param, enumD3)
         {
             this.StartEvent += D3FJ_StartEvent;
+            SessionOptions sessionOptions = new SessionOptions();
+            sessionOptions.GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL;
+            sessionOptions.AppendExecutionProvider_DML();
+            yoloScorer = new YoloScorer<YoloCocoP5Model>(onnxName, LabelCount, sessionOptions);
+
+
 
         }
         /// <summary>
@@ -60,84 +85,156 @@ namespace DMTools.FunList
             public DateTime ImageTime { get; set; }
             public string ImageName { get; set; }
         }
-        public void FindLabel(StructCapture sc)
-        { 
-            
+        public struct StructImageAfter
+        {
+            public int x  { get; set; }
+            public int y { get; set; }
+  
         }
+        public void FindLabel(System.Drawing.Image img)
+        {
+
+
+            var imgPath = Application.StartupPath + "Temp" + "\\" + Guid.NewGuid().ToString() + ".jpg";
+            img.Save(imgPath, ImageFormat.Jpeg);
+            var image = SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(imgPath).Result;
+            var predictions = yoloScorer.Predict(image, "person",0);
+            foreach (var p in predictions)
+            {
+                var ractSize = 100;
+                var (x1, y1) = (Convert.ToInt32(p.Rectangle.Left + (p.Rectangle.Right - p.Rectangle.Left) / 2),
+                    Convert.ToInt32(p.Rectangle.Top + (p.Rectangle.Bottom - p.Rectangle.Top) / 2));
+                if (this.D3W / 2 - ractSize <= x1 && x1 < this.D3W / 2 + ractSize
+                    && this.D3H / 2 - ractSize <= y1 && y1 < this.D3H / 2 + ractSize)
+                {
+                    objdm.MoveTo(x1, y1);
+                    objdm.LeftClick();
+                }
+
+            }
+            Task.Run(() =>
+             {
+                 System.IO.File.Delete(imgPath);
+             });
+
+        }
+
+
+        public void FindLabel(string imagePath,bool isSave=false)
+        {
+
+            using var image = SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(imagePath).Result;
+            var predictions = yoloScorer.Predict(image, "person",0);
+            //log.Info($"==========单次=========推理：{this.stopwatch.ElapsedMilliseconds}毫秒");
+            var rectSize = 300;
+            foreach (var p in predictions)
+            {
+                var (x1, y1) = (Convert.ToInt32(p.Rectangle.Left + (p.Rectangle.Right - p.Rectangle.Left) / 2),
+                    Convert.ToInt32(p.Rectangle.Top + (p.Rectangle.Bottom - p.Rectangle.Top) / 2));
+                if (this.D3W / 2 - rectSize <= x1 && x1 < this.D3W / 2 + rectSize
+                    && this.D3H / 2 - rectSize <= y1 && y1 < this.D3H / 2 + rectSize)
+                {
+                    objdm.MoveTo(x1, y1);
+                    objdm.LeftClick();
+               }
+            }
+            if (isSave)
+            {
+
+
+                foreach (var prediction in predictions) // draw predictions
+                {
+                    var score = Math.Round(prediction.Score, 2);
+
+                    var (x, y) = (prediction.Rectangle.Left - 3, prediction.Rectangle.Top - 23);
+
+                    image.Mutate(a => a.DrawPolygon(new Pen(prediction.Label.Color, 1),
+                        new PointF(prediction.Rectangle.Left, prediction.Rectangle.Top),
+                        new PointF(prediction.Rectangle.Right, prediction.Rectangle.Top),
+                        new PointF(prediction.Rectangle.Right, prediction.Rectangle.Bottom),
+                        new PointF(prediction.Rectangle.Left, prediction.Rectangle.Bottom)
+                    ));
+
+                    image.Mutate(a => a.DrawText($"{prediction.Label.Name} ({score})",
+                        font, prediction.Label.Color, new PointF(x, y)));
+                }
+
+                image.Save(imagePath);
+
+            }
+
+
+        }
+        ConcurrentQueue<StructImageAfter> structImageAfters = new ConcurrentQueue<StructImageAfter>();
         private void D3FJ_StartEvent()
         {
-            var TempPath = Application.StartupPath + "\\Temp";
+            // FindLabel(new StructCapture() { ImageName = Application.StartupPath  + jpgName, ImageTime = DateTime.Now });
+            var TempPath = Application.StartupPath + "Temp";
             if (!Directory.Exists(TempPath))
             {
                 Directory.CreateDirectory(TempPath);
             }
             DeleteFolder(TempPath);
 
-            //SessionOptions sessionOptions = new SessionOptions();
-            //sessionOptions.GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL;
-            //sessionOptions.AppendExecutionProvider_DML(1);
-            log.Info("=================截图开始================" );
-            //st.Start();
-            //for (int i=0; i<count; i++) {
-            //    //object obj1=new object();
-            //    //object obj2=new object();
-            //    //retOK+= objdm.Capture(0, 0, 1920, 1080, Application.StartupPath+"Temp\\"+ i.ToString()+".bmp");
 
-            //    Bitmap image = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            //    Graphics imgGraphics = Graphics.FromImage(image);
-            //    //设置截屏区域 柯乐义
-            //    imgGraphics.CopyFromScreen(0,0 ,1920 ,1080 , new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height));
-            //    image.Save(Application.StartupPath + "Temp\\" + i.ToString() + ".bmp");
+            log.Info("=================截图开始================");
 
-            //}
-            //st.Stop();
-            //log.Info($"==========截图结束========={st.ElapsedMilliseconds}毫秒,成功数量：{retOK}张，平均一张:{st.ElapsedMilliseconds*1.0/ count}毫秒");
-           // DirectXScreenCapturer dx=new DirectXScreenCapturer();
-           
-
-            StructCapture structCapture = new StructCapture() {  ImageTime = DateTime.Now, ImageName = "" };
-            ConcurrentStack< StructCapture > structCaptures = new ConcurrentStack< StructCapture >();
-            ConcurrentStack<int>  ints = new ConcurrentStack<int>();
+            ConcurrentStack<string> strings = new ConcurrentStack<string>();
             int fileCount = 0;
-            StartNewTaskToList(() => {
-                while(true)
-                {
-                    var popCount = 100;
-                    StructCapture[] scs=new StructCapture[popCount];
-                    var itemsCount= structCaptures.TryPopRange(scs, 0, popCount);
-                    if (itemsCount > 0)
-                    {
-                        Parallel.For(0, itemsCount, (i) =>
-                        {
-                            //File.Delete(scs[i].ImageName);
-                        });
-                    }
-                    this.Sleep(500);
-                }
-            });
-            StartNewTaskToList(()=>
+        
+            
+            Stopwatch sw = Stopwatch.StartNew();
+            Parallel.For(0, 2, i =>
             {
-                while (true)
+                StartForThreadToList(() =>
                 {
-                    StartNewTaskToList(() =>
+                    var imgPath = TempPath + "\\" + Guid.NewGuid().ToString() + ".bmp";
+                    if (objdm.Capture(0, 0, this.D3W, this.D3H, imgPath) > 0)
                     {
-                        var imgPath = TempPath + "\\" +  Guid.NewGuid().ToString() + ".bmp";
-                        if (objdm.Capture(0, 0, this.D3W, this.D3H, imgPath) > 0)
-                        {
-                            Interlocked.Increment(ref fileCount);
-                        }
-   
-                        structCaptures.Push(new StructCapture() {  ImageTime = DateTime.Now, ImageName = imgPath });
-                        ints.Push(0);
-                        
-
-                    });
-                    this.Sleep(5);
-                }
+                        //FindLabel(imgPath);
+                        strings.Push(imgPath);
+                        Interlocked.Increment(ref fileCount);
+                    }
+                });
             });
+
+            StartForThreadToList(() =>
+            {
+                string[] strs=new string[1000];
+                var itemCount=strings.TryPopRange(strs);
+                if (itemCount == 0)
+                    return;
+                
+                FindLabel(strs[0],true);
+                Parallel.For(1, itemCount, i => {
+                    File.Delete(strs[i]);
+                });
+   
+                
+            });
+            
+
+
+
+
+            //StartNewTaskToList(() =>
+            //{
+
+
+            //        //stopwatch.Restart();
+            //        var imgPath = TempPath + "\\" + Guid.NewGuid().ToString() + ".bmp";
+            //        if (objdm.Capture(0, 0, this.D3W, this.D3H, imgPath) > 0)
+            //        {
+            //            //FindLabel(imgPath);
+            //            strings.Push(imgPath);
+            //            Interlocked.Increment(ref fileCount);
+            //        }
+
+            //});
             AddStopTask(() =>
             {
-                log.Info($"==========截图结束=========执行时间：{this.stopwatch.ElapsedMilliseconds}毫秒,生成文件数量：{fileCount}张，平均每张耗时:{ Math.Round(stopwatch.ElapsedMilliseconds * 1.0 / fileCount,2)}毫秒");
+                sw.Stop();
+                log.Info($"==========截图结束=========执行时间：{sw.ElapsedMilliseconds}毫秒,生成文件数量：{fileCount}张，平均每张耗时:{Math.Round(sw.ElapsedMilliseconds * 1.0 / fileCount, 2)}毫秒");
             });
         }
 

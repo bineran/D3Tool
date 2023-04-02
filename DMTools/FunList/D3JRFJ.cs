@@ -9,7 +9,7 @@ using System.Threading;
 using DMTools.Config;
 using DMTools.Control;
 //using Dm;
-
+using Idmsoft = DMTools.libs.Idmsoft;
 namespace DMTools.FunList
 {
 

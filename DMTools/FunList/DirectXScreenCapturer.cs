@@ -32,8 +32,8 @@ namespace DMTools
             DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport;
 
             //device = new SharpDX.Direct3D11.Device(adapter);
- 
-            device = new SharpDX.Direct3D11.Device(adapter, flags, FeatureLevel.Level_11_1);
+           // device = new SharpDX.Direct3D11.Device(DriverType.Hardware, DeviceCreationFlags.BgraSupport);
+           device = new SharpDX.Direct3D11.Device(adapter);
 
             output = adapter.GetOutput(0);
 

@@ -13,7 +13,7 @@ using DMTools.Control;
 using System.Reflection.Metadata;
 using System.Runtime.Intrinsics.Arm;
 using System.Diagnostics;
-//using Dm;
+using Idmsoft = DMTools.libs.Idmsoft;
 
 namespace DMTools.FunList
 {
@@ -87,6 +87,10 @@ namespace DMTools.FunList
         { 
             get 
             {
+                if (StartThreadList.Count > 0)
+                {
+                    return true;
+                }
                 if (this.StartTaskList.Count == 0)
                     return false;
                 var x = 0;
@@ -106,10 +110,13 @@ namespace DMTools.FunList
        
         public List<Task> StartTaskList { get; set; } = new List<Task>();
         public List<Task> StopTaskList { get; set; } = new List<Task>();
+        public List<Thread> StartThreadList { get; set; } = new List<Thread>();
+
         public  void Stop()
         {
             stopwatch.Stop();
-            log.Info($"------运行时长： {stopwatch.ElapsedMilliseconds * 1.0 / 1000}秒,     {stopwatch.ElapsedMilliseconds}毫秒");
+            if(stopwatch.ElapsedMilliseconds>0)
+                log.Info($"------运行时长： {stopwatch.ElapsedMilliseconds * 1.0 / 1000}秒,     {stopwatch.ElapsedMilliseconds}毫秒");
             //log.Info($"============Stop  begin ");
             cs.Cancel();
             //for (int i = 0; i < StartTaskList.Count; i++)
@@ -131,9 +138,21 @@ namespace DMTools.FunList
 
                 StopTaskList =new List<Task>();
             }
+            foreach (var t in StartThreadList)
+            {
+                try
+                {
+                    t.Abort();
+                }
+                catch
+                { 
+                    
+                }
+            }
+            StartThreadList=new List<Thread>();
             //log.Info($"============Stop  end ");
         }
-       public System.Diagnostics.Stopwatch stopwatch { get; set; }
+       private System.Diagnostics.Stopwatch stopwatch { get; set; }
         public virtual void Start()
         {
             stopwatch.Restart();
