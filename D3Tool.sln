@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{277C282A-4188-495B-B3F2-C23F6185D074}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		临时文件\POE\Common\AStart.cs = 临时文件\POE\Common\AStart.cs
+		临时文件\POE\Services\BuildMap.cs = 临时文件\POE\Services\BuildMap.cs
 		..\..\..\Desktop\DmSoft.cs = ..\..\..\Desktop\DmSoft.cs
 	EndProjectSection
 EndProject
@@ -17,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yolov5Net.Scorer", "Yolov5Net.Scorer\Yolov5Net.Scorer.csproj", "{6777B377-C7F9-46A2-8797-CD7DC80D8B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapTest", "MapTest\MapTest.csproj", "{A005241F-38D3-4A57-8421-A4CE96B26A23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +76,26 @@ Global
 		{6777B377-C7F9-46A2-8797-CD7DC80D8B3C}.Release|x64.Build.0 = Release|Any CPU
 		{6777B377-C7F9-46A2-8797-CD7DC80D8B3C}.Release|x86.ActiveCfg = Release|Any CPU
 		{6777B377-C7F9-46A2-8797-CD7DC80D8B3C}.Release|x86.Build.0 = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|x64.Build.0 = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Debug|x86.Build.0 = Debug|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|ARM.Build.0 = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|ARM64.Build.0 = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|x64.ActiveCfg = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|x64.Build.0 = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|x86.ActiveCfg = Release|Any CPU
+		{A005241F-38D3-4A57-8421-A4CE96B26A23}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
