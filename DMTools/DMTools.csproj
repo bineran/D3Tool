@@ -16,7 +16,6 @@
   <ItemGroup>
     <Compile Remove="FormMain.Menu.cs" />
     <Compile Remove="FormMain.Setting.cs" />
-    <Compile Remove="FunList\D3Test.cs" />
     <Compile Remove="FunList\DirectXScreenCapturer.cs" />
   </ItemGroup>
 
@@ -96,15 +95,6 @@
   <ItemGroup>
     <Reference Include="Lvhang.WindowsCapture">
       <HintPath>..\WpfApp1\Lvhang.WindowsCapture.dll</HintPath>
-    </Reference>
-    <Reference Include="SixLabors.Fonts">
-      <HintPath>libs\SixLabors.Fonts.dll</HintPath>
-    </Reference>
-    <Reference Include="SixLabors.ImageSharp">
-      <HintPath>libs\SixLabors.ImageSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="SixLabors.ImageSharp.Drawing">
-      <HintPath>libs\SixLabors.ImageSharp.Drawing.dll</HintPath>
     </Reference>
   </ItemGroup>
 

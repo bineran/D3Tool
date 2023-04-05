@@ -13,6 +13,7 @@ namespace MapTest
         public Form1()
         {
             InitializeComponent();
+            //var ss = AstarHelper.Test();
         }
 
 
@@ -20,14 +21,7 @@ namespace MapTest
         int[,] mapPoint;
         int RowCount = 10;
         int ColumnCount = 10;
-        private int random()
-        {
-            return 0;
-            Task.Delay(2).Wait();
-            var seed = Guid.NewGuid().GetHashCode();
-            Random r = new Random(seed);
-            return r.Next(0, 10) > 5 ? 0 : 1;
-        }
+
         public void InitPoint()
         {
 
@@ -76,34 +70,36 @@ namespace MapTest
             };
 
         }
-
+        public Button beginBtn;
+        public Button endBtn;
         public void SetPoint(int x, int y, Button btn)
         {
-            if (endPoint.x != defaultPointXY && beginPoint.x != defaultPointXY)
+            if (beginBtn!=null && endBtn != null)
             {
                 RestButtonColor();
-                beginPoint.btn.BackColor = Color.White;
-                endPoint.btn.BackColor = Color.White;
-                beginPoint = new Vertex();
-                endPoint = new Vertex();
+                beginBtn.BackColor = Color.White;
+                endBtn.BackColor = Color.White;
+                beginBtn = null;
+                endBtn = null;
+                beginPoint = new AstarHelper.Vertex();
+                endPoint = new AstarHelper.Vertex();
             }
-            if (beginPoint.x == defaultPointXY)
+            if (beginBtn == null)
             {
-                beginPoint = new Vertex();
-                beginPoint.x = x;
-                beginPoint.y = y;
+                beginPoint = new AstarHelper.Vertex();
+                beginPoint.X = x;
+                beginPoint.Y = y;
 
 
                 btn.BackColor = Color.Green;
-                beginPoint.btn = btn;
+                beginBtn = btn;
             }
-            else if (endPoint.x == defaultPointXY && !beginPoint.btn.Equals(btn))
+            else if (endBtn==null && !(beginPoint.X==x && beginPoint.Y==y))
             {
-                endPoint.x = x;
-                endPoint.y = y;
-
+                endPoint.X = x;
+                endPoint.Y = y;
                 btn.BackColor = Color.Red;
-                endPoint.btn = btn;
+                endBtn = btn;
                 Start();
             }
         }
@@ -177,8 +173,8 @@ namespace MapTest
             });
 
         }
-        Vertex beginPoint = new Vertex();
-        Vertex endPoint = new Vertex();
+        AstarHelper.Vertex beginPoint = new AstarHelper.Vertex();
+        AstarHelper.Vertex endPoint = new AstarHelper.Vertex();
         private void Btn_Click(object? sender, EventArgs e)
         {
             throw new NotImplementedException();
@@ -188,13 +184,13 @@ namespace MapTest
         {
             this.InitPoint();
             this.DrawMap();
-           // LoadPic();
+          // LoadPic();
            
             
 
         }
-        Vertex p1 = new Vertex();
-        Vertex p2 = new Vertex();
+        AstarHelper.Vertex p1 = new AstarHelper.Vertex();
+        AstarHelper.Vertex p2 = new AstarHelper.Vertex();
         Ostu ostu = new Ostu(MapTest.Resource.map);
         public void LoadPic()
         {
@@ -205,11 +201,11 @@ namespace MapTest
 
 
            
-            ostu.RetrunPoint();
+            //ostu.RetrunPoint();
 
             
             PictureBox pic2 = new PictureBox();
-            pic2.Image = MapTest.Resource.map;
+            pic2.Image = ostu.RetrunPicture(2);
             pic2.Size = new Size(pic2.Image.Width, pic2.Image.Height);
             this.tableLayoutPanel1.Controls.Add(pic2);
             pic2.MouseClick += Pic2_MouseClick;
@@ -221,29 +217,29 @@ namespace MapTest
         {
             var x = e.Location.X;
             var y = e.Location.Y;
-            if (p1.x != defaultPointXY && p2.x != defaultPointXY)
+            if (p1.X != defaultPointXY && p2.X != defaultPointXY)
             {
 
-                p1 = new Vertex();
-                p2 = new Vertex();
+                p1 = new AstarHelper.Vertex();
+                p2 = new AstarHelper.Vertex();
             }
-            if (p1.x == defaultPointXY)
+            if (p1.X == defaultPointXY)
             {
-                p1 = new Vertex();
-                p1.x = x;
-                p1.y = y;
+                p1 = new AstarHelper.Vertex();
+                p1.X = x;
+                p1.Y = y;
 
 
             }
-            else if (p2.x == defaultPointXY && !(p1.x == x && p1.y == y))
+            else if (p2.X == defaultPointXY && !(p1.X == x && p1.Y == y))
             {
-                p2.x = x;
-                p2.y = y;
+                p2.X = x;
+                p2.Y = y;
 
-                AstarHelper a = new AstarHelper();
+               
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
-                var vertices = a.AStar(p1, p2, ostu.point);
+                var vertices = AstarHelper.AStar(p1, p2, ostu.point);
                 stopwatch.Stop();
                 this.Text = stopwatch.ElapsedMilliseconds + "毫秒";
 
@@ -254,12 +250,11 @@ namespace MapTest
 
         public void Start()
         {
-            if (beginPoint.x >= 0 && endPoint.x >= 0)
+            if (beginPoint.X >= 0 && endPoint.X >= 0)
             {
-                AstarHelper a = new AstarHelper();
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
-                var vertices = a.AStar(beginPoint, endPoint, mapPoint);
+                var vertices = AstarHelper.AStar(beginPoint, endPoint, mapPoint);
                 stopwatch.Stop();
                 this.Text = stopwatch.ElapsedMilliseconds + "毫秒";
                 SetVertexButton(vertices);
@@ -279,7 +274,7 @@ namespace MapTest
             }
 
         }
-        public void SetVertexButton(List<Vertex> vertices)
+        public void SetVertexButton(List<AstarHelper.Vertex> vertices)
         {
 
             RestButtonColor();
@@ -288,7 +283,7 @@ namespace MapTest
                 var btn = sender as Button;
                 if (btn != null && btn.Text.Length > 0)
                 {
-                    if (vertices.Exists(r => r.x + "," + r.y == btn.Text))
+                    if (vertices.Exists(r => r.X + "," + r.Y == btn.Text))
                     {
                         btn.BackColor = Color.Blue;
                     }
@@ -296,53 +291,110 @@ namespace MapTest
 
                 }
             }
-            beginPoint.btn.BackColor = Color.Green;
-            endPoint.btn.BackColor = Color.Red;
+            beginBtn.BackColor = Color.Green;
+            endBtn.BackColor = Color.Red;
         }
 
 
-        public class Vertex
+      
+        public static class AstarHelper
         {
-            public int x { get; set; } = -99999;
-            public int y { get; set; } = -99999;//顶点的X,Y坐标
-            public Vertex parent = null;//父节点（前驱节点）,默认无父节点
-
-            public int F, G, H; //F = G +H
-            public Vertex(int x, int y)
+           
+            public class Vertex
             {
-                this.x = x;
-                this.y = y;
-            }
-            public Vertex()
-            {
+                public int X { get; set; }
+                public int Y { get; set; } //顶点的X,Y坐标
+                public Vertex Parent { get; set; }//父节点（前驱节点）,默认无父节点
 
+                public float F, G, H; //F = G +H
+
+                public Vertex(int x, int y)
+                {
+                    this.X = x;
+                    this.Y = y;
+                }
+                public Vertex()
+                { }
             }
-            public Button btn;
-        }
-        public class AstarHelper
-        {
+
             //只有四方向就只要四个.
-           readonly  int[,] direction = new int[8, 2] {
-                    { 0, 1 },
-                    { 1, 0 },
-                    { 0, -1 },
-                    { -1, 0 },
-
-                    { 1,1},
-                    { -1, -1 },
-                    {1,-1 },
-                    { -1,1}
+            //第一个是X坐标,第二个是Y坐标加,第三个值是G的变量,直线走算10,斜的算15
+            //理论了上也可以跳着走,只要改变X和Y的增量就可以.
+            static readonly int[,] direction = new int[8, 3] {
+                    //直线走
+                    { 0, 1,10 },
+                    { 1, 0,10 },
+                    { 0, -1,10 },
+                    { -1, 0 ,10},
+                    //斜着走
+                    { 1,1,15},
+                    { -1, -1,15 },
+                    {1,-1 ,15},
+                    { -1,1,15}
                 };
-            public int heuristicsCostEstimate(Vertex reachableV, Vertex goalV)
+            /// <summary>
+            /// DEMO 测试方法 从0,0-->9,9
+            /// </summary>
+            /// <returns></returns>
+            public static string Test()
             {
-                int disX = reachableV.x - goalV.x;
-                int disY = reachableV.y - goalV.y;
-                return Math.Abs(disX) + Math.Abs(disY);
+                var mapPoint = new int[,] {
+                    { 0,1,1,1,1,1,1,1,1,0},
+                    { 0,0,1,0,0,0,0,1,0,0},
+                    { 0,0,1,0,1,1,0,1,0,0},
+                    { 0,0,1,0,1,0,0,1,0,0},
+                    { 0,0,0,0,1,0,1,1,0,0},
+                    { 0,0,1,1,1,0,0,0,0,0},
+                    { 0,0,0,0,1,0,1,1,0,0},
+                    { 0,0,1,0,0,0,1,1,0,0},
+                    { 0,0,1,0,1,0,1,1,0,0},
+                    { 0,1,1,1,1,1,1,1,1,0}
+                };
+                var al=AStar(0, 0, 9, 9, mapPoint);
+                //下面是打印
+                string str = "原始的\r\n";
+                for (int i = 0; i < mapPoint.GetLength(0); i++)
+                {
+                    for (int j = 0; j < mapPoint.GetLength(1); j++)
+                    {
+                        if (mapPoint[i, j] == 1)
+                        {
+                            str += "1";
+                        }
+                        else
+                        {
+                                str += "0";
+                        }
+                    }
+                    str += "\r\n";
+                }
+                str += "计算后\r\n";
+                for (int i = 0; i < mapPoint.GetLength(0); i++)
+                {
+                    for (int j= 0; j < mapPoint.GetLength(1); j++)
+                    {
+                        if (mapPoint[i, j] == 1)
+                        {
+                            str += "1";
+                        }
+                        else
+                        {
+                            if (al.Any(r => r.X == i && r.Y == j))
+                            {
+                                str += "*";
+                            }
+                            else
+                            {
+                                str += "0";
+                            }
+                        }
+                    }
+                    str += "\r\n";
+                }
+                return str;
             }
 
-
-
-            public List<Vertex> AStar(Vertex startVertex, Vertex endVertex, int[,] mapData)
+            public static List<Vertex> AStar(Vertex startVertex, Vertex endVertex, int[,] mapData)
             {
                 List<Vertex> openList = new List<Vertex>();
                 List<Vertex> closeList = new List<Vertex>();
@@ -370,9 +422,9 @@ namespace MapTest
                     //遍历openList,查找F值最小的顶点
                     Vertex minVertex = openList.OrderBy(r => r.F).First();
 
-                    if (minVertex.x == endVertex.x && minVertex.y == endVertex.y)
+                    if (minVertex.X == endVertex.X && minVertex.Y == endVertex.Y)
                     {
-                        endVertex.parent = minVertex.parent;
+                        endVertex.Parent = minVertex.Parent;
                         break;
                     }
 
@@ -384,34 +436,34 @@ namespace MapTest
 
                     for (int i = 0; i < directionCount; ++i)
                     {
-                        int nextX = minVertex.x + direction[i, 0];
-                        int nextY = minVertex.y + direction[i, 1];
-
+                        int nextX = minVertex.X + direction[i, 0];
+                        int nextY = minVertex.Y + direction[i, 1];
+                          
                         //下一个顶点没有越界
                         if (nextX >= 0 && nextX < aLength && nextY >= 0 && nextY < bLength)
                         {
-                            if (mapData[nextX, nextY] == 0 && !closeList.Any(r => r.x == nextX && r.y == nextY))
+                            if (mapData[nextX, nextY] == 0 && !closeList.Any(r => r.X == nextX && r.Y == nextY))
                             {
                                 //判断是否在openList中
-                                if (!openList.Any(r => r.x == nextX && r.y == nextY))
+                                if (!openList.Any(r => r.X == nextX && r.Y == nextY))
                                 {//不在openList中，则加入，并将当前处理节点作为它的父节点，并计算其F,G,H
                                     Vertex vex = new Vertex();
-                                    vex.x = nextX;
-                                    vex.y = nextY;
-                                    vex.parent = minVertex;
-                                    vex.G = vex.parent.G + 1;
-                                    vex.H = heuristicsCostEstimate(vex, endVertex);
+                                    vex.X = nextX;
+                                    vex.Y = nextY;
+                                    vex.Parent = minVertex;
+                                    vex.G = vex.Parent.G + direction[i, 2];
+                                    vex.H = Math.Abs(vex.X - endVertex.X) + Math.Abs(vex.Y - endVertex.Y);
                                     vex.F = vex.G + vex.H;
                                     openList.Add(vex);
                                 }
                                 else
                                 {
                                     //从openList中获取该节点
-                                    Vertex vex = openList.First(r => r.x == nextX && r.y == nextY);
-                                    if (minVertex.G + 1 < vex.G)
+                                    Vertex vex = openList.First(r => r.X == nextX && r.Y == nextY);
+                                    if (minVertex.G + direction[i, 2] < vex.G)
                                     {//如果从当前处理顶点到该顶点使得G更小
-                                        vex.parent = minVertex;
-                                        vex.G = minVertex.G + 1;
+                                        vex.Parent = minVertex;
+                                        vex.G = minVertex.G + direction[i, 2];
                                         vex.F = vex.G + vex.H;
                                     }
                                 }
@@ -421,12 +473,20 @@ namespace MapTest
                 }
                 List<Vertex> theWay = new List<Vertex>();
                 Vertex v = endVertex;
-                while (v.parent != null)
+                while (v.Parent != null)
                 {
                     theWay.Add(v);
-                    v = v.parent;
+                    v = v.Parent;
                 }
                 return theWay;
+            }
+            public static List<Vertex> AStar((int x,int y) startVertex, (int x, int y) endVertex, int[,] mapData)
+            {
+                return AStar(new Vertex(startVertex.x, startVertex.y), new Vertex(endVertex.x, endVertex.y), mapData);
+            }
+            public static List<Vertex> AStar(int x1, int y1 , int x2, int y2 , int[,] mapData)
+            {
+                return AStar(new Vertex(x1, y1), new Vertex(x2, y2), mapData);
             }
         }
 

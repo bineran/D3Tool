@@ -23,8 +23,11 @@ public class YoloScorer<T> : IDisposable where T : YoloModel
     private readonly T _model;
 
     private InferenceSession _inferenceSession { get; set; }
-    
 
+    private InferenceSession GetInferenceSession(int index=0)
+    { 
+        return inferenceSessions[index];
+    }
     /// <summary>
     /// Outputs value between 0 and 1.
     /// </summary>
@@ -90,7 +93,6 @@ public class YoloScorer<T> : IDisposable where T : YoloModel
             var inputs = new List<NamedOnnxValue> // add image as input
             {  
                 NamedOnnxValue.CreateFromTensor("images", ExtractPixels(image))
-
             };
             
             var result = _inferenceSession.Run(inputs); // run inference
@@ -118,6 +120,46 @@ public class YoloScorer<T> : IDisposable where T : YoloModel
             return null;
         }
     }
+    private IDisposableReadOnlyCollection<DisposableNamedOnnxValue> Run(int index, List<NamedOnnxValue> inputs)
+    {
+        switch (index)
+        {
+            case 0:
+                lock (object1)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 1:
+                lock (object2)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 2:
+                lock (object3)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 3:
+                lock (object4)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 4:
+                lock (object5)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 5:
+                lock (object6)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 6:
+                lock (object7)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 7:
+                lock (object8)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 8:
+                lock (object9)
+                    return this.GetInferenceSession(index).Run(inputs);
+            case 9:
+                lock (object0)
+                    return this.GetInferenceSession(index).Run(inputs);
+
+
+
+        }
+        return null;
+    }
     private DenseTensor<float>[] Inference(Image<Rgba32> image,int index)
     {
         try
@@ -132,7 +174,7 @@ public class YoloScorer<T> : IDisposable where T : YoloModel
 
             };
 
-            var result = this._inferenceSession.Run(inputs); // run inference
+            var result = Run(index, inputs); // run inference
 
             var output = new List<DenseTensor<float>>();
 
@@ -421,12 +463,31 @@ public class YoloScorer<T> : IDisposable where T : YoloModel
     {
         _inferenceSession = new InferenceSession(File.ReadAllBytes(weights), opts ?? new SessionOptions());
     }
-    public YoloScorer(string weights,int labelCount, SessionOptions opts = null) : this()
+    public List<InferenceSession> inferenceSessions { get; set; } = new List<InferenceSession>();
+
+    public object object0 = new object();
+    public object object1 = new object();
+    public object object2 = new object();
+    public object object3 = new object();
+    public object object4 = new object();
+    public object object5 = new object();
+    public object object6 = new object();
+    public object object7 = new object();
+    public object object8 = new object();
+    public object object9 = new object();
+
+    public YoloScorer(string weights,int labelCount,int inferenceCount=1, SessionOptions opts = null) : this()
     {
         this.LabelCount=labelCount+5;
         var bytes = File.ReadAllBytes(weights);
         _inferenceSession = new InferenceSession(bytes, opts ?? new SessionOptions());
 
+
+        inferenceSessions.Add(_inferenceSession);
+        for (int i=1;i< inferenceCount;i++)
+        {
+            inferenceSessions.Add(new InferenceSession(bytes, opts ?? new SessionOptions()));
+        }
 
 
     }

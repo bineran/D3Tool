@@ -100,15 +100,24 @@ namespace MapTest
         /// 图像二值化
         /// </summary>
         /// <returns>无</returns>
-        private void TurnGray()
+        private void TurnGray(int centPix = 0)
         {
-
+            var x1 = IMG_WIDTH / 2 - centPix;
+            var x2 = IMG_WIDTH / 2 + centPix;
+            var y1 = IMG_HEIGHT / 2 - centPix;
+            var y2 = IMG_HEIGHT / 2 + centPix;
             int val = GetVal();
             for (int i = 0; i < IMG_HEIGHT; i++)
             {
                 for (int j = 0; j < IMG_WIDTH; j++)
                 {
+                    if (centPix > 0 && x1<j && j<x2 && y1<i && i<y2)
+                    {
+                        pic.SetPixel(j, i, Color.FromArgb(0, 0, 0));
+                        continue;
+                    }
                     Color color = pic.GetPixel(j, i);
+                   
                     int gray = (int)(0.39 * color.R + 0.50 * color.G + 0.11 * color.B);
                     if (gray > val)
                     {
@@ -155,9 +164,9 @@ namespace MapTest
         /// 返回二值化后的图像
         /// </summary>
         /// <returns>图像</returns>
-        public Bitmap RetrunPicture()
+        public Bitmap RetrunPicture(int centPix=0)
         {
-            TurnGray();
+            TurnGray(centPix);
             return pic;
         }
         /// <summary>

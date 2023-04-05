@@ -1,27 +1,19 @@
-﻿using DMTools.libs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-
-using DMTools.Config;
+﻿
 using DMTools.Control;
-//using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Collections.Concurrent;
 using Yolov5Net.Scorer.Models;
 using Yolov5Net.Scorer;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.Fonts;
+
 using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Drawing.Processing;
-using Pen = SixLabors.ImageSharp.Drawing.Processing.Pen;
+
+
 using SixLabors.ImageSharp;
 using Microsoft.ML.OnnxRuntime;
-using SixLabors.ImageSharp.Drawing;
+
 using static DMTools.FunList.D3Test;
 using PointF = SixLabors.ImageSharp.PointF;
 
@@ -35,11 +27,12 @@ namespace DMTools.FunList
     public class D3Test : BaseD3
     {
         public const EnumD3 enumD3Name = EnumD3.测试;
-        SixLabors.Fonts.Font font = new SixLabors.Fonts.Font(new FontCollection().Add("Assets/consola.ttf"), 16);
+       // SixLabors.Fonts.Font font = new SixLabors.Fonts.Font(new FontCollection().Add("Assets/consola.ttf"), 16);
 
         string jpgName = "Assets\\test.jpg";
         string onnxName = "Assets\\Weights\\csgo.onnx";
         int LabelCount = 2;
+        int YoloScorerCount = 5;
         YoloScorer<YoloCocoP5Model> yoloScorer;
         private SortedList<int, BagPoint> bagPointList = new SortedList<int, BagPoint>();
 
@@ -49,10 +42,7 @@ namespace DMTools.FunList
             SessionOptions sessionOptions = new SessionOptions();
             sessionOptions.GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL;
             sessionOptions.AppendExecutionProvider_DML();
-            yoloScorer = new YoloScorer<YoloCocoP5Model>(onnxName, LabelCount, sessionOptions);
-
-
-
+            yoloScorer = new YoloScorer<YoloCocoP5Model>(onnxName, LabelCount, YoloScorerCount, sessionOptions);
         }
         /// <summary>
         /// 清空文件夹
@@ -120,11 +110,13 @@ namespace DMTools.FunList
         }
 
 
-        public void FindLabel(string imagePath,bool isSave=false)
+        public void FindLabel(string imagePath,int index)
         {
 
             using var image = SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(imagePath).Result;
             var predictions = yoloScorer.Predict(image, "person",0);
+            deleteFiles.Enqueue(imagePath);
+            Interlocked.Increment(ref PredictCount);
             //log.Info($"==========单次=========推理：{this.stopwatch.ElapsedMilliseconds}毫秒");
             var rectSize = 300;
             foreach (var p in predictions)
@@ -134,38 +126,19 @@ namespace DMTools.FunList
                 if (this.D3W / 2 - rectSize <= x1 && x1 < this.D3W / 2 + rectSize
                     && this.D3H / 2 - rectSize <= y1 && y1 < this.D3H / 2 + rectSize)
                 {
-                    objdm.MoveTo(x1, y1);
-                    objdm.LeftClick();
+                    findAfter.Push((x1, y1));
+                    return;
                }
-            }
-            if (isSave)
-            {
-
-
-                foreach (var prediction in predictions) // draw predictions
-                {
-                    var score = Math.Round(prediction.Score, 2);
-
-                    var (x, y) = (prediction.Rectangle.Left - 3, prediction.Rectangle.Top - 23);
-
-                    image.Mutate(a => a.DrawPolygon(new Pen(prediction.Label.Color, 1),
-                        new PointF(prediction.Rectangle.Left, prediction.Rectangle.Top),
-                        new PointF(prediction.Rectangle.Right, prediction.Rectangle.Top),
-                        new PointF(prediction.Rectangle.Right, prediction.Rectangle.Bottom),
-                        new PointF(prediction.Rectangle.Left, prediction.Rectangle.Bottom)
-                    ));
-
-                    image.Mutate(a => a.DrawText($"{prediction.Label.Name} ({score})",
-                        font, prediction.Label.Color, new PointF(x, y)));
-                }
-
-                image.Save(imagePath);
-
             }
 
 
         }
-        ConcurrentQueue<StructImageAfter> structImageAfters = new ConcurrentQueue<StructImageAfter>();
+
+        ConcurrentStack<string> strings = new ConcurrentStack<string>();
+        ConcurrentStack<(int,int)> findAfter = new ConcurrentStack<(int, int)>();
+        ConcurrentQueue<string> deleteFiles = new ConcurrentQueue<string>();
+        int FileCount = 0;
+        int PredictCount = 0;
         private void D3FJ_StartEvent()
         {
             // FindLabel(new StructCapture() { ImageName = Application.StartupPath  + jpgName, ImageTime = DateTime.Now });
@@ -175,66 +148,86 @@ namespace DMTools.FunList
                 Directory.CreateDirectory(TempPath);
             }
             DeleteFolder(TempPath);
-
+            FileCount = 0;
+            PredictCount = 0;
 
             log.Info("=================截图开始================");
 
-            ConcurrentStack<string> strings = new ConcurrentStack<string>();
-            int fileCount = 0;
+        
+        
         
             
             Stopwatch sw = Stopwatch.StartNew();
-            Parallel.For(0, 2, i =>
+            Parallel.For(0, 1, i =>
             {
                 StartForThreadToList(() =>
                 {
-                    var imgPath = TempPath + "\\" + Guid.NewGuid().ToString() + ".bmp";
+                    var imgPath = TempPath + "\\" +DateTime.Now.Ticks.ToString()+ ".bmp";
                     if (objdm.Capture(0, 0, this.D3W, this.D3H, imgPath) > 0)
                     {
-                        //FindLabel(imgPath);
                         strings.Push(imgPath);
-                        Interlocked.Increment(ref fileCount);
+                        Interlocked.Increment(ref FileCount);
                     }
+                    System.Threading.Thread.Sleep(5);
                 });
             });
-
+            // yolo识别
             StartForThreadToList(() =>
             {
-                string[] strs=new string[1000];
-                var itemCount=strings.TryPopRange(strs);
+                string[] strs = new string[1000];
+                var itemCount = strings.TryPopRange(strs);
                 if (itemCount == 0)
+                {
+                    System.Threading.Thread.Sleep(2);
                     return;
-                
-                FindLabel(strs[0],true);
-                Parallel.For(1, itemCount, i => {
-                    File.Delete(strs[i]);
+                }
+                //取最后三张图片
+                Parallel.For(0, YoloScorerCount, i =>
+                {
+                    if (i < itemCount)
+                    {
+                        FindLabel(strs[i],i);
+                    }
                 });
-   
-                
+                //删除多余的文件
+                if (itemCount > YoloScorerCount)
+                {
+                    foreach (var str in strs.Skip(YoloScorerCount))
+                    {
+                        deleteFiles.Enqueue(str);
+                    }
+                }
+
             });
-            
 
+            //删除生成的图片
+            StartForThreadToList(() =>
+            {
+                string str;
+                if (deleteFiles.TryDequeue(out str))
+                {
+                    if (!string.IsNullOrEmpty(str))
+                    {
+                        File.Delete(str);
+                    }
+               
+                }
+                else { 
+                    Thread.Sleep(2);
+                }
+                
 
+            }
+            );
 
-
-            //StartNewTaskToList(() =>
-            //{
-
-
-            //        //stopwatch.Restart();
-            //        var imgPath = TempPath + "\\" + Guid.NewGuid().ToString() + ".bmp";
-            //        if (objdm.Capture(0, 0, this.D3W, this.D3H, imgPath) > 0)
-            //        {
-            //            //FindLabel(imgPath);
-            //            strings.Push(imgPath);
-            //            Interlocked.Increment(ref fileCount);
-            //        }
-
-            //});
             AddStopTask(() =>
             {
                 sw.Stop();
-                log.Info($"==========截图结束=========执行时间：{sw.ElapsedMilliseconds}毫秒,生成文件数量：{fileCount}张，平均每张耗时:{Math.Round(sw.ElapsedMilliseconds * 1.0 / fileCount, 2)}毫秒");
+                log.Info($"==========截图结束=========执行时间：" +
+                    $"{sw.ElapsedMilliseconds}毫秒,生成文件数量：" +
+                    $"{FileCount}张，平均每张耗时:" +
+                    $"{Math.Round(sw.ElapsedMilliseconds * 1.0 / FileCount, 2)}毫秒,"+
+                    $"同时AI处理{YoloScorerCount}张,AI共识图:{PredictCount}张,平均每张AI识图:{Math.Round(sw.ElapsedMilliseconds * 1.0 / PredictCount, 2)}毫秒");
             });
         }
 
