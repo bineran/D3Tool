@@ -28,516 +28,485 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.复制调试的功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.粘贴调试的功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.粘贴坐标和颜色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.粘贴坐标1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.粘贴坐标2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Column17 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.查看功能说明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lbltools = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ckEnabled = new System.Windows.Forms.CheckBox();
-            this.btnRemoveFun = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.重命名功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.contextMenuStrip3.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.contextMenuStrip2.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            groupBox2 = new GroupBox();
+            dataGridView1 = new DataGridView();
+            Column1 = new DataGridViewComboBoxColumn();
+            Column2 = new DataGridViewComboBoxColumn();
+            Column15 = new DataGridViewTextBoxColumn();
+            Column16 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
+            Column7 = new DataGridViewTextBoxColumn();
+            Column8 = new DataGridViewTextBoxColumn();
+            Column9 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
+            Column13 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            contextMenuStrip3 = new ContextMenuStrip(components);
+            复制调试的功能ToolStripMenuItem = new ToolStripMenuItem();
+            粘贴调试的功能ToolStripMenuItem = new ToolStripMenuItem();
+            粘贴坐标和颜色ToolStripMenuItem = new ToolStripMenuItem();
+            粘贴坐标1ToolStripMenuItem = new ToolStripMenuItem();
+            粘贴坐标2ToolStripMenuItem = new ToolStripMenuItem();
+            panel1 = new Panel();
+            dataGridView2 = new DataGridView();
+            Column17 = new DataGridViewCheckBoxColumn();
+            Column18 = new DataGridViewComboBoxColumn();
+            contextMenuStrip2 = new ContextMenuStrip(components);
+            查看功能说明ToolStripMenuItem = new ToolStripMenuItem();
+            panel2 = new Panel();
+            lbltools = new Label();
+            groupBox1 = new GroupBox();
+            ckEnabled = new CheckBox();
+            btnRemoveFun = new Button();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            重命名功能ToolStripMenuItem = new ToolStripMenuItem();
+            comboBox2 = new ComboBox();
+            label2 = new Label();
+            comboBox1 = new ComboBox();
+            label1 = new Label();
+            checkBox2 = new CheckBox();
+            checkBox1 = new CheckBox();
+            toolTip1 = new ToolTip(components);
+            groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            contextMenuStrip3.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            contextMenuStrip2.SuspendLayout();
+            panel2.SuspendLayout();
+            groupBox1.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Controls.Add(this.panel1);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 54);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(847, 452);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "功能列表";
+            groupBox2.Controls.Add(dataGridView1);
+            groupBox2.Controls.Add(panel1);
+            groupBox2.Dock = DockStyle.Fill;
+            groupBox2.Location = new Point(0, 54);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(847, 452);
+            groupBox2.TabIndex = 1;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "功能列表";
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column15,
-            this.Column16,
-            this.Column3,
-            this.Column11,
-            this.Column7,
-            this.Column8,
-            this.Column9,
-            this.Column10,
-            this.Column4,
-            this.Column5,
-            this.Column6,
-            this.Column12,
-            this.Column13,
-            this.Column14});
-            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip3;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(203, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(641, 430);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
-            this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
-            this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column15, Column16, Column3, Column11, Column7, Column8, Column9, Column10, Column4, Column5, Column6, Column12, Column13, Column14 });
+            dataGridView1.ContextMenuStrip = contextMenuStrip3;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(203, 19);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(641, 430);
+            dataGridView1.TabIndex = 1;
+            dataGridView1.CellValidating += dataGridView1_CellValidating;
+            dataGridView1.ColumnHeaderMouseDoubleClick += dataGridView1_ColumnHeaderMouseDoubleClick;
+            dataGridView1.DataError += dataGridView1_DataError;
             // 
             // Column1
             // 
-            this.Column1.DataPropertyName = "KeyCode";
-            this.Column1.Frozen = true;
-            this.Column1.HeaderText = "键";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            Column1.DataPropertyName = "KeyCode";
+            Column1.Frozen = true;
+            Column1.HeaderText = "键";
+            Column1.Name = "Column1";
+            Column1.Resizable = DataGridViewTriState.True;
+            Column1.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // Column2
             // 
-            this.Column2.DataPropertyName = "keyClickType";
-            this.Column2.Frozen = true;
-            this.Column2.HeaderText = "类型";
-            this.Column2.Items.AddRange(new object[] {
-            "不做操作",
-            "CD好了就按",
-            "定时按",
-            "按住",
-            "按顺序"});
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 120;
+            Column2.DataPropertyName = "keyClickType";
+            Column2.Frozen = true;
+            Column2.HeaderText = "类型";
+            Column2.Items.AddRange(new object[] { "不做操作", "CD好了就按", "定时按", "按住", "按顺序" });
+            Column2.Name = "Column2";
+            Column2.Width = 120;
             // 
             // Column15
             // 
-            this.Column15.DataPropertyName = "Rank";
+            Column15.DataPropertyName = "Rank";
             dataGridViewCellStyle1.Format = "N0";
             dataGridViewCellStyle1.NullValue = null;
-            this.Column15.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column15.Frozen = true;
-            this.Column15.HeaderText = "顺序";
-            this.Column15.Name = "Column15";
-            this.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column15.Width = 60;
+            Column15.DefaultCellStyle = dataGridViewCellStyle1;
+            Column15.Frozen = true;
+            Column15.HeaderText = "顺序";
+            Column15.Name = "Column15";
+            Column15.Resizable = DataGridViewTriState.True;
+            Column15.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Column15.Width = 60;
             // 
             // Column16
             // 
-            this.Column16.DataPropertyName = "TSRemark";
-            this.Column16.Frozen = true;
-            this.Column16.HeaderText = "备注";
-            this.Column16.Name = "Column16";
+            Column16.DataPropertyName = "TSRemark";
+            Column16.Frozen = true;
+            Column16.HeaderText = "备注";
+            Column16.Name = "Column16";
             // 
             // Column3
             // 
-            this.Column3.DataPropertyName = "D1";
+            Column3.DataPropertyName = "D1";
             dataGridViewCellStyle2.Format = "N0";
             dataGridViewCellStyle2.NullValue = null;
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Column3.HeaderText = "时间1";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 75;
+            Column3.DefaultCellStyle = dataGridViewCellStyle2;
+            Column3.HeaderText = "时间1";
+            Column3.Name = "Column3";
+            Column3.Width = 75;
             // 
             // Column11
             // 
-            this.Column11.DataPropertyName = "Str1";
-            this.Column11.HeaderText = "文本1";
-            this.Column11.Name = "Column11";
+            Column11.DataPropertyName = "Str1";
+            Column11.HeaderText = "文本1";
+            Column11.Name = "Column11";
             // 
             // Column7
             // 
-            this.Column7.DataPropertyName = "Int1";
+            Column7.DataPropertyName = "Int1";
             dataGridViewCellStyle3.Format = "d";
             dataGridViewCellStyle3.NullValue = null;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column7.HeaderText = "整数1";
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 75;
+            Column7.DefaultCellStyle = dataGridViewCellStyle3;
+            Column7.HeaderText = "整数1";
+            Column7.Name = "Column7";
+            Column7.Width = 75;
             // 
             // Column8
             // 
-            this.Column8.DataPropertyName = "Int2";
+            Column8.DataPropertyName = "Int2";
             dataGridViewCellStyle4.Format = "d";
-            this.Column8.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Column8.HeaderText = "整数2";
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 75;
+            Column8.DefaultCellStyle = dataGridViewCellStyle4;
+            Column8.HeaderText = "整数2";
+            Column8.Name = "Column8";
+            Column8.Width = 75;
             // 
             // Column9
             // 
-            this.Column9.DataPropertyName = "Int3";
+            Column9.DataPropertyName = "Int3";
             dataGridViewCellStyle5.Format = "d";
-            this.Column9.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Column9.HeaderText = "整数3";
-            this.Column9.Name = "Column9";
-            this.Column9.Width = 75;
+            Column9.DefaultCellStyle = dataGridViewCellStyle5;
+            Column9.HeaderText = "整数3";
+            Column9.Name = "Column9";
+            Column9.Width = 75;
             // 
             // Column10
             // 
-            this.Column10.DataPropertyName = "Int4";
+            Column10.DataPropertyName = "Int4";
             dataGridViewCellStyle6.Format = "d";
-            this.Column10.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Column10.HeaderText = "整数4";
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 75;
+            Column10.DefaultCellStyle = dataGridViewCellStyle6;
+            Column10.HeaderText = "整数4";
+            Column10.Name = "Column10";
+            Column10.Width = 75;
             // 
             // Column4
             // 
-            this.Column4.DataPropertyName = "D2";
+            Column4.DataPropertyName = "D2";
             dataGridViewCellStyle7.Format = "N0";
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Column4.HeaderText = "时间2";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 75;
+            Column4.DefaultCellStyle = dataGridViewCellStyle7;
+            Column4.HeaderText = "时间2";
+            Column4.Name = "Column4";
+            Column4.Width = 75;
             // 
             // Column5
             // 
-            this.Column5.DataPropertyName = "D3";
+            Column5.DataPropertyName = "D3";
             dataGridViewCellStyle8.Format = "N0";
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Column5.HeaderText = "时间3";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 75;
+            Column5.DefaultCellStyle = dataGridViewCellStyle8;
+            Column5.HeaderText = "时间3";
+            Column5.Name = "Column5";
+            Column5.Width = 75;
             // 
             // Column6
             // 
-            this.Column6.DataPropertyName = "D4";
+            Column6.DataPropertyName = "D4";
             dataGridViewCellStyle9.Format = "N0";
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle9;
-            this.Column6.HeaderText = "时间4";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 75;
+            Column6.DefaultCellStyle = dataGridViewCellStyle9;
+            Column6.HeaderText = "时间4";
+            Column6.Name = "Column6";
+            Column6.Width = 75;
             // 
             // Column12
             // 
-            this.Column12.DataPropertyName = "Str2";
-            this.Column12.HeaderText = "文本2";
-            this.Column12.Name = "Column12";
+            Column12.DataPropertyName = "Str2";
+            Column12.HeaderText = "文本2";
+            Column12.Name = "Column12";
             // 
             // Column13
             // 
-            this.Column13.DataPropertyName = "Str3";
-            this.Column13.HeaderText = "文本3";
-            this.Column13.Name = "Column13";
+            Column13.DataPropertyName = "Str3";
+            Column13.HeaderText = "文本3";
+            Column13.Name = "Column13";
             // 
             // Column14
             // 
-            this.Column14.DataPropertyName = "Str4";
-            this.Column14.HeaderText = "文本4";
-            this.Column14.Name = "Column14";
+            Column14.DataPropertyName = "Str4";
+            Column14.HeaderText = "文本4";
+            Column14.Name = "Column14";
             // 
             // contextMenuStrip3
             // 
-            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.复制调试的功能ToolStripMenuItem,
-            this.粘贴调试的功能ToolStripMenuItem,
-            this.粘贴坐标和颜色ToolStripMenuItem,
-            this.粘贴坐标1ToolStripMenuItem,
-            this.粘贴坐标2ToolStripMenuItem});
-            this.contextMenuStrip3.Name = "contextMenuStrip3";
-            this.contextMenuStrip3.Size = new System.Drawing.Size(161, 114);
+            contextMenuStrip3.Items.AddRange(new ToolStripItem[] { 复制调试的功能ToolStripMenuItem, 粘贴调试的功能ToolStripMenuItem, 粘贴坐标和颜色ToolStripMenuItem, 粘贴坐标1ToolStripMenuItem, 粘贴坐标2ToolStripMenuItem });
+            contextMenuStrip3.Name = "contextMenuStrip3";
+            contextMenuStrip3.Size = new Size(161, 114);
             // 
             // 复制调试的功能ToolStripMenuItem
             // 
-            this.复制调试的功能ToolStripMenuItem.Name = "复制调试的功能ToolStripMenuItem";
-            this.复制调试的功能ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.复制调试的功能ToolStripMenuItem.Text = "复制";
-            this.复制调试的功能ToolStripMenuItem.Click += new System.EventHandler(this.复制调试的功能ToolStripMenuItem_Click);
+            复制调试的功能ToolStripMenuItem.Name = "复制调试的功能ToolStripMenuItem";
+            复制调试的功能ToolStripMenuItem.Size = new Size(160, 22);
+            复制调试的功能ToolStripMenuItem.Text = "复制";
+            复制调试的功能ToolStripMenuItem.Click += 复制调试的功能ToolStripMenuItem_Click;
             // 
             // 粘贴调试的功能ToolStripMenuItem
             // 
-            this.粘贴调试的功能ToolStripMenuItem.Name = "粘贴调试的功能ToolStripMenuItem";
-            this.粘贴调试的功能ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.粘贴调试的功能ToolStripMenuItem.Text = "粘贴";
-            this.粘贴调试的功能ToolStripMenuItem.Click += new System.EventHandler(this.粘贴调试的功能ToolStripMenuItem_Click);
+            粘贴调试的功能ToolStripMenuItem.Name = "粘贴调试的功能ToolStripMenuItem";
+            粘贴调试的功能ToolStripMenuItem.Size = new Size(160, 22);
+            粘贴调试的功能ToolStripMenuItem.Text = "粘贴";
+            粘贴调试的功能ToolStripMenuItem.Click += 粘贴调试的功能ToolStripMenuItem_Click;
             // 
             // 粘贴坐标和颜色ToolStripMenuItem
             // 
-            this.粘贴坐标和颜色ToolStripMenuItem.Name = "粘贴坐标和颜色ToolStripMenuItem";
-            this.粘贴坐标和颜色ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.粘贴坐标和颜色ToolStripMenuItem.Text = "粘贴坐标和颜色";
-            this.粘贴坐标和颜色ToolStripMenuItem.Click += new System.EventHandler(this.粘贴坐标和颜色ToolStripMenuItem_Click);
+            粘贴坐标和颜色ToolStripMenuItem.Name = "粘贴坐标和颜色ToolStripMenuItem";
+            粘贴坐标和颜色ToolStripMenuItem.Size = new Size(160, 22);
+            粘贴坐标和颜色ToolStripMenuItem.Text = "粘贴坐标和颜色";
+            粘贴坐标和颜色ToolStripMenuItem.Click += 粘贴坐标和颜色ToolStripMenuItem_Click;
             // 
             // 粘贴坐标1ToolStripMenuItem
             // 
-            this.粘贴坐标1ToolStripMenuItem.Name = "粘贴坐标1ToolStripMenuItem";
-            this.粘贴坐标1ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.粘贴坐标1ToolStripMenuItem.Text = "粘贴坐标1";
-            this.粘贴坐标1ToolStripMenuItem.Click += new System.EventHandler(this.粘贴坐标1ToolStripMenuItem_Click);
+            粘贴坐标1ToolStripMenuItem.Name = "粘贴坐标1ToolStripMenuItem";
+            粘贴坐标1ToolStripMenuItem.Size = new Size(160, 22);
+            粘贴坐标1ToolStripMenuItem.Text = "粘贴坐标1";
+            粘贴坐标1ToolStripMenuItem.Click += 粘贴坐标1ToolStripMenuItem_Click;
             // 
             // 粘贴坐标2ToolStripMenuItem
             // 
-            this.粘贴坐标2ToolStripMenuItem.Name = "粘贴坐标2ToolStripMenuItem";
-            this.粘贴坐标2ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.粘贴坐标2ToolStripMenuItem.Text = "粘贴坐标2";
-            this.粘贴坐标2ToolStripMenuItem.Click += new System.EventHandler(this.粘贴坐标2ToolStripMenuItem_Click);
+            粘贴坐标2ToolStripMenuItem.Name = "粘贴坐标2ToolStripMenuItem";
+            粘贴坐标2ToolStripMenuItem.Size = new Size(160, 22);
+            粘贴坐标2ToolStripMenuItem.Text = "粘贴坐标2";
+            粘贴坐标2ToolStripMenuItem.Click += 粘贴坐标2ToolStripMenuItem_Click;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.dataGridView2);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(3, 19);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 430);
-            this.panel1.TabIndex = 2;
+            panel1.Controls.Add(dataGridView2);
+            panel1.Controls.Add(panel2);
+            panel1.Dock = DockStyle.Left;
+            panel1.Location = new Point(3, 19);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(200, 430);
+            panel1.TabIndex = 2;
             // 
             // dataGridView2
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.AllowUserToResizeRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dataGridView2.ColumnHeadersVisible = false;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column17,
-            this.Column18});
-            this.dataGridView2.ContextMenuStrip = this.contextMenuStrip2;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(200, 396);
-            this.dataGridView2.TabIndex = 4;
-            this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
+            dataGridView2.AllowUserToResizeRows = false;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridView2.ColumnHeadersVisible = false;
+            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { Column17, Column18 });
+            dataGridView2.ContextMenuStrip = contextMenuStrip2;
+            dataGridView2.Dock = DockStyle.Fill;
+            dataGridView2.Location = new Point(0, 0);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowHeadersVisible = false;
+            dataGridView2.RowTemplate.Height = 25;
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView2.Size = new Size(200, 396);
+            dataGridView2.TabIndex = 4;
+            dataGridView2.DataError += dataGridView2_DataError;
+            dataGridView2.SelectionChanged += dataGridView2_SelectionChanged;
             // 
             // Column17
             // 
-            this.Column17.DataPropertyName = "isSelect";
-            this.Column17.HeaderText = "";
-            this.Column17.Name = "Column17";
-            this.Column17.Width = 35;
+            Column17.DataPropertyName = "EnableFlag";
+            Column17.HeaderText = "";
+            Column17.Name = "Column17";
+            Column17.Width = 35;
             // 
             // Column18
             // 
-            this.Column18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column18.DataPropertyName = "enumD3";
-            this.Column18.HeaderText = "功能列表";
-            this.Column18.Name = "Column18";
-            this.Column18.ReadOnly = true;
+            Column18.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Column18.DataPropertyName = "enumD3";
+            Column18.HeaderText = "功能列表";
+            Column18.Name = "Column18";
+            Column18.Resizable = DataGridViewTriState.True;
+            Column18.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // contextMenuStrip2
             // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.查看功能说明ToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(149, 26);
+            contextMenuStrip2.Items.AddRange(new ToolStripItem[] { 查看功能说明ToolStripMenuItem });
+            contextMenuStrip2.Name = "contextMenuStrip2";
+            contextMenuStrip2.Size = new Size(149, 26);
             // 
             // 查看功能说明ToolStripMenuItem
             // 
-            this.查看功能说明ToolStripMenuItem.Name = "查看功能说明ToolStripMenuItem";
-            this.查看功能说明ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.查看功能说明ToolStripMenuItem.Text = "查看功能说明";
-            this.查看功能说明ToolStripMenuItem.Click += new System.EventHandler(this.查看功能说明ToolStripMenuItem_Click);
+            查看功能说明ToolStripMenuItem.Name = "查看功能说明ToolStripMenuItem";
+            查看功能说明ToolStripMenuItem.Size = new Size(148, 22);
+            查看功能说明ToolStripMenuItem.Text = "查看功能说明";
+            查看功能说明ToolStripMenuItem.Click += 查看功能说明ToolStripMenuItem_Click;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.lbltools);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 396);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 34);
-            this.panel2.TabIndex = 3;
+            panel2.Controls.Add(lbltools);
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(0, 396);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(200, 34);
+            panel2.TabIndex = 3;
             // 
             // lbltools
             // 
-            this.lbltools.AutoSize = true;
-            this.lbltools.Location = new System.Drawing.Point(3, 9);
-            this.lbltools.Name = "lbltools";
-            this.lbltools.Size = new System.Drawing.Size(0, 17);
-            this.lbltools.TabIndex = 0;
+            lbltools.AutoSize = true;
+            lbltools.Location = new Point(3, 9);
+            lbltools.Name = "lbltools";
+            lbltools.Size = new Size(0, 17);
+            lbltools.TabIndex = 0;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.ckEnabled);
-            this.groupBox1.Controls.Add(this.btnRemoveFun);
-            this.groupBox1.Controls.Add(this.comboBox2);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(847, 54);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "启动设置";
+            groupBox1.Controls.Add(ckEnabled);
+            groupBox1.Controls.Add(btnRemoveFun);
+            groupBox1.Controls.Add(comboBox2);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(comboBox1);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(checkBox2);
+            groupBox1.Controls.Add(checkBox1);
+            groupBox1.Dock = DockStyle.Top;
+            groupBox1.Location = new Point(0, 0);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(847, 54);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "启动设置";
             // 
             // ckEnabled
             // 
-            this.ckEnabled.AutoSize = true;
-            this.ckEnabled.Location = new System.Drawing.Point(676, 22);
-            this.ckEnabled.Name = "ckEnabled";
-            this.ckEnabled.Size = new System.Drawing.Size(51, 21);
-            this.ckEnabled.TabIndex = 5;
-            this.ckEnabled.Text = "启用";
-            this.ckEnabled.UseVisualStyleBackColor = true;
-            this.ckEnabled.CheckedChanged += new System.EventHandler(this.ckEnabled_CheckedChanged);
+            ckEnabled.AutoSize = true;
+            ckEnabled.Location = new Point(676, 22);
+            ckEnabled.Name = "ckEnabled";
+            ckEnabled.Size = new Size(51, 21);
+            ckEnabled.TabIndex = 5;
+            ckEnabled.Text = "启用";
+            ckEnabled.UseVisualStyleBackColor = true;
+            ckEnabled.CheckedChanged += ckEnabled_CheckedChanged;
             // 
             // btnRemoveFun
             // 
-            this.btnRemoveFun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveFun.BackColor = System.Drawing.Color.Linen;
-            this.btnRemoveFun.ContextMenuStrip = this.contextMenuStrip1;
-            this.btnRemoveFun.Location = new System.Drawing.Point(813, 20);
-            this.btnRemoveFun.Name = "btnRemoveFun";
-            this.btnRemoveFun.Size = new System.Drawing.Size(28, 23);
-            this.btnRemoveFun.TabIndex = 4;
-            this.btnRemoveFun.Text = "X";
-            this.btnRemoveFun.UseVisualStyleBackColor = false;
-            this.btnRemoveFun.Click += new System.EventHandler(this.btnRemoveFun_Click);
+            btnRemoveFun.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRemoveFun.BackColor = Color.Linen;
+            btnRemoveFun.ContextMenuStrip = contextMenuStrip1;
+            btnRemoveFun.Location = new Point(813, 20);
+            btnRemoveFun.Name = "btnRemoveFun";
+            btnRemoveFun.Size = new Size(28, 23);
+            btnRemoveFun.TabIndex = 4;
+            btnRemoveFun.Text = "X";
+            btnRemoveFun.UseVisualStyleBackColor = false;
+            btnRemoveFun.Click += btnRemoveFun_Click;
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.重命名功能ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(137, 26);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { 重命名功能ToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(137, 26);
             // 
             // 重命名功能ToolStripMenuItem
             // 
-            this.重命名功能ToolStripMenuItem.Name = "重命名功能ToolStripMenuItem";
-            this.重命名功能ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.重命名功能ToolStripMenuItem.Text = "重命名功能";
-            this.重命名功能ToolStripMenuItem.Click += new System.EventHandler(this.重命名功能ToolStripMenuItem_Click);
+            重命名功能ToolStripMenuItem.Name = "重命名功能ToolStripMenuItem";
+            重命名功能ToolStripMenuItem.Size = new Size(136, 22);
+            重命名功能ToolStripMenuItem.Text = "重命名功能";
+            重命名功能ToolStripMenuItem.Click += 重命名功能ToolStripMenuItem_Click;
             // 
             // comboBox2
             // 
-            this.comboBox2.DisplayMember = "KeyName";
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(549, 20);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 25);
-            this.comboBox2.TabIndex = 3;
-            this.comboBox2.ValueMember = "KeyCode";
+            comboBox2.DisplayMember = "KeyName";
+            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(549, 20);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(121, 25);
+            comboBox2.TabIndex = 3;
+            comboBox2.ValueMember = "KeyCode";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(504, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "热键2";
+            label2.AutoSize = true;
+            label2.Location = new Point(504, 24);
+            label2.Name = "label2";
+            label2.Size = new Size(39, 17);
+            label2.TabIndex = 1;
+            label2.Text = "热键2";
             // 
             // comboBox1
             // 
-            this.comboBox1.DisplayMember = "KeyName";
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(370, 20);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 25);
-            this.comboBox1.TabIndex = 2;
-            this.comboBox1.ValueMember = "KeyCode";
+            comboBox1.DisplayMember = "KeyName";
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(370, 20);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 25);
+            comboBox1.TabIndex = 2;
+            comboBox1.ValueMember = "KeyCode";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(325, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "热键1";
+            label1.AutoSize = true;
+            label1.Location = new Point(325, 23);
+            label1.Name = "label1";
+            label1.Size = new Size(39, 17);
+            label1.TabIndex = 1;
+            label1.Text = "热键1";
             // 
             // checkBox2
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(147, 22);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(159, 21);
-            this.checkBox2.TabIndex = 0;
-            this.checkBox2.Text = "运行时阻止其它功能停止";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(147, 22);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(159, 21);
+            checkBox2.TabIndex = 0;
+            checkBox2.Text = "运行时阻止其它功能停止";
+            checkBox2.UseVisualStyleBackColor = true;
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 22);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(135, 21);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "启动时先停其它功能";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(6, 22);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(135, 21);
+            checkBox1.TabIndex = 0;
+            checkBox1.Text = "启动时先停其它功能";
+            checkBox1.UseVisualStyleBackColor = true;
             // 
             // UserFun
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Name = "UserFun";
-            this.Size = new System.Drawing.Size(847, 506);
-            this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.contextMenuStrip3.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.contextMenuStrip2.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
+            Name = "UserFun";
+            Size = new Size(847, 506);
+            groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            contextMenuStrip3.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            contextMenuStrip2.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
@@ -584,6 +553,6 @@
         private ToolStripMenuItem 粘贴坐标2ToolStripMenuItem;
         private DataGridView dataGridView2;
         private DataGridViewCheckBoxColumn Column17;
-        private DataGridViewTextBoxColumn Column18;
+        private DataGridViewComboBoxColumn Column18;
     }
 }

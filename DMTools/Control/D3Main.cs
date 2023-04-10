@@ -132,14 +132,14 @@ namespace DMTools.Control
             return true;
   
         }
-        public D3Param NewD3Param(SortedList<EnumD3,List< KeyTimeSetting>>   funTimes,SysConfig sysConfig)
+        public D3Param NewD3Param(List<D3ConfigFun> d3ConfigFuns,SysConfig sysConfig)
         {
             D3Param d3Param = new D3Param();
             d3Param.sysConfig= sysConfig;
             d3Param.Handle = this.handle;
             d3Param.d3KeyState = this.d3KeyState;
             d3Param.KeyCodes = this.d3KeySetting;
-            d3Param.SLTimes = funTimes;
+            d3Param.ConfigFuns = d3ConfigFuns;
             return d3Param;
             
         }
@@ -165,12 +165,12 @@ namespace DMTools.Control
             foreach (var  item in items)
             {
                 List<EnumD3> enumD3s = ConvertEnumd3List(item);
-                var ts = ConvertTimeList(item);
+           
                 if (enumD3s.Count > 0)
                 {
                     //strfunList[]
-                     var d3param = d3Main.NewD3Param(ts, d3Config.sysConfig);
-                    D3Fun d3Fun = new D3Fun(d3param, enumD3s.ToArray());
+                     var d3param = d3Main.NewD3Param(item.d3ConfigFuns, d3Config.sysConfig);
+                    D3Fun d3Fun = new D3Fun(d3param);
                     d3Fun.EnabledFlag = item.EnabledFlag;
                     d3Fun.StartBeforeStopOther=item.StartBeforeStopOther;
                     d3Fun.OtherStopFlag= item.OtherStopFlag;
@@ -214,15 +214,6 @@ namespace DMTools.Control
             }
             return enumD3s;
         }
-        private static SortedList<EnumD3, List<KeyTimeSetting>> ConvertTimeList(D3ConfigItem item)
-        {
-            SortedList<EnumD3, List<KeyTimeSetting>> sl = new SortedList<EnumD3, List<KeyTimeSetting>>();
-            foreach (var s in item.d3ConfigFuns)
-            {
-                if(s.EnableFlag== true)
-                    sl.Add(s.enumD3, s.Times);
-            }
-            return sl;
-        }
+
     }
 }

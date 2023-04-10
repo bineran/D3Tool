@@ -15,7 +15,7 @@ namespace DMTools.Control
        public SysConfig sysConfig { get; set; }
         public int Handle { get; set; }
         public D3KeyCodes KeyCodes { get; set; }
-        public SortedList<EnumD3, List<KeyTimeSetting>> SLTimes { get; set; }
+        public List<D3ConfigFun> ConfigFuns { get; set; }
         public D3KeyState d3KeyState { get; set; }
         public EnumD3 enumD3 { get; set; }
 

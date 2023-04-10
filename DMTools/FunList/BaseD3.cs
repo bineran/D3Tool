@@ -61,20 +61,14 @@ namespace DMTools.FunList
         public int Handle { get { return this.d3Param.Handle; } }
         public D3Param d3Param { get; set; }
         public D3KeyState d3KeyState { get { return d3Param.d3KeyState; } }
-        public List<KeyTimeSetting> Times
-        {
-            get
-            {
-                return this.d3Param.SLTimes[this.enumD3];
-            }
-        }
+        public List<KeyTimeSetting> Times { get; set; }
 
         public CancellationTokenSource cs { get; set; }
         
-        public BaseD3(D3Param _d3Param,EnumD3 enumD3)
+        public BaseD3(D3Param _d3Param, List<KeyTimeSetting> Times,EnumD3 enumD3)
         {
             this.cs=new CancellationTokenSource();
-
+            this.Times= Times;
             this.d3Param = _d3Param;
             this.enumD3 = enumD3;
             stopwatch = new Stopwatch();

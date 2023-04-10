@@ -22,8 +22,9 @@ namespace DMTools
     {
         public event Action<D3ConfigItem> RemoveFunEvent;
         public event Action<D3ConfigItem> ReNameFunEvent;
-        public static DataTable dtkey= new DataTable();
-        static UserFun() {
+        public static DataTable dtkey = new DataTable();
+        static UserFun()
+        {
             dtkey = DTHelper.TableList[DataTableType.HotKey];
         }
         private class Funitem
@@ -37,27 +38,42 @@ namespace DMTools
             InitializeComponent();
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView2.AutoGenerateColumns = false;
-            FunItems=new List<Funitem>();
-
+            FunItems = new List<Funitem>();
+            List<EnumD3> enumD3s = new List<EnumD3>();
             foreach (EnumD3 hs1 in Enum.GetValues(typeof(EnumD3)))
             {
+
                 if (hs1 != EnumD3.默认)
-                    FunItems.Add(new Funitem() { enumD3 = hs1, isSelect = false });
+                {
+                    enumD3s.Add(hs1);
+                }
+
             }
+
+            Column1.DisplayMember = "enumD3";
+            Column1.ValueMember = "enumD3";
+
+            this.Column18.ValueType = typeof(EnumD3);
+
+            this.Column18.DataSource = enumD3s.ToArray();
+
+
+
             Column2.DataSource = Enum.GetValues(typeof(KeyClickType));
             Column2.ValueType = typeof(KeyClickType);
             this.comboBox1.DataSource = dtkey.Copy();
             this.comboBox2.DataSource = dtkey.Copy();
             Column1.DisplayMember = "KeyName";
-            Column1.ValueMember= "KeyCode";
+            Column1.ValueMember = "KeyCode";
             Column1.DataPropertyName = "KeyCode";
             this.Column1.DataSource = DTHelper.TableList[DataTableType.Key].Copy();
             this.d3ConfigItem = d3ConfigItem;
             BindData();
         }
 
-        public  D3ConfigItem d3ConfigItem;
-        private void BindData( )
+        public D3ConfigItem d3ConfigItem;
+        public List<D3ConfigFun> D3ConfigFuns = new List<D3ConfigFun>();
+        private void BindData()
         {
             this.checkBox1.DataBindings.Add("Checked", d3ConfigItem, "StartBeforeStopOther");
             this.checkBox2.DataBindings.Add("Checked", d3ConfigItem, "OtherStopFlag");
@@ -65,20 +81,10 @@ namespace DMTools
             this.comboBox2.SelectedValue = d3ConfigItem.HotKey2;
             this.ckEnabled.DataBindings.Add("Checked", d3ConfigItem, "EnabledFlag");
 
-           
-            FunItems.ForEach(r=>r.isSelect=false);
 
-            bool issetSelect = false;
-            for (int i = 0; i < this.FunItems.Count; i++)
-            {
-                var enumD3 = this.FunItems[i].enumD3;
-                if (d3ConfigItem.d3ConfigFuns != null && d3ConfigItem.d3ConfigFuns.Any(r=>r.enumD3== enumD3 && r.EnableFlag))
-                {
-                    this.FunItems[i].isSelect = true;
-                }
-            }
-            var al=this.FunItems.OrderByDescending(r => r.isSelect).ThenBy(r=>r.enumD3).ToList();
-            this.dataGridView2.DataSource = new BindingList<Funitem>(al);
+
+            D3ConfigFuns = d3ConfigItem.d3ConfigFuns.OrderByDescending(r => r.EnableFlag).ThenBy(r => r.enumD3).ToList();
+            this.dataGridView2.DataSource = new BindingList<D3ConfigFun>(D3ConfigFuns);
 
 
 
@@ -90,33 +96,26 @@ namespace DMTools
 
         }
 
-        public  void SaveData()
+        public void SaveData()
         {
             if (this.d3ConfigItem != null)
             {
-                SortedList<string, List<KeyTimeSetting>> alfn1 = new SortedList<string, List<KeyTimeSetting>>();
-                foreach (var c in this.FunItems)
+                for(int i=0;i<this.D3ConfigFuns.Count;i++)
                 {
-                    var cenumd3=c.enumD3;
-
-                   var tmpFun= this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == cenumd3);
-                    if (tmpFun != null)
-                    {
-                        var alkey = tmpFun.Times.Where(r =>
-                          r.Rank > 0 ||
-                          r.Int1 > 0 || r.Int2 > 0 || r.Int3 > 0 || r.Int4 > 0 ||
-                          r.D1 > 0 || r.D2 > 0 || r.D3 > 0 || r.D4 > 0 ||
-                          r.Str1.TrimLength() > 0 || r.Str2.TrimLength() > 0 ||
-                          r.Str3.TrimLength() > 0 || r.Str4.TrimLength() > 0 || r.keyClickType != KeyClickType.不做操作)
-                            .ToList();
-                        tmpFun.Times = alkey;
-                        tmpFun.EnableFlag = c.isSelect;
-                    }
-                  
-                    
-                
-                  
+                    this.D3ConfigFuns[i].Times = this.D3ConfigFuns[i].Times.Where(r =>
+ r.TSRemark.TrimLength() > 0 ||
+   r.Rank > 0 ||
+   r.Int1 > 0 || r.Int2 > 0 || r.Int3 > 0 || r.Int4 > 0 ||
+   r.D1 > 0 || r.D2 > 0 || r.D3 > 0 || r.D4 > 0 ||
+   r.Str1.TrimLength() > 0 || r.Str2.TrimLength() > 0 ||
+   r.Str3.TrimLength() > 0 || r.Str4.TrimLength() > 0 || r.keyClickType != KeyClickType.不做操作)
+     .ToList();
                 }
+
+
+
+                this.d3ConfigItem.d3ConfigFuns = this.D3ConfigFuns;
+
 
                 //foreach (var s in alfn1)
                 //{
@@ -126,19 +125,19 @@ namespace DMTools
                 //    }
                 //}
 
-                if(this.comboBox1.SelectedValue!= null)
-                d3ConfigItem.HotKey1 =(Keys) this.comboBox1.SelectedValue;
+                if (this.comboBox1.SelectedValue != null)
+                    d3ConfigItem.HotKey1 = (Keys)this.comboBox1.SelectedValue;
                 if (this.comboBox2.SelectedValue != null)
                     d3ConfigItem.HotKey2 = (Keys)this.comboBox2.SelectedValue;
                 this.d3ConfigItem.EnabledFlag = this.ckEnabled.Checked;
                 this.d3ConfigItem.OtherStopFlag = this.checkBox2.Checked;
                 this.d3ConfigItem.StartBeforeStopOther = this.checkBox1.Checked;
-           
+
             }
-            
+
         }
 
-        
+
 
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
@@ -175,8 +174,9 @@ namespace DMTools
 
                 }
             }
-            catch {
-            e.Cancel=true;
+            catch
+            {
+                e.Cancel = true;
             }
 
 
@@ -218,12 +218,13 @@ namespace DMTools
 
         private void Txt_KeyPress(object? sender, KeyPressEventArgs e)
         {
-           if(!char.IsNumber(e.KeyChar)  && e.KeyChar!='\b') { 
-                e.Handled= true;
+            if (!char.IsNumber(e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true;
             }
             if (e.KeyChar == '.')
-            { 
-                e.Handled=true;
+            {
+                e.Handled = true;
             }
         }
         public void RestDebugDataGridView()
@@ -237,7 +238,7 @@ namespace DMTools
         private void btnRemoveFun_Click(object sender, EventArgs e)
         {
             if (RemoveFunEvent != null)
-                {
+            {
                 if (MessageBox.Show($"你确定要删除吗？", "删除功能", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     RemoveFunEvent(this.d3ConfigItem);
@@ -251,9 +252,9 @@ namespace DMTools
             {
 
                 ReNameFunEvent(this.d3ConfigItem);
-                
+
             }
-            
+
         }
         public void SetEnabled()
         {
@@ -273,10 +274,10 @@ namespace DMTools
         {
             e.Cancel = true;
         }
-        public List<KeyTimeSetting> selectKTSList=new List<KeyTimeSetting>();
+        public List<KeyTimeSetting> selectKTSList = new List<KeyTimeSetting>();
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
         }
 
         private string GetFunInfo(EnumD3 enumD3)
@@ -309,11 +310,11 @@ namespace DMTools
         }
         private void 查看功能说明ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-    
-            if(this.dataGridView2.CurrentRow!=null)
+
+            if (this.dataGridView2.CurrentRow != null)
             {
                 var fun = this.dataGridView2.CurrentRow.DataBoundItem as Funitem;
-                if(fun != null)
+                if (fun != null)
                 {
                     var str1 = GetFunInfo(fun.enumD3);
                     if (str1.Length > 0)
@@ -328,17 +329,18 @@ namespace DMTools
         private void 粘贴调试的功能ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DMP dmp = new DMP();
-           var str= dmp.DM.GetClipboard();
+            var str = dmp.DM.GetClipboard();
             if (str != null)
             {
                 var al = str.FromJson<List<KeyTimeSetting>>();
                 if (al != null && al.Count > 0)
                 {
                     selectKTSList.AddRange(al.ToArray());
-                    this.Invoke(() => {
+                    this.Invoke(() =>
+                    {
                         this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
                     });
-                   // dmp.DM.SetClipboard("");
+                    // dmp.DM.SetClipboard("");
                 }
             }
         }
@@ -370,8 +372,8 @@ namespace DMTools
                 var al = str.FromJson<List<KeyTimeSetting>>();
                 if (al != null && al.Count == 1 && this.dataGridView1.SelectedRows.Count == 1)
                 {
-                    var kt=this.dataGridView1.SelectedRows[0].DataBoundItem as KeyTimeSetting;
-                    if(kt!=null)
+                    var kt = this.dataGridView1.SelectedRows[0].DataBoundItem as KeyTimeSetting;
+                    if (kt != null)
                     {
                         var ks = al[0];
 
@@ -387,7 +389,8 @@ namespace DMTools
                     }
 
 
-                    this.Invoke(() => {
+                    this.Invoke(() =>
+                    {
                         this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
                     });
                     // dmp.DM.SetClipboard("");
@@ -416,7 +419,8 @@ namespace DMTools
                     }
 
 
-                    this.Invoke(() => {
+                    this.Invoke(() =>
+                    {
                         this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
                     });
                     // dmp.DM.SetClipboard("");
@@ -445,7 +449,8 @@ namespace DMTools
                     }
 
 
-                    this.Invoke(() => {
+                    this.Invoke(() =>
+                    {
                         this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
                     });
                     // dmp.DM.SetClipboard("");
@@ -455,23 +460,21 @@ namespace DMTools
 
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
-            if (this.dataGridView2.CurrentRow == null) return;
-            var fun = dataGridView2.CurrentRow.DataBoundItem as Funitem;
-            var key = fun.enumD3.ToString();
+            if (this.dataGridView2.CurrentRow == null)
+                return;
 
-            if (key.TrimLength() == 0) { return; }
-            Enum.TryParse(key, out EnumD3 enumD3);
-            if (!this.d3ConfigItem.d3ConfigFuns.Any(r => r.enumD3 == enumD3))
+            var fun = dataGridView2.CurrentRow.DataBoundItem as D3ConfigFun;
+            if (fun == null)
             {
-                this.d3ConfigItem.d3ConfigFuns.Add(new D3ConfigFun() { EnableFlag = false, enumD3 = enumD3 });
+                
+                return;
             }
-            var tmpFun = this.d3ConfigItem.d3ConfigFuns.FirstOrDefault(r => r.enumD3 == enumD3);
-            if (tmpFun == null) { return; }
+
 
             selectKTSList = new List<KeyTimeSetting>();
-            if (tmpFun.Times != null && tmpFun.Times.Count > 0)
+            if (fun.Times != null && fun.Times.Count > 0)
             {
-                selectKTSList = tmpFun.Times;
+                selectKTSList = fun.Times;
             }
             else
             {
@@ -485,13 +488,18 @@ namespace DMTools
                 selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
             }
             this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
-            tmpFun.Times = selectKTSList;
-
-           // this.toolTip1.Show(GetFunInfo(key), this.lbltools, 10000);
+            fun.Times = selectKTSList;
         }
 
         private void dataGridView1_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+        }
+
+        private void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+
+
         }
     }
 }

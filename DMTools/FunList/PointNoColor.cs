@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DMTools.Config;
 
 namespace DMTools.FunList
 {
@@ -16,7 +17,7 @@ namespace DMTools.FunList
     public class PointNoColor : BaseD3
     {
         public  const EnumD3 enumD3Name = EnumD3.颜色不相等时按键;
-        public PointNoColor(D3Param d3Param,EnumD3 enumD3) : base(d3Param,enumD3)
+        public PointNoColor(D3Param d3Param, List<KeyTimeSetting> Times, EnumD3 enumD3) : base(d3Param, Times,enumD3)
         {
            
             this.StartEvent += Pause_StartEvent;

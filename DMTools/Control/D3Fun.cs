@@ -16,66 +16,41 @@ namespace DMTools.Control
         NLog.Logger log= NLog.LogManager.GetCurrentClassLogger();
         public const string enumD3Name = "enumD3Name";
         public D3Param d3Param { get; set; }
-        public  SortedList<EnumD3, ID3Function> slD3Function = new SortedList<EnumD3, ID3Function>();
-        public SortedList<EnumD3, List<KeyTimeSetting>> Times { get; set; } = new SortedList<EnumD3, List<KeyTimeSetting>>();
-        
-        public D3Fun(params EnumD3[] enumD3s)
-        {
-     
-            InitD3Function( enumD3s);
-            if (enumD3s != null)
-            {
-                foreach (var e in enumD3s)
-                {
-                    if (slD3Function.ContainsKey(e))
-                    {
-                        this.funList.Add(slD3Function[e]);
-                    }
-                }
-            }
-        }
-        public D3Fun(D3Param _d3Param,params EnumD3[] enumD3s)
+        public  List<(D3ConfigFun, ID3Function)> slD3Function = new List<(D3ConfigFun, ID3Function)>();
+
+       
+        public D3Fun(D3Param _d3Param)
         {
             this.d3Param= _d3Param;
-            InitD3Function(enumD3s);
-            if (enumD3s != null)
-            { 
-                foreach(var e in enumD3s)
-                {
-                    if (slD3Function.ContainsKey(e))
-                    {
-                        this.funList.Add(slD3Function[e]);
-                    }
-                }
+            InitD3Function();
+
+            foreach (var e in slD3Function)
+            {
+                this.funList.Add(e.Item2);
             }
+            
         }
-        public void InitD3Function(EnumD3[] enumD3s)
+        public void InitD3Function()
         {
-            slD3Function = new SortedList<EnumD3, ID3Function>();
+            slD3Function = new List<(D3ConfigFun, ID3Function)>();
+
             var types = Assembly.GetAssembly(typeof(BaseD3)).GetTypes()
                          .Where(r => r.BaseType == typeof(BaseD3) && !r.IsInterface
                                                  && !r.IsAbstract);
-            this.Times = this.d3Param.SLTimes;
-            foreach (var t in types)
-            {
-                var field = t.GetField(D3Fun.enumD3Name);
-                if (field == null)
-                    continue;
 
-                var enumD3 = (EnumD3)field.GetRawConstantValue();
-                if (!enumD3s.Contains(enumD3))
+            foreach (var d3ConfigFun in this.d3Param.ConfigFuns)
+            {
+                var t = types.FirstOrDefault(r => r.GetField(D3Fun.enumD3Name)?.GetRawConstantValue() != null
+                  && ((EnumD3)r.GetField(D3Fun.enumD3Name)?.GetRawConstantValue()) == d3ConfigFun.enumD3);
+                if (t != null)
                 {
-                    continue;
-                }
-                if (!slD3Function.ContainsKey(enumD3))
-                {
-                    var d3Function = Activator.CreateInstance(t, this.d3Param, enumD3) as ID3Function;
+                   
+                    var d3Function = Activator.CreateInstance(t, this.d3Param, d3ConfigFun.Times, d3ConfigFun.enumD3) as ID3Function;
                     if (d3Function != null)
                     {
-                        slD3Function.Add(enumD3, d3Function);
+                        slD3Function.Add((d3ConfigFun, d3Function));
                     }
                 }
-
 
             }
         }

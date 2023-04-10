@@ -18,7 +18,7 @@ namespace DMTools.FunList
     public class ImageClick : BaseD3
     {
         public  const EnumD3 enumD3Name = EnumD3.图片存在按键;
-        public ImageClick(D3Param d3Param,EnumD3 enumD3) : base(d3Param,enumD3)
+        public ImageClick(D3Param d3Param, List<KeyTimeSetting> Times, EnumD3 enumD3) : base(d3Param, Times,enumD3)
         {
             this.StartEvent += ImageClick_StartEvent;
         }

@@ -33,8 +33,9 @@ namespace DMTools.Control
             var funlist=this.FunList.Where(r => r.EnabledFlag);
             foreach (var fun in funlist)
             {
-                foreach (var times in fun.d3Param.SLTimes.Values)
+                foreach (var configFun in fun.d3Param.ConfigFuns)
                 {
+                    var times = configFun.Times;
                     var ts = times.Where(r => r.keyClickType == KeyClickType.按下
                      && r.KeyCode > 0 && ConvertKeys.NoMouseKey(r.KeyCode));
                     foreach (var t in ts)
@@ -44,6 +45,8 @@ namespace DMTools.Control
                             alkey.Add((int)t.KeyCode);
                         }
                     }
+
+
                 }
             }
 

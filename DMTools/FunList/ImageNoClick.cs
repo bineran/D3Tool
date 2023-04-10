@@ -18,7 +18,7 @@ namespace DMTools.FunList
     public class ImageNoClick : BaseD3
     {
         public  const EnumD3 enumD3Name = EnumD3.图片不存在按键;
-        public ImageNoClick(D3Param d3Param,EnumD3 enumD3) : base(d3Param,enumD3)
+        public ImageNoClick(D3Param d3Param, List<KeyTimeSetting> Times, EnumD3 enumD3) : base(d3Param, Times,enumD3)
         {
             this.StartEvent += ImageNoClick_StartEvent;
         }
