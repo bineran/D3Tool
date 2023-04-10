@@ -16,12 +16,12 @@ namespace DMTools
         /// <summary>
         /// 加载下面的TabPage
         /// </summary>
-        public void BindTabControl()
+        public void BindTabControl(bool isall=false)
         {
             this.tbfun.TabPages.Clear();
             if (d3Config == null)
                 return;
-            var al=d3Config.d3ConfigItems.OrderByDescending(r=>r.EnabledFlag)
+            var al=d3Config.d3ConfigItems.Where(r=>r.EnabledFlag || isall).OrderByDescending(r=>r.EnabledFlag)
                 .ThenBy(r=>r.ItemRank)
                 .ToList(); 
 

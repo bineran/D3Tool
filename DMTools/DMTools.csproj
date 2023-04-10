@@ -16,6 +16,7 @@
   <ItemGroup>
     <Compile Remove="FormMain.Menu.cs" />
     <Compile Remove="FormMain.Setting.cs" />
+    <Compile Remove="FunList\D3Test.cs" />
     <Compile Remove="FunList\DirectXScreenCapturer.cs" />
   </ItemGroup>
 
@@ -43,11 +44,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.14.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="NLog" Version="5.1.2" />
-    <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
-    <PackageReference Include="Tesseract" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,16 +84,6 @@
       <SubType>Form</SubType>
     </None>
     <None Include="Forms\FormMain\FormMain.Hook.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Yolov5Net.Scorer\Yolov5Net.Scorer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Lvhang.WindowsCapture">
-      <HintPath>..\WpfApp1\Lvhang.WindowsCapture.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

@@ -195,5 +195,10 @@ namespace DMTools
 
 
         }
+
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+        }
     }
 }

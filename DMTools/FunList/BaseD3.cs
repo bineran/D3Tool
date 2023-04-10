@@ -162,6 +162,7 @@ namespace DMTools.FunList
             cs = new CancellationTokenSource();
             StartTaskList.Clear();
             StopTaskList.Clear();
+            this.d3KeyState.Rest();
             if (this.StartEvent != null)
             {
                 var task = StartNewTask(this.StartEvent,true);

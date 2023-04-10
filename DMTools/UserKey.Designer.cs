@@ -110,6 +110,7 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(554, 470);
             dataGridView1.TabIndex = 0;
+            dataGridView1.DataError += dataGridView1_DataError;
             // 
             // Column1
             // 

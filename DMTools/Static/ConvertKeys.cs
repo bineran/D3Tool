@@ -15,7 +15,7 @@ namespace DMTools
         public const Keys MouseShiftRight = Keys.Shift | Keys.Right;
         public const Keys HotKeyMouseUp = Keys.Control | Keys.PageUp;
         public const Keys HotKeyMouseDown = Keys.Control | Keys.PageDown;
-        public const Keys HotKeyDebug = Keys.Shift | Keys.NumPad0;
+        public const Keys HotKeyDebug = Keys.OemClear;
     
         public const Keys HotKeyRightUp = Keys.Right | Keys.Alt;
         public const Keys HotKeyRightDown = Keys.Right | Keys.Alt ;

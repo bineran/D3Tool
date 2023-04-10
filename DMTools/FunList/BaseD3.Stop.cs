@@ -28,9 +28,9 @@ namespace DMTools.FunList
         }
         public void AddStopTaskKeysUp(int key)
         {
-        
+            
             StopTaskList.Add(CreateTaskNoCS(() => {
-                var objdm = CreateDM();
+                //var objdm = CreateDM();
                 objdm.KeyUp(key);
             }));
         }

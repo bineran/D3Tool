@@ -99,13 +99,20 @@ namespace DMTools.FunList
             ts.Rank = 0;
             return ts;
         }
-        public static KeyTimeSetting GetKTSPointColor(Idmsoft objdm)
+        public static (KeyTimeSetting, int, int) GetKTSPointColor(Idmsoft objdm)
         {
             object ox;
             object oy;
             objdm.GetCursorPos(out ox, out oy);
             int x = Convert.ToInt32(ox);
             int y = Convert.ToInt32(oy);
+
+            var ts = GetPointColor(objdm, x, y);
+            return (ts, x, y);
+        }
+
+        public static KeyTimeSetting GetPointColor(Idmsoft objdm,int x,int y)
+        {
             var color = objdm.GetColor(x, y);
 
             KeyTimeSetting ts = new KeyTimeSetting();
@@ -115,8 +122,6 @@ namespace DMTools.FunList
             ts.keyClickType = KeyClickType.颜色不匹配点击;
             ts.KeyCode = ConvertKeys.HotKeyDebug;
             ts.Rank = 0;
-
-
             return ts;
         }
         public int D3W { get; set; }
@@ -155,18 +160,25 @@ namespace DMTools.FunList
             var key = (int)ts.KeyCode;
             var keyCode = ts.KeyCode;
             var sleepInt = ts.D1;
-            var tagColor = ts.Str1;
-            //var objdm = CreateDM();
+            var tagColor = ts.Str1.ToColor();
+            var tagColor2 = ts.Str2.ToColor();
+            var x1 = ts.Int3;
+            var y1 = ts.Int4;
             this.GetPointRGB(x, y, true);
      
             var action = () =>
             {
                 var ret = objdm.CmpColor(x, y, tagColor,this.d3Param.sysConfig.color_sim);
-                if (ret==0 && ColorFalg )
+                var ret2 = -1;
+                if (x1 > 0 && y1 > 0 && tagColor2!=null)
+                {
+                    ret2 = objdm.CmpColor(x1, y1, tagColor2, this.d3Param.sysConfig.color_sim);
+                }
+                if (ret==0 && (ret2==-1 || ret2==0) && ColorFalg )
                 {
                     this.DMKeyPress( keyCode);
                 }
-                else if (ret == 1 && ColorFalg==false)
+                else if (ret == 1 && (ret2 == -1 || ret2 == 1) && ColorFalg==false)
                 {
                     this.DMKeyPress( keyCode);
                 }

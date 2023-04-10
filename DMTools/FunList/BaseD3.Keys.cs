@@ -36,15 +36,16 @@ namespace DMTools.FunList
         {
             //var objdm = this.CreateDM();
             int key = (int)keys;
-            objdm.KeyDown(key);
+            this.d3KeyState.SetState(keys, true);
 
             var action = () =>
             {
-                if(this.d3KeyState.isPause || !this.d3KeyState.isD3)
+
+                if (this.d3KeyState.isPause)
                 {
-                    if (this.d3KeyState[this.d3Param.KeyCodes.KeyMove])
+                    if (this.d3KeyState[key])
                     {
-                       // log.Debug("AddKeyDownForTask   --- move1");
+                        //log.Debug($"AddKeyDownForTask   {key}---KeyUp1");
                         objdm.KeyUp(key);
                     }
                     Sleep(sleepTime);
@@ -57,7 +58,7 @@ namespace DMTools.FunList
 
                         if (this.d3KeyState[this.d3Param.KeyCodes.KeyMove])
                         {
-                            //log.Debug("AddKeyDownForTask   --- move2");
+                            //log.Debug($"AddKeyDownForTask   {key}---KeyUp2");
                             objdm.KeyUp(key);
                         }
                         Sleep(20);
@@ -67,12 +68,12 @@ namespace DMTools.FunList
                 //return;
                 if (!this.d3KeyState[keys])
                 {
-                   // log.Debug("AddKeyDownForTask   --- KeyDown");
+                    //log.Debug($"AddKeyDownForTask    {key}--- KeyDown");
                     objdm.KeyDown(key);
                 }
 
             };
-            StartTaskList.Add(StartNewForTask(action, sleepTime, false,false));
+            StartTaskList.Add(StartNewForTask(action, sleepTime, false,true));
             AddStopTaskKeysUp(key);
         }
         public void AddKeyPressForTask(KeyTimeSetting ts)

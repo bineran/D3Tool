@@ -11,7 +11,7 @@ namespace DMTools.Config
 
     public class D3KeyState
     {
-        public static SortedList<Keys, bool> slkeydata { get; set; }=new SortedList<Keys, bool>();
+        public static SortedList<Keys, bool> slkeydata { get; set; } = new SortedList<Keys, bool>();
         static D3KeyState()
         {
             var dt = DTHelper.TableList[DataTableType.Key];
@@ -20,15 +20,15 @@ namespace DMTools.Config
                 var keys = (Keys)dr["KeyCode"];
 
                 slkeydata.Add(keys, false);
-                
-                
+
+
             }
         }
         public void SetState(Keys keys, bool value)
-        { 
-            if(slkeydata.ContainsKey(keys))
+        {
+            if (slkeydata.ContainsKey(keys))
             {
-                slkeydata[keys] = value;    
+                slkeydata[keys] = value;
             }
         }
         public void SetPauseState(Keys keys, bool value)
@@ -52,8 +52,8 @@ namespace DMTools.Config
             get
             {
                 if (slkeydata.ContainsKey(k))
-                { 
-                    return slkeydata[k]; 
+                {
+                    return slkeydata[k];
                 }
                 return false;
             }
@@ -62,5 +62,11 @@ namespace DMTools.Config
         public bool isRight { get { return FormMain.isRight; } }
         public bool isD3 { get; set; }
         public bool isPause { get; set; }
+
+        public void Rest()
+        {
+            //this.isD3 = false;
+            //this.isPause = false;
+        }
     }
 }

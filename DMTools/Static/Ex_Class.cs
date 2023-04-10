@@ -112,13 +112,30 @@ using Color = System.Drawing.Color;
 
                     foreach (var c in cs)
                     {
-                        if (c.TrimLength() == 6)
+                        if (c.Contains(" "))
+                        {
+                            var cStr=c.Split(" ");
+                            if (cStr.Length == 3)
+                            {
+                                colors.Add(Convert.ToInt32(cStr[0]).ToString("x") + Convert.ToInt32(cStr[1]).ToString("x") + Convert.ToInt32(cStr[2]).ToString("x"));
+                            }
+                        }
+                        else if (c.Contains(","))
+                        {
+                            var cStr = c.Split(",");
+                            if (cStr.Length == 3)
+                            {
+                                colors.Add(Convert.ToInt32(cStr[0]).ToString("x") + Convert.ToInt32(cStr[1]).ToString("x") + Convert.ToInt32(cStr[2]).ToString("x"));
+                            }
+                        }
+                        else  if (c.TrimLength() == 6)
                         {
                             var r = Convert.ToInt32(str.Substring(0, 2), 16);
                             var g = Convert.ToInt32(str.Substring(2, 2), 16);
                             var b = Convert.ToInt32(str.Substring(4, 2), 16);
                             colors.Add(c.Trim().ToLower());
                         }
+
                     }
                 }
 
@@ -131,5 +148,48 @@ using Color = System.Drawing.Color;
 
             return colors;
         }
+
+
+    public static string ToColor(this string c)
+    {
+        if (c == null)
+            return null;
+        try
+        {
+            if (c.Contains(" "))
+            {
+                var cStr = c.Split(" ");
+                if (cStr.Length == 3)
+                {
+                    return ColorTranslator.ToHtml(Color.FromArgb(Convert.ToInt32(cStr[0]), Convert.ToInt32(cStr[1]), Convert.ToInt32(cStr[2]))).Replace("#", "").ToLower();
+
+
+
+                }
+            }
+            else if (c.Contains(","))
+            {
+                var cStr = c.Split(",");
+                if (cStr.Length == 3)
+                {
+                    return ColorTranslator.ToHtml(Color.FromArgb(Convert.ToInt32(cStr[0]), Convert.ToInt32(cStr[1]), Convert.ToInt32(cStr[2]))).Replace("#", "").ToLower();
+
+                }
+            }
+            else if (c.TrimLength() == 6)
+            {
+                var r = Convert.ToInt32(c.Substring(0, 2), 16);
+                var g = Convert.ToInt32(c.Substring(2, 2), 16);
+                var b = Convert.ToInt32(c.Substring(4, 2), 16);
+                return c.Trim();
+            }
+            return null ;
+        }
+        catch
+        {
+            return null;
+        }
+    
     }
+}
 

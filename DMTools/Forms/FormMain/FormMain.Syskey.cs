@@ -238,8 +238,13 @@ namespace DMTools
             var strClass = items.Item3;
             this.BindForm(objdm, hd,new SysConfig());
 
-            var tsPointColor = BaseD3.GetKTSPointColor(objdm);
-       
+            var (tsPointColor,x,y) = BaseD3.GetKTSPointColor(objdm);
+
+            objdm.MoveTo(0, 0);
+            Task.Delay(300).Wait();
+            var tsPointColor2 = BaseD3.GetPointColor(objdm, x, y);
+            objdm.MoveTo(x, y);
+            Task.Delay(100).Wait();
             if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
             {
                 if (this.d3Config.WindowClass != null && this.d3Config.WindowClass.Length > 0)
@@ -267,6 +272,11 @@ namespace DMTools
                 if(uf != null )
                 {
                     uf.selectKTSList.Add(tsPointColor);
+                    if (tsPointColor.Str1 != tsPointColor2.Str1)
+                    {
+                        uf.selectKTSList.Add(tsPointColor2);
+                    }
+                    
                     uf.selectKTSList.Add(tsImage);
                     uf.RestDebugDataGridView();
                 }

@@ -33,6 +33,8 @@ namespace DMTools.Static
             dt.Columns.Add("KeyName");
             dt.Columns.Add("KeyCode", typeof(Keys));
             #region code
+            
+            dt.Rows.Add("空", Keys.OemClear);
             dt.Rows.Add("向下滚", Keys.Control | Keys.PageDown);
             dt.Rows.Add("向上滚", Keys.Control | Keys.PageUp);
             dt.Rows.Add("左键按下", ConvertKeys.HotKeyLeftDown);
@@ -141,7 +143,7 @@ namespace DMTools.Static
             dt.Columns.Add("KeyName");
             dt.Columns.Add("KeyCode", typeof(Keys));
             #region code
-            dt.Rows.Add("调试", ConvertKeys.HotKeyDebug);
+            dt.Rows.Add("空", ConvertKeys.HotKeyDebug);
             dt.Rows.Add("1", 49);
             dt.Rows.Add("2", 50);
             dt.Rows.Add("3", 51);

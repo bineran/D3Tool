@@ -11,7 +11,7 @@ namespace DMTools
 {
     public partial class FormMain : Form
     {
-        
+
         public readonly Logger log = LogManager.GetCurrentClassLogger();
 
         public FormMain()
@@ -119,14 +119,14 @@ namespace DMTools
                         this.d3Config.d3ConfigItems.Add(f.d3ConfigItem);
                         SaveConfig();
                     }
-                
+
                 }
             }
         }
 
         private void tbfun_DrawItem(object sender, DrawItemEventArgs e)
         {
-           e.DrawBackground();
+            e.DrawBackground();
             try
             {
                 Color c = Color.White;
@@ -165,28 +165,34 @@ namespace DMTools
 
         private void tsbhide_Click(object sender, EventArgs e)
         {
-     
-                this.notifyIcon1.Visible = true;
-                this.Visible = false;
-                this.ShowInTaskbar = true;
-            
+
+            this.notifyIcon1.Visible = true;
+            this.Visible = false;
+            this.ShowInTaskbar = true;
+
         }
 
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if (!this.Visible)
             {
-             
+
                 this.Visible = true;
                 this.notifyIcon1.Visible = false;
                 this.WindowState = lastState;
             }
         }
-        FormWindowState lastState= FormWindowState.Normal;
+        FormWindowState lastState = FormWindowState.Normal;
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
             lastState = this.WindowState;
+        }
+        private bool isshoall=false;
+        private void 显示所有功能ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isshoall = !isshoall;
+            BindTabControl(isshoall);
         }
     }
 
