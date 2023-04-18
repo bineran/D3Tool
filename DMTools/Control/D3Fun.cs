@@ -40,6 +40,7 @@ namespace DMTools.Control
 
             foreach (var d3ConfigFun in this.d3Param.ConfigFuns)
             {
+                if(!d3ConfigFun.EnableFlag) { continue; }
                 var t = types.FirstOrDefault(r => r.GetField(D3Fun.enumD3Name)?.GetRawConstantValue() != null
                   && ((EnumD3)r.GetField(D3Fun.enumD3Name)?.GetRawConstantValue()) == d3ConfigFun.enumD3);
                 if (t != null)

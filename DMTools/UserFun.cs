@@ -100,15 +100,17 @@ namespace DMTools
         {
             if (this.d3ConfigItem != null)
             {
-                for(int i=0;i<this.D3ConfigFuns.Count;i++)
+                for (int i = 0; i < this.D3ConfigFuns.Count; i++)
                 {
                     this.D3ConfigFuns[i].Times = this.D3ConfigFuns[i].Times.Where(r =>
+
  r.TSRemark.TrimLength() > 0 ||
    r.Rank > 0 ||
    r.Int1 > 0 || r.Int2 > 0 || r.Int3 > 0 || r.Int4 > 0 ||
    r.D1 > 0 || r.D2 > 0 || r.D3 > 0 || r.D4 > 0 ||
    r.Str1.TrimLength() > 0 || r.Str2.TrimLength() > 0 ||
    r.Str3.TrimLength() > 0 || r.Str4.TrimLength() > 0 || r.keyClickType != KeyClickType.不做操作)
+                        .Where(r => r.KeyCode != ConvertKeys.HotKeyDebug)
      .ToList();
                 }
 
@@ -466,7 +468,7 @@ namespace DMTools
             var fun = dataGridView2.CurrentRow.DataBoundItem as D3ConfigFun;
             if (fun == null)
             {
-                
+
                 return;
             }
 

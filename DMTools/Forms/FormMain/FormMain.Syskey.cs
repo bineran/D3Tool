@@ -26,7 +26,7 @@ namespace DMTools
                 {
                     return false;
                 }
-
+                ReplayProcessKey(key);
                 if (!d3Config.ALLHotKeys.Contains(key))
                     return false;
 
@@ -42,8 +42,7 @@ namespace DMTools
 
 
 
-                log.Info(key);
-                ReplayProcessKey(key);
+
                 if ((DateTime.Now - D_Time).TotalSeconds < 0.05)
                 {
                     return false;
@@ -324,7 +323,16 @@ namespace DMTools
             {
                 if (this.d3Config != null && ReplayList.Count>0)
                 {
+                    this.d3Config.DebugTimes = new List<KeyTimeSetting>();
                     this.d3Config.DebugTimes.AddRange(ReplayList.ToArray());
+                    foreach (TabPage tb in this.tbfun.TabPages)
+                    {
+                        if (tb.Controls[0] is UserKey bdd)
+                        {
+                            bdd.RestDebugDataGridView();
+                        }
+                    }
+              
                 }
             }
         }

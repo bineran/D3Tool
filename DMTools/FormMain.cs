@@ -19,7 +19,7 @@ namespace DMTools
             InitializeComponent();
             LoadFile();
             InitKeyHook();
-            //InitMouseHook();
+            InitMouseHook();
         }
         #region ²Ëµ¥ÊÂ¼þ
         private void tsbAdd_Click(object sender, EventArgs e)

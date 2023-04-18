@@ -184,7 +184,15 @@ namespace DMTools.FunList
                 AddKeyPressForTask(kt);
             }
         }
-
+        public void MoveMouse(KeyTimeSetting k)
+        {
+            if (k.Int1 > 0 && k.Int2 > 0)
+            { 
+                objdm.MoveTo(k.Int1, k.Int2);
+              
+            }
+            Sleep(k.D1);
+        }
         public void StartKeyRank()
         {
             //var objdm = this.CreateDM();
@@ -203,15 +211,14 @@ namespace DMTools.FunList
                     {
                         case KeyClickType.点击:
                             objdm.KeyPress((int)ts.KeyCode);
-                            Sleep(ts.D1);
+
                             break;
                         case KeyClickType.按下:
                             objdm.KeyDown((int)ts.KeyCode);
-                            Sleep(ts.D1);
+ 
                             break;
                         case KeyClickType.弹起:
                             objdm.KeyUp((int)ts.KeyCode);
-                            Sleep(ts.D1);
                             break;
                     }
                 }
@@ -219,38 +226,41 @@ namespace DMTools.FunList
                 {
                     if (ts.KeyCode == ConvertKeys.MouseLeft)
                     {
+                        MoveMouse(ts);
                         switch (ts.keyClickType)
                         {
                             case KeyClickType.点击:
-                                objdm.LeftClick(); Sleep(ts.D1);
+                                objdm.LeftClick(); 
                                 break;
                             case KeyClickType.按下:
                                 addLeft = true;
-                                objdm.LeftDown(); Sleep(ts.D1);
+                                objdm.LeftDown(); 
                                 break;
                             case KeyClickType.弹起:
-                                objdm.LeftUp(); Sleep(ts.D1);
+                                objdm.LeftUp(); 
                                 break;
                         }
                     }
                     else if (ts.KeyCode == ConvertKeys.MouseRight)
                     {
+                        MoveMouse(ts);
                         switch (ts.keyClickType)
                         {
                             case KeyClickType.点击:
-                                objdm.RightClick(); Sleep(ts.D1);
+                                objdm.RightClick(); 
                                 break;
                             case KeyClickType.按下:
                                 addRight = true;
-                                objdm.RightDown(); Sleep(ts.D1);
+                                objdm.RightDown(); 
                                 break;
                             case KeyClickType.弹起:
-                                objdm.RightUp(); Sleep(ts.D1);
+                                objdm.RightUp(); 
                                 break;
                         }
                     }
                     else if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
                     {
+                        MoveMouse(ts);
                         switch (ts.keyClickType)
                         {
                             case KeyClickType.点击:
@@ -258,18 +268,18 @@ namespace DMTools.FunList
                                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
                                 objdm.LeftClick();
                                 objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
-                                Sleep(ts.D1);
+     
                                 break;
                             case KeyClickType.按下:
                                 addLeft = true;
                                 addStand = true;
                                 objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
-                                objdm.LeftDown(); Sleep(ts.D1);
+                                objdm.LeftDown(); 
                                 break;
                             case KeyClickType.弹起:
                                 objdm.LeftUp();
                                 objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
-                                Sleep(ts.D1);
+
                                 break;
                         }
                     }

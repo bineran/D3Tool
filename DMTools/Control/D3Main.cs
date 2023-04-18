@@ -161,23 +161,20 @@ namespace DMTools.Control
     
             var d3KeySetting = ConvertD3KeySetting(d3Config);
             D3Main d3Main=new D3Main(hd,d3KeySetting, d3Config.sysConfig);
-          
-            foreach (var  item in items)
+
+            foreach (var item in items)
             {
-                List<EnumD3> enumD3s = ConvertEnumd3List(item);
-           
-                if (enumD3s.Count > 0)
-                {
-                    //strfunList[]
-                     var d3param = d3Main.NewD3Param(item.d3ConfigFuns, d3Config.sysConfig);
-                    D3Fun d3Fun = new D3Fun(d3param);
-                    d3Fun.EnabledFlag = item.EnabledFlag;
-                    d3Fun.StartBeforeStopOther=item.StartBeforeStopOther;
-                    d3Fun.OtherStopFlag= item.OtherStopFlag;
-                    d3Fun.HotKey1= item.HotKey1;
-                    d3Fun.HotKey2 = item.HotKey2;
-                    d3Main.FunList.Add(d3Fun);
-                }
+
+                //strfunList[]
+                var d3param = d3Main.NewD3Param(item.d3ConfigFuns, d3Config.sysConfig);
+                D3Fun d3Fun = new D3Fun(d3param);
+                d3Fun.EnabledFlag = item.EnabledFlag;
+                d3Fun.StartBeforeStopOther = item.StartBeforeStopOther;
+                d3Fun.OtherStopFlag = item.OtherStopFlag;
+                d3Fun.HotKey1 = item.HotKey1;
+                d3Fun.HotKey2 = item.HotKey2;
+                d3Main.FunList.Add(d3Fun);
+
             }
             if (d3Main.FunList.Count > 0)
             {
