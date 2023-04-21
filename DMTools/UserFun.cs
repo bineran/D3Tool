@@ -36,7 +36,11 @@ namespace DMTools
         public UserFun(D3ConfigItem d3ConfigItem)
         {
             InitializeComponent();
-            this.dataGridView1.AutoGenerateColumns = false;
+            SetStyle(
+               ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
+               ControlStyles.OptimizedDoubleBuffer,true //使用双缓冲
+            );
+           this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView2.AutoGenerateColumns = false;
             FunItems = new List<Funitem>();
             List<EnumD3> enumD3s = new List<EnumD3>();
@@ -57,8 +61,6 @@ namespace DMTools
 
             this.Column18.DataSource = enumD3s.ToArray();
 
-
-
             Column2.DataSource = Enum.GetValues(typeof(KeyClickType));
             Column2.ValueType = typeof(KeyClickType);
             this.comboBox1.DataSource = dtkey.Copy();
@@ -70,7 +72,15 @@ namespace DMTools
             this.d3ConfigItem = d3ConfigItem;
             BindData();
         }
-
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
         public D3ConfigItem d3ConfigItem;
         public List<D3ConfigFun> D3ConfigFuns = new List<D3ConfigFun>();
         private void BindData()
@@ -95,7 +105,7 @@ namespace DMTools
 
 
         }
-
+      
         public void SaveData()
         {
             if (this.d3ConfigItem != null)
@@ -274,7 +284,7 @@ namespace DMTools
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            e.Cancel = true;
+           // e.Cancel = true;
         }
         public List<KeyTimeSetting> selectKTSList = new List<KeyTimeSetting>();
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)

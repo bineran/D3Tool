@@ -16,6 +16,19 @@ namespace DMTools
         public MyTabControl()
         {
             this.DrawMode = TabDrawMode.OwnerDrawFixed;
+            SetStyle(
+      ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
+      ControlStyles.OptimizedDoubleBuffer, true //使用双缓冲
+   );
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
