@@ -17,6 +17,7 @@ namespace DMTools
         {
             this.DrawMode = TabDrawMode.OwnerDrawFixed;
             SetStyle(
+                    ControlStyles.ResizeRedraw |
       ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
       ControlStyles.OptimizedDoubleBuffer, true //使用双缓冲
    );

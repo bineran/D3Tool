@@ -106,21 +106,21 @@
             // 添加功能ToolStripMenuItem
             // 
             添加功能ToolStripMenuItem.Name = "添加功能ToolStripMenuItem";
-            添加功能ToolStripMenuItem.Size = new Size(180, 22);
+            添加功能ToolStripMenuItem.Size = new Size(153, 22);
             添加功能ToolStripMenuItem.Text = "添加功能";
             添加功能ToolStripMenuItem.Click += tsbAdd_Click;
             // 
             // 复制功能ToolStripMenuItem
             // 
             复制功能ToolStripMenuItem.Name = "复制功能ToolStripMenuItem";
-            复制功能ToolStripMenuItem.Size = new Size(180, 22);
+            复制功能ToolStripMenuItem.Size = new Size(153, 22);
             复制功能ToolStripMenuItem.Text = "复制功能";
             复制功能ToolStripMenuItem.Click += toolStripButton1_Click;
             // 
             // 显示所有功能ToolStripMenuItem
             // 
             显示所有功能ToolStripMenuItem.Name = "显示所有功能ToolStripMenuItem";
-            显示所有功能ToolStripMenuItem.Size = new Size(180, 22);
+            显示所有功能ToolStripMenuItem.Size = new Size(153, 22);
             显示所有功能ToolStripMenuItem.Text = "显示/隐藏功能";
             显示所有功能ToolStripMenuItem.Click += 显示所有功能ToolStripMenuItem_Click;
             // 
@@ -164,11 +164,13 @@
             ClientSize = new Size(898, 528);
             Controls.Add(tbfun);
             Controls.Add(menuStrip1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Bineran-DM";
+            WindowState = FormWindowState.Maximized;
             FormClosed += FormMain_FormClosed;
             SizeChanged += FormMain_SizeChanged;
             menuStrip1.ResumeLayout(false);

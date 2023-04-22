@@ -374,7 +374,7 @@ namespace DMTools
 
             ds.D1 = d1;
             ds.KeyCode = key;
-            ds.Str4 = $"new PointCheckColor({x},{y}, \"{color}\")";
+            ds.Str4 = "";
             ReplayList.Add(ds);
         }
 
@@ -389,6 +389,26 @@ namespace DMTools
         }
         protected override void WndProc(ref Message m)
         {
+            //if (m.Msg == 0x112)
+            //{
+            //    switch ((int)m.WParam)
+            //    {
+            //        //禁止双击标题栏关闭窗体
+            //        case 0xF063:
+            //        case 0xF093:
+            //            m.WParam = IntPtr.Zero;
+            //            break;
+            //        //禁止拖拽标题栏还原窗体
+            //        case 0xF012:
+            //        case 0xF010:
+            //            m.WParam = IntPtr.Zero;
+            //            break;
+            //        //禁止双击标题栏
+            //        case 0xf122:
+            //            m.WParam = IntPtr.Zero;
+            //            break;
+            //    }
+            //}
             base.WndProc(ref m);
             Hotkey.ProcessHotKey(m);
         }

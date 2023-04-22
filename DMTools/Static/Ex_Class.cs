@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Color = System.Drawing.Color;
 
 
@@ -22,6 +24,16 @@ using Color = System.Drawing.Color;
                 return (T)formatter.Deserialize(ms);
             }
         }
+
+    public static void DoubleBuffered(this Control c)
+        {
+            Type dgvType = c.GetType();
+            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
+               BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(c, true, null);
+        }
+   
+
         public static byte[] HexStringToByteArray(this string hex)
         {
             hex = hex.Replace(" ", "");

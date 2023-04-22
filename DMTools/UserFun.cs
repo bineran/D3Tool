@@ -37,10 +37,19 @@ namespace DMTools
         {
             InitializeComponent();
             SetStyle(
+
+
+                 ControlStyles.ResizeRedraw|
                ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
                ControlStyles.OptimizedDoubleBuffer,true //使用双缓冲
             );
-           this.dataGridView1.AutoGenerateColumns = false;
+            this.UpdateStyles();
+
+            this.dataGridView1.DoubleBuffered();
+            this.dataGridView2.DoubleBuffered();
+
+
+            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView2.AutoGenerateColumns = false;
             FunItems = new List<Funitem>();
             List<EnumD3> enumD3s = new List<EnumD3>();

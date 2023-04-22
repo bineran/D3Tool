@@ -42,6 +42,9 @@ namespace DMTools
         public UserKey(D3Config d3Config)
         {
             InitializeComponent();
+            this.dataGridView1.DoubleBuffered();
+            this.dataGridView2.DoubleBuffered();
+            this.tabControl1.DoubleBuffered();
             this.txtClass.DataBindings.Add("Text", d3Config, "WindowClass");
             this.dataGridView1.AutoGenerateColumns = false;
             this.Column2.DisplayMember = "KeyName";

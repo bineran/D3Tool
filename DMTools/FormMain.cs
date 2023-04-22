@@ -17,9 +17,26 @@ namespace DMTools
         public FormMain()
         {
             InitializeComponent();
+            SetStyle(
+                ControlStyles.ResizeRedraw |
+            ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
+            ControlStyles.OptimizedDoubleBuffer, true //使用双缓冲
+            );
             LoadFile();
             InitKeyHook();
             InitMouseHook();
+        }
+
+
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
         }
         #region 菜单事件
         private void tsbAdd_Click(object sender, EventArgs e)
@@ -182,13 +199,13 @@ namespace DMTools
                 this.WindowState = lastState;
             }
         }
-        FormWindowState lastState = FormWindowState.Normal;
+        FormWindowState lastState = FormWindowState.Maximized;
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
             lastState = this.WindowState;
         }
-        private bool isshoall=false;
+        private bool isshoall = false;
         private void 显示所有功能ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isshoall = !isshoall;
