@@ -122,6 +122,7 @@ namespace DMTools
         private void ±£´æ·½°¸ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveConfig();
+            isshoall = false;
         }
         private void toolStripButton1_Click(object sender, EventArgs e)
         {

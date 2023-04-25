@@ -38,7 +38,9 @@ namespace DMTools
 
                 tp.Controls.Add(u);
                 this.tbfun.TabPages.Add(tp);
+
             }
+   
             if (d3Config.ConfigKeys != null)
             {
                 TabPage tp = new TabPage();

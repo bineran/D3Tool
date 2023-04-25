@@ -131,15 +131,22 @@ public class KeyboardHook
         Keys rtnKey = Keys.None;
         foreach (Keys i in preKeysList)
         {
-            if (i == Keys.LControlKey || i == Keys.RControlKey) { rtnKey = rtnKey | Keys.Control; }
-            if (i == Keys.LMenu || i == Keys.RMenu) { rtnKey = rtnKey | Keys.Alt; }
-            if (i == Keys.LShiftKey || i == Keys.RShiftKey) { rtnKey = rtnKey | Keys.Shift; }
+            if (i == Keys.LControlKey || i == Keys.RControlKey) 
+            {
+                rtnKey= rtnKey | Keys.Control; 
+            }
+            if (i == Keys.LMenu || i == Keys.RMenu)
+            { rtnKey = rtnKey | Keys.Alt; }
+            if (i == Keys.LShiftKey || i == Keys.RShiftKey)
+            { rtnKey = rtnKey | Keys.Shift; }
         }
         return rtnKey | key;
     }
     private Boolean IsCtrlAltShiftKeys(Keys key)
     {
-        if (key == Keys.LControlKey || key == Keys.RControlKey || key == Keys.LMenu || key == Keys.RMenu || key == Keys.LShiftKey || key == Keys.RShiftKey) { return true; }
+        if (key == Keys.LControlKey || key == Keys.RControlKey 
+            || key == Keys.LMenu || key == Keys.RMenu 
+            || key == Keys.LShiftKey || key == Keys.RShiftKey) { return true; }
         return false;
     }
 }

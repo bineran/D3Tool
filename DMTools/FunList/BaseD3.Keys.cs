@@ -37,7 +37,7 @@ namespace DMTools.FunList
             //var objdm = this.CreateDM();
             int key = (int)keys;
             this.d3KeyState.SetState(keys, true);
-
+            objdm.KeyDown (key);
             var action = () =>
             {
 

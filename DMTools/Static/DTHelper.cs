@@ -44,6 +44,10 @@ namespace DMTools.Static
             dt.Rows.Add("G2(ctrl + * )", Keys.Control | Keys.Multiply);
             dt.Rows.Add("G3(ctrl + - )", Keys.Control | Keys.Subtract);
             dt.Rows.Add("G4(ctrl + + )", Keys.Control | Keys.Add);
+            dt.Rows.Add("G5(alt + / )", Keys.Alt | Keys.Divide);
+            dt.Rows.Add("G6(alt + * )", Keys.Alt | Keys.Multiply);
+            dt.Rows.Add("G7(alt + - )", Keys.Alt | Keys.Subtract);
+            dt.Rows.Add("G8(alt + + )", Keys.Alt | Keys.Add);
             #region code
 
             dt.Rows.Add("1", 49);

@@ -13,6 +13,7 @@ namespace DMTools
         #region 全局钩子
         public void InitKeyHook()
         {
+
             kh = new KeyboardHook();
             kh.OnKeyDownEvent += Kh_OnKeyDownEvent;
             kh.SetHook();
@@ -105,9 +106,87 @@ namespace DMTools
             finally { isMouseWheelRun = !isMouseWheelRun; }
 
         }
+  
+        public Keys ConvertKey(KeyEventArgs e )
+        {
+            
+            //if (e.Control && (e.Shift || e.Alt))
+            //{
+            //   var al= this.d3Config.d3ConfigItems.Where(r => r.EnabledFlag);
+                
+            //    foreach (var key in ConvertKeys.alGKeys)
+            //    {
+            //        if (e.Alt && e.Shift && e.KeyData == (Keys.Control | Keys.Shift | Keys.Alt | key))
+            //        {
+            //            return Keys.Control | key;
+            //        }
+            //        else if (e.Shift && e.KeyData == (Keys.Control | Keys.Shift | key))
+            //        {
+            //            return Keys.Control | key;
+            //        }
+            //        else if (e.Alt && e.KeyData == ( Keys.Control | Keys.Alt | key))
+            //        {
+            //            return Keys.Control | key;
+            //        }
+            //    }
+            //}
+            if (e.Control || e.Shift || e.Alt)
+            {
+
+                var items=this.d3Config.d3ConfigItems.Where(r => r.EnabledFlag);
+                List<Keys> keys= new List<Keys>();
+                foreach (var item in items)
+                {
+                    if (item.HotKey1 != Keys.OemClear)
+                    {
+                        keys.Add(item.HotKey1);
+                    }
+                    if (item.HotKey2 != Keys.OemClear)
+                    {
+                        keys.Add(item.HotKey2);
+                    }
+                }
+
+
+                foreach (var key in keys)
+                {
+                    if (e.Control  && e.KeyData == (Keys.Control|  key))
+                    {
+                        return  key;
+                    }
+                    else if (e.Shift && e.KeyData == ( Keys.Shift | key))
+                    {
+                        return  key;
+                    }
+                    else if (e.Alt && e.KeyData == (Keys.Alt | key))
+                    {
+                        return  key;
+                    }
+                    if (e.Control && e.Shift && e.KeyData == (Keys.Control | Keys.Shift| key))
+                    {
+                        return key;
+                    }
+                    if (e.Control && e.Alt && e.KeyData == (Keys.Control | Keys.Alt | key))
+                    {
+                        return key;
+                    }
+                    if (e.Shift && e.Alt && e.KeyData == (Keys.Shift | Keys.Alt | key))
+                    {
+                        return key;
+                    }
+                    if (e.Control && e.Shift && e.Alt && e.KeyData == (Keys.Control | Keys.Shift | Keys.Alt | key))
+                    {
+                        return key;
+                    }
+                }
+            }
+            return e.KeyData;
+        }
         private void Kh_OnKeyDownEvent(object? sender, KeyEventArgs e)
         {
-          this.ProcessKey(e.KeyData);
+
+
+            this.ProcessKey(ConvertKey(e));
         }
         #endregion
     }

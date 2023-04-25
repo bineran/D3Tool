@@ -94,13 +94,13 @@ namespace DMTools
         public List<D3ConfigFun> D3ConfigFuns = new List<D3ConfigFun>();
         private void BindData()
         {
-            this.checkBox1.DataBindings.Add("Checked", d3ConfigItem, "StartBeforeStopOther");
-            this.checkBox2.DataBindings.Add("Checked", d3ConfigItem, "OtherStopFlag");
+
             this.comboBox1.SelectedValue = d3ConfigItem.HotKey1;
             this.comboBox2.SelectedValue = d3ConfigItem.HotKey2;
-            this.ckEnabled.DataBindings.Add("Checked", d3ConfigItem, "EnabledFlag");
-
-
+            
+            this.ckEnabled.Checked = d3ConfigItem.EnabledFlag;
+            this.checkBox1.Checked = d3ConfigItem.StartBeforeStopOther;
+            this.checkBox2.Checked = d3ConfigItem.OtherStopFlag;
 
             D3ConfigFuns = d3ConfigItem.d3ConfigFuns.OrderByDescending(r => r.EnableFlag).ThenBy(r => r.enumD3).ToList();
             this.dataGridView2.DataSource = new BindingList<D3ConfigFun>(D3ConfigFuns);

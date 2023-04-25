@@ -24,9 +24,17 @@ namespace DMTools
         public const Keys HotKeyLeftUp = Keys.Left | Keys.Alt ;
         public const Keys HotKeyLeftDown = Keys.Left | Keys.Alt ;
         public static List<Keys> MouseKeys { get; set; } = new List<Keys>();
+        /// <summary>
+        /// 几个热键对应的键
+        /// </summary>
+        public static List<Keys> alGKeys { get; set; } = new List<Keys>();
         static ConvertKeys()
         {
             InitMouseKeys();
+            alGKeys.Add(Keys.Divide);
+            alGKeys.Add(Keys.Multiply);
+            alGKeys.Add(Keys.Subtract);
+            alGKeys.Add(Keys.Add);
         }
         public static void InitMouseKeys()
         {

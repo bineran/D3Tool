@@ -193,6 +193,76 @@ namespace DMTools.FunList
             }
             Sleep(k.D1);
         }
+        /// <summary>
+        /// 验证两个点的颜色,找到为真,否则为false
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        public bool ValidatePointColor(KeyTimeSetting ts)
+        {
+            var x = ts.Int1;
+            var y = ts.Int2;
+            var tagColor = ts.Str1.ToColor();
+            var tagColor2 = ts.Str2.ToColor();
+            var x1 = ts.Int3;
+            var y1 = ts.Int4;
+
+
+
+            var ret = objdm.CmpColor(x, y, tagColor, this.d3Param.sysConfig.color_sim);
+            var ret2 = -1;
+            if (x1 > 0 && y1 > 0 && tagColor2 != null)
+            {
+                ret2 = objdm.CmpColor(x1, y1, tagColor2, this.d3Param.sysConfig.color_sim);
+            }
+            if (ret == 0 && (ret2 == -1 || ret2 == 0))
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool ValidateImage(KeyTimeSetting ts)
+        {
+            var files = ts.Str1.Split('|');
+            objdm.SetPath(FileConfig.DM_BMP_PATH);
+            string allpic = "";
+            foreach (var f in files)
+            {
+
+                var sourceFile = "";
+                if (f.ToLower().Contains(".png"))
+                {
+                    sourceFile = f.DmPngPath();
+                }
+                var newName = f.ToLower().Trim().Replace(".png", ".bmp");
+                var tagFile = newName.DmBmpPath(); ;
+
+                if (!File.Exists(tagFile) && File.Exists(sourceFile))
+                {
+                    objdm.ImageToBmp(sourceFile, tagFile);
+                }
+                if (File.Exists(tagFile))
+                {
+                    if (allpic.Length > 0)
+                    {
+                        allpic += "|" + newName;
+                    }
+                    else
+                    {
+                        allpic = newName;
+                    }
+                }
+
+            }
+            if (allpic.Length == 0)
+            {
+                return false;
+            }
+            object x;
+            object y;
+            var ret = objdm.FindPic(ts.Int1, ts.Int2, ts.Int3, ts.Int4, allpic, this.d3Param.sysConfig.delta_color, this.d3Param.sysConfig.sim, 0, out x, out y);
+            return (ret >= 0);
+        }
         public void StartKeyRank()
         {
             //var objdm = this.CreateDM();
@@ -201,8 +271,19 @@ namespace DMTools.FunList
             bool addStand = false;
             bool addLeft = false;
             bool addRight = false;
- 
-            Sleep(150);
+            this.Sleep(50);
+            if(list.Count > 0)
+            {
+                var ts = list[0];
+                if (ts.keyClickType == KeyClickType.颜色不匹配点击 && ValidatePointColor(ts) )
+                    return;
+                if (ts.keyClickType == KeyClickType.颜色匹配点击 && !ValidatePointColor(ts))
+                    return;
+                if (ts.keyClickType == KeyClickType.图片未找到点击 && ValidateImage(ts))
+                    return;
+                if (ts.keyClickType == KeyClickType.图片找到点击 && !ValidateImage(ts))
+                    return;
+            }
             foreach (var ts in list)
             {
                 if (ConvertKeys.NoMouseKey(ts.KeyCode))
@@ -221,6 +302,7 @@ namespace DMTools.FunList
                             objdm.KeyUp((int)ts.KeyCode);
                             break;
                     }
+                    Sleep(ts.D1);
                 }
                 else
                 {
