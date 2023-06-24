@@ -48,11 +48,42 @@ namespace DMTools.Control
 
 
                 }
+
+                foreach (var configFun in fun.d3Param.ConfigFuns)
+                {
+                    var times = configFun.Times;
+                    var ts = times.Where(r => r.keyClickType == KeyClickType.按下
+                     && r.KeyCode > 0 && (r.KeyCode == ConvertKeys.HotKeyLeftWhereShiftDown || r.KeyCode == ConvertKeys.HotKeyRightWhereShiftDown));
+                    foreach (var t in ts)
+                    {
+                        var keycode = 0;
+                        if (t.Str1!=null && t.Str1.Length == 1)
+                        {
+                            keycode = Convert.ToInt32(t.Str1.ToUpper()[0]);
+                        }
+                        else if (t.Int1 > 0)
+                        {
+                            keycode = t.Int1;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        if (!alkey.Contains(keycode))
+                        {
+                            alkey.Add(keycode);
+                        }
+                    }
+
+
+                }
+
+
             }
 
-           
 
-          
+
+
             if (TaskBackList.Count > 0)
             {
                 cs.Cancel();

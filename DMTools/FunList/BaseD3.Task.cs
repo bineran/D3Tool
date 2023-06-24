@@ -116,8 +116,12 @@ namespace DMTools.FunList
             };
             return StartNewTask(actionFor);
         }
-       
 
+        public void ThreadSleep(int Sleep)
+        { 
+            if(Sleep>0)
+            System.Threading.Thread.Sleep(Sleep);
+        }
         public void Sleep(int Sleep)
         {
             if (Sleep <1)
@@ -144,7 +148,7 @@ namespace DMTools.FunList
             foreach (var kt in list)
             {
                 if (ConvertKeys.NoMouseKey(kt.KeyCode))
-                    AddKeyDownForTask(kt.KeyCode);
+                    AddKeyDownForTask(kt);
                 else if (kt.KeyCode == ConvertKeys.MouseLeft)
                 {
                     AddLeftDownForTask(kt);
@@ -157,21 +161,17 @@ namespace DMTools.FunList
                 {
                     AddShiftLeftDownForTask(kt);
                 }
-                else if (kt.KeyCode == ConvertKeys.MouseShiftLeft)
+                else if (kt.KeyCode == ConvertKeys.MouseShiftRight)
                 {
-                    AddShiftLeftDownForTask(kt);
-                }
-                else if (kt.KeyCode == ConvertKeys.MouseShiftLeft)
-                {
-                    AddShiftLeftDownForTask(kt);
+                    AddShiftRightDownForTask(kt);
                 }
                 else if (kt.KeyCode == ConvertKeys.HotKeyRightWhereShiftDown)
                 {
-                    AddWhereRightDownShiftForTask(kt,25);
+                    AddWhereRightDownShiftForTask(kt,kt.D1);
                 }
                 else if (kt.KeyCode == ConvertKeys.HotKeyLeftWhereShiftDown)
                 {
-                    AddWhereLeftDownShiftForTask(kt,25);
+                    AddWhereLeftDownShiftForTask(kt, kt.D1);
                 }
             }
         }

@@ -201,6 +201,7 @@ namespace DMTools.FunList
             try
             {
                 //var objdm = CreateDM();
+
                 var files = ts.Str1.Split('|');
                 objdm.SetPath(FileConfig.DM_BMP_PATH);
                 string allpic = "";
@@ -269,11 +270,14 @@ namespace DMTools.FunList
                      if (imgFlag && ret >= 0)
                      {
                          this.DMKeyPress( KeyCode);
+                         Sleep(ts.D2);
                      }
                      if (!imgFlag && ret == -1)
                      {
                          this.DMKeyPress( KeyCode);
+                         Sleep(ts.D2);
                      }
+                    
                  };
                 StartTaskList.Add(StartNewForTask(action, sleepInt));
                 if (ts.KeyCode == ConvertKeys.MouseShiftLeft)

@@ -14,9 +14,16 @@ namespace DMTools
 
         public readonly Logger log = LogManager.GetCurrentClassLogger();
 
-        public FormMain()
+        public FormMain(string[] args)
         {
+            
             InitializeComponent();
+            if(args != null && args.Length>0 )
+            {
+                this.ckload.Checked = false;
+               
+            }
+            else { this.ckload.Checked = true; }
             SetStyle(
                 ControlStyles.ResizeRedraw |
             ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图

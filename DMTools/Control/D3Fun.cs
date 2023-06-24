@@ -18,7 +18,7 @@ namespace DMTools.Control
         public D3Param d3Param { get; set; }
         public  List<(D3ConfigFun, ID3Function)> slD3Function = new List<(D3ConfigFun, ID3Function)>();
 
-       
+        List<EnumD3> alBefore = new List<EnumD3>();
         public D3Fun(D3Param _d3Param)
         {
             this.d3Param= _d3Param;
@@ -28,7 +28,9 @@ namespace DMTools.Control
             {
                 this.funList.Add(e.Item2);
             }
-            
+            alBefore.Add(EnumD3.POE开光环);
+
+
         }
         public void InitD3Function()
         {
@@ -95,12 +97,39 @@ namespace DMTools.Control
             }
         }
 
-        public void Start()
+        public async void Start()
         {
-        
-            foreach (var f in funList)
+
+          var funBefore=  funList.Where(r => alBefore.Contains(r.enumD3)).ToList();
+            foreach (var f in funBefore)
             {
 
+                f.Start();
+            }
+            if (funBefore.Count > 0)
+            {
+                Task t = Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        if (funBefore.All(r => !r.RunState))
+                        {
+
+                            break;
+                        }
+                        Task.Delay(5).Wait();
+                    }
+                    return;
+                });
+                await t;
+            }
+
+          
+       
+
+            foreach (var f in funList.Where(r => !alBefore.Contains(r.enumD3)))
+            {
+              
                 f.Start();
             }
         }

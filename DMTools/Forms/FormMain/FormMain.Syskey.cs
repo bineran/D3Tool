@@ -88,6 +88,7 @@ namespace DMTools
                     return;
                 }
 
+
                 if (!isbl)
                 {
                     RestD3Main(d3Config, hd);
@@ -246,12 +247,15 @@ namespace DMTools
             Task.Delay(100).Wait();
             if (!this.d3Config.WindowClass.ToLower().Contains(strClass.ToLower()))
             {
-                if (this.d3Config.WindowClass != null && this.d3Config.WindowClass.Length > 0)
+                if (this.ckload.Checked)
                 {
-                    this.d3Config.WindowClass += ",";
+                    if (this.d3Config.WindowClass != null && this.d3Config.WindowClass.Length > 0)
+                    {
+                        this.d3Config.WindowClass += ",";
+                    }
+                    this.d3Config.WindowClass += strClass;
+                    SaveConfig();
                 }
-                this.d3Config.WindowClass += strClass;
-                SaveConfig();
             }
             KeyTimeSetting tsImage= new KeyTimeSetting(); 
             foreach (TabPage tp in this.tbfun.TabPages)
@@ -275,7 +279,6 @@ namespace DMTools
                     {
                         uf.selectKTSList.Add(tsPointColor2);
                     }
-                    
                     uf.selectKTSList.Add(tsImage);
                     uf.RestDebugDataGridView();
                 }

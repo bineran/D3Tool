@@ -36,6 +36,7 @@
             新增方案ToolStripMenuItem = new ToolStripMenuItem();
             删除方案ToolStripMenuItem = new ToolStripMenuItem();
             另存方案ToolStripMenuItem = new ToolStripMenuItem();
+            ckload = new ToolStripMenuItem();
             功能ToolStripMenuItem = new ToolStripMenuItem();
             添加功能ToolStripMenuItem = new ToolStripMenuItem();
             复制功能ToolStripMenuItem = new ToolStripMenuItem();
@@ -70,7 +71,7 @@
             // 
             // 方案ToolStripMenuItem
             // 
-            方案ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 新增方案ToolStripMenuItem, 删除方案ToolStripMenuItem, 另存方案ToolStripMenuItem });
+            方案ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 新增方案ToolStripMenuItem, 删除方案ToolStripMenuItem, 另存方案ToolStripMenuItem, ckload });
             方案ToolStripMenuItem.Name = "方案ToolStripMenuItem";
             方案ToolStripMenuItem.Size = new Size(44, 25);
             方案ToolStripMenuItem.Text = "方案";
@@ -78,23 +79,31 @@
             // 新增方案ToolStripMenuItem
             // 
             新增方案ToolStripMenuItem.Name = "新增方案ToolStripMenuItem";
-            新增方案ToolStripMenuItem.Size = new Size(100, 22);
+            新增方案ToolStripMenuItem.Size = new Size(180, 22);
             新增方案ToolStripMenuItem.Text = "新增";
             新增方案ToolStripMenuItem.Click += 新增方案ToolStripMenuItem_Click;
             // 
             // 删除方案ToolStripMenuItem
             // 
             删除方案ToolStripMenuItem.Name = "删除方案ToolStripMenuItem";
-            删除方案ToolStripMenuItem.Size = new Size(100, 22);
+            删除方案ToolStripMenuItem.Size = new Size(180, 22);
             删除方案ToolStripMenuItem.Text = "删除";
             删除方案ToolStripMenuItem.Click += 删除方案ToolStripMenuItem_Click;
             // 
             // 另存方案ToolStripMenuItem
             // 
             另存方案ToolStripMenuItem.Name = "另存方案ToolStripMenuItem";
-            另存方案ToolStripMenuItem.Size = new Size(100, 22);
+            另存方案ToolStripMenuItem.Size = new Size(180, 22);
             另存方案ToolStripMenuItem.Text = "另存";
             另存方案ToolStripMenuItem.Click += 另存方案ToolStripMenuItem_Click;
+            // 
+            // ckload
+            // 
+            ckload.Checked = true;
+            ckload.CheckState = CheckState.Checked;
+            ckload.Name = "ckload";
+            ckload.Size = new Size(180, 22);
+            ckload.Text = "加载新的窗口";
             // 
             // 功能ToolStripMenuItem
             // 
@@ -194,5 +203,6 @@
         private ToolStripMenuItem 复制功能ToolStripMenuItem;
         private ToolStripMenuItem 隐藏ToolStripMenuItem;
         private ToolStripMenuItem 显示所有功能ToolStripMenuItem;
+        private ToolStripMenuItem ckload;
     }
 }

@@ -39,9 +39,9 @@ namespace DMTools
             SetStyle(
 
 
-                 ControlStyles.ResizeRedraw|
+                 ControlStyles.ResizeRedraw |
                ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
-               ControlStyles.OptimizedDoubleBuffer,true //使用双缓冲
+               ControlStyles.OptimizedDoubleBuffer, true //使用双缓冲
             );
             this.UpdateStyles();
 
@@ -97,7 +97,7 @@ namespace DMTools
 
             this.comboBox1.SelectedValue = d3ConfigItem.HotKey1;
             this.comboBox2.SelectedValue = d3ConfigItem.HotKey2;
-            
+
             this.ckEnabled.Checked = d3ConfigItem.EnabledFlag;
             this.checkBox1.Checked = d3ConfigItem.StartBeforeStopOther;
             this.checkBox2.Checked = d3ConfigItem.OtherStopFlag;
@@ -114,7 +114,7 @@ namespace DMTools
 
 
         }
-      
+
         public void SaveData()
         {
             if (this.d3ConfigItem != null)
@@ -252,7 +252,8 @@ namespace DMTools
         {
             this.Invoke(() =>
             {
-                this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(this.selectKTSList);
+                var al = this.selectKTSList.OrderBy(r => r.Rank).ToList();
+                this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(al);
             });
 
         }
@@ -293,7 +294,7 @@ namespace DMTools
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-           // e.Cancel = true;
+            // e.Cancel = true;
         }
         public List<KeyTimeSetting> selectKTSList = new List<KeyTimeSetting>();
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -433,7 +434,7 @@ namespace DMTools
                     {
                         var ks = al[0];
 
-
+                        kt.Str1 = ks.Str1;
                         kt.Int1 = ks.Int1;
                         kt.Int2 = ks.Int2;
 
@@ -463,9 +464,9 @@ namespace DMTools
                     {
                         var ks = al[0];
 
-
-                        kt.Int3 = ks.Int3;
-                        kt.Int4 = ks.Int4;
+                        kt.Str2 = ks.Str1;
+                        kt.Int3 = ks.Int1;
+                        kt.Int4 = ks.Int2;
 
                     }
 
@@ -508,7 +509,10 @@ namespace DMTools
                 selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Right });
                 selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
             }
-            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+            var al = this.selectKTSList.OrderBy(r => r.Rank).ToList();
+            selectKTSList = al;
+            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(al);
+
             fun.Times = selectKTSList;
         }
 

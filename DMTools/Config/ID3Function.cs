@@ -10,7 +10,7 @@ namespace DMTools.Config
 {
     public interface ID3Function
     {
-    
+         EnumD3 enumD3 { get; set; }
         void Start();
         void Stop();
         D3Param d3Param { get; set; }

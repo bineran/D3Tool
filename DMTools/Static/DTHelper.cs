@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -103,7 +104,7 @@ namespace DMTools.Static
             dt.Rows.Add("DOWN", 40);
             dt.Rows.Add("LEFT", 37);
             dt.Rows.Add("RIGHT", 39);
-
+            dt.Rows.Add("ENTER", 13);
             dt.Rows.Add("PrintScreen", Keys.PrintScreen);
             dt.Rows.Add("Pause", Keys.Pause);
             
@@ -215,6 +216,8 @@ namespace DMTools.Static
             dt.Rows.Add("DOWN", 40);
             dt.Rows.Add("LEFT", 37);
             dt.Rows.Add("RIGHT", 39);
+            dt.Rows.Add("ENTER", 13);
+            
 
             dt.Rows.Add("HOME", 36);
             dt.Rows.Add("END", 35);

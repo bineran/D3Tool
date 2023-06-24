@@ -27,17 +27,19 @@ namespace DMTools.FunList
             return false;
         }
 
-  
+
         /// <summary>
         /// 添加一直接住的键的TASK
         /// </summary>
         /// <param name="action"></param>
-        public void AddKeyDownForTask(Keys keys, int sleepTime=100)
+        public void AddKeyDownForTask( KeyTimeSetting ks, int sleepTime=100)
         {
+            Keys keys = ks.KeyCode;
             //var objdm = this.CreateDM();
             int key = (int)keys;
             this.d3KeyState.SetState(keys, true);
             objdm.KeyDown (key);
+
             var action = () =>
             {
 
@@ -48,7 +50,7 @@ namespace DMTools.FunList
                         //log.Debug($"AddKeyDownForTask   {key}---KeyUp1");
                         objdm.KeyUp(key);
                     }
-                    Sleep(sleepTime);
+                    Sleep(20);
                     return;
                 }
                 if ((int)keys == this.d3Param.KeyCodes.KeyMove)
@@ -73,8 +75,23 @@ namespace DMTools.FunList
                 }
 
             };
+            var    sleepTime2 = ks.D2;
+            if (ks.D2 > 0 && ks.D1>0)
+            {
+                sleepTime = ks.D1;
+                action = () =>
+                {
+
+                    objdm.KeyDown(key);
+                    Sleep(sleepTime2);
+                    objdm.KeyUp(key);
+                };
+            }
+
+
             StartTaskList.Add(StartNewForTask(action, sleepTime, false,true));
             AddStopTaskKeysUp(key);
+
         }
         public void AddKeyPressForTask(KeyTimeSetting ts)
         {
@@ -105,7 +122,13 @@ namespace DMTools.FunList
                             break;
                     }
                 };
-                StartTaskList.Add(StartNewForTask(action, ts.D1));
+                var tmpd = ts.D1;
+                if ( ts.D2>0 && ts.D2<100 && ( ts.KeyCode == Keys.D1 || ts.KeyCode == Keys.D2 || ts.KeyCode == Keys.D3 || ts.KeyCode == Keys.D4 || ts.KeyCode == Keys.D5))
+                {
+                    tmpd = Convert.ToInt32(ts.D1 * (1.0 + ts.D2 * 1.0 / 100));
+                }
+             
+                StartTaskList.Add(StartNewForTask(action, tmpd));
             }
         }
         public void AddPauseKeyPressForTask(KeyTimeSetting ts)
@@ -158,6 +181,8 @@ namespace DMTools.FunList
                         Sleep(sleep);
                         return;
                     }
+
+
                     //if (tmp < DateTime.Now)
                     //{
                     //    objdm.LeftDown();
@@ -186,6 +211,15 @@ namespace DMTools.FunList
                     {
                         objdm.RightUp();
                         Sleep(sleep);
+                        return;
+                    }
+                    if (this.d3KeyState.isLeft)
+                    {
+                        if (this.d3KeyState.isRight)
+                        {
+                            objdm.RightUp();
+                        }
+                        Sleep(30);
                         return;
                     }
                     if (!this.d3KeyState.isRight)
@@ -226,6 +260,37 @@ namespace DMTools.FunList
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep, false, false));
                 AddStopTaskLeftUp();
+                AddStopTaskKeysUpStand();
+            }
+        }
+        public void AddShiftRightDownForTask(KeyTimeSetting ts, int sleep = 100)
+        {
+
+            if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.MouseShiftRight && ts.keyClickType == KeyClickType.按下 && sleep > 0)
+            {
+                //var objdm = CreateDM();
+                objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                objdm.RightDown();
+                var action = () =>
+                {
+                    if (this.d3KeyState.isPause || !this.d3KeyState.isD3)
+                    {
+                        objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                        objdm.RightUp();
+                        Sleep(sleep);
+                        return;
+                    }
+                    if (!this.d3KeyState[this.d3Param.KeyCodes.KeyStand])
+                    {
+                        objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                    }
+                    if (!this.d3KeyState.isRight)
+                    {
+                        objdm.RightDown();
+                    }
+                };
+                StartTaskList.Add(StartNewForTask(action, sleep, false, false));
+                AddStopTaskRightUp();
                 AddStopTaskKeysUpStand();
             }
         }
@@ -275,29 +340,38 @@ namespace DMTools.FunList
 
             if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.HotKeyRightWhereShiftDown && ts.keyClickType == KeyClickType.按下 && sleep > 0)
             {
+                var keycode = 0;
+                if (ts.Str1 != null && ts.Str1.Length == 1)
+                {
+                    keycode = Convert.ToInt32(ts.Str1.ToUpper()[0]);
+                }
+                else if (ts.Int1 > 0)
+                {
+                    keycode = ts.Int1;
+                }
+                else
+                    return;
                 //var objdm = this.CreateDM();
                 var action = () =>
                 {
                     if (this.d3Param.d3KeyState.isRight)
                     {
-                        if (!this.d3Param.d3KeyState[this.d3Param.KeyCodes.KeyStand])
+                        if (!this.d3Param.d3KeyState[keycode])
                         {
-                            objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                            objdm.KeyDown(keycode);
                         }
-                    
                     }
                     else
                     {
-                        if (this.d3Param.d3KeyState[this.d3Param.KeyCodes.KeyStand])
+                        if (this.d3Param.d3KeyState[keycode])
                         {
-                            objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                           objdm.KeyUp(keycode);
                         }
-                       
+
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep));
-
-                AddStopTaskKeysUpStand();
+                AddStopTaskKeysUp(keycode);
             }
         }
 
@@ -306,21 +380,38 @@ namespace DMTools.FunList
 
             if (ts.Rank == 0 && ts.KeyCode == ConvertKeys.HotKeyLeftWhereShiftDown && ts.keyClickType == KeyClickType.按下 && sleep > 0)
             {
-                //var objdm = this.CreateDM();
+                var keycode = 0;
+                if (ts.Str1 != null && ts.Str1.Length == 1)
+                {
+                    keycode = Convert.ToInt32(ts.Str1.ToUpper()[0]);
+                }
+                else if (ts.Int1 > 0)
+                {
+                    keycode = ts.Int1;
+                }
+                else
+                    return;
                 var action = () =>
                 {
                     if (this.d3Param.d3KeyState.isLeft)
                     {
-                        objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                        if (!this.d3Param.d3KeyState[keycode])
+                        {
+                            objdm.KeyDown(keycode);
+                        }
+
                     }
                     else
                     {
-                        objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                        if (this.d3Param.d3KeyState[keycode])
+                        {
+                            objdm.KeyUp(keycode);
+                        }
                     }
                 };
                 StartTaskList.Add(StartNewForTask(action, sleep));
 
-                AddStopTaskKeysUpStand();
+                AddStopTaskKeysUp(keycode);
             }
         }
 

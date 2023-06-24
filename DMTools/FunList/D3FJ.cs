@@ -285,9 +285,12 @@ namespace DMTools.FunList
     }
     public class BagPoint
     {
+        public int ID { get; set; }
         public int centerX { get; set; }
         public int centerY { get; set; }
         public int leftX { get; set; }
         public int leftY { get; set; }
+        public int rightX { get; set; }
+        public int rightY { get; set; }
     }
 }

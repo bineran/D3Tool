@@ -21,7 +21,7 @@ namespace DMTools.FunList
     {
         //public  const  EnumD3 enumD3Name  = EnumD3.默认;
 
-        public virtual EnumD3 enumD3 { get; set; } = EnumD3.默认;
+        public  EnumD3 enumD3 { get; set; } = EnumD3.默认;
         public readonly Logger log=LogManager.GetCurrentClassLogger();
         public virtual event Action StartEvent;
         public virtual event Action StopEvent;

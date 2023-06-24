@@ -25,10 +25,10 @@ namespace DMTools.FunList
         }
         private void D3Key_StartEvent()
         {
-
+            this.StartKeyRank();
             StartKeyDown();
             StartKeyPress();
-            this.StartKeyRank();
+          
             StartPointColor();
             StartPointNoColor();
             StartImageTask();
