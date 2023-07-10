@@ -181,7 +181,16 @@ namespace DMTools.FunList
                         Sleep(sleep);
                         return;
                     }
-
+                    if (this.d3KeyState.isRight)
+                    {
+                        if (this.d3KeyState.isLeft)
+                        {
+                            objdm.LeftUp();
+                   
+                        }
+                        Sleep(30);
+                        return;
+                    }
 
                     //if (tmp < DateTime.Now)
                     //{
