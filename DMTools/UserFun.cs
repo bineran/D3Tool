@@ -335,7 +335,7 @@ namespace DMTools
 
             if (this.dataGridView2.CurrentRow != null)
             {
-                var fun = this.dataGridView2.CurrentRow.DataBoundItem as Funitem;
+                var fun = this.dataGridView2.CurrentRow.DataBoundItem as D3ConfigFun;
                 if (fun != null)
                 {
                     var str1 = GetFunInfo(fun.enumD3);
