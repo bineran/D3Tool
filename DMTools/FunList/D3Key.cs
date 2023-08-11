@@ -20,7 +20,6 @@ namespace DMTools.FunList
         public  const EnumD3 enumD3Name = EnumD3.按键;
         public D3Key(D3Param d3Param, List<KeyTimeSetting> Times, EnumD3 enumD3) : base(d3Param, Times,enumD3)
         {
-           
             this.StartEvent += D3Key_StartEvent;
         }
         private void D3Key_StartEvent()
