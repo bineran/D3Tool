@@ -26,6 +26,7 @@ namespace DMTools.FunList
         {
             this.StartKeyRank();
             StartKeyDown();
+
             StartKeyPress();
           
             StartPointColor();
