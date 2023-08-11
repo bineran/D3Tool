@@ -28,8 +28,6 @@ namespace DMTools.FunList
             StartKeyDown();
 
 
-
-
             StartKeyPress();
           
             StartPointColor();
