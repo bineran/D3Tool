@@ -7,7 +7,7 @@ namespace DMTools
     public enum KeyClickType
     {
         /// <summary>
-        /// 不做操作.
+        /// 不做操作...
         /// </summary>
         不做操作 = 0,
         /// <summary>
