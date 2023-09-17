@@ -174,11 +174,12 @@ namespace DMTools.FunList
                 {
                     ret2 = objdm.CmpColor(x1, y1, tagColor2, this.d3Param.sysConfig.color_sim);
                 }
-                if (ret==0 && (ret2==-1 || ret2==0) && ColorFalg )
+
+                if ( (ret==0 || ret2==0) && ColorFalg )
                 {
-                    this.DMKeyPress( keyCode);
+                    this.DMKeyPress(keyCode);
                 }
-                else if (ret == 1 && (ret2 == -1 || ret2 == 1) && ColorFalg==false)
+                else if ((ret == 1 || ret2 == 1) && ColorFalg==false)
                 {
                     this.DMKeyPress( keyCode);
                 }
@@ -244,13 +245,15 @@ namespace DMTools.FunList
                 var KeyCode = ts.KeyCode;
                 var key = (int)ts.KeyCode;
                 var sleepInt = ts.D1;
+                var sleepInt2 = ts.D2 == 0 ? 100 : ts.D2;
+
                 //if (files.Length == 1)
                 //{
                 //    var tmpTagName = files[0].ToLower().Trim().Replace(".png", ".bmp").Replace(".bmp", "-tag.bmp");
                 //    if (!File.Exists(tmpTagName.DmBmpPath()))
                 //    {
                 //        //x = 0:y = 0
-                        
+
                 //        //objdm.Capture(x1, y1, x2, y2, tmpTagName);
 
                 //    }
@@ -270,12 +273,12 @@ namespace DMTools.FunList
                      if (imgFlag && ret >= 0)
                      {
                          this.DMKeyPress( KeyCode);
-                         Sleep(ts.D2);
+                         Sleep(sleepInt2);
                      }
                      if (!imgFlag && ret == -1)
                      {
                          this.DMKeyPress( KeyCode);
-                         Sleep(ts.D2);
+                         Sleep(sleepInt2);
                      }
                     
                  };

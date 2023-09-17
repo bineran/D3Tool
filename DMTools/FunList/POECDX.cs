@@ -216,10 +216,10 @@ namespace DMTools.FunList
                
                 objdm.KeyDown(17);
                 objdm.MoveTo(item.Value.centerX, item.Value.centerY);
-                ThreadSleep(t1.D1);
+                Sleep(t1.D1);
                 objdm.KeyPress((int)Keys.C);
                 objdm.KeyUp(17);
-                ThreadSleep(t1.D1);
+                Sleep(t1.D1);
                 var str=objdm.GetClipboard();
                 AddSkipPoint(item.Key,skipPoint, str);
                 if (skipPoint.Contains(item.Key))
@@ -242,7 +242,7 @@ namespace DMTools.FunList
 
                 objdm.KeyDown(17);
                 objdm.MoveTo(item.Value.centerX, item.Value.centerY);
-                ThreadSleep(t1.D1);
+                Sleep(t1.D1);
                 objdm.LeftClick();
                 objdm.KeyUp(17);
               

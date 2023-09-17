@@ -22,6 +22,8 @@ public enum EnumD3
     魔电血量,
     测试,
     POE存东西,
-    POE开光环
+    POE开光环,
+    循环按顺序执行,
+    POE开卡
 }
 

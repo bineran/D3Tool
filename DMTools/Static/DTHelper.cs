@@ -107,7 +107,7 @@ namespace DMTools.Static
             dt.Rows.Add("ENTER", 13);
             dt.Rows.Add("PrintScreen", Keys.PrintScreen);
             dt.Rows.Add("Pause", Keys.Pause);
-            
+            dt.Rows.Add("ScrLk", Keys.Scroll);
             dt.Rows.Add("HOME", 36);
             dt.Rows.Add("END", 35);
             dt.Rows.Add("PGUP", 33);

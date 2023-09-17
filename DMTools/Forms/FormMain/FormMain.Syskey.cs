@@ -1,4 +1,5 @@
 ﻿using DMTools.Config;
+using DMTools.Forms;
 using DMTools.FunList;
 using DMTools.libs;
 using DMTools.Static;
@@ -117,6 +118,9 @@ namespace DMTools
                     break;
                 case Hotkey.HotKeyPtrScr:
                     PrScrnHelper.PrScrn();
+                    break;
+                case Hotkey.HotKeyScrLk:
+                    CapImg();
                     break;
                 case Hotkey.HotKeyTestBind:
                     TestBind();
@@ -291,6 +295,13 @@ namespace DMTools
         public void RestDebugDataGridBind()
         {
            
+        }
+        public void CapImg()
+        {
+
+            FrmCapImg f= new FrmCapImg();
+            f.ShowDialog();
+
         }
         public void StopAll()
         {
