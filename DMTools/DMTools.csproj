@@ -18,6 +18,7 @@
     <Compile Remove="FormMain.Setting.cs" />
     <Compile Remove="FunList\D3Test.cs" />
     <Compile Remove="FunList\DirectXScreenCapturer.cs" />
+    <Compile Remove="FunList\POEKill.cs" />
   </ItemGroup>
 
   <ItemGroup>

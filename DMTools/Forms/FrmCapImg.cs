@@ -19,7 +19,7 @@ namespace DMTools.Forms
 {
     public partial class FrmCapImg : Form
     {
-  
+
 
         private const int MOUSEEVENTF_MOVE = 0x0001;
 
@@ -30,11 +30,12 @@ namespace DMTools.Forms
             this.pictureBox1.Image = LoadImg();
             this.KeyPreview = true;
             screenshotTimer = new Timer();
-            screenshotTimer.Interval = 200;
+            screenshotTimer.Interval = 50;
 
             // 订阅定时器的Tick事件
             screenshotTimer.Tick += ScreenshotTimer_Tick;
-
+            screenshotTimer.Start();
+            
         }
 
         private void ScreenshotTimer_Tick(object? sender, EventArgs e)
@@ -44,16 +45,18 @@ namespace DMTools.Forms
 
         public Bitmap LoadImg()
         {
+            Pen pen = new Pen(Color.Green, 4);
             Bitmap capturedScreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             using (Graphics g = Graphics.FromImage(capturedScreen))
             {
                 g.CopyFromScreen(0, 0, 0, 0, new Size(capturedScreen.Width, capturedScreen.Height));
+                g.DrawRectangle(pen, 0, 0, Screen.PrimaryScreen.Bounds.Width - 1, Screen.PrimaryScreen.Bounds.Height - 1);
             }
             return capturedScreen;
         }
         private void CaptureScreen()
         {
-
+            this.panel2.Visible = true;
 
             // 创建一个位图，用于保存放大后的图片
             Bitmap zoomedImage = new Bitmap(200, 200);
@@ -83,30 +86,68 @@ namespace DMTools.Forms
                 zoomTop = Math.Max(0, Math.Min(zoomTop, screenHeight - zoomSize));
                 zoomSize = 50;
             }
-
+        
             // 截取屏幕上的图片
             using (Graphics g = Graphics.FromImage(zoomedImage))
             {
                 g.CopyFromScreen(zoomLeft, zoomTop, 0, 0, new System.Drawing.Size(zoomSize, zoomSize));
+              
             }
             // 创建一个位图，用于保存截图
             Bitmap screenshot = new Bitmap(zoomSize, zoomSize);
-
+            Pen pen = new Pen(Color.White, 2);
             // 截取屏幕上的图片
+            var pn = this.panel2;
             using (Graphics g = Graphics.FromImage(screenshot))
             {
                 g.CopyFromScreen(zoomLeft, zoomTop, 0, 0, new System.Drawing.Size(zoomSize, zoomSize));
 
-                Color transparentColor = Color.FromArgb(100, 255, 0, 0); // 红色的线条，半透明
+                Color transparentColor = Color.FromArgb(128, 255, 0, 0); // 红色的线条，半透明
                 Pen transparentPen = new Pen(transparentColor, 1);
                 g.DrawLine(transparentPen, zoomSize / 2, zoomSize / 2 - 10, zoomSize / 2, zoomSize / 2 + 10);
                 g.DrawLine(transparentPen, zoomSize / 2 - 10, zoomSize / 2, zoomSize / 2 + 10, zoomSize / 2);
-
+                g.DrawRectangle(pen, 0, 0, pn.Size.Width - 1, pn.Size.Height - 1);
             }
 
-
+            this.lblfbl.Text = $"{Screen.PrimaryScreen.Bounds.Width}*{Screen.PrimaryScreen.Bounds.Height}";
+            this.lblpoint.Text = $"X:{mousePosition.X},Y:{mousePosition.Y}";
+            this.lblcolor.Text = $"Color:{this.dMP.DM.GetColor(mousePosition.X, mousePosition.Y)}";
             // 显示截图到pictureBox控件
             this.pictureBox2.Image = screenshot;
+
+            var e = mousePosition;
+
+
+
+            // 自定义偏移量
+            int offsetX = 50;
+            int offsetY = 50;
+
+            // 根据鼠标的位置和偏移量调整面板的位置
+            if (e.X < screenWidth / 2 && e.Y < screenHeight / 2)
+            {
+                // 左上方
+                pn.Location = new Point(e.X + offsetX, e.Y + offsetY);
+                pn.BringToFront();
+            }
+            else if (e.X < screenWidth / 2 && e.Y >= screenHeight / 2)
+            {
+                // 左下方
+                pn.Location = new Point(e.X + offsetX, e.Y - pn.Height - offsetY);
+                pn.BringToFront();
+            }
+            else if (e.X >= screenWidth / 2 && e.Y < screenHeight / 2)
+            {
+                // 右上方
+                pn.Location = new Point(e.X - pn.Width - offsetX, e.Y + offsetY);
+                pn.BringToFront();
+            }
+            else if (e.X >= screenWidth / 2 && e.Y >= screenHeight / 2)
+            {
+                // 右下方
+                pn.Location = new Point(e.X - pn.Width - offsetX, e.Y - pn.Height - offsetY);
+                pn.BringToFront();
+            }
         }
 
 
@@ -114,12 +155,13 @@ namespace DMTools.Forms
         {
             if (e.KeyChar == (char)Keys.Escape)
             {
+                this.screenshotTimer.Stop();
                 this.Close();
                 return;
             }
             if (e.KeyChar == (char)Keys.Enter)
             {
-
+                this.screenshotTimer.Stop();
                 SetClipboard();
                 this.Close();
                 return;
@@ -154,11 +196,11 @@ namespace DMTools.Forms
             Cursor.Position = pictureBox1.PointToScreen(currentMousePos);
             CaptureScreen();
         }
-
+        DMP dMP = new DMP();
 
         public void SetClipboard()
         {
-            DMP dMP = new DMP();
+
             var objdm = dMP.DM;
             object x;
             object y;
