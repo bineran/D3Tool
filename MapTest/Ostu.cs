@@ -10,6 +10,8 @@ namespace MapTest
     {
         private const int GrayNum = 256;        //灰度值
         private int[] GrayArr = new int[GrayNum];   //灰度值数组
+
+
         private int[] PixArr;
         private double w1;  //背景灰度概率
         private double w0;  //前景灰度概率
