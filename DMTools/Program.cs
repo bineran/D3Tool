@@ -40,126 +40,25 @@ namespace DMTools
            // RegisterDmSoft.AutoRegCom($"regsvr32 -s {pathDMDLL}");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var path = Application.StartupPath + $@"NLogs\Info\{DateTime.Now.ToString("yyyy-MM-dd")}.txt";
+            //var path = Application.StartupPath + $@"NLogs\Info\{DateTime.Now.ToString("yyyy-MM-dd")}.txt";
 
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-           // POEJN_StartEvent();
-            var registerDmSoftDllResult = RegisterDmSoft.RegisterDmSoftDll();
+            //if (File.Exists(path))
+            //{
+            //    File.Delete(path);
+            //}
+            //var CrossProxyPath = "CrossProxy.Config";
+            //if (File.Exists(CrossProxyPath))
+            //{
+            //   CrossProxyPath= System.IO.File.ReadAllText(CrossProxyPath);
+            //    DMTools.FunList.POEKill.GrantPOE(CrossProxyPath);
+            //}
+        
+                       var registerDmSoftDllResult = RegisterDmSoft.RegisterDmSoftDll();
             ApplicationConfiguration.Initialize();
             Application.Run(new FormMain(args));
         }
-        public static void POEJN_StartEvent()
-        {
-            var alstr = GetDisabledPrograms();
-            var powerShellScript = new StringBuilder();
-            powerShellScript.AppendLine("Set-ExecutionPolicy RemoteSigned -Force");
-
-            List<string> alprocss = new List<string>();
-            alprocss.Add( @"CrossProxy");
-            var op = "grant";//grant,deny
-            var croossPath = @"D:\Game\WeGame\apps\Cross\Core\Stable\CrossProxy.exe";
-            List<string> exes = new List<string>();
-            exes.Add("CrossInstallerExternal64.exe");
-            exes.Add("CrossInstallerExternal.exe");
-            powerShellScript.AppendLine($"icacls {croossPath} /{op} Everyone:F");
-            foreach (var exe in exes)
-            {
-                var exePath = croossPath.Replace($"CrossProxy.exe", exe);
-                powerShellScript.AppendLine($"icacls {exePath} /{op} Everyone:F");
-            }
-            //foreach (var pName in alprocss)
-            //{
-            //    Process[] processes = Process.GetProcessesByName(pName);
-            //    List<string> exes = new List<string>();
-            //    exes.Add("CrossInstallerExternal64.exe");
-            //    exes.Add("CrossInstallerExternal.exe");
-            //    foreach (var process in processes)
-            //    {
-
-            //        try
-            //        {
-            //            if (process.MainModule != null)
-            //            {
-            //                powerShellScript.AppendLine($"icacls {process.MainModule.FileName} /{op} Everyone:F");
-            //                foreach (var exe in exes)
-            //                {
-            //                    var exePath = process.MainModule.FileName.Replace($"{pName}.exe", exe);
-            //                    powerShellScript.AppendLine($"icacls {exePath} /{op} Everyone:F");
-            //                }
-            //            }
-
-            //        }
-            //        catch
-            //        { 
-
-            //        }
-            //    }
 
 
-
-            //}
-            powerShellScript.AppendLine("exit");
-            if (powerShellScript.Length > 50)
-            {
-                using (Process powerShellProcess = new Process())
-                {
-                    powerShellProcess.StartInfo.FileName = "powershell.exe";
-                    powerShellProcess.StartInfo.RedirectStandardInput = true;
-                    powerShellProcess.StartInfo.RedirectStandardOutput = true;
-                    powerShellProcess.StartInfo.UseShellExecute = false;
-                   // powerShellProcess.StartInfo.CreateNoWindow = true;
-
-                    powerShellProcess.Start();
-
-                    // 将命令写入PowerShell进程的标准输入
-                    powerShellProcess.StandardInput.WriteLine(powerShellScript.ToString());
-
-                    // 读取PowerShell进程的输出
-                    string output = powerShellProcess.StandardOutput.ReadToEnd();
-                  
-                  
-                    powerShellProcess.WaitForExit();
-                }
-            }
-        }
-        private static List<string> GetDisabledPrograms()
-        {
-            List<string> disabledPrograms = new List<string>();
-
-            try
-            {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = "cmd.exe";
-                startInfo.RedirectStandardOutput = true;
-                startInfo.UseShellExecute = false;
-                startInfo.CreateNoWindow = true;
-                startInfo.Arguments = "/c icacls /dumpacl *";
-
-                Process process = new Process();
-                process.StartInfo = startInfo;
-                process.Start();
-
-                while (!process.StandardOutput.EndOfStream)
-                {
-                    string line = process.StandardOutput.ReadLine();
-                    if (line.Contains("Deny"))
-                    {
-                        string[] splitLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        string programName = splitLine[splitLine.Length - 1];
-                        disabledPrograms.Add(programName);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("执行命令时出现错误: " + e.Message);
-            }
-
-            return disabledPrograms;
-        }
         static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
 
