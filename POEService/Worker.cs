@@ -2,6 +2,7 @@ using Microsoft.Extensions.Options;
 using POEService.common;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Linq;
 using static Org.BouncyCastle.Math.EC.ECCurve;
@@ -21,27 +22,31 @@ namespace POEService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            int pid = 0;
+            bool canRest = true;
             while (!stoppingToken.IsCancellationRequested)
             {
                 Process[] processes = Process.GetProcessesByName(serviceConfig.POEExeName);
-                if (processes.Length > 0)
+                if (processes.Length > 0 && pid!= processes[0].Id)
                 {
+                    pid = processes[0].Id;
                     await Task.Delay(30 * 1000, stoppingToken);
-                    if(!stoppingToken.IsCancellationRequested)
+               
+                    if (!stoppingToken.IsCancellationRequested)
                     {
                         KillCrossProxy();
                         KillProcess();
+                        canRest = true;
                     }
+
                 }
-                else
+                else if (processes.Length==0 && canRest) 
                 {
-                    await Task.Delay(1000, stoppingToken);
-                    if (!stoppingToken.IsCancellationRequested)
-                    {
-                        EnableCrossProxy();
-                    }
+                    EnableCrossProxy();
+                    canRest = false;
                 }
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(3 * 1000, stoppingToken);
+
             }
         }
         public override Task StopAsync(CancellationToken cancellationToken)
@@ -58,7 +63,7 @@ namespace POEService
                 {
                     process.Kill();
                 }
-                _logger.LogInformation("KillProcess: {time}", DateTimeOffset.Now);
+              
             }
         }
 
@@ -89,7 +94,6 @@ namespace POEService
 
 
                 powerShellProcess.WaitForExit();
-                _logger.LogInformation("KillCrossProxy: {time}", DateTimeOffset.Now);
             }
         }
         public void EnableCrossProxy()
@@ -119,7 +123,6 @@ namespace POEService
 
 
                 powerShellProcess.WaitForExit();
-                _logger.LogInformation("EnableCrossProxy: {time}", DateTimeOffset.Now);
             }
         }
 
