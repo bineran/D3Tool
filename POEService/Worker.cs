@@ -26,29 +26,31 @@ namespace POEService
                 if (processes.Length > 0)
                 {
                     await Task.Delay(30 * 1000, stoppingToken);
-                    KillCrossProxy();
+                    if(!stoppingToken.IsCancellationRequested)
+                    {
+                        KillCrossProxy();
+                        KillProcess();
+                    }
                 }
                 else
                 {
-                    await Task.Delay(30 * 1000, stoppingToken);
-                    EnableCrossProxy();
+                    await Task.Delay(1000, stoppingToken);
+                    if (!stoppingToken.IsCancellationRequested)
+                    {
+                        EnableCrossProxy();
+                    }
                 }
                 await Task.Delay(1000, stoppingToken);
             }
         }
         public void KillProcess()
         {
-            List<string> processList = new List<string>();
-            processList.Add("CrossInstallerExternal64");
-            processList.Add("CrossInstallerExternal");
-            processList.Add("CrossProxy");
-            foreach (var pName in processList)
+            foreach (var pName in this.serviceConfig.ProcessList)
             {
                 Process[] processes = Process.GetProcessesByName(pName);
                 foreach (Process process in processes)
                 {
                     process.Kill();
-
                 }
                 _logger.LogInformation("KillProcess: {time}", DateTimeOffset.Now);
             }
