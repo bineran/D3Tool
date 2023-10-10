@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace POEService
 {
@@ -42,6 +43,11 @@ namespace POEService
                 }
                 await Task.Delay(1000, stoppingToken);
             }
+        }
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            EnableCrossProxy();
+            return base.StopAsync(cancellationToken);
         }
         public void KillProcess()
         {
