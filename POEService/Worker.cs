@@ -22,6 +22,7 @@ namespace POEService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
             int pid = 0;
             bool canRest = true;
             while (!stoppingToken.IsCancellationRequested)
@@ -73,9 +74,10 @@ namespace POEService
             powerShellScript.AppendLine("Set-ExecutionPolicy RemoteSigned -Force");
             foreach (var item in this.serviceConfig.PathList)
             {
-                powerShellScript.AppendLine($"icacls {item} /Deny Everyone:F");
+                powerShellScript.AppendLine($"icacls \"{item}\" /Deny Everyone:F");
             }
             powerShellScript.AppendLine("exit");
+        
             using (Process powerShellProcess = new Process())
             {
                 powerShellProcess.StartInfo.FileName = "powershell.exe";
@@ -102,7 +104,7 @@ namespace POEService
             powerShellScript.AppendLine("Set-ExecutionPolicy RemoteSigned -Force");
             foreach (var item in this.serviceConfig.PathList)
             {
-                powerShellScript.AppendLine($"icacls {item} /grant Everyone:F");
+                powerShellScript.AppendLine($"icacls \"{item}\" /grant Everyone:F");
             }
             powerShellScript.AppendLine("exit");
             using (Process powerShellProcess = new Process())
