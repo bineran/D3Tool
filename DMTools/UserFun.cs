@@ -77,7 +77,11 @@ namespace DMTools
             Column1.DisplayMember = "KeyName";
             Column1.ValueMember = "KeyCode";
             Column1.DataPropertyName = "KeyCode";
+            KeyCode2.DisplayMember = "KeyName";
+            KeyCode2.ValueMember = "KeyCode";
+            KeyCode2.DataPropertyName = "KeyCode2";
             this.Column1.DataSource = DTHelper.TableList[DataTableType.Key].Copy();
+            this.KeyCode2.DataSource = DTHelper.TableList[DataTableType.Key].Copy();
             this.d3ConfigItem = d3ConfigItem;
             BindData();
         }

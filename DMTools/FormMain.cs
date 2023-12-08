@@ -16,14 +16,14 @@ namespace DMTools
 
         public FormMain(string[] args)
         {
-            
+
             InitializeComponent();
-            if(args != null && args.Length>0 )
-            {
-                this.ckload.Checked = false;
-               
-            }
-            else { this.ckload.Checked = true; }
+            //if (args != null && args.Length > 0)
+            //{
+            //    this.ckload.Checked = false;
+
+            //}
+            //else { this.ckload.Checked = true; }
             SetStyle(
                 ControlStyles.ResizeRedraw |
             ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
@@ -218,6 +218,11 @@ namespace DMTools
         {
             isshoall = !isshoall;
             BindTabControl(isshoall);
+        }
+
+        private void ckload_Click(object sender, EventArgs e)
+        {
+            this.ckload.Checked = !ckload.Checked;
         }
     }
 

@@ -12,6 +12,7 @@ namespace DMTools.Config
     public class KeyTimeSetting
     {
 
+        public KeyTimeSetting() { KeyCode2 = Keys.None; }
         public KeyClickType keyClickType { get; set; } = KeyClickType.不做操作;
         public string TSRemark { get; set; } = "";
         /// <summary>
@@ -35,6 +36,7 @@ namespace DMTools.Config
         public int Int3 { get; set; }
         public int Int4 { get; set; }
         public Keys KeyCode { get; set; }
+        public Keys KeyCode2 { get; set; }
         [JsonIgnore]
         public Image ImageFile { get; set; }
 

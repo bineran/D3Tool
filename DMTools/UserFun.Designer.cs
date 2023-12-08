@@ -40,22 +40,6 @@
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             groupBox2 = new GroupBox();
             dataGridView1 = new DataGridView();
-            Column1 = new DataGridViewComboBoxColumn();
-            Column2 = new DataGridViewComboBoxColumn();
-            Column15 = new DataGridViewTextBoxColumn();
-            Column16 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
-            Column7 = new DataGridViewTextBoxColumn();
-            Column8 = new DataGridViewTextBoxColumn();
-            Column12 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column13 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
             contextMenuStrip3 = new ContextMenuStrip(components);
             复制调试的功能ToolStripMenuItem = new ToolStripMenuItem();
             粘贴调试的功能ToolStripMenuItem = new ToolStripMenuItem();
@@ -82,6 +66,23 @@
             checkBox2 = new CheckBox();
             checkBox1 = new CheckBox();
             toolTip1 = new ToolTip(components);
+            Column1 = new DataGridViewComboBoxColumn();
+            Column2 = new DataGridViewComboBoxColumn();
+            Column15 = new DataGridViewTextBoxColumn();
+            Column16 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
+            Column7 = new DataGridViewTextBoxColumn();
+            Column8 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
+            Column9 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column13 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            KeyCode2 = new DataGridViewComboBoxColumn();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             contextMenuStrip3.SuspendLayout();
@@ -109,7 +110,7 @@
             // 
             dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column15, Column16, Column3, Column11, Column7, Column8, Column12, Column9, Column10, Column4, Column5, Column6, Column13, Column14 });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column15, Column16, Column3, Column11, Column7, Column8, Column12, Column9, Column10, Column4, Column5, Column6, Column13, Column14, KeyCode2 });
             dataGridView1.ContextMenuStrip = contextMenuStrip3;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(203, 19);
@@ -121,180 +122,44 @@
             dataGridView1.ColumnHeaderMouseDoubleClick += dataGridView1_ColumnHeaderMouseDoubleClick;
             dataGridView1.DataError += dataGridView1_DataError;
             // 
-            // Column1
-            // 
-            Column1.DataPropertyName = "KeyCode";
-            Column1.Frozen = true;
-            Column1.HeaderText = "键";
-            Column1.Name = "Column1";
-            Column1.Resizable = DataGridViewTriState.True;
-            Column1.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // Column2
-            // 
-            Column2.DataPropertyName = "keyClickType";
-            Column2.Frozen = true;
-            Column2.HeaderText = "类型";
-            Column2.Items.AddRange(new object[] { "不做操作", "CD好了就按", "定时按", "按住", "按顺序" });
-            Column2.Name = "Column2";
-            Column2.Width = 120;
-            // 
-            // Column15
-            // 
-            Column15.DataPropertyName = "Rank";
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            Column15.DefaultCellStyle = dataGridViewCellStyle1;
-            Column15.Frozen = true;
-            Column15.HeaderText = "顺序";
-            Column15.Name = "Column15";
-            Column15.Resizable = DataGridViewTriState.True;
-            Column15.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Column15.Width = 60;
-            // 
-            // Column16
-            // 
-            Column16.DataPropertyName = "TSRemark";
-            Column16.Frozen = true;
-            Column16.HeaderText = "备注";
-            Column16.Name = "Column16";
-            // 
-            // Column3
-            // 
-            Column3.DataPropertyName = "D1";
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            Column3.DefaultCellStyle = dataGridViewCellStyle2;
-            Column3.HeaderText = "时间1";
-            Column3.Name = "Column3";
-            Column3.Width = 75;
-            // 
-            // Column11
-            // 
-            Column11.DataPropertyName = "Str1";
-            Column11.HeaderText = "文本1";
-            Column11.Name = "Column11";
-            // 
-            // Column7
-            // 
-            Column7.DataPropertyName = "Int1";
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            Column7.DefaultCellStyle = dataGridViewCellStyle3;
-            Column7.HeaderText = "整数1";
-            Column7.Name = "Column7";
-            Column7.Width = 75;
-            // 
-            // Column8
-            // 
-            Column8.DataPropertyName = "Int2";
-            dataGridViewCellStyle4.Format = "d";
-            Column8.DefaultCellStyle = dataGridViewCellStyle4;
-            Column8.HeaderText = "整数2";
-            Column8.Name = "Column8";
-            Column8.Width = 75;
-            // 
-            // Column12
-            // 
-            Column12.DataPropertyName = "Str2";
-            Column12.HeaderText = "文本2";
-            Column12.Name = "Column12";
-            // 
-            // Column9
-            // 
-            Column9.DataPropertyName = "Int3";
-            dataGridViewCellStyle5.Format = "d";
-            Column9.DefaultCellStyle = dataGridViewCellStyle5;
-            Column9.HeaderText = "整数3";
-            Column9.Name = "Column9";
-            Column9.Width = 75;
-            // 
-            // Column10
-            // 
-            Column10.DataPropertyName = "Int4";
-            dataGridViewCellStyle6.Format = "d";
-            Column10.DefaultCellStyle = dataGridViewCellStyle6;
-            Column10.HeaderText = "整数4";
-            Column10.Name = "Column10";
-            Column10.Width = 75;
-            // 
-            // Column4
-            // 
-            Column4.DataPropertyName = "D2";
-            dataGridViewCellStyle7.Format = "N0";
-            Column4.DefaultCellStyle = dataGridViewCellStyle7;
-            Column4.HeaderText = "时间2";
-            Column4.Name = "Column4";
-            Column4.Width = 75;
-            // 
-            // Column5
-            // 
-            Column5.DataPropertyName = "D3";
-            dataGridViewCellStyle8.Format = "N0";
-            Column5.DefaultCellStyle = dataGridViewCellStyle8;
-            Column5.HeaderText = "时间3";
-            Column5.Name = "Column5";
-            Column5.Width = 75;
-            // 
-            // Column6
-            // 
-            Column6.DataPropertyName = "D4";
-            dataGridViewCellStyle9.Format = "N0";
-            Column6.DefaultCellStyle = dataGridViewCellStyle9;
-            Column6.HeaderText = "时间4";
-            Column6.Name = "Column6";
-            Column6.Width = 75;
-            // 
-            // Column13
-            // 
-            Column13.DataPropertyName = "Str3";
-            Column13.HeaderText = "文本3";
-            Column13.Name = "Column13";
-            // 
-            // Column14
-            // 
-            Column14.DataPropertyName = "Str4";
-            Column14.HeaderText = "文本4";
-            Column14.Name = "Column14";
-            // 
             // contextMenuStrip3
             // 
             contextMenuStrip3.Items.AddRange(new ToolStripItem[] { 复制调试的功能ToolStripMenuItem, 粘贴调试的功能ToolStripMenuItem, 粘贴坐标和颜色ToolStripMenuItem, 粘贴坐标1ToolStripMenuItem, 粘贴坐标2ToolStripMenuItem });
             contextMenuStrip3.Name = "contextMenuStrip3";
-            contextMenuStrip3.Size = new Size(181, 136);
+            contextMenuStrip3.Size = new Size(161, 114);
             // 
             // 复制调试的功能ToolStripMenuItem
             // 
             复制调试的功能ToolStripMenuItem.Name = "复制调试的功能ToolStripMenuItem";
-            复制调试的功能ToolStripMenuItem.Size = new Size(180, 22);
+            复制调试的功能ToolStripMenuItem.Size = new Size(160, 22);
             复制调试的功能ToolStripMenuItem.Text = "复制";
             复制调试的功能ToolStripMenuItem.Click += 复制调试的功能ToolStripMenuItem_Click;
             // 
             // 粘贴调试的功能ToolStripMenuItem
             // 
             粘贴调试的功能ToolStripMenuItem.Name = "粘贴调试的功能ToolStripMenuItem";
-            粘贴调试的功能ToolStripMenuItem.Size = new Size(180, 22);
+            粘贴调试的功能ToolStripMenuItem.Size = new Size(160, 22);
             粘贴调试的功能ToolStripMenuItem.Text = "粘贴";
             粘贴调试的功能ToolStripMenuItem.Click += 粘贴调试的功能ToolStripMenuItem_Click;
             // 
             // 粘贴坐标和颜色ToolStripMenuItem
             // 
             粘贴坐标和颜色ToolStripMenuItem.Name = "粘贴坐标和颜色ToolStripMenuItem";
-            粘贴坐标和颜色ToolStripMenuItem.Size = new Size(180, 22);
+            粘贴坐标和颜色ToolStripMenuItem.Size = new Size(160, 22);
             粘贴坐标和颜色ToolStripMenuItem.Text = "粘贴坐标和颜色";
             粘贴坐标和颜色ToolStripMenuItem.Click += 粘贴坐标和颜色ToolStripMenuItem_Click;
             // 
             // 粘贴坐标1ToolStripMenuItem
             // 
             粘贴坐标1ToolStripMenuItem.Name = "粘贴坐标1ToolStripMenuItem";
-            粘贴坐标1ToolStripMenuItem.Size = new Size(180, 22);
+            粘贴坐标1ToolStripMenuItem.Size = new Size(160, 22);
             粘贴坐标1ToolStripMenuItem.Text = "粘贴到坐标1";
             粘贴坐标1ToolStripMenuItem.Click += 粘贴坐标1ToolStripMenuItem_Click;
             // 
             // 粘贴坐标2ToolStripMenuItem
             // 
             粘贴坐标2ToolStripMenuItem.Name = "粘贴坐标2ToolStripMenuItem";
-            粘贴坐标2ToolStripMenuItem.Size = new Size(180, 22);
+            粘贴坐标2ToolStripMenuItem.Size = new Size(160, 22);
             粘贴坐标2ToolStripMenuItem.Text = "粘贴到坐标2";
             粘贴坐标2ToolStripMenuItem.Click += 粘贴坐标2ToolStripMenuItem_Click;
             // 
@@ -487,6 +352,148 @@
             checkBox1.Text = "启动时先停其它功能";
             checkBox1.UseVisualStyleBackColor = true;
             // 
+            // Column1
+            // 
+            Column1.DataPropertyName = "KeyCode";
+            Column1.Frozen = true;
+            Column1.HeaderText = "键";
+            Column1.Name = "Column1";
+            Column1.Resizable = DataGridViewTriState.True;
+            Column1.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // Column2
+            // 
+            Column2.DataPropertyName = "keyClickType";
+            Column2.Frozen = true;
+            Column2.HeaderText = "类型";
+            Column2.Items.AddRange(new object[] { "不做操作", "CD好了就按", "定时按", "按住", "按顺序" });
+            Column2.Name = "Column2";
+            Column2.Width = 120;
+            // 
+            // Column15
+            // 
+            Column15.DataPropertyName = "Rank";
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            Column15.DefaultCellStyle = dataGridViewCellStyle1;
+            Column15.Frozen = true;
+            Column15.HeaderText = "顺序";
+            Column15.Name = "Column15";
+            Column15.Resizable = DataGridViewTriState.True;
+            Column15.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Column15.Width = 60;
+            // 
+            // Column16
+            // 
+            Column16.DataPropertyName = "TSRemark";
+            Column16.Frozen = true;
+            Column16.HeaderText = "备注";
+            Column16.Name = "Column16";
+            // 
+            // Column3
+            // 
+            Column3.DataPropertyName = "D1";
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            Column3.DefaultCellStyle = dataGridViewCellStyle2;
+            Column3.HeaderText = "时间1";
+            Column3.Name = "Column3";
+            Column3.Width = 75;
+            // 
+            // Column11
+            // 
+            Column11.DataPropertyName = "Str1";
+            Column11.HeaderText = "文本1";
+            Column11.Name = "Column11";
+            // 
+            // Column7
+            // 
+            Column7.DataPropertyName = "Int1";
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            Column7.DefaultCellStyle = dataGridViewCellStyle3;
+            Column7.HeaderText = "整数1";
+            Column7.Name = "Column7";
+            Column7.Width = 75;
+            // 
+            // Column8
+            // 
+            Column8.DataPropertyName = "Int2";
+            dataGridViewCellStyle4.Format = "d";
+            Column8.DefaultCellStyle = dataGridViewCellStyle4;
+            Column8.HeaderText = "整数2";
+            Column8.Name = "Column8";
+            Column8.Width = 75;
+            // 
+            // Column12
+            // 
+            Column12.DataPropertyName = "Str2";
+            Column12.HeaderText = "文本2";
+            Column12.Name = "Column12";
+            // 
+            // Column9
+            // 
+            Column9.DataPropertyName = "Int3";
+            dataGridViewCellStyle5.Format = "d";
+            Column9.DefaultCellStyle = dataGridViewCellStyle5;
+            Column9.HeaderText = "整数3";
+            Column9.Name = "Column9";
+            Column9.Width = 75;
+            // 
+            // Column10
+            // 
+            Column10.DataPropertyName = "Int4";
+            dataGridViewCellStyle6.Format = "d";
+            Column10.DefaultCellStyle = dataGridViewCellStyle6;
+            Column10.HeaderText = "整数4";
+            Column10.Name = "Column10";
+            Column10.Width = 75;
+            // 
+            // Column4
+            // 
+            Column4.DataPropertyName = "D2";
+            dataGridViewCellStyle7.Format = "N0";
+            Column4.DefaultCellStyle = dataGridViewCellStyle7;
+            Column4.HeaderText = "时间2";
+            Column4.Name = "Column4";
+            Column4.Width = 75;
+            // 
+            // Column5
+            // 
+            Column5.DataPropertyName = "D3";
+            dataGridViewCellStyle8.Format = "N0";
+            Column5.DefaultCellStyle = dataGridViewCellStyle8;
+            Column5.HeaderText = "时间3";
+            Column5.Name = "Column5";
+            Column5.Width = 75;
+            // 
+            // Column6
+            // 
+            Column6.DataPropertyName = "D4";
+            dataGridViewCellStyle9.Format = "N0";
+            Column6.DefaultCellStyle = dataGridViewCellStyle9;
+            Column6.HeaderText = "时间4";
+            Column6.Name = "Column6";
+            Column6.Width = 75;
+            // 
+            // Column13
+            // 
+            Column13.DataPropertyName = "Str3";
+            Column13.HeaderText = "文本3";
+            Column13.Name = "Column13";
+            // 
+            // Column14
+            // 
+            Column14.DataPropertyName = "Str4";
+            Column14.HeaderText = "文本4";
+            Column14.Name = "Column14";
+            // 
+            // KeyCode2
+            // 
+            KeyCode2.DataPropertyName = "KeyCode2";
+            KeyCode2.HeaderText = "键2";
+            KeyCode2.Name = "KeyCode2";
+            // 
             // UserFun
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -554,5 +561,6 @@
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column14;
+        private DataGridViewComboBoxColumn KeyCode2;
     }
 }

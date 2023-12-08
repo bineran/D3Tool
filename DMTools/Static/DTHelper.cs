@@ -148,7 +148,8 @@ namespace DMTools.Static
             dt.Columns.Add("KeyName");
             dt.Columns.Add("KeyCode", typeof(Keys));
             #region code
-            dt.Rows.Add("空", ConvertKeys.HotKeyDebug);
+   
+            dt.Rows.Add("空", Keys.None);
             dt.Rows.Add("1", 49);
             dt.Rows.Add("2", 50);
             dt.Rows.Add("3", 51);

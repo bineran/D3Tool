@@ -99,11 +99,10 @@
             // 
             // ckload
             // 
-            ckload.Checked = true;
-            ckload.CheckState = CheckState.Checked;
             ckload.Name = "ckload";
             ckload.Size = new Size(180, 22);
             ckload.Text = "加载新的窗口";
+            ckload.Click += ckload_Click;
             // 
             // 功能ToolStripMenuItem
             // 

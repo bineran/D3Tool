@@ -24,7 +24,8 @@ public enum EnumD3
     POE存东西,
     POE开光环,
     循环按顺序执行,
-    POE开卡
-   //, POE多余进程
+    POE开卡,
+    回车发消息
+    //, POE多余进程
 }
 

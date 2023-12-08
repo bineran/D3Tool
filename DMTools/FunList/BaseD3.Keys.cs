@@ -67,6 +67,18 @@ namespace DMTools.FunList
                         return;
                     }
                 }
+                if(ks.KeyCode2>0)
+                {
+                    if (objdm.GetKeyState(Convert.ToInt32( ks.KeyCode2)) == 1)
+                    {
+                        if (this.d3KeyState[keys])
+                        {
+                            objdm.KeyUp(key);
+                        }
+                        Sleep(20);
+                        return;
+                    }
+                }
                 //return;
                 if (!this.d3KeyState[keys])
                 {
@@ -230,6 +242,18 @@ namespace DMTools.FunList
                         }
                         Sleep(30);
                         return;
+                    }
+                    if (ts.KeyCode2 > 0)
+                    {
+                        if (objdm.GetKeyState(Convert.ToInt32(ts.KeyCode2)) == 1)
+                        {
+                            if (this.d3KeyState.isRight)
+                            {
+                                objdm.RightUp();
+                            }
+                            Sleep(20);
+                            return;
+                        }
                     }
                     if (!this.d3KeyState.isRight)
                     {
