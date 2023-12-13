@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -125,6 +126,7 @@ namespace DMTools
             {
                 for (int i = 0; i < this.D3ConfigFuns.Count; i++)
                 {
+                    
                     this.D3ConfigFuns[i].Times = this.D3ConfigFuns[i].Times.Where(r =>
 
  r.TSRemark.TrimLength() > 0 ||
@@ -513,9 +515,8 @@ namespace DMTools
                 selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Control | Keys.Right });
                 selectKTSList.Add(new KeyTimeSetting() { KeyCode = Keys.Shift | Keys.Left });
             }
-            var al = this.selectKTSList.OrderBy(r => r.Rank).ToList();
-            selectKTSList = al;
-            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(al);
+
+            this.dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
 
             fun.Times = selectKTSList;
         }
@@ -529,6 +530,56 @@ namespace DMTools
 
 
 
+        }
+        private SortedList<string, ListSortDirection> currentSortDirectionList = new SortedList<string, ListSortDirection>(); 
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
+            // 判断是否点击了列头
+            if (e.Button == MouseButtons.Left && e.RowIndex == -1)
+            {
+                // 获取所点击列的名称
+                if (dataGridView1.DataSource is BindingList<KeyTimeSetting> dd)
+                {
+                    string columnName = dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
+                    if (!currentSortDirectionList.ContainsKey(columnName))
+                    {
+                        currentSortDirectionList.Add(columnName, ListSortDirection.Ascending);
+                    }
+
+                    // 根据所点击列进行排序
+                    if (currentSortDirectionList[columnName] == ListSortDirection.Ascending)
+                    {
+                        selectKTSList = dd.OrderBy(GetProperty(columnName)).ToList();
+                
+                        currentSortDirectionList[columnName] = ListSortDirection.Descending;
+
+                    }
+                    else
+                    {
+                        selectKTSList = dd.OrderByDescending(GetProperty(columnName)).ToList();
+                        currentSortDirectionList[columnName] = ListSortDirection.Ascending;
+                    }
+                    dataGridView1.DataSource = new BindingList<KeyTimeSetting>(selectKTSList);
+                    var fun = dataGridView2.CurrentRow.DataBoundItem as D3ConfigFun;
+                    if (fun == null)
+                    {
+
+                        return;
+                    }
+
+                    fun.Times = selectKTSList;
+                }
+            }
+
+        }
+        private Func<KeyTimeSetting, object> GetProperty(string propertyName)
+        {
+            // 使用反射动态获取属性值
+            var param = Expression.Parameter(typeof(KeyTimeSetting), "x");
+            var body = Expression.Property(param, propertyName);
+            var expr = Expression.Lambda<Func<KeyTimeSetting, object>>(Expression.Convert(body, typeof(object)), param);
+            return expr.Compile();
         }
     }
 }
