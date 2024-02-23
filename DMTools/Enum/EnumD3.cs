@@ -26,6 +26,7 @@ public enum EnumD3
     循环按顺序执行,
     POE开卡,
     回车发消息
+    //,POE改造
     //, POE多余进程
 }
 
