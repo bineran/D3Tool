@@ -2,9 +2,11 @@
 using DMTools.Config;
 using DMTools.Control;
 using DMTools.libs;
+using DMTools.Static;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
@@ -87,6 +89,7 @@ namespace DMTools.FunList
 
         public Task StartNewForTask(Action action, int sleep, bool checkPause = true, bool checkHandle = true)
         {
+         
             var actionFor = () =>
             {
                 if (sleep < 1)
@@ -138,8 +141,29 @@ namespace DMTools.FunList
             }
 
         }
-       
 
+        /// <summary>
+        /// 按键前会取绝对值,只能存负数
+        /// </summary>
+        /// <param name="Sleep"></param>
+        public void SleepBefore(int Sleep)
+        {
+          
+            if (Sleep > 0)
+            {
+                return;
+            }
+            Sleep = System.Math.Abs(Sleep);
+            if (cs != null)
+            {
+                Task.Delay(Sleep).Wait(cs.Token);
+            }
+            if (cs.IsCancellationRequested)
+            {
+                cs.Token.ThrowIfCancellationRequested();
+            }
+
+        }
 
         public void StartKeyDown()
         {
@@ -186,6 +210,7 @@ namespace DMTools.FunList
         }
         public void MoveMouse(KeyTimeSetting k)
         {
+            SleepBefore(k.D1);
             if (k.Int1 > 0 && k.Int2 > 0)
             { 
                 objdm.MoveTo(k.Int1, k.Int2);
@@ -266,126 +291,194 @@ namespace DMTools.FunList
         public void StartKeyRank()
         {
             //var objdm = this.CreateDM();
-             var list = this.Times.Where(r => r.keyClickType != KeyClickType.不做操作
-             && r.KeyCode > 0 && r.Rank > 0).OrderBy(r => r.Rank).ToList();
-            bool addStand = false;
-            bool addLeft = false;
-            bool addRight = false;
-            this.Sleep(50);
-            if(list.Count > 0)
-            {
-                var ts = list[0];
-                if (ts.keyClickType == KeyClickType.颜色不匹配点击 && ValidatePointColor(ts) )
-                    return;
-                if (ts.keyClickType == KeyClickType.颜色匹配点击 && !ValidatePointColor(ts))
-                    return;
-                if (ts.keyClickType == KeyClickType.图片未找到点击 && ValidateImage(ts))
-                    return;
-                if (ts.keyClickType == KeyClickType.图片找到点击 && !ValidateImage(ts))
-                    return;
-            }
-            foreach (var ts in list)
-            {
-                if (ConvertKeys.NoMouseKey(ts.KeyCode))
+            var task = StartNewTask(() =>
                 {
-                    switch (ts.keyClickType)
+                    var list = this.Times.Where(r => r.keyClickType != KeyClickType.不做操作
+                    && r.KeyCode > 0 && r.Rank > 0).OrderBy(r => r.Rank).ToList();
+                    bool addStand = false;
+                    bool addLeft = false;
+                    bool addRight = false;
+                    this.Sleep(50);
+                    if (list.Count > 0)
                     {
-                        case KeyClickType.点击:
-                            objdm.KeyPress((int)ts.KeyCode);
-
-                            break;
-                        case KeyClickType.按下:
-                            objdm.KeyDown((int)ts.KeyCode);
- 
-                            break;
-                        case KeyClickType.弹起:
-                            objdm.KeyUp((int)ts.KeyCode);
-                            break;
+                        var ts = list[0];
+                        if (ts.keyClickType == KeyClickType.颜色不匹配点击 && ts.D1==0 && ValidatePointColor(ts))
+                            return;
+                        if (ts.keyClickType == KeyClickType.颜色匹配点击 && ts.D1 == 0 && !ValidatePointColor(ts))
+                            return;
+                        if (ts.keyClickType == KeyClickType.图片未找到点击 && ts.D1 == 0 && ValidateImage(ts))
+                            return;
+                        if (ts.keyClickType == KeyClickType.图片找到点击 && ts.D1 == 0 && !ValidateImage(ts))
+                            return;
                     }
-                    Sleep(ts.D1);
-                }
-                else
+                    foreach (var ts in list)
+                    {
+                        if (ConvertKeys.NoMouseKey(ts.KeyCode))
+                        {
+                            SleepBefore(ts.D1);
+                            switch (ts.keyClickType)
+                            {
+                                case KeyClickType.颜色匹配点击:
+                                    if (
+        0 <= ts.Int1 && ts.Int1 <= D3W
+       && 0 <= ts.Int2 && ts.Int2 <= D3H
+       && ts.KeyCode > 0
+       && ts.Str1.TrimLength() > 0
+       )
+                                    {
+                                        AddPointColor(ts);
+                                    }
+                                    break;
+                                case KeyClickType.颜色不匹配点击:
+                                    if (
+        0 <= ts.Int1 && ts.Int1 <= D3W
+       && 0 <= ts.Int2 && ts.Int2 <= D3H
+       && ts.KeyCode > 0
+       && ts.Str1.TrimLength() > 0
+       )
+                                    {
+                                        AddPointColor(ts, false);
+                                    }
+                                    break;
+                                case KeyClickType.点击:
+                                    objdm.KeyPress((int)ts.KeyCode);
+
+                                    break;
+                                case KeyClickType.按下:
+                                    objdm.KeyDown((int)ts.KeyCode);
+
+                                    break;
+                                case KeyClickType.弹起:
+                                    objdm.KeyUp((int)ts.KeyCode);
+                                    break;
+                            }
+                            Sleep(ts.D1);
+                        }
+                        else
+                        {
+                            if (ts.KeyCode == ConvertKeys.MouseLeft)
+                            {
+                                MoveMouse(ts);
+                                switch (ts.keyClickType)
+                                {
+                                    case KeyClickType.点击:
+                                        objdm.LeftClick();
+                                        break;
+                                    case KeyClickType.按下:
+                                        addLeft = true;
+                                        objdm.LeftDown();
+                                        break;
+                                    case KeyClickType.弹起:
+                                        objdm.LeftUp();
+                                        break;
+                                }
+                            }
+                            else if (ts.KeyCode == ConvertKeys.MouseRight)
+                            {
+                                MoveMouse(ts);
+                                switch (ts.keyClickType)
+                                {
+                                    case KeyClickType.点击:
+                                        objdm.RightClick();
+                                        break;
+                                    case KeyClickType.按下:
+                                        addRight = true;
+                                        objdm.RightDown();
+                                        break;
+                                    case KeyClickType.弹起:
+                                        objdm.RightUp();
+                                        break;
+                                }
+                            }
+                            else if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
+                            {
+                                MoveMouse(ts);
+                                switch (ts.keyClickType)
+                                {
+                                    case KeyClickType.点击:
+                                        addStand = true;
+                                        objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                                        objdm.LeftClick();
+                                        objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+
+                                        break;
+                                    case KeyClickType.按下:
+                                        addLeft = true;
+                                        addStand = true;
+                                        objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                                        objdm.LeftDown();
+                                        break;
+                                    case KeyClickType.弹起:
+                                        objdm.LeftUp();
+                                        objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    if (addStand)
+                    {
+                        AddStopTask(() =>
+                        {
+                            objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                        });
+                    }
+                    if (addLeft)
+                    {
+                        AddStopTask(() =>
+                        {
+                            objdm.LeftUp();
+                        });
+                    }
+                    if (addRight)
+                    {
+                        AddStopTask(() =>
+                        {
+                            objdm.RightUp();
+                        });
+                    }
+                });
+            task.Wait();
+
+        }
+        public void StartAfterKey()
+        {
+            var ks = this.Times.Where(r => r.keyClickType == KeyClickType.延迟热键 && r.D1>0
+       && r.KeyCode > 0).FirstOrDefault();
+            if (ks != null)
+            {
+                var action = () =>
                 {
-                    if (ts.KeyCode == ConvertKeys.MouseLeft)
-                    {
-                        MoveMouse(ts);
-                        switch (ts.keyClickType)
-                        {
-                            case KeyClickType.点击:
-                                objdm.LeftClick(); 
-                                break;
-                            case KeyClickType.按下:
-                                addLeft = true;
-                                objdm.LeftDown(); 
-                                break;
-                            case KeyClickType.弹起:
-                                objdm.LeftUp(); 
-                                break;
-                        }
-                    }
-                    else if (ts.KeyCode == ConvertKeys.MouseRight)
-                    {
-                        MoveMouse(ts);
-                        switch (ts.keyClickType)
-                        {
-                            case KeyClickType.点击:
-                                objdm.RightClick(); 
-                                break;
-                            case KeyClickType.按下:
-                                addRight = true;
-                                objdm.RightDown(); 
-                                break;
-                            case KeyClickType.弹起:
-                                objdm.RightUp(); 
-                                break;
-                        }
-                    }
-                    else if (ts.KeyCode == ConvertKeys.MouseShiftLeft)
-                    {
-                        MoveMouse(ts);
-                        switch (ts.keyClickType)
-                        {
-                            case KeyClickType.点击:
-                                addStand = true;
-                                objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
-                                objdm.LeftClick();
-                                objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
-     
-                                break;
-                            case KeyClickType.按下:
-                                addLeft = true;
-                                addStand = true;
-                                objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
-                                objdm.LeftDown(); 
-                                break;
-                            case KeyClickType.弹起:
-                                objdm.LeftUp();
-                                objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                    Sleep(ks.D1);
+          
+                    Keys keys = ks.KeyCode;
 
-                                break;
-                        }
+                    Dictionary<Keys, Keys> keyMap = new Dictionary<Keys, Keys>
+                    {
+                        { Keys.Control | Keys.NumPad1, Keys.NumPad1 },
+                        { Keys.Control | Keys.NumPad2, Keys.NumPad2 },
+                        { Keys.Control | Keys.NumPad3, Keys.NumPad3 },
+                        { Keys.Control | Keys.NumPad4, Keys.NumPad4 },
+                        { Keys.Control | Keys.NumPad5, Keys.NumPad5 },
+                        { Keys.Control | Keys.NumPad6, Keys.NumPad6 },
+                        { Keys.Control | Keys.NumPad7, Keys.NumPad7 },
+                        { Keys.Control | Keys.NumPad8, Keys.NumPad8 },
+                        { Keys.Control | Keys.NumPad9, Keys.NumPad9 },
+                        { Keys.Control | Keys.NumPad0, Keys.NumPad0 }
+                    };
+                    if (keyMap.TryGetValue(keys, out Keys value))
+                    {
+                        objdm.KeyDown(17);
+                        
+                        objdm.KeyPress((int)value);
+                        objdm.KeyUp(17);
                     }
-                }
-            }
-            if (addStand)
-            {
-                AddStopTask(() => {
-                    objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
-                });
-            }
-            if (addLeft)
-            {
-                AddStopTask(() => {
-                    objdm.LeftUp();
-                });
-            }
-            if (addRight)
-            {
-                AddStopTask(() => {
-                    objdm.RightUp();
-                });
+                };
+                StartNewTaskToList(action);
             }
 
+            
         }
         public bool IsHandle{ get { return this.d3KeyState.isD3; } }
         public void AddPauseClick()

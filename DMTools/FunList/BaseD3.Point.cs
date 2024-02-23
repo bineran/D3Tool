@@ -153,6 +153,44 @@ namespace DMTools.FunList
         /// 指定位置等于指定颜色按键
         /// </summary>
         /// <param name="ts"></param>
+        public void AddPointColor(KeyTimeSetting ts, bool ColorFalg = true)
+        {
+            var x = ts.Int1;
+            var y = ts.Int2;
+            var key = (int)ts.KeyCode;
+            var keyCode = ts.KeyCode;
+            var sleepInt = ts.D1;
+            var tagColor = ts.Str1.ToColor();
+            var tagColor2 = ts.Str2.ToColor();
+            var x1 = ts.Int3;
+            var y1 = ts.Int4;
+  
+
+            var ret = objdm.CmpColor(x, y, tagColor, this.d3Param.sysConfig.color_sim);
+            var ret2 = -1;
+            if (x1 > 0 && y1 > 0 && tagColor2 != null)
+            {
+                ret2 = objdm.CmpColor(x1, y1, tagColor2, this.d3Param.sysConfig.color_sim);
+            }
+
+            if ((ret == 0 || ret2 == 0) && ColorFalg)
+            {
+                this.DMKeyPress(keyCode);
+            }
+            else if ((ret == 1 || ret2 == 1) && ColorFalg == false)
+            {
+                this.DMKeyPress(keyCode);
+            }
+            
+
+
+        }
+
+
+        /// <summary>
+        /// 指定位置等于指定颜色按键
+        /// </summary>
+        /// <param name="ts"></param>
         public void AddPointColorTask(KeyTimeSetting ts,bool ColorFalg=true)
         {
             var x = ts.Int1;
@@ -303,6 +341,7 @@ namespace DMTools.FunList
              && r.KeyCode > 0
              && r.Str1.TrimLength() > 0
              && r.D1 > 0
+             && r.Rank ==0
              );
             foreach (var k in kl)
             {
@@ -317,6 +356,7 @@ namespace DMTools.FunList
              && r.KeyCode > 0
              && r.Str1.TrimLength() > 0
              && r.D1 > 0
+                && r.Rank == 0
              );
             foreach (var k in kl)
             {

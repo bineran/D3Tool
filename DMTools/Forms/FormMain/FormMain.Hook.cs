@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DMTools
 {
@@ -109,11 +111,11 @@ namespace DMTools
   
         public Keys ConvertKey(KeyEventArgs e )
         {
-            
+
             //if (e.Control && (e.Shift || e.Alt))
             //{
             //   var al= this.d3Config.d3ConfigItems.Where(r => r.EnabledFlag);
-                
+
             //    foreach (var key in ConvertKeys.alGKeys)
             //    {
             //        if (e.Alt && e.Shift && e.KeyData == (Keys.Control | Keys.Shift | Keys.Alt | key))
@@ -130,7 +132,7 @@ namespace DMTools
             //        }
             //    }
             //}
-            if (e.Control || e.Shift || e.Alt)
+            if (e.Control || e.Shift || e.Alt  )
             {
 
                 var items=this.d3Config.d3ConfigItems.Where(r => r.EnabledFlag);
@@ -178,8 +180,10 @@ namespace DMTools
                     {
                         return key;
                     }
+
                 }
             }
+            Trace.WriteLine(e.KeyData);
             return e.KeyData;
         }
         private void Kh_OnKeyDownEvent(object? sender, KeyEventArgs e)

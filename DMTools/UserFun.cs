@@ -178,7 +178,7 @@ namespace DMTools
                 {
                     if (e.FormattedValue != null && e.FormattedValue.ToString().Length > 0)
                     {
-                        if (!decimal.TryParse(e.FormattedValue.ToString(), out dci) || dci < 0)
+                        if (!decimal.TryParse(e.FormattedValue.ToString(), out dci) )
                         {
                             e.Cancel = true;
                         }

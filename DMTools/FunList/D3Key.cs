@@ -33,8 +33,11 @@ namespace DMTools.FunList
             StartPointColor();
             StartPointNoColor();
             StartImageTask();
+            StartAfterKey();
             //Test();
         }
+
+
         public void Test()
         { 
             while(true)

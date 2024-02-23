@@ -38,6 +38,10 @@ namespace DMTools
         /// 图片未找到点击
         /// </summary>
         图片未找到点击 = 70,
+        /// <summary>
+        /// 延迟热键
+        /// </summary>
+        延迟热键
 
     }
 }

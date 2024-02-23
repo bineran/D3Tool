@@ -108,6 +108,7 @@ namespace DMTools.FunList
         public void AddKeyPressForTask(KeyTimeSetting ts)
         {
         
+            //正常先按再点击
             if (ts.Rank == 0 && ts.D1 > 0 && ts.keyClickType == KeyClickType.点击)
             {
          
@@ -155,14 +156,79 @@ namespace DMTools.FunList
                         objdm.KeyPress(key);
                         Sleep(tmpd);
                         objdm.KeyPress(Convert.ToInt32(ts.KeyCode2));
+                        Sleep(tmpd2);
                     };
-                    StartTaskList.Add(StartNewForTask(action, tmpd2));
+                    StartTaskList.Add(StartNewForTask(action, 1));
                 }
                 else
                 {
                     StartTaskList.Add(StartNewForTask(action, tmpd));
                 }
                 
+            }
+            //先休眠正常先按再点击
+            if (ts.Rank == 0 && ts.D1 <0 && ts.keyClickType == KeyClickType.点击)
+            {
+
+                int key = (int)ts.KeyCode;
+                //var objdm=CreateDM();
+                var isfirst = true;
+                var action = () =>
+                {
+                 
+                    if (isfirst = true)
+                    {
+                        SleepBefore(ts.D1);
+                        isfirst = false;
+                    }
+                    switch (ts.KeyCode)
+                    {
+                        case ConvertKeys.MouseLeft:
+                            objdm.LeftClick();
+                            break;
+                        case ConvertKeys.MouseRight:
+                            objdm.RightClick();
+                            break;
+                        case ConvertKeys.MouseShiftLeft:
+                            objdm.KeyDown(this.d3Param.KeyCodes.KeyStand);
+                            objdm.LeftClick();
+                            objdm.KeyUp(this.d3Param.KeyCodes.KeyStand);
+                            break;
+                        default:
+                            objdm.KeyPress(key);
+                            break;
+                    }
+                };
+                var tmpd = System.Math.Abs(ts.D1);
+                if (ts.D2 > 0 && ts.D2 < 100 && (ts.KeyCode == Keys.D1 || ts.KeyCode == Keys.D2 || ts.KeyCode == Keys.D3 || ts.KeyCode == Keys.D4 || ts.KeyCode == Keys.D5))
+                {
+                    tmpd = System.Math.Abs(Convert.ToInt32(ts.D1 * (1.0 + ts.D2 * 1.0 / 100)));
+                }
+                var tmpd2 = ts.D3;
+                if (ts.D2 > 0 && ts.D2 < 100 && (ts.KeyCode2 == Keys.D1 || ts.KeyCode2 == Keys.D2 || ts.KeyCode2 == Keys.D3 || ts.KeyCode2 == Keys.D4 || ts.KeyCode2 == Keys.D5))
+                {
+                    tmpd2 = Convert.ToInt32(ts.D3 * (1.0 + ts.D2 * 1.0 / 100));
+                }
+                //交替按键
+                if ((ts.KeyCode == Keys.D1 || ts.KeyCode == Keys.D2 || ts.KeyCode == Keys.D3 || ts.KeyCode == Keys.D4 || ts.KeyCode == Keys.D5) &&
+                    (ts.KeyCode2 == Keys.D1 || ts.KeyCode2 == Keys.D2 || ts.KeyCode2 == Keys.D3 || ts.KeyCode2 == Keys.D4 || ts.KeyCode2 == Keys.D5)
+                    && ts.KeyCode != ts.KeyCode2 && ts.D3 > 0
+                    )
+                {
+                    action = () =>
+                    {
+                        objdm.KeyPress(key);
+                        Sleep(tmpd);
+                        objdm.KeyPress(Convert.ToInt32(ts.KeyCode2));
+                        Sleep(tmpd2);
+                    };
+                    StartTaskList.Add(StartNewForTask(action, 1));
+                }
+                else
+                {
+                    StartTaskList.Add(StartNewForTask(action, tmpd));
+                }
+
             }
         }
         public void AddPauseKeyPressForTask(KeyTimeSetting ts)

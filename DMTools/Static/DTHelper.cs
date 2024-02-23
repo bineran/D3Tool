@@ -49,6 +49,14 @@ namespace DMTools.Static
             dt.Rows.Add("G6(alt + * )", Keys.Alt | Keys.Multiply);
             dt.Rows.Add("G7(alt + - )", Keys.Alt | Keys.Subtract);
             dt.Rows.Add("G8(alt + + )", Keys.Alt | Keys.Add);
+            dt.Rows.Add("C1(ctrl + 1 )", Keys.Control | Keys.NumPad1);
+            dt.Rows.Add("C2(ctrl + 2 )", Keys.Control | Keys.NumPad2);
+            dt.Rows.Add("C3(ctrl + 3 )", Keys.Control | Keys.NumPad3);
+            dt.Rows.Add("C4(ctrl + 4 )", Keys.Control | Keys.NumPad4);
+            dt.Rows.Add("C5(ctrl + 5 )", Keys.Control | Keys.NumPad5);
+            dt.Rows.Add("C6(ctrl + 6 )", Keys.Control | Keys.NumPad6);
+            dt.Rows.Add("C7(ctrl + 7 )", Keys.Control | Keys.NumPad7);
+            dt.Rows.Add("C8(ctrl + 8 )", Keys.Control | Keys.NumPad8);
             #region code
 
             dt.Rows.Add("1", 49);
@@ -160,6 +168,7 @@ namespace DMTools.Static
             dt.Rows.Add("原地左键", ConvertKeys.MouseShiftLeft);
             dt.Rows.Add("左键?↓shift↓", ConvertKeys.HotKeyLeftWhereShiftDown);
             dt.Rows.Add("右键?↓shift↓", ConvertKeys.HotKeyRightWhereShiftDown);
+
             //"↑"
             dt.Rows.Add("Q", 81);
             dt.Rows.Add("E", 69);
@@ -247,6 +256,14 @@ namespace DMTools.Static
             dt.Rows.Add("Num8", 104);
             dt.Rows.Add("Num9", 105);
 
+            dt.Rows.Add("C1(ctrl + 1 )", Keys.Control | Keys.NumPad1);
+            dt.Rows.Add("C2(ctrl + 2 )", Keys.Control | Keys.NumPad2);
+            dt.Rows.Add("C3(ctrl + 3 )", Keys.Control | Keys.NumPad3);
+            dt.Rows.Add("C4(ctrl + 4 )", Keys.Control | Keys.NumPad4);
+            dt.Rows.Add("C5(ctrl + 5 )", Keys.Control | Keys.NumPad5);
+            dt.Rows.Add("C6(ctrl + 6 )", Keys.Control | Keys.NumPad6);
+            dt.Rows.Add("C7(ctrl + 7 )", Keys.Control | Keys.NumPad7);
+            dt.Rows.Add("C8(ctrl + 8 )", Keys.Control | Keys.NumPad8);
             #endregion
             return dt;
         }
