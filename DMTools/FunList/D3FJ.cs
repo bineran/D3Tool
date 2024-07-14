@@ -20,6 +20,7 @@ namespace DMTools.FunList
 
        private SortedList<int, BagPoint> bagPointList=new SortedList<int, BagPoint>();
 
+
         public D3FJ(D3Param d3Param, List<KeyTimeSetting> Times, EnumD3 enumD3) : base(d3Param, Times,enumD3)
         {
             this.StartEvent += D3FJ_StartEvent;
