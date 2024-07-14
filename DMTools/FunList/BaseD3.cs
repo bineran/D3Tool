@@ -32,6 +32,7 @@ namespace DMTools.FunList
             DMP dMP=new DMP();
             Idmsoft objdm = dMP.DM;
             return this.BindForm(objdm, this.Handle,this.d3Param.sysConfig);
+
         }
         public  Idmsoft BindForm(Idmsoft objdm, int handle, SysConfig sysConfig)
         {
