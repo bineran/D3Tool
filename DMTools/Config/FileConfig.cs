@@ -14,6 +14,7 @@ namespace DMTools
 
         public static readonly string D3_BAG_PATH= DM_BMP_PATH + "\\bag";
         public static readonly string Poe_BAG_PATH = DM_BMP_PATH + "\\poebag";
+        public static readonly string Poe_GH_PATH = DM_BMP_PATH + "\\gh";
         public static string DmBmpPath(this string imgFileName)
         {
           return  DM_BMP_PATH + "\\" + imgFileName;

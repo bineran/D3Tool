@@ -45,6 +45,7 @@
             保存方案ToolStripMenuItem = new ToolStripMenuItem();
             隐藏ToolStripMenuItem = new ToolStripMenuItem();
             notifyIcon1 = new NotifyIcon(components);
+            删除隐藏功能ToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -79,34 +80,34 @@
             // 新增方案ToolStripMenuItem
             // 
             新增方案ToolStripMenuItem.Name = "新增方案ToolStripMenuItem";
-            新增方案ToolStripMenuItem.Size = new Size(180, 22);
+            新增方案ToolStripMenuItem.Size = new Size(148, 22);
             新增方案ToolStripMenuItem.Text = "新增";
             新增方案ToolStripMenuItem.Click += 新增方案ToolStripMenuItem_Click;
             // 
             // 删除方案ToolStripMenuItem
             // 
             删除方案ToolStripMenuItem.Name = "删除方案ToolStripMenuItem";
-            删除方案ToolStripMenuItem.Size = new Size(180, 22);
+            删除方案ToolStripMenuItem.Size = new Size(148, 22);
             删除方案ToolStripMenuItem.Text = "删除";
             删除方案ToolStripMenuItem.Click += 删除方案ToolStripMenuItem_Click;
             // 
             // 另存方案ToolStripMenuItem
             // 
             另存方案ToolStripMenuItem.Name = "另存方案ToolStripMenuItem";
-            另存方案ToolStripMenuItem.Size = new Size(180, 22);
+            另存方案ToolStripMenuItem.Size = new Size(148, 22);
             另存方案ToolStripMenuItem.Text = "另存";
             另存方案ToolStripMenuItem.Click += 另存方案ToolStripMenuItem_Click;
             // 
             // ckload
             // 
             ckload.Name = "ckload";
-            ckload.Size = new Size(180, 22);
+            ckload.Size = new Size(148, 22);
             ckload.Text = "加载新的窗口";
             ckload.Click += ckload_Click;
             // 
             // 功能ToolStripMenuItem
             // 
-            功能ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 添加功能ToolStripMenuItem, 复制功能ToolStripMenuItem, 显示所有功能ToolStripMenuItem });
+            功能ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 添加功能ToolStripMenuItem, 复制功能ToolStripMenuItem, 显示所有功能ToolStripMenuItem, 删除隐藏功能ToolStripMenuItem });
             功能ToolStripMenuItem.Name = "功能ToolStripMenuItem";
             功能ToolStripMenuItem.Size = new Size(44, 25);
             功能ToolStripMenuItem.Text = "功能";
@@ -114,21 +115,21 @@
             // 添加功能ToolStripMenuItem
             // 
             添加功能ToolStripMenuItem.Name = "添加功能ToolStripMenuItem";
-            添加功能ToolStripMenuItem.Size = new Size(153, 22);
+            添加功能ToolStripMenuItem.Size = new Size(180, 22);
             添加功能ToolStripMenuItem.Text = "添加功能";
             添加功能ToolStripMenuItem.Click += tsbAdd_Click;
             // 
             // 复制功能ToolStripMenuItem
             // 
             复制功能ToolStripMenuItem.Name = "复制功能ToolStripMenuItem";
-            复制功能ToolStripMenuItem.Size = new Size(153, 22);
+            复制功能ToolStripMenuItem.Size = new Size(180, 22);
             复制功能ToolStripMenuItem.Text = "复制功能";
             复制功能ToolStripMenuItem.Click += toolStripButton1_Click;
             // 
             // 显示所有功能ToolStripMenuItem
             // 
             显示所有功能ToolStripMenuItem.Name = "显示所有功能ToolStripMenuItem";
-            显示所有功能ToolStripMenuItem.Size = new Size(153, 22);
+            显示所有功能ToolStripMenuItem.Size = new Size(180, 22);
             显示所有功能ToolStripMenuItem.Text = "显示/隐藏功能";
             显示所有功能ToolStripMenuItem.Click += 显示所有功能ToolStripMenuItem_Click;
             // 
@@ -164,6 +165,13 @@
             notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
             notifyIcon1.Text = "BineranDM";
             notifyIcon1.MouseClick += notifyIcon1_MouseClick;
+            // 
+            // 删除隐藏功能ToolStripMenuItem
+            // 
+            删除隐藏功能ToolStripMenuItem.Name = "删除隐藏功能ToolStripMenuItem";
+            删除隐藏功能ToolStripMenuItem.Size = new Size(180, 22);
+            删除隐藏功能ToolStripMenuItem.Text = "删除隐藏功能";
+            删除隐藏功能ToolStripMenuItem.Click += 删除隐藏功能ToolStripMenuItem_Click;
             // 
             // FormMain
             // 
@@ -203,5 +211,6 @@
         private ToolStripMenuItem 隐藏ToolStripMenuItem;
         private ToolStripMenuItem 显示所有功能ToolStripMenuItem;
         private ToolStripMenuItem ckload;
+        private ToolStripMenuItem 删除隐藏功能ToolStripMenuItem;
     }
 }

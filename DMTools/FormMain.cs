@@ -6,7 +6,7 @@ using DMTools.Static;
 using NLog;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Linq;
 namespace DMTools
 {
     public partial class FormMain : Form
@@ -223,6 +223,24 @@ namespace DMTools
         private void ckload_Click(object sender, EventArgs e)
         {
             this.ckload.Checked = !ckload.Checked;
+        }
+
+        private void É¾³ýÒþ²Ø¹¦ÄÜToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<D3ConfigItem> list = new List<D3ConfigItem>();
+            foreach (var t in this.d3Config.d3ConfigItems)
+            {
+                if (!t.EnabledFlag)
+                {
+                    list.Add(t);
+                }
+            }
+            foreach (var t in list)
+            {
+                this.d3Config.d3ConfigItems.Remove(t);
+            }
+
+            BindTabControl();
         }
     }
 

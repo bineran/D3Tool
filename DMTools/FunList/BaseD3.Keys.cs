@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 using NLog.Fluent;
+using static System.Windows.Forms.DataFormats;
 //using Dm;
 
 namespace DMTools.FunList
@@ -99,9 +100,15 @@ namespace DMTools.FunList
                     objdm.KeyUp(key);
                 };
             }
+            var checkhandle = true;
+            if (this.d3Param.sysConfig.keypad!= "normal")
+            {
+                checkhandle= false; 
 
 
-            StartTaskList.Add(StartNewForTask(action, sleepTime, false,true));
+            }
+
+            StartTaskList.Add(StartNewForTask(action, sleepTime, false, checkhandle));
             AddStopTaskKeysUp(key);
 
         }
@@ -145,6 +152,11 @@ namespace DMTools.FunList
                 {
                     tmpd2 = Convert.ToInt32(ts.D3 * (1.0 + ts.D2 * 1.0 / 100));
                 }
+                var checkhandle = true;
+                if (this.d3Param.sysConfig.keypad != "normal")
+                {
+                    checkhandle = false;
+                }
                 //交替按键
                 if ((ts.KeyCode == Keys.D1 || ts.KeyCode == Keys.D2 || ts.KeyCode == Keys.D3 || ts.KeyCode == Keys.D4 || ts.KeyCode == Keys.D5) &&
                     (ts.KeyCode2 == Keys.D1 || ts.KeyCode2 == Keys.D2 || ts.KeyCode2 == Keys.D3 || ts.KeyCode2 == Keys.D4 || ts.KeyCode2 == Keys.D5)
@@ -158,11 +170,11 @@ namespace DMTools.FunList
                         objdm.KeyPress(Convert.ToInt32(ts.KeyCode2));
                         Sleep(tmpd2);
                     };
-                    StartTaskList.Add(StartNewForTask(action, 1));
+                    StartTaskList.Add(StartNewForTask(action, 1, true, checkhandle));
                 }
                 else
                 {
-                    StartTaskList.Add(StartNewForTask(action, tmpd));
+                    StartTaskList.Add(StartNewForTask(action, tmpd,true, checkhandle));
                 }
                 
             }
@@ -209,6 +221,13 @@ namespace DMTools.FunList
                 {
                     tmpd2 = Convert.ToInt32(ts.D3 * (1.0 + ts.D2 * 1.0 / 100));
                 }
+                var checkhandle = true;
+                if (this.d3Param.sysConfig.keypad != "normal")
+                {
+                    checkhandle = false;
+
+
+                }
                 //交替按键
                 if ((ts.KeyCode == Keys.D1 || ts.KeyCode == Keys.D2 || ts.KeyCode == Keys.D3 || ts.KeyCode == Keys.D4 || ts.KeyCode == Keys.D5) &&
                     (ts.KeyCode2 == Keys.D1 || ts.KeyCode2 == Keys.D2 || ts.KeyCode2 == Keys.D3 || ts.KeyCode2 == Keys.D4 || ts.KeyCode2 == Keys.D5)
@@ -222,11 +241,11 @@ namespace DMTools.FunList
                         objdm.KeyPress(Convert.ToInt32(ts.KeyCode2));
                         Sleep(tmpd2);
                     };
-                    StartTaskList.Add(StartNewForTask(action, 1));
+                    StartTaskList.Add(StartNewForTask(action, 1,true, checkhandle));
                 }
                 else
                 {
-                    StartTaskList.Add(StartNewForTask(action, tmpd));
+                    StartTaskList.Add(StartNewForTask(action, tmpd,true, checkhandle));
                 }
 
             }

@@ -203,7 +203,7 @@ namespace DMTools.FunList
             var x1 = ts.Int3;
             var y1 = ts.Int4;
             this.GetPointRGB(x, y, true);
-     
+            var sleepInt2 = ts.D2;
             var action = () =>
             {
                 var ret = objdm.CmpColor(x, y, tagColor,this.d3Param.sysConfig.color_sim);
@@ -216,10 +216,16 @@ namespace DMTools.FunList
                 if ( (ret==0 || ret2==0) && ColorFalg )
                 {
                     this.DMKeyPress(keyCode);
+      
+                        Sleep(sleepInt2);
+                    
                 }
                 else if ((ret == 1 || ret2 == 1) && ColorFalg==false)
                 {
                     this.DMKeyPress( keyCode);
+             
+                        Sleep(sleepInt2);
+                    
                 }
             };
             StartTaskList.Add(StartNewForTask(action, sleepInt));

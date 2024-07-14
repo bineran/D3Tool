@@ -16,13 +16,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ADF2ED15-EDEC-4F30-A085-9917CFC3F30A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\..\trunk\D3Tool\Common\大漠接口说明.CHM = ..\..\trunk\D3Tool\Common\大漠接口说明.CHM
+		..\..\trunk\D3Tool\Common\大漠接口说明.chw = ..\..\trunk\D3Tool\Common\大漠接口说明.chw
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yolov5Net.Scorer", "Yolov5Net.Scorer\Yolov5Net.Scorer.csproj", "{6777B377-C7F9-46A2-8797-CD7DC80D8B3C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapTest", "MapTest\MapTest.csproj", "{A005241F-38D3-4A57-8421-A4CE96B26A23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POEService", "POEService\POEService.csproj", "{57A5D290-2806-41BE-A882-1BA5E6D62F30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POEService", "POEService\POEService.csproj", "{57A5D290-2806-41BE-A882-1BA5E6D62F30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
